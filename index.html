@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NextGen BPO Intelligence Platform</title>
+  <link rel="stylesheet" href="/bpo-theme.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    /* ── Hero ── */
+    .hero-dark {
+      background: #161616;
+      padding: 5rem 0 4.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-dark::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -100px;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,125,121,0.10) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-dark::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: 20%;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,125,121,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      color: #3ddbd9;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-family: 'IBM Plex Mono', monospace;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-h1 {
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 300;
+      color: #ffffff;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-h1 strong {
+      font-weight: 600;
+      color: #3ddbd9;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: #a8a8a8;
+      line-height: 1.65;
+      max-width: 640px;
+      margin-bottom: 2.25rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .hero-tag {
+      font-size: 0.75rem;
+      color: #6f6f6f;
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.04em;
+      border: 1px solid #393939;
+      padding: 0.3rem 0.75rem;
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    /* ── Stats strip ── */
+    .stats-strip {
+      background: #1c1c1c;
+      border-top: 1px solid #262626;
+      border-bottom: 1px solid #262626;
+      padding: 2.5rem 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      padding: 0 2rem;
+      border-right: 1px solid #393939;
+    }
+
+    .stat-item:first-child {
+      padding-left: 0;
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-number {
+      font-size: 2.25rem;
+      font-weight: 300;
+      color: #3ddbd9;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      font-family: 'IBM Plex Sans', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-label {
+      font-size: 0.8125rem;
+      color: #8d8d8d;
+      line-height: 1.45;
+    }
+
+    /* ── Domain Pillars ── */
+    .section {
+      padding: 5rem 0;
+    }
+
+    .section-eyebrow {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      color: #007d79;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-family: 'IBM Plex Mono', monospace;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-h2 {
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 300;
+      color: #161616;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin-bottom: 3rem;
+    }
+
+    .section-h2.light {
+      color: #161616;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .pillar-card {
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .pillar-card:hover {
+      border-color: #007d79;
+      box-shadow: 0 4px 16px rgba(0,125,121,0.08);
+    }
+
+    .pillar-icon {
+      width: 40px;
+      height: 40px;
+      background: #007d79;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'IBM Plex Sans', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .pillar-title {
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: #161616;
+      line-height: 1.3;
+    }
+
+    .pillar-desc {
+      font-size: 0.875rem;
+      color: #525252;
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .pillar-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.375rem;
+    }
+
+    .pillar-tag {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      color: #007d79;
+      background: #e5f6f5;
+      padding: 0.2rem 0.6rem;
+      border-radius: 2px;
+      letter-spacing: 0.02em;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .pillar-cta {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #007d79;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid #e0e0e0;
+      transition: color 0.15s ease;
+    }
+
+    .pillar-cta:hover {
+      color: #005d5d;
+    }
+
+    .pillar-cta::after {
+      content: '→';
+    }
+
+    /* ── How It Works ── */
+    .section-grey {
+      background: #f4f4f4;
+    }
+
+    .step-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 1.5rem;
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      position: relative;
+    }
+
+    .step-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #007d79;
+      line-height: 1;
+      font-family: 'IBM Plex Mono', monospace;
+      opacity: 0.25;
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+    }
+
+    .step-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #161616;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-title-accent {
+      display: block;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      color: #007d79;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-family: 'IBM Plex Mono', monospace;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-desc {
+      font-size: 0.875rem;
+      color: #525252;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── CTA Banner ── */
+    .cta-banner {
+      background: #007d79;
+      padding: 4rem 0;
+    }
+
+    .cta-banner .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .cta-text-block {}
+
+    .cta-heading {
+      font-size: 1.75rem;
+      font-weight: 300;
+      color: #ffffff;
+      line-height: 1.25;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .cta-sub {
+      font-size: 0.9375rem;
+      color: rgba(255,255,255,0.75);
+      max-width: 520px;
+      line-height: 1.55;
+    }
+
+    .btn-cta-white {
+      display: inline-flex;
+      align-items: center;
+      height: 48px;
+      padding: 0 1.75rem;
+      background: #ffffff;
+      color: #007d79;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'IBM Plex Sans', sans-serif;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s ease, color 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .btn-cta-white:hover {
+      background: #e5f6f5;
+      color: #005d5d;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+      .stat-item {
+        border-right: none;
+        padding-left: 0;
+        border-bottom: 1px solid #393939;
+        padding-bottom: 1.5rem;
+      }
+      .stat-item:nth-child(2n) { border-right: none; }
+      .stat-item:nth-last-child(-n+2) { border-bottom: none; padding-bottom: 0; }
+    }
+
+    @media (max-width: 768px) {
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .cta-banner .container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .stat-item {
+        border-bottom: 1px solid #393939;
+        padding-bottom: 1.25rem;
+      }
+      .stat-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ AUTH CHECK ══════════════════ -->
+<script src="/config.js"></script>
+<script>
+(async () => {
+  await new Promise(r => setTimeout(r, 50));
+  if (window.PLATFORM_CONFIG?.protectedMode) {
+    const token = sessionStorage.getItem('bpo_token');
+    if (!token) { window.location.href = '/login.html'; return; }
+    const r = await fetch('/api/verify', { headers: { 'Authorization': 'Bearer ' + token } });
+    if (!r.ok) { sessionStorage.clear(); window.location.href = '/login.html'; }
+  }
+})();
+</script>
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav class="c-nav">
+  <div class="container">
+    <a href="/" class="c-nav-brand">
+      <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" fill="#007d79"/>
+        <text x="6" y="22" font-family="IBM Plex Sans" font-size="14" font-weight="700" fill="white">BPO</text>
+      </svg>
+      NextGen BPO
+    </a>
+    <div class="c-nav-links">
+      <a href="/" class="active"><span>Home</span></a>
+      <a href="/client-zero.html"><span>Client Zero</span></a>
+      <a href="/platform.html"><span>Platform</span></a>
+      <a href="/assets.html"><span>Playbooks</span></a>
+      <a href="/assess.html"><span>Assess</span></a>
+      <a href="/tracker.html"><span>Pipeline</span></a>
+      <a href="/roi.html"><span>ROI</span></a>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <span id="nav-client" style="font-size:0.75rem;color:#8d8d8d;font-family:'IBM Plex Mono',monospace;"></span>
+      <a href="/login.html" onclick="sessionStorage.clear()" style="font-size:0.75rem;color:#6f6f6f;" id="nav-logout" hidden>Sign out</a>
+    </div>
+  </div>
+</nav>
+<script>
+const _t = sessionStorage.getItem('bpo_token');
+const _c = sessionStorage.getItem('bpo_client');
+if (_c) { document.getElementById('nav-client').textContent = _c; document.getElementById('nav-logout').hidden = false; }
+</script>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="hero-dark">
+  <div class="container">
+    <div class="hero-eyebrow">Next-Generation BPO Intelligence</div>
+    <h1 class="hero-h1">
+      Unlock Operational Excellence<br>
+      Across <strong>HR, Finance &</strong><br>
+      <strong>Procurement</strong>
+    </h1>
+    <p class="hero-sub">
+      The NextGen BPO Intelligence Platform helps organisations benchmark, transform, and operate their back-office functions with precision — moving from manual, fragmented processes to high-performance outsourced or hybrid operations.
+    </p>
+    <div class="hero-actions">
+      <a href="/assess.html" class="btn-primary">Start Maturity Assessment →</a>
+      <a href="/platform.html" class="btn-secondary">View Transformation Platform</a>
+    </div>
+    <div class="hero-tag">Procurement &middot; Finance &middot; HR</div>
+  </div>
+</section>
+
+<!-- ══════════════════ STATS STRIP ══════════════════ -->
+<div class="stats-strip">
+  <div class="container">
+    <div class="stats-grid">
+
+      <div class="stat-item">
+        <div class="stat-number">30–45%</div>
+        <div class="stat-label">Average cost reduction in transactional BPO</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-number">60%</div>
+        <div class="stat-label">Of Procurement organisations have unoptimised P2P processes</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-number">2.5×</div>
+        <div class="stat-label">Productivity gain from HR shared services transformation</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-number">18 months</div>
+        <div class="stat-label">Typical BPO transformation to steady state</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ DOMAIN PILLARS ══════════════════ -->
+<section class="section" style="background:#ffffff;">
+  <div class="container">
+    <div class="section-eyebrow">BPO Focus Areas</div>
+    <h2 class="section-h2">Three Domains. One Platform.</h2>
+
+    <div class="grid-3">
+
+      <!-- Procurement -->
+      <div class="pillar-card">
+        <div class="pillar-icon">P</div>
+        <div class="pillar-title">Source-to-Pay Transformation</div>
+        <p class="pillar-desc">
+          Benchmark your Category Management, Contract Administration, Procurement Operations, Accounts Payable, and Vendor Management maturity. Identify outsourcing opportunities and cost reduction levers.
+        </p>
+        <div class="pillar-tags">
+          <span class="pillar-tag">Source-to-Pay</span>
+          <span class="pillar-tag">Category Management</span>
+          <span class="pillar-tag">Accounts Payable</span>
+        </div>
+        <a href="/assess.html" class="pillar-cta">Assess Procurement maturity</a>
+      </div>
+
+      <!-- Finance -->
+      <div class="pillar-card">
+        <div class="pillar-icon">F</div>
+        <div class="pillar-title">Record-to-Report Excellence</div>
+        <p class="pillar-desc">
+          Assess your Finance BPO readiness across R2R, AP/AR, FP&amp;A, Treasury, Tax Compliance, and Close &amp; Consolidation. Build the case for finance shared services.
+        </p>
+        <div class="pillar-tags">
+          <span class="pillar-tag">Record-to-Report</span>
+          <span class="pillar-tag">AP/AR</span>
+          <span class="pillar-tag">Financial Close</span>
+        </div>
+        <a href="/assess.html" class="pillar-cta">Assess Finance maturity</a>
+      </div>
+
+      <!-- HR -->
+      <div class="pillar-card">
+        <div class="pillar-icon">H</div>
+        <div class="pillar-title">Hire-to-Retire Optimisation</div>
+        <p class="pillar-desc">
+          Evaluate your HR operating model across Payroll, Talent Acquisition, L&amp;D, Benefits Administration, and Employee Relations. Define your HR shared services target state.
+        </p>
+        <div class="pillar-tags">
+          <span class="pillar-tag">Hire-to-Retire</span>
+          <span class="pillar-tag">Payroll</span>
+          <span class="pillar-tag">HR Shared Services</span>
+        </div>
+        <a href="/assess.html" class="pillar-cta">Assess HR maturity</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ HOW IT WORKS ══════════════════ -->
+<section class="section section-grey">
+  <div class="container">
+    <div class="section-eyebrow">Transformation Methodology</div>
+    <h2 class="section-h2">Four Phases to BPO Excellence</h2>
+
+    <div class="grid-4">
+
+      <div class="step-card">
+        <div class="step-number">01</div>
+        <div class="step-title">
+          <span class="step-title-accent">Phase 1</span>
+          Assess
+        </div>
+        <p class="step-desc">
+          Run the BPO Operational Maturity Assessment across your chosen domains. Receive a scored readiness profile with gap analysis.
+        </p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">02</div>
+        <div class="step-title">
+          <span class="step-title-accent">Phase 2</span>
+          Design
+        </div>
+        <p class="step-desc">
+          Define the target operating model: retained vs outsourced FTE, governance, SLAs, and technology landscape.
+        </p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">03</div>
+        <div class="step-title">
+          <span class="step-title-accent">Phase 3</span>
+          Transform
+        </div>
+        <p class="step-desc">
+          Execute the transition with structured workstreams, change management, and operational cut-over planning.
+        </p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">04</div>
+        <div class="step-title">
+          <span class="step-title-accent">Phase 4</span>
+          Operate
+        </div>
+        <p class="step-desc">
+          Monitor steady-state performance against KPIs, drive continuous improvement, and capture savings.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ CTA BANNER ══════════════════ -->
+<section class="cta-banner">
+  <div class="container">
+    <div class="cta-text-block">
+      <h2 class="cta-heading">Ready to assess your BPO maturity?</h2>
+      <p class="cta-sub">
+        Take the 20-question diagnostic for Procurement, Finance, or HR and receive an instant maturity profile.
+      </p>
+    </div>
+    <a href="/assess.html" class="btn-cta-white">Start Assessment</a>
+  </div>
+</section>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer class="c-footer">
+  <div class="container">
+    <div class="grid-2" style="gap:2rem;">
+      <div>
+        <div class="footer-brand">NextGen BPO Intelligence Platform</div>
+        <div class="footer-tagline" style="margin-top:4px;">Assess. Transform. Operate.</div>
+        <p style="margin-top:1rem;font-size:0.75rem;color:#6f6f6f;">Enabling operational excellence across Procurement, Finance, and HR through structured BPO transformation.</p>
+      </div>
+      <div style="display:flex;gap:3rem;justify-content:flex-end;">
+        <div>
+          <div style="font-size:0.75rem;font-weight:600;color:#8d8d8d;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.75rem;">Platform</div>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            <a href="/assess.html" style="font-size:0.875rem;">Maturity Assessment</a>
+            <a href="/tracker.html" style="font-size:0.875rem;">Transformation Pipeline</a>
+            <a href="/roi.html" style="font-size:0.875rem;">ROI Tracker</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;font-weight:600;color:#8d8d8d;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.75rem;">Domains</div>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            <a href="/assets.html" style="font-size:0.875rem;">Procurement</a>
+            <a href="/assets.html" style="font-size:0.875rem;">Finance</a>
+            <a href="/assets.html" style="font-size:0.875rem;">HR</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section-rule" style="margin:2rem 0;"></div>
+    <p style="font-size:0.75rem;color:#6f6f6f;">© 2025 NextGen BPO Intelligence Platform. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

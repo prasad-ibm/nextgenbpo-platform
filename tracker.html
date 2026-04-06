@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transformation Pipeline | NextGen BPO</title>
+  <link rel="stylesheet" href="/bpo-theme.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Layout ── */
+    .tracker-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .tracker-layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      background: #f4f4f4;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 1.25rem;
+      position: sticky;
+      top: 1.5rem;
+    }
+    .sidebar-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #525252;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .sidebar-section {
+      margin-bottom: 1.5rem;
+    }
+    .cds-select {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #c6c6c6;
+      background: white;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.875rem;
+      color: #161616;
+      border-radius: 2px;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23525252' d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      padding-right: 2rem;
+    }
+    .cds-select:focus { outline: 2px solid #007d79; outline-offset: 0; }
+
+    /* ── Filter buttons ── */
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .filter-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.375rem 0.625rem;
+      font-size: 0.8125rem;
+      font-family: 'IBM Plex Sans', sans-serif;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #525252;
+      cursor: pointer;
+      border-radius: 2px;
+      text-align: left;
+      transition: all 0.12s;
+    }
+    .filter-btn:hover { background: #e8e8e8; }
+    .filter-btn.active { background: white; border-color: #c6c6c6; color: #161616; font-weight: 600; }
+    .filter-btn .badge {
+      font-size: 0.6875rem;
+      font-family: 'IBM Plex Mono', monospace;
+      background: #e0e0e0;
+      color: #525252;
+      padding: 1px 5px;
+      border-radius: 8px;
+    }
+    .filter-btn.active .badge { background: #007d79; color: white; }
+
+    /* ── KPI Strip ── */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 900px) { .kpi-strip { grid-template-columns: repeat(2, 1fr); } }
+    .kpi-tile {
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-top: 3px solid #007d79;
+      border-radius: 4px;
+      padding: 1rem 1.25rem;
+    }
+    .kpi-tile-label {
+      font-size: 0.75rem;
+      font-family: 'IBM Plex Mono', monospace;
+      color: #8d8d8d;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.375rem;
+    }
+    .kpi-tile-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #161616;
+      line-height: 1;
+    }
+    .kpi-tile-sub {
+      font-size: 0.75rem;
+      color: #8d8d8d;
+      margin-top: 0.25rem;
+    }
+
+    /* ── Engagement Cards ── */
+    .engagement-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .engagement-card {
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 1.25rem 1.5rem;
+      transition: box-shadow 0.15s;
+    }
+    .engagement-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .engagement-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .engagement-card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #161616;
+      margin: 0 0 0.375rem;
+    }
+    .engagement-card-meta {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .engagement-card-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+    .btn-icon {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8125rem;
+      font-family: 'IBM Plex Sans', sans-serif;
+      border: 1px solid #c6c6c6;
+      background: white;
+      color: #525252;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+    .btn-icon:hover { background: #f4f4f4; }
+    .btn-icon.btn-danger { border-color: #da1e28; color: #da1e28; }
+    .btn-icon.btn-danger:hover { background: #fff0f0; }
+
+    /* Progress bar */
+    .progress-bar-wrap {
+      background: #e0e0e0;
+      border-radius: 2px;
+      height: 6px;
+      margin: 0.75rem 0 0.5rem;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: #007d79;
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+    .progress-label {
+      font-size: 0.75rem;
+      color: #8d8d8d;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* Detail row */
+    .engagement-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.75rem 1.5rem;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid #f4f4f4;
+    }
+    .detail-item-label {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8d8d8d;
+      font-family: 'IBM Plex Mono', monospace;
+      margin-bottom: 2px;
+    }
+    .detail-item-value {
+      font-size: 0.875rem;
+      color: #161616;
+      font-weight: 600;
+    }
+
+    /* ── Status badges ── */
+    .status-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 2px;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .status-pipeline  { background: #e8e8e8; color: #525252; }
+    .status-assess    { background: #eaf6ff; color: #0050e6; }
+    .status-design    { background: #e6f6f4; color: #005d5d; }
+    .status-transform { background: #fdf4dc; color: #8a5900; }
+    .status-operate   { background: #e8f5e9; color: #198038; }
+    .status-complete  { background: #f3e8fb; color: #6e32c9; }
+
+    /* ── Modals ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(22,22,22,0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: white;
+      border-radius: 4px;
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .modal-header h3 { margin: 0; font-size: 1.125rem; font-weight: 600; color: #161616; }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      color: #525252;
+      cursor: pointer;
+      padding: 0.25rem;
+      line-height: 1;
+    }
+    .modal-close:hover { color: #161616; }
+    .modal-body { padding: 1.5rem; }
+    .modal-footer {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+      padding: 1rem 1.5rem;
+      border-top: 1px solid #e0e0e0;
+      background: #f4f4f4;
+    }
+
+    /* Form fields */
+    .form-field {
+      margin-bottom: 1rem;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #525252;
+      margin-bottom: 0.375rem;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+    .form-label .required { color: #da1e28; margin-left: 2px; }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #c6c6c6;
+      background: white;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.875rem;
+      color: #161616;
+      border-radius: 2px;
+      box-sizing: border-box;
+      transition: border-color 0.15s;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: #007d79;
+      box-shadow: 0 0 0 2px rgba(0,125,121,0.15);
+    }
+    .form-textarea { min-height: 80px; resize: vertical; }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: #8d8d8d;
+      border: 2px dashed #e0e0e0;
+      border-radius: 4px;
+    }
+    .empty-state-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .empty-state h4 { margin: 0 0 0.5rem; color: #525252; font-weight: 600; }
+    .empty-state p { margin: 0; font-size: 0.875rem; }
+
+    /* Error/info */
+    .api-error {
+      background: #fff0f0;
+      border: 1px solid #da1e28;
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      color: #da1e28;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    /* Misc */
+    .main-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+    .main-toolbar h3 { margin: 0; font-size: 1rem; font-weight: 600; color: #161616; }
+
+    .btn-primary {
+      padding: 0.5625rem 1.25rem;
+      background: #007d79;
+      color: white;
+      border: none;
+      border-radius: 2px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: #005d5d; }
+    .btn-primary:disabled { background: #c6c6c6; cursor: not-allowed; }
+
+    .btn-secondary {
+      padding: 0.5625rem 1.25rem;
+      background: white;
+      color: #525252;
+      border: 1px solid #c6c6c6;
+      border-radius: 2px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-secondary:hover { background: #f4f4f4; }
+
+    .spinning { animation: spin 0.7s linear infinite; display: inline-block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 2px; font-size: 0.75rem; font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
+    .tag-teal   { background: #e6f6f4; color: #005d5d; }
+    .tag-blue   { background: #eaf6ff; color: #0050e6; }
+    .tag-green  { background: #e8f5e9; color: #198038; }
+    .tag-gold   { background: #fdf4dc; color: #8a5900; }
+    .tag-purple { background: #f3e8fb; color: #6e32c9; }
+  </style>
+</head>
+<body>
+
+<script src="/config.js"></script>
+<script>
+(async () => {
+  await new Promise(r => setTimeout(r, 50));
+  if (window.PLATFORM_CONFIG?.protectedMode) {
+    const token = sessionStorage.getItem('bpo_token');
+    if (!token) { window.location.href = '/login.html'; return; }
+    const r = await fetch('/api/verify', { headers: { 'Authorization': 'Bearer ' + token } });
+    if (!r.ok) { sessionStorage.clear(); window.location.href = '/login.html'; }
+  }
+})();
+</script>
+
+<nav class="c-nav">
+  <div class="container">
+    <a href="/" class="c-nav-brand">
+      <svg width="24" height="24" viewBox="0 0 32 32"><rect width="32" height="32" fill="#007d79"/><text x="4" y="22" font-family="IBM Plex Sans" font-size="13" font-weight="700" fill="white">BPO</text></svg>
+      NextGen BPO
+    </a>
+    <div class="c-nav-links">
+      <a href="/"><span>Home</span></a>
+      <a href="/client-zero.html"><span>Client Zero</span></a>
+      <a href="/platform.html"><span>Platform</span></a>
+      <a href="/assets.html"><span>Playbooks</span></a>
+      <a href="/assess.html"><span>Assess</span></a>
+      <a href="/tracker.html" class="active"><span>Pipeline</span></a>
+      <a href="/roi.html"><span>ROI</span></a>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <span id="nav-client" style="font-size:0.75rem;color:#8d8d8d;font-family:'IBM Plex Mono',monospace;"></span>
+      <a href="/login.html" onclick="sessionStorage.clear()" style="font-size:0.75rem;color:#6f6f6f;" id="nav-logout" hidden>Sign out</a>
+    </div>
+  </div>
+</nav>
+<script>
+const _c=sessionStorage.getItem('bpo_client');
+if(_c){document.getElementById('nav-client').textContent=_c;document.getElementById('nav-logout').hidden=false;}
+</script>
+
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <div class="eyebrow">TRANSFORMATION PIPELINE</div>
+    <h1>BPO Engagement Tracker</h1>
+    <p>Monitor active BPO transformation engagements across Procurement, Finance, and HR — from pipeline through to steady-state operations.</p>
+  </div>
+</section>
+
+<!-- Main Content -->
+<section class="section">
+  <div class="container">
+    <div class="tracker-layout">
+
+      <!-- ── Sidebar ── -->
+      <aside class="sidebar">
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Select Client</div>
+          <select class="cds-select" id="clientSelect">
+            <option value="">— choose client —</option>
+          </select>
+          <button class="btn-secondary" style="width:100%;margin-top:0.625rem;" onclick="openModal('addClientModal')">+ Add Client</button>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Domain</div>
+          <div class="filter-group" id="domainFilters">
+            <button class="filter-btn active" data-domain="all" onclick="setDomainFilter('all')">All Domains <span class="badge" id="badge-domain-all">—</span></button>
+            <button class="filter-btn" data-domain="procurement" onclick="setDomainFilter('procurement')">Procurement <span class="badge" id="badge-domain-procurement">0</span></button>
+            <button class="filter-btn" data-domain="finance" onclick="setDomainFilter('finance')">Finance <span class="badge" id="badge-domain-finance">0</span></button>
+            <button class="filter-btn" data-domain="hr" onclick="setDomainFilter('hr')">HR <span class="badge" id="badge-domain-hr">0</span></button>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Status</div>
+          <div class="filter-group" id="statusFilters">
+            <button class="filter-btn active" data-status="all" onclick="setStatusFilter('all')">All Statuses <span class="badge" id="badge-status-all">—</span></button>
+            <button class="filter-btn" data-status="pipeline" onclick="setStatusFilter('pipeline')">Pipeline <span class="badge" id="badge-status-pipeline">0</span></button>
+            <button class="filter-btn" data-status="assess" onclick="setStatusFilter('assess')">Assess <span class="badge" id="badge-status-assess">0</span></button>
+            <button class="filter-btn" data-status="design" onclick="setStatusFilter('design')">Design <span class="badge" id="badge-status-design">0</span></button>
+            <button class="filter-btn" data-status="transform" onclick="setStatusFilter('transform')">Transform <span class="badge" id="badge-status-transform">0</span></button>
+            <button class="filter-btn" data-status="operate" onclick="setStatusFilter('operate')">Operate <span class="badge" id="badge-status-operate">0</span></button>
+            <button class="filter-btn" data-status="complete" onclick="setStatusFilter('complete')">Complete <span class="badge" id="badge-status-complete">0</span></button>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- ── Main Area ── -->
+      <main>
+
+        <!-- KPI Strip -->
+        <div class="kpi-strip" id="kpiStrip">
+          <div class="kpi-tile">
+            <div class="kpi-tile-label">Total Engagements</div>
+            <div class="kpi-tile-value" id="kpi-total">—</div>
+            <div class="kpi-tile-sub">across all phases</div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kpi-tile-label">Active</div>
+            <div class="kpi-tile-value" id="kpi-active">—</div>
+            <div class="kpi-tile-sub">transform &amp; operate</div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kpi-tile-label">Total Investment</div>
+            <div class="kpi-tile-value" id="kpi-investment">—</div>
+            <div class="kpi-tile-sub">committed</div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kpi-tile-label">Projected Savings</div>
+            <div class="kpi-tile-value" id="kpi-savings">—</div>
+            <div class="kpi-tile-sub">total pipeline</div>
+          </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="main-toolbar">
+          <h3 id="engagementHeading">Engagements</h3>
+          <button class="btn-primary" id="addEngagementBtn" onclick="openModal('addEngagementModal')" disabled>+ Add Engagement</button>
+        </div>
+
+        <!-- Error banner -->
+        <div class="api-error" id="apiError"></div>
+
+        <!-- Engagement list -->
+        <div id="engagementContainer">
+          <div class="empty-state">
+            <div class="empty-state-icon">📋</div>
+            <h4>Select a client to view engagements</h4>
+            <p>Choose an existing client from the sidebar, or add a new client to get started.</p>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+</section>
+
+<!-- ── Add Client Modal ── -->
+<div class="modal-overlay" id="addClientModal" role="dialog" aria-modal="true" aria-labelledby="addClientTitle">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="addClientTitle">Add New Client</h3>
+      <button class="modal-close" onclick="closeModal('addClientModal')" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-field">
+        <label class="form-label" for="clientName">Client Name <span class="required">*</span></label>
+        <input class="form-input" type="text" id="clientName" placeholder="e.g. Acme Corporation" required />
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="clientIndustry">Industry</label>
+        <input class="form-input" type="text" id="clientIndustry" placeholder="e.g. Financial Services, Retail, Healthcare" />
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="clientSize">Organisation Size</label>
+        <select class="form-select" id="clientSize">
+          <option value="">Select size</option>
+          <option value="Small">Small</option>
+          <option value="Mid-Market">Mid-Market</option>
+          <option value="Enterprise">Enterprise</option>
+          <option value="Global">Global</option>
+        </select>
+      </div>
+      <div class="api-error" id="clientError"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('addClientModal')">Cancel</button>
+      <button class="btn-primary" id="submitClientBtn" onclick="submitClient()">Add Client</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Add Engagement Modal ── -->
+<div class="modal-overlay" id="addEngagementModal" role="dialog" aria-modal="true" aria-labelledby="addEngagementTitle">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="addEngagementTitle">Add Engagement</h3>
+      <button class="modal-close" onclick="closeModal('addEngagementModal')" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-field">
+        <label class="form-label" for="engName">Engagement Name <span class="required">*</span></label>
+        <input class="form-input" type="text" id="engName" placeholder="e.g. S2P Transformation — Wave 1" required />
+      </div>
+      <div class="form-grid-2">
+        <div class="form-field">
+          <label class="form-label" for="engDomain">Domain <span class="required">*</span></label>
+          <select class="form-select" id="engDomain" required>
+            <option value="">Select domain</option>
+            <option value="procurement">Procurement</option>
+            <option value="finance">Finance</option>
+            <option value="hr">HR</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="engStatus">Status <span class="required">*</span></label>
+          <select class="form-select" id="engStatus" required>
+            <option value="pipeline">Pipeline</option>
+            <option value="assess">Assess</option>
+            <option value="design">Design</option>
+            <option value="transform">Transform</option>
+            <option value="operate">Operate</option>
+            <option value="complete">Complete</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="engWorkstream">Workstream</label>
+        <input class="form-input" type="text" id="engWorkstream" placeholder="e.g. Accounts Payable Automation" />
+      </div>
+      <div class="form-grid-2">
+        <div class="form-field">
+          <label class="form-label" for="engProgress">Progress %</label>
+          <input class="form-input" type="number" id="engProgress" min="0" max="100" placeholder="0" />
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="engSponsor">Sponsor Name</label>
+          <input class="form-input" type="text" id="engSponsor" placeholder="e.g. Jane Smith" />
+        </div>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-field">
+          <label class="form-label" for="engStartDate">Start Date</label>
+          <input class="form-input" type="date" id="engStartDate" />
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="engTargetDate">Target Date</label>
+          <input class="form-input" type="date" id="engTargetDate" />
+        </div>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-field">
+          <label class="form-label" for="engInvestment">Investment (£)</label>
+          <input class="form-input" type="number" id="engInvestment" min="0" placeholder="0" />
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="engSavings">Projected Savings (£)</label>
+          <input class="form-input" type="number" id="engSavings" min="0" placeholder="0" />
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="engFTE">FTE to Redeploy</label>
+        <input class="form-input" type="number" id="engFTE" min="0" placeholder="0" />
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="engNotes">Notes</label>
+        <textarea class="form-textarea" id="engNotes" placeholder="Key scope notes, risks, dependencies..."></textarea>
+      </div>
+      <div class="api-error" id="engError"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('addEngagementModal')">Cancel</button>
+      <button class="btn-primary" id="submitEngBtn" onclick="submitEngagement()">Add Engagement</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Update Engagement Modal ── -->
+<div class="modal-overlay" id="updateEngagementModal" role="dialog" aria-modal="true" aria-labelledby="updateEngTitle">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="updateEngTitle">Update Engagement</h3>
+      <button class="modal-close" onclick="closeModal('updateEngagementModal')" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="updateEngId" />
+      <div class="form-grid-2">
+        <div class="form-field">
+          <label class="form-label" for="updateStatus">Status</label>
+          <select class="form-select" id="updateStatus">
+            <option value="pipeline">Pipeline</option>
+            <option value="assess">Assess</option>
+            <option value="design">Design</option>
+            <option value="transform">Transform</option>
+            <option value="operate">Operate</option>
+            <option value="complete">Complete</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="updateProgress">Progress %</label>
+          <input class="form-input" type="number" id="updateProgress" min="0" max="100" />
+        </div>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-field">
+          <label class="form-label" for="updateActualSavings">Actual Savings (£)</label>
+          <input class="form-input" type="number" id="updateActualSavings" min="0" placeholder="0" />
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="updateFTERedeployed">FTE Redeployed</label>
+          <input class="form-input" type="number" id="updateFTERedeployed" min="0" placeholder="0" />
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="updateCycleTime">Cycle Time Reduction %</label>
+        <input class="form-input" type="number" id="updateCycleTime" min="0" max="100" placeholder="0" />
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="updateNotes">Notes</label>
+        <textarea class="form-textarea" id="updateNotes" placeholder="Progress update, blockers, decisions..."></textarea>
+      </div>
+      <div class="api-error" id="updateError"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('updateEngagementModal')">Cancel</button>
+      <button class="btn-primary" id="submitUpdateBtn" onclick="submitUpdate()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<footer class="c-footer">
+  <div class="container">
+    <div class="grid-2" style="gap:2rem;">
+      <div>
+        <div class="footer-brand">NextGen BPO Intelligence Platform</div>
+        <div class="footer-tagline" style="margin-top:4px;">Assess. Transform. Operate.</div>
+        <p style="margin-top:1rem;font-size:0.75rem;color:#6f6f6f;">Enabling operational excellence across Procurement, Finance, and HR.</p>
+      </div>
+      <div style="display:flex;gap:3rem;justify-content:flex-end;">
+        <div>
+          <div style="font-size:0.75rem;font-weight:600;color:#8d8d8d;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.75rem;">Platform</div>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            <a href="/assess.html" style="font-size:0.875rem;">Maturity Assessment</a>
+            <a href="/tracker.html" style="font-size:0.875rem;">Transformation Pipeline</a>
+            <a href="/roi.html" style="font-size:0.875rem;">ROI Tracker</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section-rule" style="margin:2rem 0;"></div>
+    <p style="font-size:0.75rem;color:#6f6f6f;">© 2025 NextGen BPO Intelligence Platform. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+// ── Auth header helper ──
+function authHeaders() {
+  const token = sessionStorage.getItem('bpo_token') || '';
+  return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token };
+}
+
+// ── Currency formatter ──
+function formatCurrency(val) {
+  if (val == null || val === '' || val === 0) return '—';
+  const n = Number(val);
+  if (isNaN(n)) return '—';
+  return '£' + n.toLocaleString('en-GB');
+}
+
+function formatCurrencyShort(val) {
+  if (val == null || val === '' || Number(val) === 0) return '—';
+  const n = Number(val);
+  if (isNaN(n)) return '—';
+  if (n >= 1_000_000) return '£' + (n / 1_000_000).toFixed(1) + 'm';
+  if (n >= 1_000) return '£' + (n / 1_000).toFixed(0) + 'k';
+  return '£' + n.toLocaleString('en-GB');
+}
+
+// ── State ──
+let currentClientId = null;
+let currentDomainFilter = 'all';
+let currentStatusFilter = 'all';
+let allEngagements = [];
+
+// ── Modal helpers ──
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  hideError(id === 'addClientModal' ? 'clientError' : id === 'addEngagementModal' ? 'engError' : 'updateError');
+}
+// Close on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+function hideError(id) {
+  const el = document.getElementById(id);
+  if (el) { el.style.display = 'none'; el.textContent = ''; }
+}
+
+// ── Status badge ──
+function statusBadge(status) {
+  const labels = { pipeline: 'Pipeline', assess: 'Assess', design: 'Design', transform: 'Transform', operate: 'Operate', complete: 'Complete' };
+  const cls = 'status-' + (status || 'pipeline');
+  return `<span class="status-badge ${cls}">${labels[status] || status}</span>`;
+}
+
+// ── Domain tag ──
+function domainTag(domain) {
+  const map = { procurement: 'tag-teal', finance: 'tag-blue', hr: 'tag-green' };
+  const labels = { procurement: 'Procurement', finance: 'Finance', hr: 'HR' };
+  const cls = map[domain] || 'tag-teal';
+  return `<span class="tag ${cls}">${labels[domain] || domain}</span>`;
+}
+
+// ── Format date ──
+function formatDate(d) {
+  if (!d) return '—';
+  const dt = new Date(d);
+  if (isNaN(dt)) return d;
+  return dt.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+// ── Load clients ──
+async function loadClients() {
+  try {
+    const res = await fetch('/api/clients', { headers: authHeaders() });
+    if (!res.ok) throw new Error('Failed to load clients');
+    const clients = await res.json();
+    const select = document.getElementById('clientSelect');
+    const prev = select.value;
+    select.innerHTML = '<option value="">— choose client —</option>';
+    (Array.isArray(clients) ? clients : (clients.data || [])).forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c.id || c._id || c.client_id;
+      opt.textContent = c.name || c.client_name;
+      select.appendChild(opt);
+    });
+    if (prev) select.value = prev;
+  } catch (err) {
+    console.warn('loadClients:', err.message);
+  }
+}
+
+// ── Load engagements ──
+async function loadEngagements(clientId, domain, status) {
+  const container = document.getElementById('engagementContainer');
+  container.innerHTML = '<div style="padding:2rem;color:#8d8d8d;text-align:center;"><span class="spinning">⟳</span> Loading engagements...</div>';
+  hideError('apiError');
+
+  try {
+    let url = '/api/engagements?client_id=' + encodeURIComponent(clientId);
+    if (domain && domain !== 'all') url += '&domain=' + encodeURIComponent(domain);
+    if (status && status !== 'all') url += '&status=' + encodeURIComponent(status);
+
+    const res = await fetch(url, { headers: authHeaders() });
+    if (!res.ok) throw new Error('API returned ' + res.status);
+    const data = await res.json();
+    allEngagements = Array.isArray(data) ? data : (data.data || []);
+    renderEngagements(allEngagements);
+    updateBadges(allEngagements);
+    updateHeading();
+  } catch (err) {
+    showError('apiError', 'Could not load engagements: ' + err.message);
+    container.innerHTML = '';
+    allEngagements = [];
+  }
+}
+
+// ── Load summary KPIs ──
+async function loadSummary(clientId) {
+  document.getElementById('kpi-total').textContent = '—';
+  document.getElementById('kpi-active').textContent = '—';
+  document.getElementById('kpi-investment').textContent = '—';
+  document.getElementById('kpi-savings').textContent = '—';
+
+  try {
+    const res = await fetch('/api/roi-summary/' + encodeURIComponent(clientId), { headers: authHeaders() });
+    if (!res.ok) throw new Error('roi-summary ' + res.status);
+    const d = await res.json();
+    document.getElementById('kpi-total').textContent = d.total_engagements ?? d.total ?? '—';
+    document.getElementById('kpi-active').textContent = d.active_engagements ?? d.active ?? '—';
+    document.getElementById('kpi-investment').textContent = formatCurrencyShort(d.total_investment ?? d.investment);
+    document.getElementById('kpi-savings').textContent = formatCurrencyShort(d.total_projected_savings ?? d.projected_savings ?? d.savings);
+  } catch (err) {
+    // Fallback: compute from allEngagements
+    const total = allEngagements.length;
+    const active = allEngagements.filter(e => e.status === 'transform' || e.status === 'operate').length;
+    const inv = allEngagements.reduce((s, e) => s + Number(e.investment || 0), 0);
+    const sav = allEngagements.reduce((s, e) => s + Number(e.projected_savings || 0), 0);
+    document.getElementById('kpi-total').textContent = total;
+    document.getElementById('kpi-active').textContent = active;
+    document.getElementById('kpi-investment').textContent = formatCurrencyShort(inv);
+    document.getElementById('kpi-savings').textContent = formatCurrencyShort(sav);
+  }
+}
+
+// ── Render engagement cards ──
+function renderEngagements(engagements) {
+  const container = document.getElementById('engagementContainer');
+  if (!engagements || engagements.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">📋</div>
+        <h4>No engagements found</h4>
+        <p>Add the first engagement for this client using the button above.</p>
+      </div>`;
+    return;
+  }
+
+  const html = engagements.map(eng => {
+    const id = eng.id || eng._id || eng.engagement_id;
+    const progress = Number(eng.progress || 0);
+    const notes = eng.notes ? `<div style="margin-top:0.75rem;padding:0.625rem 0.875rem;background:#f4f4f4;border-radius:2px;font-size:0.8125rem;color:#525252;line-height:1.5;">${escapeHtml(eng.notes)}</div>` : '';
+
+    return `
+    <div class="engagement-card" data-id="${id}" data-domain="${eng.domain || ''}" data-status="${eng.status || ''}">
+      <div class="engagement-card-header">
+        <div>
+          <div class="engagement-card-title">${escapeHtml(eng.name || eng.engagement_name || 'Unnamed Engagement')}</div>
+          <div class="engagement-card-meta">
+            ${statusBadge(eng.status)}
+            ${domainTag(eng.domain)}
+            ${eng.workstream ? `<span style="font-size:0.8125rem;color:#525252;">${escapeHtml(eng.workstream)}</span>` : ''}
+          </div>
+        </div>
+        <div class="engagement-card-actions">
+          <button class="btn-icon" onclick="openUpdateModal(${JSON.stringify(id)})">Edit</button>
+          <button class="btn-icon btn-danger" onclick="deleteEngagement(${JSON.stringify(id)})">Delete</button>
+        </div>
+      </div>
+
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="progress-label">Progress</div>
+          <div class="progress-label">${progress}%</div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" style="width:${Math.min(100, Math.max(0, progress))}%"></div>
+        </div>
+      </div>
+
+      <div class="engagement-details">
+        <div>
+          <div class="detail-item-label">Sponsor</div>
+          <div class="detail-item-value">${eng.sponsor_name || eng.sponsor || '—'}</div>
+        </div>
+        <div>
+          <div class="detail-item-label">Start</div>
+          <div class="detail-item-value">${formatDate(eng.start_date)}</div>
+        </div>
+        <div>
+          <div class="detail-item-label">Target</div>
+          <div class="detail-item-value">${formatDate(eng.target_date)}</div>
+        </div>
+        <div>
+          <div class="detail-item-label">Investment</div>
+          <div class="detail-item-value">${formatCurrency(eng.investment)}</div>
+        </div>
+        <div>
+          <div class="detail-item-label">Proj. Savings</div>
+          <div class="detail-item-value">${formatCurrency(eng.projected_savings)}</div>
+        </div>
+        ${eng.actual_savings ? `<div><div class="detail-item-label">Actual Savings</div><div class="detail-item-value" style="color:#198038;">${formatCurrency(eng.actual_savings)}</div></div>` : ''}
+        <div>
+          <div class="detail-item-label">FTE Redeployed</div>
+          <div class="detail-item-value">${eng.fte_redeployed != null ? eng.fte_redeployed : (eng.fte_to_redeploy != null ? eng.fte_to_redeploy + ' (target)' : '—')}</div>
+        </div>
+        ${eng.cycle_time_reduction ? `<div><div class="detail-item-label">Cycle Time ↓</div><div class="detail-item-value">${eng.cycle_time_reduction}%</div></div>` : ''}
+      </div>
+      ${notes}
+    </div>`;
+  }).join('');
+
+  container.innerHTML = `<div class="engagement-grid">${html}</div>`;
+}
+
+// ── Update filter badges ──
+function updateBadges(engagements) {
+  const domains = ['procurement', 'finance', 'hr'];
+  const statuses = ['pipeline', 'assess', 'design', 'transform', 'operate', 'complete'];
+
+  document.getElementById('badge-domain-all').textContent = engagements.length;
+  domains.forEach(d => {
+    const el = document.getElementById('badge-domain-' + d);
+    if (el) el.textContent = engagements.filter(e => e.domain === d).length;
+  });
+  document.getElementById('badge-status-all').textContent = engagements.length;
+  statuses.forEach(s => {
+    const el = document.getElementById('badge-status-' + s);
+    if (el) el.textContent = engagements.filter(e => e.status === s).length;
+  });
+}
+
+function updateHeading() {
+  const el = document.getElementById('engagementHeading');
+  let label = 'All Engagements';
+  if (currentDomainFilter !== 'all') {
+    const names = { procurement: 'Procurement', finance: 'Finance', hr: 'HR' };
+    label = names[currentDomainFilter] + ' Engagements';
+  }
+  if (currentStatusFilter !== 'all') {
+    const names = { pipeline: 'Pipeline', assess: 'Assess', design: 'Design', transform: 'Transform', operate: 'Operate', complete: 'Complete' };
+    label += ' — ' + names[currentStatusFilter];
+  }
+  el.textContent = label + (allEngagements.length ? ` (${allEngagements.length})` : '');
+}
+
+// ── Filter setters ──
+function setDomainFilter(domain) {
+  currentDomainFilter = domain;
+  document.querySelectorAll('#domainFilters .filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.domain === domain);
+  });
+  if (currentClientId) loadEngagements(currentClientId, domain, currentStatusFilter);
+}
+
+function setStatusFilter(status) {
+  currentStatusFilter = status;
+  document.querySelectorAll('#statusFilters .filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.status === status);
+  });
+  if (currentClientId) loadEngagements(currentClientId, currentDomainFilter, status);
+}
+
+// ── Client select change ──
+document.getElementById('clientSelect').addEventListener('change', function () {
+  currentClientId = this.value || null;
+  const addBtn = document.getElementById('addEngagementBtn');
+  if (currentClientId) {
+    addBtn.disabled = false;
+    sessionStorage.setItem('bpo_client_id', currentClientId);
+    const txt = this.options[this.selectedIndex]?.text;
+    if (txt && txt !== '— choose client —') {
+      sessionStorage.setItem('bpo_client', txt);
+      document.getElementById('nav-client').textContent = txt;
+      document.getElementById('nav-logout').hidden = false;
+    }
+    loadEngagements(currentClientId, currentDomainFilter, currentStatusFilter);
+    loadSummary(currentClientId);
+  } else {
+    addBtn.disabled = true;
+    document.getElementById('engagementContainer').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">📋</div>
+        <h4>Select a client to view engagements</h4>
+        <p>Choose an existing client from the sidebar, or add a new client to get started.</p>
+      </div>`;
+    ['kpi-total','kpi-active','kpi-investment','kpi-savings'].forEach(id => {
+      document.getElementById(id).textContent = '—';
+    });
+  }
+});
+
+// ── Submit Client ──
+async function submitClient() {
+  const name = document.getElementById('clientName').value.trim();
+  if (!name) { showError('clientError', 'Client name is required.'); return; }
+
+  const btn = document.getElementById('submitClientBtn');
+  btn.disabled = true;
+  btn.textContent = 'Adding...';
+  hideError('clientError');
+
+  const payload = {
+    name,
+    industry: document.getElementById('clientIndustry').value.trim() || undefined,
+    size: document.getElementById('clientSize').value || undefined,
+  };
+
+  try {
+    const res = await fetch('/api/clients', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || err.error || 'Failed to add client');
+    }
+    const created = await res.json();
+    document.getElementById('clientName').value = '';
+    document.getElementById('clientIndustry').value = '';
+    document.getElementById('clientSize').value = '';
+    closeModal('addClientModal');
+    await loadClients();
+    // Auto-select the new client
+    const newId = created.id || created._id || created.client_id;
+    if (newId) {
+      const select = document.getElementById('clientSelect');
+      select.value = newId;
+      select.dispatchEvent(new Event('change'));
+    }
+  } catch (err) {
+    showError('clientError', err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Add Client';
+  }
+}
+
+// ── Submit Engagement ──
+async function submitEngagement() {
+  const name = document.getElementById('engName').value.trim();
+  const domain = document.getElementById('engDomain').value;
+  if (!name) { showError('engError', 'Engagement name is required.'); return; }
+  if (!domain) { showError('engError', 'Domain is required.'); return; }
+  if (!currentClientId) { showError('engError', 'No client selected.'); return; }
+
+  const btn = document.getElementById('submitEngBtn');
+  btn.disabled = true;
+  btn.textContent = 'Adding...';
+  hideError('engError');
+
+  const payload = {
+    client_id: currentClientId,
+    name,
+    domain,
+    workstream: document.getElementById('engWorkstream').value.trim() || undefined,
+    status: document.getElementById('engStatus').value || 'pipeline',
+    progress: Number(document.getElementById('engProgress').value) || 0,
+    sponsor_name: document.getElementById('engSponsor').value.trim() || undefined,
+    start_date: document.getElementById('engStartDate').value || undefined,
+    target_date: document.getElementById('engTargetDate').value || undefined,
+    investment: Number(document.getElementById('engInvestment').value) || undefined,
+    projected_savings: Number(document.getElementById('engSavings').value) || undefined,
+    fte_to_redeploy: Number(document.getElementById('engFTE').value) || undefined,
+    notes: document.getElementById('engNotes').value.trim() || undefined,
+  };
+
+  try {
+    const res = await fetch('/api/engagements', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || err.error || 'Failed to add engagement');
+    }
+    // Reset form
+    ['engName','engWorkstream','engSponsor','engStartDate','engTargetDate','engInvestment','engSavings','engFTE','engNotes'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('engDomain').value = '';
+    document.getElementById('engStatus').value = 'pipeline';
+    document.getElementById('engProgress').value = '';
+    closeModal('addEngagementModal');
+    await loadEngagements(currentClientId, currentDomainFilter, currentStatusFilter);
+    await loadSummary(currentClientId);
+  } catch (err) {
+    showError('engError', err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Add Engagement';
+  }
+}
+
+// ── Open Update Modal ──
+async function openUpdateModal(id) {
+  document.getElementById('updateEngId').value = id;
+  hideError('updateError');
+
+  // Find from allEngagements
+  const eng = allEngagements.find(e => (e.id || e._id || e.engagement_id) == id);
+  if (eng) {
+    document.getElementById('updateStatus').value = eng.status || 'pipeline';
+    document.getElementById('updateProgress').value = eng.progress || 0;
+    document.getElementById('updateActualSavings').value = eng.actual_savings || '';
+    document.getElementById('updateFTERedeployed').value = eng.fte_redeployed || '';
+    document.getElementById('updateCycleTime').value = eng.cycle_time_reduction || '';
+    document.getElementById('updateNotes').value = eng.notes || '';
+  }
+
+  openModal('updateEngagementModal');
+}
+
+// ── Submit Update ──
+async function submitUpdate() {
+  const id = document.getElementById('updateEngId').value;
+  const btn = document.getElementById('submitUpdateBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+  hideError('updateError');
+
+  const payload = {
+    status: document.getElementById('updateStatus').value,
+    progress: Number(document.getElementById('updateProgress').value) || 0,
+    actual_savings: Number(document.getElementById('updateActualSavings').value) || undefined,
+    fte_redeployed: Number(document.getElementById('updateFTERedeployed').value) || undefined,
+    cycle_time_reduction: Number(document.getElementById('updateCycleTime').value) || undefined,
+    notes: document.getElementById('updateNotes').value.trim() || undefined,
+  };
+
+  try {
+    const res = await fetch('/api/engagements/' + encodeURIComponent(id), {
+      method: 'PUT',
+      headers: authHeaders(),
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || err.error || 'Failed to update engagement');
+    }
+    closeModal('updateEngagementModal');
+    await loadEngagements(currentClientId, currentDomainFilter, currentStatusFilter);
+    await loadSummary(currentClientId);
+  } catch (err) {
+    showError('updateError', err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Save Changes';
+  }
+}
+
+// ── Delete Engagement ──
+async function deleteEngagement(id) {
+  const eng = allEngagements.find(e => (e.id || e._id || e.engagement_id) == id);
+  const name = eng ? (eng.name || eng.engagement_name || 'this engagement') : 'this engagement';
+  if (!confirm(`Delete "${name}"? This action cannot be undone.`)) return;
+
+  try {
+    const res = await fetch('/api/engagements/' + encodeURIComponent(id), {
+      method: 'DELETE',
+      headers: authHeaders(),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || err.error || 'Delete failed');
+    }
+    await loadEngagements(currentClientId, currentDomainFilter, currentStatusFilter);
+    await loadSummary(currentClientId);
+  } catch (err) {
+    showError('apiError', 'Could not delete: ' + err.message);
+  }
+}
+
+// ── HTML escape ──
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// ── Init ──
+(async () => {
+  await loadClients();
+  // Restore previously selected client
+  const savedId = sessionStorage.getItem('bpo_client_id');
+  if (savedId) {
+    const select = document.getElementById('clientSelect');
+    select.value = savedId;
+    if (select.value === savedId) {
+      select.dispatchEvent(new Event('change'));
+    }
+  }
+})();
+</script>
+
+</body>
+</html>

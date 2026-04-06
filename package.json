@@ -1,0 +1,19 @@
+{
+  "name": "nextgenbpo-platform",
+  "version": "1.0.0",
+  "description": "NextGen BPO Intelligence Platform — BPO Maturity Assessment, Process Transformation & ROI Tracking",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "pg": "^8.20.0"
+  }
+}

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Platform | NextGen BPO</title>
+  <link rel="stylesheet" href="/bpo-theme.css" />
+  <script src="/config.js"></script>
+  <script>
+  (async () => {
+    await new Promise(r => setTimeout(r, 50));
+    if (window.PLATFORM_CONFIG?.protectedMode) {
+      const token = sessionStorage.getItem('bpo_token');
+      if (!token) { window.location.href = '/login.html'; return; }
+      const r = await fetch('/api/verify', { headers: { 'Authorization': 'Bearer ' + token } });
+      if (!r.ok) { sessionStorage.clear(); window.location.href = '/login.html'; }
+    }
+  })();
+  </script>
+  <style>
+    .pillar-card {
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-top: 4px solid #007d79;
+      padding: 2rem;
+      border-radius: 2px;
+    }
+    .pillar-number {
+      font-size: 3rem;
+      font-weight: 300;
+      color: #007d79;
+      font-family: 'IBM Plex Mono', monospace;
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+    .pillar-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #161616;
+      margin-bottom: 0.5rem;
+    }
+    .pillar-tag {
+      display: inline-block;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #007d79;
+      background: #d9fbfb;
+      padding: 0.25rem 0.625rem;
+      border-radius: 1px;
+      margin-bottom: 1.25rem;
+    }
+    .pillar-card ul {
+      margin: 0 0 1.25rem 0;
+      padding-left: 1.25rem;
+    }
+    .pillar-card ul li {
+      font-size: 0.875rem;
+      color: #393939;
+      margin-bottom: 0.4rem;
+      line-height: 1.55;
+    }
+    .pillar-deliverable {
+      font-size: 0.8125rem;
+      color: #525252;
+      font-style: italic;
+      border-top: 1px solid #e0e0e0;
+      padding-top: 0.875rem;
+      line-height: 1.5;
+    }
+    .pillar-deliverable::before {
+      content: "Deliverable: ";
+      font-weight: 700;
+      font-style: normal;
+      color: #007d79;
+    }
+    .capability-tile {
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      padding: 1.5rem;
+      border-radius: 2px;
+      border-left: 3px solid #007d79;
+    }
+    .capability-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #161616;
+      margin-bottom: 0.625rem;
+    }
+    .capability-text {
+      font-size: 0.875rem;
+      color: #525252;
+      line-height: 1.6;
+    }
+    .tech-col-header {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #007d79;
+      margin-bottom: 0.875rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .tech-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .tech-list li {
+      font-size: 0.875rem;
+      color: #393939;
+      padding: 0.375rem 0;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .tech-list li:last-child {
+      border-bottom: none;
+    }
+    .tech-list li::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: #007d79;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .engagement-card {
+      background: #ffffff;
+      border: 1px solid #d9fbfb;
+      padding: 1.75rem;
+      border-radius: 2px;
+    }
+    .engagement-card-title {
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: #161616;
+      margin-bottom: 0.375rem;
+    }
+    .engagement-card-duration {
+      font-size: 0.75rem;
+      color: #007d79;
+      font-family: 'IBM Plex Mono', monospace;
+      margin-bottom: 0.875rem;
+      font-weight: 600;
+    }
+    .engagement-card-text {
+      font-size: 0.875rem;
+      color: #393939;
+      line-height: 1.65;
+    }
+    .framework-heading {
+      font-size: 1.875rem;
+      font-weight: 600;
+      color: #161616;
+      margin-bottom: 0.5rem;
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: -0.01em;
+    }
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+    @media (max-width: 900px) {
+      .tech-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="c-nav">
+  <div class="container">
+    <a href="/" class="c-nav-brand">
+      <svg width="24" height="24" viewBox="0 0 32 32"><rect width="32" height="32" fill="#007d79"/><text x="4" y="22" font-family="IBM Plex Sans" font-size="13" font-weight="700" fill="white">BPO</text></svg>
+      NextGen BPO
+    </a>
+    <div class="c-nav-links">
+      <a href="/"><span>Home</span></a>
+      <a href="/client-zero.html"><span>Client Zero</span></a>
+      <a href="/platform.html" class="active"><span>Platform</span></a>
+      <a href="/assets.html"><span>Playbooks</span></a>
+      <a href="/assess.html"><span>Assess</span></a>
+      <a href="/tracker.html"><span>Pipeline</span></a>
+      <a href="/roi.html"><span>ROI</span></a>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <span id="nav-client" style="font-size:0.75rem;color:#8d8d8d;font-family:'IBM Plex Mono',monospace;"></span>
+      <a href="/login.html" onclick="sessionStorage.clear()" style="font-size:0.75rem;color:#6f6f6f;" id="nav-logout" hidden>Sign out</a>
+    </div>
+  </div>
+</nav>
+<script>
+const _c=sessionStorage.getItem('bpo_client');
+if(_c){document.getElementById('nav-client').textContent=_c;document.getElementById('nav-logout').hidden=false;}
+</script>
+
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <div class="section-eyebrow">TRANSFORMATION METHODOLOGY</div>
+    <h1>The NextGen BPO Platform</h1>
+    <p style="max-width:680px;font-size:1.0625rem;color:#525252;line-height:1.7;margin-top:1rem;">A structured, data-driven approach to BPO readiness, operating model design, transformation delivery, and steady-state operations management.</p>
+  </div>
+</section>
+
+<!-- Four-Pillar Framework -->
+<section class="section" style="background:#ffffff;">
+  <div class="container">
+    <div class="section-eyebrow">FOUR-PILLAR FRAMEWORK</div>
+    <div class="framework-heading">Assess → Design → Transform → Operate</div>
+    <p style="color:#6f6f6f;margin-bottom:2.5rem;max-width:660px;font-size:0.9375rem;line-height:1.7;">Every engagement follows the same rigorous framework — adapted to the domain, scale, and maturity of the organisation.</p>
+    <div class="grid-2" style="gap:2rem;">
+      <!-- 01 Assess -->
+      <div class="pillar-card">
+        <div class="pillar-number">01</div>
+        <div class="pillar-title">Assess</div>
+        <div><span class="pillar-tag">4–8 weeks</span></div>
+        <ul>
+          <li>BPO Operational Maturity Assessment (20 questions per domain)</li>
+          <li>FTE mapping — retained vs outsourced by function</li>
+          <li>Cost baseline by function and process</li>
+          <li>Technology landscape inventory and integration readiness</li>
+          <li>Process volumetrics and KPI benchmarking</li>
+        </ul>
+        <div class="pillar-deliverable">BPO Readiness Report with maturity score (0–80) and prioritised gap list</div>
+      </div>
+      <!-- 02 Design -->
+      <div class="pillar-card">
+        <div class="pillar-number">02</div>
+        <div class="pillar-title">Design</div>
+        <div><span class="pillar-tag">8–16 weeks</span></div>
+        <ul>
+          <li>Target Operating Model definition by function</li>
+          <li>Retained/outsourced FTE model by function and process tier</li>
+          <li>SLA and governance framework design</li>
+          <li>BPO provider selection support and scoring</li>
+          <li>Technology integration architecture</li>
+        </ul>
+        <div class="pillar-deliverable">Target Operating Model document and BPO transition blueprint</div>
+      </div>
+      <!-- 03 Transform -->
+      <div class="pillar-card">
+        <div class="pillar-number">03</div>
+        <div class="pillar-title">Transform</div>
+        <div><span class="pillar-tag">6–18 months</span></div>
+        <ul>
+          <li>Wave-based process transition by geography or business unit</li>
+          <li>Change management and communications programme</li>
+          <li>Process redesign and SOP documentation</li>
+          <li>Technology configuration and user acceptance testing</li>
+          <li>Parallel run and hypercare period</li>
+        </ul>
+        <div class="pillar-deliverable">Live BPO operations with signed-off SLAs and transition completion report</div>
+      </div>
+      <!-- 04 Operate -->
+      <div class="pillar-card">
+        <div class="pillar-number">04</div>
+        <div class="pillar-title">Operate</div>
+        <div><span class="pillar-tag">Ongoing</span></div>
+        <ul>
+          <li>Continuous KPI monitoring and monthly performance reporting</li>
+          <li>Root-cause analysis for exceptions and SLA breaches</li>
+          <li>Continuous improvement cycle with prioritised backlog</li>
+          <li>Contract performance management and governance</li>
+          <li>Annual maturity re-assessment against updated benchmarks</li>
+        </ul>
+        <div class="pillar-deliverable">Steady-state operations dashboard and continuous improvement register</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Platform Capabilities -->
+<section class="section" style="background:#f4f4f4;">
+  <div class="container">
+    <div class="section-eyebrow">PLATFORM CAPABILITIES</div>
+    <h2 style="font-size:1.625rem;font-weight:600;color:#161616;margin-bottom:0.5rem;">What the Platform Provides</h2>
+    <p style="color:#6f6f6f;margin-bottom:2.5rem;max-width:620px;font-size:0.9375rem;">Six integrated capabilities spanning the full BPO transformation lifecycle — from first assessment to ongoing operations management.</p>
+    <div class="grid-3">
+      <div class="capability-tile">
+        <div class="capability-title">BPO Maturity Assessment</div>
+        <div class="capability-text">60-question diagnostic across Procurement (Source-to-Pay), Finance (R2R, AP/AR), and HR (H2R, Payroll). Scored 0–80 per domain with an instant maturity band and structured gap analysis.</div>
+      </div>
+      <div class="capability-tile">
+        <div class="capability-title">FTE &amp; Cost Modelling</div>
+        <div class="capability-text">Map your retained and outsourced headcount by function. Benchmark against industry norms. Identify redeployment and cost reduction opportunities across the operating model.</div>
+      </div>
+      <div class="capability-tile">
+        <div class="capability-title">Transformation Pipeline</div>
+        <div class="capability-text">Track active engagements by phase (Assess / Design / Transform / Operate) and domain. Monitor progress, risks, and milestones across the full transformation portfolio.</div>
+      </div>
+      <div class="capability-tile">
+        <div class="capability-title">BPO Playbooks &amp; Accelerators</div>
+        <div class="capability-text">Ready-to-deploy process frameworks, SOP templates, governance models, and transformation toolkits for HR, Finance, and Procurement engagements.</div>
+      </div>
+      <div class="capability-tile">
+        <div class="capability-title">ROI &amp; Value Tracking</div>
+        <div class="capability-text">Monitor FTE redeployment, cycle time reduction, cost savings, and compliance improvements. Build and update the business case continuously throughout the engagement lifecycle.</div>
+      </div>
+      <div class="capability-tile">
+        <div class="capability-title">Benchmarking &amp; Proof Points</div>
+        <div class="capability-text">Industry benchmarks and Client Zero performance data to anchor your business case and validate transformation targets against real-world BPO outcomes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Technology Compatibility -->
+<section class="section" style="background:#ffffff;">
+  <div class="container">
+    <div class="section-eyebrow">TECHNOLOGY LANDSCAPE</div>
+    <h3 style="font-size:1.375rem;font-weight:600;color:#161616;margin-bottom:0.5rem;">Technology Landscape Coverage</h3>
+    <p style="color:#6f6f6f;margin-bottom:2.5rem;max-width:620px;font-size:0.9375rem;line-height:1.65;">The NextGen BPO Platform is technology-agnostic and integrates with your existing ERP and best-of-breed applications.</p>
+    <div class="tech-grid">
+      <!-- Procurement -->
+      <div>
+        <div class="tech-col-header">Procurement</div>
+        <ul class="tech-list">
+          <li>SAP Ariba</li>
+          <li>Coupa</li>
+          <li>Jaggaer</li>
+          <li>SAP S/4HANA</li>
+          <li>Oracle Procurement Cloud</li>
+          <li>Ivalua</li>
+        </ul>
+      </div>
+      <!-- Finance -->
+      <div>
+        <div class="tech-col-header">Finance</div>
+        <ul class="tech-list">
+          <li>SAP S/4HANA</li>
+          <li>Oracle Fusion</li>
+          <li>Workday Financials</li>
+          <li>BlackLine</li>
+          <li>Trintech</li>
+          <li>Kyriba</li>
+        </ul>
+      </div>
+      <!-- HR -->
+      <div>
+        <div class="tech-col-header">HR</div>
+        <ul class="tech-list">
+          <li>Workday HCM</li>
+          <li>SAP SuccessFactors</li>
+          <li>Oracle HCM</li>
+          <li>ServiceNow HR</li>
+          <li>Ceridian Dayforce</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Engagement Models -->
+<section class="section" style="background:#d9fbfb;">
+  <div class="container">
+    <div class="section-eyebrow" style="color:#007d79;">ENGAGEMENT MODELS</div>
+    <h3 style="font-size:1.375rem;font-weight:600;color:#161616;margin-bottom:0.5rem;">Engagement Models</h3>
+    <p style="color:#525252;margin-bottom:2.5rem;max-width:560px;font-size:0.9375rem;line-height:1.65;">Choose the level of engagement that matches your organisation's current position and objectives.</p>
+    <div class="grid-3">
+      <div class="engagement-card">
+        <div class="engagement-card-title">Diagnostic Only</div>
+        <div class="engagement-card-duration">Typically 4–6 weeks</div>
+        <div class="engagement-card-text">Run the BPO Maturity Assessment to establish your baseline. Receive a scored maturity profile across all in-scope domains, with a prioritised list of recommendations and indicative business case.</div>
+      </div>
+      <div class="engagement-card">
+        <div class="engagement-card-title">Design &amp; Blueprint</div>
+        <div class="engagement-card-duration">Typically 12–20 weeks</div>
+        <div class="engagement-card-text">Diagnostic plus Target Operating Model design. Includes FTE modelling, retained/outsourced split definition, SLA framework, and BPO provider shortlisting and evaluation support.</div>
+      </div>
+      <div class="engagement-card">
+        <div class="engagement-card-title">Full Transformation</div>
+        <div class="engagement-card-duration">12–24 months</div>
+        <div class="engagement-card-text">End-to-end programme delivery from initial assessment through to steady-state BPO operations. Includes all four pillars — Assess, Design, Transform, and Operate — with continuous improvement in place.</div>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap;">
+      <a href="/assess.html" class="btn btn-primary">Start with Assessment</a>
+      <a href="/client-zero.html" class="btn btn-secondary">See Client Zero Results</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="c-footer">
+  <div class="container">
+    <div class="grid-2" style="gap:2rem;">
+      <div>
+        <div class="footer-brand">NextGen BPO Intelligence Platform</div>
+        <div class="footer-tagline" style="margin-top:4px;">Assess. Transform. Operate.</div>
+        <p style="margin-top:1rem;font-size:0.75rem;color:#6f6f6f;">Enabling operational excellence across Procurement, Finance, and HR through structured BPO transformation.</p>
+      </div>
+      <div style="display:flex;gap:3rem;justify-content:flex-end;">
+        <div>
+          <div style="font-size:0.75rem;font-weight:600;color:#8d8d8d;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.75rem;">Platform</div>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            <a href="/assess.html" style="font-size:0.875rem;">Maturity Assessment</a>
+            <a href="/tracker.html" style="font-size:0.875rem;">Transformation Pipeline</a>
+            <a href="/roi.html" style="font-size:0.875rem;">ROI Tracker</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;font-weight:600;color:#8d8d8d;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.75rem;">Domains</div>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            <a href="/assets.html" style="font-size:0.875rem;">Procurement</a>
+            <a href="/assets.html" style="font-size:0.875rem;">Finance</a>
+            <a href="/assets.html" style="font-size:0.875rem;">HR</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section-rule" style="margin:2rem 0;"></div>
+    <p style="font-size:0.75rem;color:#6f6f6f;">© 2025 NextGen BPO Intelligence Platform. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BPO Maturity Assessment | NextGen BPO</title>
+  <link rel="stylesheet" href="/bpo-theme.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    .q-tile { background:#fff; border:1px solid #c6c6c6; padding:1.5rem; margin-bottom:1rem; }
+    .q-number { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; background:#007d79; color:#fff; font-size:0.75rem; font-weight:700; border-radius:50%; margin-right:0.75rem; flex-shrink:0; }
+    .q-domain-label { font-size:0.7rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#007d79; margin-bottom:0.5rem; }
+    .q-text { font-size:0.9375rem; font-weight:500; color:#161616; line-height:1.45; margin-bottom:1rem; display:flex; align-items:flex-start; gap:0; }
+    .q-text-inner { flex:1; }
+    .answer-opt { display:flex; align-items:flex-start; gap:0.75rem; padding:0.75rem 1rem; margin-bottom:0.5rem; border:1px solid #e0e0e0; cursor:pointer; transition:all 0.15s; background:#f4f4f4; }
+    .answer-opt:hover { background:#d9fbfb; border-color:#007d79; }
+    .answer-opt.selected { background:#d9fbfb; border-color:#007d79; border-left:3px solid #007d79; }
+    .answer-label { font-size:0.75rem; font-weight:700; color:#007d79; min-width:20px; padding-top:1px; }
+    .answer-text { font-size:0.875rem; color:#525252; line-height:1.4; }
+    .answer-opt.selected .answer-text { color:#161616; }
+    .domain-btn { padding:0.875rem 1rem; border:1px solid #c6c6c6; background:#fff; cursor:pointer; text-align:left; margin-bottom:0.5rem; transition:all 0.15s; border-left:3px solid transparent; width:100%; }
+    .domain-btn:hover { background:#f4f4f4; }
+    .domain-btn.active { border-left-color:#007d79; background:#d9fbfb; }
+    .domain-btn-name { font-size:0.875rem; font-weight:600; color:#161616; }
+    .domain-btn-sub { font-size:0.75rem; color:#6f6f6f; margin-top:2px; }
+    .sidebar-section { padding:1rem 1.25rem; border-bottom:1px solid #e0e0e0; }
+    .sidebar-section-label { font-size:0.7rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#6f6f6f; margin-bottom:0.75rem; }
+    #submitBtn:disabled { opacity:0.45; cursor:not-allowed; }
+    .result-band { display:inline-block; padding:0.5rem 1.5rem; font-size:1.125rem; font-weight:600; margin-bottom:1.5rem; }
+    .band-ready { background:#d0f0e0; color:#0a6640; }
+    .band-opp { background:#d9fbfb; color:#004144; }
+    .band-candidate { background:#fef3cd; color:#8a6800; }
+    .band-essential { background:#ffe0e0; color:#a2191f; }
+    .sub-score-row { display:flex; align-items:center; gap:1rem; padding:0.5rem 0; border-bottom:1px solid #e0e0e0; }
+    .sub-score-label { font-size:0.8125rem; color:#525252; flex:1; }
+    .sub-score-bar-wrap { width:120px; height:6px; background:#e0e0e0; }
+    .sub-score-bar { height:100%; background:#007d79; }
+    .sub-score-val { font-size:0.8125rem; font-weight:600; color:#161616; min-width:30px; text-align:right; }
+    .focus-item { padding:0.75rem 1rem; background:#f4f4f4; border-left:3px solid #da1e28; margin-bottom:0.5rem; }
+    .focus-item-title { font-size:0.875rem; font-weight:600; color:#161616; }
+    .focus-item-text { font-size:0.8125rem; color:#525252; margin-top:3px; }
+  </style>
+</head>
+<body>
+<script src="/config.js"></script>
+<script>
+(async () => {
+  await new Promise(r => setTimeout(r, 50));
+  if (window.PLATFORM_CONFIG?.protectedMode) {
+    const token = sessionStorage.getItem('bpo_token');
+    if (!token) { window.location.href = '/login.html'; return; }
+    const r = await fetch('/api/verify', { headers: { 'Authorization': 'Bearer ' + token } });
+    if (!r.ok) { sessionStorage.clear(); window.location.href = '/login.html'; }
+  }
+})();
+</script>
+
+<nav class="c-nav">
+  <div class="container">
+    <a href="/" class="c-nav-brand">
+      <svg width="24" height="24" viewBox="0 0 32 32"><rect width="32" height="32" fill="#007d79"/><text x="4" y="22" font-family="IBM Plex Sans" font-size="13" font-weight="700" fill="white">BPO</text></svg>
+      NextGen BPO
+    </a>
+    <div class="c-nav-links">
+      <a href="/"><span>Home</span></a>
+      <a href="/client-zero.html"><span>Client Zero</span></a>
+      <a href="/platform.html"><span>Platform</span></a>
+      <a href="/assets.html"><span>Playbooks</span></a>
+      <a href="/assess.html" class="active"><span>Assess</span></a>
+      <a href="/tracker.html"><span>Pipeline</span></a>
+      <a href="/roi.html"><span>ROI</span></a>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <span id="nav-client" style="font-size:0.75rem;color:#8d8d8d;font-family:'IBM Plex Mono',monospace;"></span>
+      <a href="/login.html" onclick="sessionStorage.clear()" style="font-size:0.75rem;color:#6f6f6f;" id="nav-logout" hidden>Sign out</a>
+    </div>
+  </div>
+</nav>
+<script>const _c=sessionStorage.getItem('bpo_client');if(_c){document.getElementById('nav-client').textContent=_c;document.getElementById('nav-logout').hidden=false;}</script>
+
+<div class="page-header">
+  <div class="container">
+    <div class="eyebrow" style="color:#3ddbd9;">BPO OPERATIONAL MATURITY ASSESSMENT</div>
+    <h1 style="color:#f4f4f4;margin-top:0.5rem;">BPO Maturity Assessment</h1>
+    <p style="color:#c6c6c6;max-width:640px;">Complete the 20-question diagnostic for your chosen domain. Receive an instant maturity score (0–80), sub-domain breakdown, radar chart, and recommended transformation focus areas.</p>
+  </div>
+</div>
+
+<div class="sidebar-layout" style="min-height:calc(100vh - 280px);">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" style="background:#fff;">
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Client</div>
+      <select class="cds-select" id="clientSelect" style="margin-bottom:0.5rem;">
+        <option value="">Loading clients...</option>
+      </select>
+      <button class="btn-ghost btn-sm" onclick="document.getElementById('addClientModal').classList.add('open')" style="font-size:0.75rem;padding:0;color:#007d79;background:none;border:none;cursor:pointer;">+ Add New Client</button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Respondent</div>
+      <div style="margin-bottom:0.5rem;">
+        <input class="cds-input" id="respName" placeholder="Full name" style="height:36px;font-size:0.8125rem;">
+      </div>
+      <div style="margin-bottom:0.5rem;">
+        <input class="cds-input" id="respRole" placeholder="Job title / role" style="height:36px;font-size:0.8125rem;">
+      </div>
+      <div>
+        <input class="cds-input" id="respEmail" placeholder="Email address" type="email" style="height:36px;font-size:0.8125rem;">
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Assessment Domain</div>
+      <button class="domain-btn active" id="dBtn-procurement" onclick="switchDomain('procurement')">
+        <div class="domain-btn-name">Procurement</div>
+        <div class="domain-btn-sub">Source-to-Pay · 20 questions</div>
+      </button>
+      <button class="domain-btn" id="dBtn-finance" onclick="switchDomain('finance')">
+        <div class="domain-btn-name">Finance</div>
+        <div class="domain-btn-sub">Record-to-Report · 20 questions</div>
+      </button>
+      <button class="domain-btn" id="dBtn-hr" onclick="switchDomain('hr')">
+        <div class="domain-btn-name">HR</div>
+        <div class="domain-btn-sub">Hire-to-Retire · 20 questions</div>
+      </button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Progress</div>
+      <div style="font-size:0.875rem;color:#161616;margin-bottom:0.5rem;"><span id="progressCount">0</span> / 20 answered</div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="progressBar" style="width:0%"></div></div>
+    </div>
+
+    <div class="sidebar-section" style="border-bottom:none;">
+      <button class="btn btn-primary" id="submitBtn" onclick="submitAssessment()" disabled style="width:100%;justify-content:center;min-width:0;">Submit Assessment</button>
+      <div id="submitMsg" style="font-size:0.75rem;color:#da1e28;margin-top:0.5rem;"></div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content" style="background:#f4f4f4;">
+
+    <!-- Questions Panel -->
+    <div id="questionsPanel">
+      <div id="questionsContainer"></div>
+    </div>
+
+    <!-- Results Panel (hidden until submit) -->
+    <div id="resultsPanel" style="display:none;">
+      <div style="background:#fff;border:1px solid #c6c6c6;padding:2rem;margin-bottom:1.5rem;">
+        <div class="eyebrow-teal" style="margin-bottom:0.5rem;">ASSESSMENT COMPLETE</div>
+        <h2 style="margin-bottom:0.25rem;">Maturity Score: <span id="resScore" style="color:#007d79;"></span><span style="font-weight:300;color:#6f6f6f;"> / 80</span></h2>
+        <div id="resBand" class="result-band"></div>
+        <p id="resSummary" style="max-width:600px;"></p>
+        <div style="margin-top:1rem;display:flex;gap:1rem;flex-wrap:wrap;">
+          <button class="btn btn-secondary btn-sm" onclick="retakeAssessment()" style="min-width:0;">Retake Assessment</button>
+          <a href="/tracker.html" class="btn btn-ghost btn-sm" style="min-width:0;">View in Pipeline →</a>
+        </div>
+      </div>
+
+      <div class="grid-2" style="gap:1.5rem;margin-bottom:1.5rem;">
+        <!-- Radar Chart -->
+        <div style="background:#fff;border:1px solid #c6c6c6;padding:1.5rem;">
+          <h4 style="margin-bottom:1rem;">Sub-domain Radar</h4>
+          <div style="max-width:360px;margin:0 auto;">
+            <canvas id="radarChart"></canvas>
+          </div>
+        </div>
+        <!-- Sub-domain scores -->
+        <div style="background:#fff;border:1px solid #c6c6c6;padding:1.5rem;">
+          <h4 style="margin-bottom:1rem;">Sub-domain Scores</h4>
+          <div id="subScores"></div>
+        </div>
+      </div>
+
+      <!-- Focus Areas -->
+      <div style="background:#fff;border:1px solid #c6c6c6;padding:1.5rem;">
+        <h4 style="margin-bottom:0.25rem;">Recommended Focus Areas</h4>
+        <p style="font-size:0.8125rem;margin-bottom:1rem;">The 5 lowest-scoring sub-domains — prioritised transformation opportunities.</p>
+        <div id="focusAreas"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Client Modal -->
+<div class="modal-overlay" id="addClientModal">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('addClientModal').classList.remove('open')">✕</button>
+    <h3 style="margin-bottom:1.5rem;">Add New Client</h3>
+    <div class="cds-form-group">
+      <label class="cds-label">Client Name *</label>
+      <input class="cds-input" id="newClientName" placeholder="Organisation name">
+    </div>
+    <div class="cds-form-group">
+      <label class="cds-label">Industry</label>
+      <input class="cds-input" id="newClientIndustry" placeholder="e.g. Manufacturing, Financial Services">
+    </div>
+    <div class="cds-form-group">
+      <label class="cds-label">Size</label>
+      <select class="cds-select" id="newClientSize">
+        <option value="">Select size</option>
+        <option>Small</option><option>Mid-Market</option><option>Enterprise</option><option>Global</option>
+      </select>
+    </div>
+    <div id="addClientError" style="color:#da1e28;font-size:0.8125rem;margin-bottom:0.75rem;"></div>
+    <button class="btn btn-primary" onclick="submitClient()" style="min-width:0;">Add Client</button>
+  </div>
+</div>
+
+<footer class="c-footer">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap;">
+      <div>
+        <div class="footer-brand">NextGen BPO Intelligence Platform</div>
+        <div class="footer-tagline" style="margin-top:4px;">Assess. Transform. Operate.</div>
+      </div>
+      <div style="display:flex;gap:2rem;">
+        <a href="/tracker.html" style="font-size:0.875rem;">Pipeline</a>
+        <a href="/roi.html" style="font-size:0.875rem;">ROI</a>
+        <a href="/assets.html" style="font-size:0.875rem;">Playbooks</a>
+      </div>
+    </div>
+    <div class="section-rule" style="margin:1.5rem 0;border-color:#393939;"></div>
+    <p style="font-size:0.75rem;color:#6f6f6f;">© 2025 NextGen BPO Intelligence Platform. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+// ── QUESTION DATA ─────────────────────────────────────────────────────────────
+const ASSESSMENTS = {
+  procurement: {
+    label: 'Procurement',
+    questions: [
+      { id:'p1', domain:'Resource & Scope',
+        text:'Which best describes your current Source-to-Pay resourcing model across Category Management, Contract/Catalog/Vendor Management, Procurement Operations, Accounts Payable, and Help Desk?',
+        options:[
+          {label:'A',text:'Clearly defined split of Retained vs Outsourced FTEs with documented totals and roles by function'},
+          {label:'B',text:'Partially defined split with approximate totals; some roles charted'},
+          {label:'C',text:'Limited visibility into split; aggregate totals only'},
+          {label:'D',text:'No formal tracking of Retained vs Outsourced FTEs'}
+        ]},
+      { id:'p2', domain:'Cost Transparency',
+        text:'How mature is your tracking of Source-to-Pay annual operating cost by function and by Retained vs Outsourced?',
+        options:[
+          {label:'A',text:'Fully allocated costs by function and sourcing model, reconciled to finance'},
+          {label:'B',text:'Partially allocated with some gaps or estimates'},
+          {label:'C',text:'High-level totals without functional breakdown'},
+          {label:'D',text:'No consistent cost tracking'}
+        ]},
+      { id:'p3', domain:'Policy & Governance',
+        text:'Do you have up-to-date procurement policies and organisation charts/roles by function?',
+        options:[
+          {label:'A',text:'Yes, current, enterprise-wide, and actively used in governance'},
+          {label:'B',text:'Yes, but outdated or not consistently enforced'},
+          {label:'C',text:'Draft or partial; limited adoption'},
+          {label:'D',text:'No formal policies or org charts'}
+        ]},
+      { id:'p4', domain:'Engagement Threshold',
+        text:'How defined and enforced is your clip level for when Procurement must be engaged?',
+        options:[
+          {label:'A',text:'Clear dollar threshold with tracking of spend below clip and active compliance controls'},
+          {label:'B',text:'Defined threshold without full spend tracking below clip'},
+          {label:'C',text:'Informal guidance; inconsistent adherence'},
+          {label:'D',text:'No defined clip level'}
+        ]},
+      { id:'p5', domain:'P2P Volumetrics',
+        text:'What is the maturity of your P2P operational statistics tracking (POs, catalog spend, PO vs non-PO invoices, automated/EDI/ERS invoices, electronic invoice spend, P-Card, T&E, vendor master changes, help desk contacts)?',
+        options:[
+          {label:'A',text:'Comprehensive, accurate annual volumes and spend with trend analysis'},
+          {label:'B',text:'Mostly complete with occasional data gaps'},
+          {label:'C',text:'Basic counts without spend linkage or trends'},
+          {label:'D',text:'Limited or no systematic tracking'}
+        ]},
+      { id:'p6', domain:'Invoice Performance',
+        text:'How do you measure and perform against key AP metrics (turnaround time, invoice exception %, paid on time %, first pass yield, average payment terms)?',
+        options:[
+          {label:'A',text:'Defined targets with regular reporting and corrective actions'},
+          {label:'B',text:'Tracked metrics without consistent targets or actions'},
+          {label:'C',text:'Ad-hoc measurement with limited visibility'},
+          {label:'D',text:'No formal measurement'}
+        ]},
+      { id:'p7', domain:'Compliance Mgmt',
+        text:"What is your level of procurement compliance tracking and definition?",
+        options:[
+          {label:'A',text:"Clear definition of 'compliance,' measured as % of overall spend with root-cause analysis"},
+          {label:'B',text:'Defined but inconsistently measured across categories or regions'},
+          {label:'C',text:'Informal interpretation; sporadic checks'},
+          {label:'D',text:'No defined compliance metric'}
+        ]},
+      { id:'p8', domain:'Category Mgmt',
+        text:'How mature is your category management across major spend areas?',
+        options:[
+          {label:'A',text:'High maturity: strategically and actively managed with realised savings'},
+          {label:'B',text:'Moderate maturity: inconsistently managed with partial expertise'},
+          {label:'C',text:'Low maturity: little strategic management or non-sourceable categories'},
+          {label:'D',text:'Not assessed across categories'}
+        ]},
+      { id:'p9', domain:'Savings Potential',
+        text:'How systematically do you assess future savings potential by category?',
+        options:[
+          {label:'A',text:'Regularly assessed with clear levers (addressability, sourcing, compliance)'},
+          {label:'B',text:'Periodically assessed; qualitative estimates'},
+          {label:'C',text:'Ad-hoc assessments during events'},
+          {label:'D',text:'No formal savings potential view'}
+        ]},
+      { id:'p10', domain:'Strategic Suppliers',
+        text:'What best describes your strategic supplier management?',
+        options:[
+          {label:'A',text:'Defined number of preferred/strategic suppliers with quantified annual spend coverage and governance'},
+          {label:'B',text:'Identified suppliers without clear spend coverage or governance cadence'},
+          {label:'C',text:'Informal preferred list; limited oversight'},
+          {label:'D',text:'No preferred supplier program'}
+        ]},
+      { id:'p11', domain:'Supplier Lifecycle',
+        text:'How mature is your supplier lifecycle management (active supplier count, annual onboarding volume, contracts under management)?',
+        options:[
+          {label:'A',text:'Centralised repository with accurate counts and onboarding/contract metrics'},
+          {label:'B',text:'Partial visibility across systems or regions'},
+          {label:'C',text:'Decentralised records; approximate counts'},
+          {label:'D',text:'No consistent tracking'}
+        ]},
+      { id:'p12', domain:'Catalog Utilisation',
+        text:'How many catalogs/outline agreements are available and how well are they adopted?',
+        options:[
+          {label:'A',text:'Extensive catalog coverage with high adoption and spend capture'},
+          {label:'B',text:'Moderate coverage with improving adoption'},
+          {label:'C',text:'Limited catalogs; low adoption'},
+          {label:'D',text:'No active catalog program'}
+        ]},
+      { id:'p13', domain:'PO Discipline',
+        text:'What is your current mix and control of PO-based vs non-PO invoices?',
+        options:[
+          {label:'A',text:'Majority PO-based with strict controls and low exceptions'},
+          {label:'B',text:'Balanced mix with ongoing shift to PO'},
+          {label:'C',text:'Predominantly non-PO; limited controls'},
+          {label:'D',text:'No policy or tracking'}
+        ]},
+      { id:'p14', domain:'Invoice Automation',
+        text:'What is your maturity in invoice automation (EDI/ERS, e-invoicing) and electronic invoice spend share?',
+        options:[
+          {label:'A',text:'High automation with significant e-invoice adoption and touchless rates'},
+          {label:'B',text:'Moderate automation with growth plans'},
+          {label:'C',text:'Limited pilots or isolated use'},
+          {label:'D',text:'Manual processing predominates'}
+        ]},
+      { id:'p15', domain:'P-Card & T&E',
+        text:'How well do you govern P-Card spend and T&E claims?',
+        options:[
+          {label:'A',text:'Robust policy, analytics, and exception monitoring'},
+          {label:'B',text:'Policies in place with basic reporting'},
+          {label:'C',text:'Minimal monitoring beyond policy documents'},
+          {label:'D',text:'No formal controls'}
+        ]},
+      { id:'p16', domain:'Vendor Master',
+        text:'What is the maturity of your vendor master add/delete/change process?',
+        options:[
+          {label:'A',text:'Controlled workflows, audit trails, and metrics on change volumes'},
+          {label:'B',text:'Standard process with some manual steps'},
+          {label:'C',text:'Decentralised updates with limited controls'},
+          {label:'D',text:'Ad-hoc changes without governance'}
+        ]},
+      { id:'p17', domain:'Help Desk',
+        text:'How mature is your User/Supplier Help Desk (contacts volume, SLAs, enablement)?',
+        options:[
+          {label:'A',text:'Tracked volumes with SLAs, root-cause reduction, and self-service'},
+          {label:'B',text:'Ticketing with basic reporting'},
+          {label:'C',text:'Email/phone-based with limited metrics'},
+          {label:'D',text:'No formal help desk model'}
+        ]},
+      { id:'p18', domain:'Technology Landscape',
+        text:'How would you rate your Source-to-Pay applications landscape (Sourcing, Contract Mgmt, SRM, Requisitioning/Procurement/Catalogs, ERP, Inventory/MRP, T&E, VMS, Spend Analysis)?',
+        options:[
+          {label:'A',text:'Current, integrated platforms deployed by geography/category with known enterprise coverage'},
+          {label:'B',text:'Multiple systems with partial integration and documented coverage'},
+          {label:'C',text:'Fragmented tools with unclear deployment scope'},
+          {label:'D',text:'Legacy/manual with minimal system support'}
+        ]},
+      { id:'p19', domain:'Spend Analytics',
+        text:'What is your capability for spend analysis and reporting?',
+        options:[
+          {label:'A',text:'Enterprise spend cube with category, supplier, compliance analytics'},
+          {label:'B',text:'Regular reports with limited drill-down'},
+          {label:'C',text:'Spreadsheet-based with manual refresh'},
+          {label:'D',text:'Minimal or no spend analytics'}
+        ]},
+      { id:'p20', domain:'Global Footprint',
+        text:'How well do you manage non-North America spend/transactions and system deployment by region?',
+        options:[
+          {label:'A',text:'Clear geographic breakdown, localised processes, and system coverage by region'},
+          {label:'B',text:'Partial visibility with plans to harmonise'},
+          {label:'C',text:'Limited view outside core markets'},
+          {label:'D',text:'No regional visibility'}
+        ]}
+    ]
+  },
+
+  finance: {
+    label: 'Finance',
+    questions: [
+      { id:'f1', domain:'R2R Operating Model',
+        text:'How mature is your Record-to-Report operating model with respect to Retained vs Outsourced FTE split across journal entry, reconciliation, consolidation, and reporting?',
+        options:[
+          {label:'A',text:'Clearly defined split with documented roles, FTE counts, and governance by R2R sub-process'},
+          {label:'B',text:'Partially defined with approximate headcount; some roles documented'},
+          {label:'C',text:'Limited visibility into split; aggregate totals only'},
+          {label:'D',text:'No formal tracking of Retained vs Outsourced FTEs in Finance'}
+        ]},
+      { id:'f2', domain:'Finance Cost Transparency',
+        text:'How well do you track annual Finance operating costs by function (AP, AR, R2R, FP&A, Treasury, Tax) and by Retained vs Outsourced?',
+        options:[
+          {label:'A',text:'Fully allocated costs by Finance sub-function and sourcing model, reconciled to management accounts'},
+          {label:'B',text:'Partially allocated with some gaps; estimates used for some functions'},
+          {label:'C',text:'High-level Finance cost totals without sub-functional breakdown'},
+          {label:'D',text:'No consistent Finance cost tracking by function'}
+        ]},
+      { id:'f3', domain:'Financial Close',
+        text:'How mature is your month-end close process in terms of cycle time, task ownership, and exception management?',
+        options:[
+          {label:'A',text:'Defined close calendar with task-level ownership, target cycle under 5 days, and tracked exceptions'},
+          {label:'B',text:'Structured close process with some task ownership gaps; cycle 6–8 days'},
+          {label:'C',text:'Close managed informally; cycle 9+ days with recurring issues'},
+          {label:'D',text:'No formal close management; cycle unpredictable'}
+        ]},
+      { id:'f4', domain:'AP Process Maturity',
+        text:'How do you measure and manage Accounts Payable performance (invoice turnaround, exception rate, first-pass yield, on-time payment)?',
+        options:[
+          {label:'A',text:'Defined KPI targets with regular reporting, root-cause analysis, and corrective actions'},
+          {label:'B',text:'Metrics tracked but without consistent targets or structured improvement'},
+          {label:'C',text:'Ad-hoc measurement with limited visibility into performance drivers'},
+          {label:'D',text:'No formal AP performance measurement'}
+        ]},
+      { id:'f5', domain:'AR & Collections',
+        text:'How mature are your Accounts Receivable and collections processes (DSO management, aging analysis, dispute resolution, cash application)?',
+        options:[
+          {label:'A',text:'Actively managed DSO with automated cash application, structured dispute resolution, and aged debt targets'},
+          {label:'B',text:'AR processes managed with periodic review; some manual cash application'},
+          {label:'C',text:'Basic AR tracking; limited dispute or collections discipline'},
+          {label:'D',text:'Minimal AR process structure; reactive collections only'}
+        ]},
+      { id:'f6', domain:'FP&A Capability',
+        text:'How standardised and efficient is your Financial Planning & Analysis (budgeting, forecasting, management reporting) process?',
+        options:[
+          {label:'A',text:'Standardised FP&A processes with defined timelines, driver-based models, and automated data feeds'},
+          {label:'B',text:'FP&A processes structured but relying on significant manual data consolidation'},
+          {label:'C',text:'FP&A largely spreadsheet-based with inconsistent timelines and formats'},
+          {label:'D',text:'No standardised FP&A process; reporting is ad-hoc'}
+        ]},
+      { id:'f7', domain:'Treasury & Cash',
+        text:'How mature is your Treasury and Cash Management capability (cash forecasting, bank reconciliation, payment authorisation, liquidity management)?',
+        options:[
+          {label:'A',text:'Centralised treasury with daily cash positioning, automated bank reconciliation, and documented controls'},
+          {label:'B',text:'Treasury processes structured with periodic cash forecasting and manual reconciliation'},
+          {label:'C',text:'Basic cash management; limited forecasting and manual bank reconciliation'},
+          {label:'D',text:'Minimal treasury structure; cash positions managed reactively'}
+        ]},
+      { id:'f8', domain:'Tax Compliance',
+        text:'How well-managed is your Tax Compliance function (indirect tax, direct tax, statutory filings, transfer pricing) across jurisdictions?',
+        options:[
+          {label:'A',text:'Centralised tax compliance calendar with defined ownership, technology support, and cross-jurisdiction visibility'},
+          {label:'B',text:'Tax compliance managed with some central oversight; gaps in smaller jurisdictions'},
+          {label:'C',text:'Tax compliance largely decentralised with limited process standardisation'},
+          {label:'D',text:'Tax compliance managed reactively; risk of missed filings or penalties'}
+        ]},
+      { id:'f9', domain:'Consolidation & Reporting',
+        text:'How mature is your financial consolidation and statutory/group reporting process?',
+        options:[
+          {label:'A',text:'Automated consolidation with defined elimination rules, intercompany reconciliation, and consistent chart of accounts'},
+          {label:'B',text:'Consolidation process structured but partially manual; some intercompany reconciliation gaps'},
+          {label:'C',text:'Consolidation managed with significant manual effort and recurring adjustments'},
+          {label:'D',text:'No standardised consolidation process; high dependency on key individuals'}
+        ]},
+      { id:'f10', domain:'Financial Controls',
+        text:'How robust are your financial controls and internal audit processes (SOX/equivalent, segregation of duties, control testing)?',
+        options:[
+          {label:'A',text:'Documented control framework with regular testing, clear ownership, and audit findings tracked to closure'},
+          {label:'B',text:'Controls documented with periodic testing; some gaps in smaller entities or processes'},
+          {label:'C',text:'Control documentation exists but testing is infrequent or incomplete'},
+          {label:'D',text:'No formal financial control framework'}
+        ]},
+      { id:'f11', domain:'Management Reporting',
+        text:'How effective is your management reporting process (timeliness, accuracy, self-service BI availability)?',
+        options:[
+          {label:'A',text:'Management reports published within 3 days of close with self-service BI and drill-down capability'},
+          {label:'B',text:'Management reports published within 5–7 days; limited self-service analytics'},
+          {label:'C',text:'Management reports take 8+ days; primarily static Excel/PDF format'},
+          {label:'D',text:'No standardised management reporting process'}
+        ]},
+      { id:'f12', domain:'Intercompany Processing',
+        text:'How well-governed are your intercompany transactions (agreements, netting, reconciliation, dispute resolution)?',
+        options:[
+          {label:'A',text:'All intercompany flows covered by agreements, netted where possible, and reconciled pre-close'},
+          {label:'B',text:'Most intercompany flows covered; some reconciliation performed post-close'},
+          {label:'C',text:'Intercompany processes partially documented; disputes common at period end'},
+          {label:'D',text:'No formal intercompany governance; reconciliation is reactive'}
+        ]},
+      { id:'f13', domain:'Finance Automation',
+        text:'What is your level of Finance process automation (journal automation, workflow approvals, reconciliation tools, RPA)?',
+        options:[
+          {label:'A',text:'High automation across core Finance processes; significant touchless transaction processing'},
+          {label:'B',text:'Moderate automation with targeted tools in place; manual steps remain in several processes'},
+          {label:'C',text:'Limited automation; most Finance processes are manual or spreadsheet-driven'},
+          {label:'D',text:'Minimal or no Finance process automation'}
+        ]},
+      { id:'f14', domain:'Data Quality & Governance',
+        text:'How well do you govern Finance master data quality (CoA structure, cost centres, legal entity data, intercompany mappings)?',
+        options:[
+          {label:'A',text:'Centralised master data governance with change control, data quality metrics, and regular cleansing'},
+          {label:'B',text:'Master data governance partially in place; some inconsistency across systems or entities'},
+          {label:'C',text:'Master data managed locally; known quality issues affect reporting accuracy'},
+          {label:'D',text:'No Finance master data governance; data quality managed reactively'}
+        ]},
+      { id:'f15', domain:'Finance Technology',
+        text:'How would you describe your Finance technology landscape (ERP, consolidation tool, reconciliation platform, FP&A tool, Treasury system)?',
+        options:[
+          {label:'A',text:'Modern, integrated Finance technology stack with clear ownership and high adoption across entities'},
+          {label:'B',text:'Finance technology partially modernised; some legacy tools and integration gaps remain'},
+          {label:'C',text:'Fragmented Finance technology with significant manual bridging between systems'},
+          {label:'D',text:'Legacy Finance systems with minimal integration; heavy reliance on spreadsheets'}
+        ]},
+      { id:'f16', domain:'Shared Services Maturity',
+        text:'How mature is your Finance Shared Services or GBS model?',
+        options:[
+          {label:'A',text:'Mature SSC/GBS in operation with documented scope, SLAs, and continuous improvement programme'},
+          {label:'B',text:'SSC/GBS established but with partial scope coverage and informal SLA governance'},
+          {label:'C',text:'Shared services model in planning or early stages with limited process standardisation'},
+          {label:'D',text:'No shared services model; Finance operations remain fully distributed'}
+        ]},
+      { id:'f17', domain:'BPO Provider Governance',
+        text:'If Finance processes are outsourced, how mature is your BPO provider governance and performance management?',
+        options:[
+          {label:'A',text:'Structured governance with monthly/quarterly performance reviews, KPI scorecards, and escalation framework'},
+          {label:'B',text:'BPO governance in place but review cadence or KPI tracking is inconsistent'},
+          {label:'C',text:'BPO governance is informal; performance issues managed reactively'},
+          {label:'D',text:'No BPO relationship or no formal governance structure in place'}
+        ]},
+      { id:'f18', domain:'Finance Talent & Skills',
+        text:'How well-matched is your Finance talent model to your operating requirements (right skills in retained vs outsourced roles)?',
+        options:[
+          {label:'A',text:'Retained Finance team focused on value-add, analytical, and control activities; transactional work appropriately outsourced or automated'},
+          {label:'B',text:'Finance team broadly aligned but with some retained capacity in transactional work'},
+          {label:'C',text:'Significant retained capacity in transactional or administrative Finance roles'},
+          {label:'D',text:'No clear alignment of Finance skills to operating model'}
+        ]},
+      { id:'f19', domain:'Finance Compliance & Audit',
+        text:'How effectively do you manage external audit, regulatory compliance, and statutory filing obligations across jurisdictions?',
+        options:[
+          {label:'A',text:'Audit and compliance calendar fully managed with minimal surprises; clean audit history'},
+          {label:'B',text:'Audit and compliance managed adequately; occasional issues in smaller jurisdictions'},
+          {label:'C',text:'Audit and compliance management is reactive; repeat findings or late filings occur'},
+          {label:'D',text:'No structured audit or compliance management process'}
+        ]},
+      { id:'f20', domain:'Finance Global Coverage',
+        text:'How well does your Finance operating model cover global/regional entities (non-HQ countries, local statutory requirements, multi-currency)?',
+        options:[
+          {label:'A',text:'Consistent Finance operating model across all entities with local statutory compliance managed centrally'},
+          {label:'B',text:'Finance model covers major entities; smaller countries have local variation'},
+          {label:'C',text:'Finance operations are predominantly centralised around HQ; limited visibility of outlying entities'},
+          {label:'D',text:'Each country/entity manages Finance independently with no standardised model'}
+        ]}
+    ]
+  },
+
+  hr: {
+    label: 'HR',
+    questions: [
+      { id:'h1', domain:'HR Operating Model',
+        text:'How well-defined is your HR operating model with respect to Retained vs Outsourced FTE split across Payroll, Talent Acquisition, L&D, Benefits, Employee Relations, and HR Operations?',
+        options:[
+          {label:'A',text:'Clearly defined split with documented roles, FTE counts, and governance by HR sub-process'},
+          {label:'B',text:'Partially defined with approximate headcount; some roles documented'},
+          {label:'C',text:'Limited visibility into split; aggregate HR headcount only'},
+          {label:'D',text:'No formal tracking of Retained vs Outsourced FTEs in HR'}
+        ]},
+      { id:'h2', domain:'HR Cost Transparency',
+        text:'How mature is your tracking of annual HR operating cost by function and by Retained vs Outsourced?',
+        options:[
+          {label:'A',text:'Fully allocated HR costs by sub-function and sourcing model with cost-per-transaction metrics'},
+          {label:'B',text:'Partially allocated; estimates used for some HR functions'},
+          {label:'C',text:'High-level HR cost totals without sub-functional breakdown'},
+          {label:'D',text:'No consistent HR cost tracking'}
+        ]},
+      { id:'h3', domain:'Payroll Maturity',
+        text:'How mature is your Payroll operation (accuracy, timeliness, compliance, cost per payslip)?',
+        options:[
+          {label:'A',text:'Payroll runs with >99.5% accuracy, on-time delivery, defined cost-per-payslip metric, and full compliance'},
+          {label:'B',text:'Payroll generally accurate and on-time; cost-per-payslip tracked but not benchmarked'},
+          {label:'C',text:'Payroll accuracy and timeliness are monitored informally; compliance issues arise periodically'},
+          {label:'D',text:'No formal Payroll performance measurement; errors and delays are common'}
+        ]},
+      { id:'h4', domain:'Talent Acquisition',
+        text:'How mature is your Talent Acquisition process (time-to-fill, cost-per-hire, recruiter utilisation, candidate experience)?',
+        options:[
+          {label:'A',text:'Defined TA metrics with targets, structured process, and technology-enabled pipeline management'},
+          {label:'B',text:'TA metrics tracked but without consistent benchmarking or structured improvement'},
+          {label:'C',text:'TA process informal; metrics tracked sporadically'},
+          {label:'D',text:'No formal TA performance measurement'}
+        ]},
+      { id:'h5', domain:'Learning & Development',
+        text:'How well-governed is your Learning & Development function (learning needs analysis, content management, completion tracking, cost per learner)?',
+        options:[
+          {label:'A',text:'L&D governed with annual learning needs analysis, LMS-tracked completion, and cost-per-learner metrics'},
+          {label:'B',text:'L&D structured with training calendar and LMS; needs analysis and cost tracking partial'},
+          {label:'C',text:'L&D managed informally; training is event-based with limited tracking'},
+          {label:'D',text:'No formal L&D governance or measurement'}
+        ]},
+      { id:'h6', domain:'Employee Relations',
+        text:'How mature is your Employee Relations and case management process (case volumes, resolution times, SLA adherence, policy consistency)?',
+        options:[
+          {label:'A',text:'ER cases tracked in a case management system with SLAs, resolution metrics, and policy consistency enforced'},
+          {label:'B',text:'ER cases tracked with basic reporting; SLA adherence is monitored informally'},
+          {label:'C',text:'ER cases managed on a case-by-case basis with limited tracking'},
+          {label:'D',text:'No formal ER case management'}
+        ]},
+      { id:'h7', domain:'Benefits Administration',
+        text:'How well-managed are your Benefits Administration processes (enrolment, claims, vendor management, compliance, cost per benefit transaction)?',
+        options:[
+          {label:'A',text:'Benefits administration automated with self-service enrolment, SLA-driven vendor management, and cost transparency'},
+          {label:'B',text:'Benefits processes structured but partially manual; vendor SLAs informal'},
+          {label:'C',text:'Benefits administration managed with significant manual effort and limited vendor oversight'},
+          {label:'D',text:'Benefits managed reactively; no process standards or vendor governance'}
+        ]},
+      { id:'h8', domain:'HR Compliance & Policy',
+        text:'How current and consistently enforced are your HR policies across the organisation (employment law compliance, policy updates, policy awareness)?',
+        options:[
+          {label:'A',text:'HR policies current, accessible enterprise-wide, and actively enforced with compliance monitoring'},
+          {label:'B',text:'HR policies exist and are broadly communicated; some gaps in compliance or currency'},
+          {label:'C',text:'HR policies partially documented; inconsistent enforcement across locations'},
+          {label:'D',text:'No formal HR policy management'}
+        ]},
+      { id:'h9', domain:'HR Data & Analytics',
+        text:'What is the maturity of your HR data and people analytics capability (headcount accuracy, turnover analytics, workforce demographics, predictive insights)?',
+        options:[
+          {label:'A',text:'HR data is accurate, centralised, and used for predictive analytics and strategic workforce decisions'},
+          {label:'B',text:'HR data is generally accurate with standard workforce reporting; limited predictive capability'},
+          {label:'C',text:'HR reporting is available but data quality issues limit confidence in analytics'},
+          {label:'D',text:'HR data is fragmented; no consistent people analytics capability'}
+        ]},
+      { id:'h10', domain:'HRIS Technology',
+        text:'How would you describe your HR technology landscape (HRIS, ATS, LMS, payroll system, case management, self-service portal)?',
+        options:[
+          {label:'A',text:'Modern, integrated HR technology stack with high employee self-service adoption and known enterprise coverage'},
+          {label:'B',text:'HR technology partially modernised; some legacy tools and integration gaps'},
+          {label:'C',text:'Fragmented HR technology with significant manual bridging between systems'},
+          {label:'D',text:'Legacy HRIS with minimal integration; heavy reliance on spreadsheets and manual processes'}
+        ]},
+      { id:'h11', domain:'Employee Self-Service',
+        text:'How mature is your Employee Self-Service and manager self-service capability?',
+        options:[
+          {label:'A',text:'High self-service adoption (70%+) for transactions including leave, pay queries, personal data updates, and benefits'},
+          {label:'B',text:'Self-service available but adoption is 40–70%; paper and email requests still common'},
+          {label:'C',text:'Basic self-service available but adoption is below 40%; most transactions handled by HR directly'},
+          {label:'D',text:'No self-service capability; all HR transactions managed manually by HR team'}
+        ]},
+      { id:'h12', domain:'HR Shared Services',
+        text:'How mature is your HR Shared Services or HR Operations Centre?',
+        options:[
+          {label:'A',text:'Mature HR SSC with documented scope, tiered service model, SLAs, and continuous improvement'},
+          {label:'B',text:'HR SSC established but scope is partial and SLA governance is informal'},
+          {label:'C',text:'HR Shared Services in early stages or planning; limited process standardisation'},
+          {label:'D',text:'No HR Shared Services; HR operations are fully distributed across business units'}
+        ]},
+      { id:'h13', domain:'Workforce Planning',
+        text:'How mature is your Workforce Planning capability (headcount forecasting, scenario modelling, skills gap analysis, succession planning)?',
+        options:[
+          {label:'A',text:'Annual workforce plan with scenario modelling, skills gap analysis, and integration with business planning'},
+          {label:'B',text:'Workforce planning conducted annually with headcount focus; limited skills or scenario analysis'},
+          {label:'C',text:'Workforce planning is informal or reactive; driven by immediate demand rather than forward planning'},
+          {label:'D',text:'No formal workforce planning process'}
+        ]},
+      { id:'h14', domain:'Onboarding & Offboarding',
+        text:'How mature are your employee onboarding and offboarding processes (time-to-productivity, completion rates, system access, experience scores)?',
+        options:[
+          {label:'A',text:'Structured onboarding/offboarding with task automation, completion tracking, and experience measurement'},
+          {label:'B',text:'Onboarding/offboarding processes documented with checklists; some manual steps remain'},
+          {label:'C',text:'Onboarding/offboarding managed informally; delays and gaps are common'},
+          {label:'D',text:'No formal onboarding or offboarding process'}
+        ]},
+      { id:'h15', domain:'HR Help Desk',
+        text:'How mature is your HR Help Desk / Tier 1 HR service (contact volumes, SLA performance, resolution rates, self-service deflection)?',
+        options:[
+          {label:'A',text:'HR Help Desk with tracked volumes, SLA targets, first-contact resolution metrics, and active deflection to self-service'},
+          {label:'B',text:'HR Help Desk with ticketing and basic SLA reporting; deflection to self-service is limited'},
+          {label:'C',text:'HR queries managed via email/phone with informal tracking'},
+          {label:'D',text:'No formal HR Help Desk; queries managed ad-hoc'}
+        ]},
+      { id:'h16', domain:'Payroll BPO Readiness',
+        text:'How ready is your Payroll function for BPO or managed service transition (process documentation, data quality, system readiness)?',
+        options:[
+          {label:'A',text:'Payroll fully documented, data is clean and system-resident, parallel-run capability exists'},
+          {label:'B',text:'Payroll mostly documented with some data gaps; system readiness partially assessed'},
+          {label:'C',text:'Payroll documentation incomplete; data quality and system readiness not assessed'},
+          {label:'D',text:'No BPO readiness assessment conducted for Payroll'}
+        ]},
+      { id:'h17', domain:'HR BPO Governance',
+        text:'If HR processes are outsourced, how mature is your BPO provider governance and performance management?',
+        options:[
+          {label:'A',text:'Structured governance with regular performance reviews, KPI scorecards, and escalation framework'},
+          {label:'B',text:'BPO governance in place but review cadence or KPI tracking is inconsistent'},
+          {label:'C',text:'BPO governance is informal; performance issues managed reactively'},
+          {label:'D',text:'No BPO relationship or no formal governance structure in place'}
+        ]},
+      { id:'h18', domain:'Change & Adoption',
+        text:'How effectively does your HR function manage organisational change and drive adoption of new processes and technologies?',
+        options:[
+          {label:'A',text:'Structured change management capability with proven adoption frameworks and measured outcomes'},
+          {label:'B',text:'Change management conducted for major programmes; informal for smaller changes'},
+          {label:'C',text:'Change management is ad-hoc; adoption of new processes is inconsistent'},
+          {label:'D',text:'No formal change management capability in HR'}
+        ]},
+      { id:'h19', domain:'HR Compliance (Employment Law)',
+        text:'How well does your HR function manage employment law compliance across jurisdictions (right-to-work, GDPR/data privacy, equal pay, labour laws)?',
+        options:[
+          {label:'A',text:'Centralised compliance monitoring with legal calendar, policy updates, and proactive risk management'},
+          {label:'B',text:'Compliance managed adequately in main jurisdictions; gaps in smaller markets'},
+          {label:'C',text:'Compliance is managed reactively; periodic issues in local markets'},
+          {label:'D',text:'No structured HR compliance management; reliant on ad-hoc legal advice'}
+        ]},
+      { id:'h20', domain:'HR Global Coverage',
+        text:'How consistently does your HR operating model cover global/regional entities (local payroll, country HR policies, language/cultural adaptation)?',
+        options:[
+          {label:'A',text:'Consistent HR operating model globally with localisation managed centrally and documented country variations'},
+          {label:'B',text:'HR model covers major markets; smaller countries have significant local variation'},
+          {label:'C',text:'HR operations are predominantly HQ-centric; limited visibility of international entities'},
+          {label:'D',text:'Each country manages HR independently with no standardised model'}
+        ]}
+    ]
+  }
+};
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+let currentDomain = 'procurement';
+let answers = {}; // { qId: { label, score } }
+let radarChartInstance = null;
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  loadClients();
+  renderQuestions();
+});
+
+// ── AUTH HEADERS ─────────────────────────────────────────────────────────────
+function authHeaders() {
+  return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (sessionStorage.getItem('bpo_token') || '') };
+}
+
+// ── CLIENTS ──────────────────────────────────────────────────────────────────
+async function loadClients() {
+  try {
+    const r = await fetch('/api/clients', { headers: authHeaders() });
+    const clients = await r.json();
+    const sel = document.getElementById('clientSelect');
+    if (!Array.isArray(clients) || clients.length === 0) {
+      sel.innerHTML = '<option value="">No clients — add one first</option>';
+      return;
+    }
+    sel.innerHTML = '<option value="">Select a client...</option>' +
+      clients.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+    const saved = sessionStorage.getItem('bpo_selected_client');
+    if (saved) sel.value = saved;
+  } catch(e) {
+    document.getElementById('clientSelect').innerHTML = '<option value="">Could not load clients</option>';
+  }
+}
+
+async function submitClient() {
+  const name = document.getElementById('newClientName').value.trim();
+  const industry = document.getElementById('newClientIndustry').value.trim();
+  const size = document.getElementById('newClientSize').value;
+  const errEl = document.getElementById('addClientError');
+  if (!name) { errEl.textContent = 'Client name is required.'; return; }
+  errEl.textContent = '';
+  try {
+    const r = await fetch('/api/clients', { method:'POST', headers: authHeaders(), body: JSON.stringify({ name, industry, size }) });
+    const data = await r.json();
+    if (!r.ok) { errEl.textContent = data.error || 'Error adding client.'; return; }
+    document.getElementById('addClientModal').classList.remove('open');
+    document.getElementById('newClientName').value = '';
+    document.getElementById('newClientIndustry').value = '';
+    document.getElementById('newClientSize').value = '';
+    await loadClients();
+    document.getElementById('clientSelect').value = data.id;
+    sessionStorage.setItem('bpo_selected_client', data.id);
+  } catch(e) { errEl.textContent = 'Network error.'; }
+}
+
+// ── DOMAIN SWITCH ────────────────────────────────────────────────────────────
+function switchDomain(domain) {
+  currentDomain = domain;
+  answers = {};
+  document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('dBtn-' + domain).classList.add('active');
+  document.getElementById('resultsPanel').style.display = 'none';
+  document.getElementById('questionsPanel').style.display = '';
+  renderQuestions();
+  updateProgress();
+}
+
+// ── RENDER QUESTIONS ─────────────────────────────────────────────────────────
+function renderQuestions() {
+  const qs = ASSESSMENTS[currentDomain].questions;
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = qs.map((q, i) => `
+    <div class="q-tile" id="qtile-${q.id}">
+      <div class="q-domain-label">${q.domain}</div>
+      <div class="q-text">
+        <span class="q-number">${i + 1}</span>
+        <span class="q-text-inner">${q.text}</span>
+      </div>
+      <div>
+        ${q.options.map(opt => `
+          <div class="answer-opt" id="opt-${q.id}-${opt.label}" onclick="selectAnswer('${q.id}','${opt.label}',${5 - ['A','B','C','D'].indexOf(opt.label) - 1})">
+            <span class="answer-label">${opt.label}</span>
+            <span class="answer-text">${opt.text}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── SELECT ANSWER ────────────────────────────────────────────────────────────
+function selectAnswer(qId, label, score) {
+  // score: A=4, B=3, C=2, D=1
+  const scoreMap = { A:4, B:3, C:2, D:1 };
+  answers[qId] = { label, score: scoreMap[label] };
+  // Update UI
+  const qs = ASSESSMENTS[currentDomain].questions;
+  const q = qs.find(x => x.id === qId);
+  q.options.forEach(opt => {
+    const el = document.getElementById(`opt-${qId}-${opt.label}`);
+    el.classList.toggle('selected', opt.label === label);
+  });
+  updateProgress();
+}
+
+// ── PROGRESS ─────────────────────────────────────────────────────────────────
+function updateProgress() {
+  const total = ASSESSMENTS[currentDomain].questions.length;
+  const done = Object.keys(answers).filter(k => k.startsWith(currentDomain[0])).length;
+  document.getElementById('progressCount').textContent = done;
+  document.getElementById('progressBar').style.width = (done / total * 100) + '%';
+  document.getElementById('submitBtn').disabled = done < total;
+}
+
+// ── SUBMIT ───────────────────────────────────────────────────────────────────
+async function submitAssessment() {
+  const clientId = document.getElementById('clientSelect').value;
+  const stakeholderName = document.getElementById('respName').value.trim();
+  const stakeholderRole = document.getElementById('respRole').value.trim();
+  const stakeholderEmail = document.getElementById('respEmail').value.trim();
+  const msgEl = document.getElementById('submitMsg');
+
+  if (!clientId) { msgEl.textContent = 'Please select a client.'; return; }
+  if (!stakeholderName) { msgEl.textContent = 'Please enter your name.'; return; }
+  msgEl.textContent = '';
+
+  const qs = ASSESSMENTS[currentDomain].questions;
+  const answersArr = qs.map(q => ({
+    questionId: q.id,
+    domain: q.domain,
+    answer: answers[q.id]?.label || '',
+    score: answers[q.id]?.score || 0
+  }));
+
+  const domainScores = {};
+  qs.forEach(q => {
+    domainScores[q.domain] = answers[q.id]?.score || 0;
+  });
+
+  const totalScore = answersArr.reduce((s, a) => s + a.score, 0);
+  const band = getMaturityBand(totalScore);
+
+  try {
+    const r = await fetch('/api/assessments', {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({
+        client_id: clientId,
+        stakeholder_name: stakeholderName,
+        stakeholder_role: stakeholderRole,
+        stakeholder_email: stakeholderEmail,
+        domain: currentDomain,
+        answers: answersArr,
+        scores: domainScores,
+        overall_score: totalScore,
+        maturity_level: band.label
+      })
+    });
+    if (!r.ok) {
+      const d = await r.json();
+      msgEl.textContent = d.error || 'Error saving assessment.';
+      return;
+    }
+  } catch(e) {
+    // continue to show results even if save fails
+  }
+
+  sessionStorage.setItem('bpo_selected_client', clientId);
+  showResults(totalScore, domainScores, band);
+}
+
+// ── MATURITY BAND ─────────────────────────────────────────────────────────────
+function getMaturityBand(score) {
+  if (score >= 65) return { label: 'BPO Ready', cls: 'band-ready', color: '#0a6640', desc: 'Your organisation demonstrates strong BPO readiness. Focus on optimising existing operations, scaling best practices, and driving continuous improvement through your BPO provider.' };
+  if (score >= 45) return { label: 'BPO Opportunity', cls: 'band-opp', color: '#007d79', desc: 'There are clear opportunities for targeted BPO transformation. Prioritise the lowest-scoring sub-domains and design a phased transition to outsourced or shared services operations.' };
+  if (score >= 25) return { label: 'BPO Candidate', cls: 'band-candidate', color: '#8a6800', desc: 'Foundational process improvements are needed before BPO transition. Address governance, data quality, and process standardisation to build a credible outsourcing business case.' };
+  return { label: 'BPO Essential', cls: 'band-essential', color: '#a2191f', desc: 'Significant operational gaps exist that require immediate intervention. A structured transformation programme is essential before any BPO engagement can be successful.' };
+}
+
+// ── SHOW RESULTS ──────────────────────────────────────────────────────────────
+function showResults(totalScore, domainScores, band) {
+  document.getElementById('questionsPanel').style.display = 'none';
+  document.getElementById('resultsPanel').style.display = '';
+
+  document.getElementById('resScore').textContent = totalScore;
+  const bandEl = document.getElementById('resBand');
+  bandEl.textContent = band.label;
+  bandEl.className = 'result-band ' + band.cls;
+  document.getElementById('resSummary').textContent = band.desc;
+
+  // Sub-domain scores table
+  const subEl = document.getElementById('subScores');
+  const entries = Object.entries(domainScores);
+  subEl.innerHTML = entries.map(([domain, score]) => {
+    const pct = (score / 4) * 100;
+    let barColor = '#007d79';
+    if (score <= 1.5) barColor = '#da1e28';
+    else if (score <= 2.5) barColor = '#e68a00';
+    return `
+      <div class="sub-score-row">
+        <span class="sub-score-label">${domain}</span>
+        <div class="sub-score-bar-wrap"><div class="sub-score-bar" style="width:${pct}%;background:${barColor};"></div></div>
+        <span class="sub-score-val">${score}/4</span>
+      </div>`;
+  }).join('');
+
+  // Radar chart
+  const labels = entries.map(([d]) => d);
+  const data = entries.map(([, v]) => v);
+  drawRadar(labels, data);
+
+  // Focus areas
+  const sorted = [...entries].sort((a,b) => a[1]-b[1]).slice(0,5);
+  const focusMap = buildFocusMap();
+  document.getElementById('focusAreas').innerHTML = sorted.map(([domain, score]) => `
+    <div class="focus-item">
+      <div class="focus-item-title">${domain} — Score: ${score}/4</div>
+      <div class="focus-item-text">${focusMap[domain] || 'Review current processes, establish governance standards, and define clear KPIs for this sub-domain.'}</div>
+    </div>`).join('');
+}
+
+// ── RADAR CHART ───────────────────────────────────────────────────────────────
+function drawRadar(labels, data) {
+  if (radarChartInstance) { radarChartInstance.destroy(); }
+  const ctx = document.getElementById('radarChart').getContext('2d');
+  radarChartInstance = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: ASSESSMENTS[currentDomain].label + ' Maturity',
+        data: data,
+        backgroundColor: 'rgba(0,125,121,0.15)',
+        borderColor: '#007d79',
+        borderWidth: 2,
+        pointBackgroundColor: '#007d79',
+        pointRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        r: {
+          min: 0, max: 4,
+          ticks: { stepSize: 1, font: { size: 10 } },
+          pointLabels: { font: { size: 9 }, color: '#525252' },
+          grid: { color: '#e0e0e0' },
+          angleLines: { color: '#e0e0e0' }
+        }
+      },
+      plugins: { legend: { display: false } }
+    }
+  });
+}
+
+// ── RETAKE ───────────────────────────────────────────────────────────────────
+function retakeAssessment() {
+  answers = {};
+  document.getElementById('resultsPanel').style.display = 'none';
+  document.getElementById('questionsPanel').style.display = '';
+  renderQuestions();
+  updateProgress();
+  window.scrollTo(0, 0);
+}
+
+// ── FOCUS AREA GUIDANCE ───────────────────────────────────────────────────────
+function buildFocusMap() {
+  return {
+    'Resource & Scope': 'Map all Retained vs Outsourced FTEs by function. Create a baseline RACI and document headcount by S2P sub-process.',
+    'Cost Transparency': 'Implement cost allocation by Finance sub-function. Reconcile total BPO operating cost to management accounts quarterly.',
+    'Policy & Governance': 'Refresh procurement policies and publish enterprise-wide. Establish a governance cadence with quarterly policy compliance reviews.',
+    'Engagement Threshold': 'Define a formal clip level with spend-below-clip tracking. Implement compliance controls and reporting against threshold.',
+    'P2P Volumetrics': 'Stand up a P2P operations dashboard with monthly volumes for all key transaction types. Establish data ownership.',
+    'Invoice Performance': 'Define AP SLA targets (turnaround, first-pass yield, on-time payment). Report monthly with root-cause analysis for misses.',
+    'Compliance Mgmt': 'Define procurement compliance metric with CFO/CPO sign-off. Measure monthly and build root-cause exception workflow.',
+    'Category Mgmt': 'Conduct category maturity assessment across top 10 spend categories. Assign category leads and set savings targets.',
+    'Savings Potential': 'Build category-level addressability model. Identify and quantify savings levers (sourcing, compliance, demand management).',
+    'Strategic Suppliers': 'Define preferred/strategic supplier criteria. Build spend coverage model and establish governance calendar.',
+    'Supplier Lifecycle': 'Centralise supplier data in a SRM system. Track active suppliers, annual onboarding, and contracts under management.',
+    'Catalog Utilisation': 'Expand catalog coverage to top 20 contracted suppliers. Set catalog utilisation targets and track spend capture monthly.',
+    'PO Discipline': 'Set PO compliance targets by business unit. Implement pre-commitment controls and reduce non-PO invoice volume.',
+    'Invoice Automation': 'Pilot e-invoicing with top 10 suppliers. Define touchless rate targets and build EDI/ERS automation roadmap.',
+    'P-Card & T&E': 'Review P-Card policy and implement spend analytics. Define T&E exception thresholds and automate exception monitoring.',
+    'Vendor Master': 'Implement controlled vendor master workflow with approval matrix. Measure monthly add/change/delete volumes and exceptions.',
+    'Help Desk': 'Stand up a ticketing system for User/Supplier contacts. Define SLA targets and track first-contact resolution rate.',
+    'Technology Landscape': 'Complete technology inventory by geography and function. Identify integration gaps and build modernisation roadmap.',
+    'Spend Analytics': 'Implement spend analytics tool with category and supplier dimensions. Establish monthly spend review cadence.',
+    'Global Footprint': 'Map spend and transaction volumes by region. Identify localisation gaps and build regional harmonisation plan.',
+    'R2R Operating Model': 'Document all R2R FTE by sub-process (JE, recon, consolidation, reporting). Define retained vs outsourced split target state.',
+    'Finance Cost Transparency': 'Allocate Finance operating cost by sub-function. Establish cost-per-transaction metrics for AP, AR, and R2R.',
+    'Financial Close': 'Implement a close management tool with task-level ownership. Target sub-5-day close cycle with exception tracking.',
+    'AP Process Maturity': 'Define AP KPI targets (turnaround, exception rate, FPY). Report monthly with structured corrective action process.',
+    'AR & Collections': 'Implement DSO targets by customer segment. Automate cash application and establish aged debt escalation process.',
+    'FP&A Capability': 'Standardise planning templates and timelines. Build driver-based forecast models and automate data feeds from ERP.',
+    'Treasury & Cash': 'Implement daily cash positioning with automated bank reconciliation. Document payment authorisation controls.',
+    'Tax Compliance': 'Build cross-jurisdiction tax compliance calendar with clear ownership. Implement tax technology for indirect tax filing.',
+    'Consolidation & Reporting': 'Implement consolidation software with defined elimination rules. Establish pre-close intercompany reconciliation process.',
+    'Financial Controls': 'Document all key financial controls. Implement quarterly control testing and track audit findings to closure.',
+    'Management Reporting': 'Target management report publication within 3 days of close. Implement self-service BI with drill-down capability.',
+    'Intercompany Processing': 'Establish intercompany agreements for all flows. Implement netting and pre-close reconciliation procedures.',
+    'Finance Automation': 'Identify top 5 automation opportunities in Finance. Pilot journal automation and AP workflow tools.',
+    'Data Quality & Governance': 'Establish Finance master data governance with change control. Implement data quality metrics and monthly cleansing.',
+    'Finance Technology': 'Complete Finance technology roadmap. Prioritise ERP rationalisation and integration gaps across entities.',
+    'Shared Services Maturity': 'Define Finance SSC/GBS target scope and SLA framework. Develop business case and transition roadmap.',
+    'BPO Provider Governance': 'Establish structured governance framework with monthly reviews. Implement KPI scorecard and escalation process.',
+    'Finance Talent & Skills': 'Restructure Finance roles to align retained team to value-add activities. Define outsourcing scope for transactional work.',
+    'Finance Compliance & Audit': 'Build compliance calendar covering all jurisdictions. Establish audit preparation process and track findings.',
+    'Finance Global Coverage': 'Map Finance operating model across all entities. Identify and address local statutory compliance gaps.',
+    'HR Operating Model': 'Document HR FTE by sub-process. Define retained vs outsourced split and governance model.',
+    'HR Cost Transparency': 'Implement cost-per-transaction metrics for Payroll, Talent Acquisition, and Benefits. Allocate total HR cost by function.',
+    'Payroll Maturity': 'Define payroll accuracy and timeliness KPIs. Implement cost-per-payslip metric and benchmark against industry.',
+    'Talent Acquisition': 'Define TA metrics (time-to-fill, cost-per-hire). Implement ATS with pipeline tracking and recruiter utilisation reporting.',
+    'Learning & Development': 'Conduct annual learning needs analysis. Implement LMS with completion tracking and cost-per-learner metrics.',
+    'Employee Relations': 'Implement case management system for ER cases. Define SLAs and track resolution times and policy consistency.',
+    'Benefits Administration': 'Implement self-service benefits enrolment. Define vendor SLAs and track cost-per-benefit transaction.',
+    'HR Compliance & Policy': 'Refresh HR policies and publish in central repository. Implement compliance monitoring and annual policy review cycle.',
+    'HR Data & Analytics': 'Centralise HR data in HRIS. Build standard workforce reports and target predictive attrition and skills gap analytics.',
+    'HRIS Technology': 'Complete HR technology inventory. Build modernisation roadmap with priority on HRIS integration and self-service.',
+    'Employee Self-Service': 'Identify top 10 HR transactions for self-service. Set adoption targets and implement deflection tracking.',
+    'HR Shared Services': 'Define HR SSC scope and tiered service model. Develop SLA framework and business case for shared services.',
+    'Workforce Planning': 'Implement annual workforce planning cycle with scenario modelling. Integrate with Finance headcount budget process.',
+    'Onboarding & Offboarding': 'Implement task-based onboarding workflow with completion tracking. Define time-to-productivity targets.',
+    'HR Help Desk': 'Implement ticketing for HR queries. Define SLA targets and first-contact resolution metrics. Track self-service deflection.',
+    'Payroll BPO Readiness': 'Document all payroll processes. Cleanse payroll data and assess system readiness for BPO transition.',
+    'HR BPO Governance': 'Establish BPO governance framework with monthly reviews. Implement KPI scorecard and escalation process.',
+    'Change & Adoption': 'Build change management capability in HR. Implement adoption measurement framework for new processes and tools.',
+    'HR Compliance (Employment Law)': 'Build cross-jurisdiction compliance calendar. Implement proactive risk monitoring for employment law changes.',
+    'HR Global Coverage': 'Map HR operating model across all countries. Identify localisation gaps and build harmonisation plan.',
+  };
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Zero | NextGen BPO</title>
+  <link rel="stylesheet" href="/bpo-theme.css" />
+  <script src="/config.js"></script>
+  <script>
+  (async () => {
+    await new Promise(r => setTimeout(r, 50));
+    if (window.PLATFORM_CONFIG?.protectedMode) {
+      const token = sessionStorage.getItem('bpo_token');
+      if (!token) { window.location.href = '/login.html'; return; }
+      const r = await fetch('/api/verify', { headers: { 'Authorization': 'Bearer ' + token } });
+      if (!r.ok) { sessionStorage.clear(); window.location.href = '/login.html'; }
+    }
+  })();
+  </script>
+  <style>
+    .phase-card {
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-top: 3px solid #007d79;
+      padding: 1.5rem;
+      border-radius: 2px;
+    }
+    .phase-number {
+      font-size: 2rem;
+      font-weight: 300;
+      color: #007d79;
+      font-family: 'IBM Plex Mono', monospace;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .phase-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #161616;
+      margin-bottom: 0.25rem;
+    }
+    .phase-duration {
+      font-size: 0.75rem;
+      color: #6f6f6f;
+      margin-bottom: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .phase-card ul {
+      margin: 0 0 1rem 0;
+      padding-left: 1.25rem;
+    }
+    .phase-card ul li {
+      font-size: 0.875rem;
+      color: #393939;
+      margin-bottom: 0.375rem;
+      line-height: 1.5;
+    }
+    .phase-deliverable {
+      font-size: 0.8125rem;
+      color: #007d79;
+      font-weight: 500;
+      border-top: 1px solid #e0e0e0;
+      padding-top: 0.75rem;
+      line-height: 1.5;
+    }
+    .phase-deliverable::before {
+      content: "Deliverable: ";
+      font-weight: 700;
+      color: #525252;
+    }
+    .benchmark-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+    .benchmark-table th {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      background: #e0e0e0;
+      font-weight: 600;
+      color: #161616;
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .benchmark-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #e0e0e0;
+      color: #393939;
+    }
+    .benchmark-table tr:last-child td {
+      border-bottom: none;
+    }
+    .benchmark-table tr:hover td {
+      background: #f4f4f4;
+    }
+    .change-positive {
+      color: #198038;
+      font-weight: 600;
+    }
+    .change-teal {
+      color: #007d79;
+      font-weight: 600;
+    }
+    .lesson-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .lesson-icon {
+      font-size: 1.25rem;
+      color: #007d79;
+      margin-bottom: 0.25rem;
+    }
+    .lesson-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #161616;
+      margin-bottom: 0.5rem;
+    }
+    .lesson-text {
+      font-size: 0.875rem;
+      color: #393939;
+      line-height: 1.6;
+    }
+    .detail-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .detail-table tr {
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .detail-table tr:last-child {
+      border-bottom: none;
+    }
+    .detail-table td {
+      padding: 0.625rem 0;
+      font-size: 0.875rem;
+      vertical-align: top;
+    }
+    .detail-table td:first-child {
+      color: #6f6f6f;
+      font-weight: 500;
+      width: 45%;
+      padding-right: 1rem;
+    }
+    .detail-table td:last-child {
+      color: #161616;
+      font-weight: 500;
+    }
+    .tile-label {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #007d79;
+      margin-bottom: 1rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .cta-strip {
+      background: #f4f4f4;
+      padding: 3rem 0;
+      text-align: center;
+    }
+    .cta-strip h3 {
+      font-size: 1.375rem;
+      font-weight: 600;
+      color: #161616;
+      margin-bottom: 0.75rem;
+    }
+    .cta-strip p {
+      color: #6f6f6f;
+      margin-bottom: 1.5rem;
+      max-width: 540px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    @media (max-width: 900px) {
+      .lessons-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="c-nav">
+  <div class="container">
+    <a href="/" class="c-nav-brand">
+      <svg width="24" height="24" viewBox="0 0 32 32"><rect width="32" height="32" fill="#007d79"/><text x="4" y="22" font-family="IBM Plex Sans" font-size="13" font-weight="700" fill="white">BPO</text></svg>
+      NextGen BPO
+    </a>
+    <div class="c-nav-links">
+      <a href="/"><span>Home</span></a>
+      <a href="/client-zero.html" class="active"><span>Client Zero</span></a>
+      <a href="/platform.html"><span>Platform</span></a>
+      <a href="/assets.html"><span>Playbooks</span></a>
+      <a href="/assess.html"><span>Assess</span></a>
+      <a href="/tracker.html"><span>Pipeline</span></a>
+      <a href="/roi.html"><span>ROI</span></a>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <span id="nav-client" style="font-size:0.75rem;color:#8d8d8d;font-family:'IBM Plex Mono',monospace;"></span>
+      <a href="/login.html" onclick="sessionStorage.clear()" style="font-size:0.75rem;color:#6f6f6f;" id="nav-logout" hidden>Sign out</a>
+    </div>
+  </div>
+</nav>
+<script>
+const _c=sessionStorage.getItem('bpo_client');
+if(_c){document.getElementById('nav-client').textContent=_c;document.getElementById('nav-logout').hidden=false;}
+</script>
+
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <div class="section-eyebrow">BPO TRANSFORMATION IN PRACTICE</div>
+    <h1>Client Zero: Manufacturing &amp; Distribution</h1>
+    <p style="max-width:680px;font-size:1.0625rem;color:#525252;line-height:1.7;margin-top:1rem;">A 24-month BPO transformation across Procurement and Finance — delivering measurable operational efficiency at scale.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.5rem;">
+      <span class="tag tag-teal">Procurement</span>
+      <span class="tag tag-teal">Finance</span>
+      <span class="tag">Manufacturing</span>
+      <span class="tag">24 months</span>
+    </div>
+  </div>
+</section>
+
+<!-- Results Strip -->
+<section class="section-sm" style="background:#ffffff;border-bottom:1px solid #e0e0e0;">
+  <div class="container">
+    <div class="grid-4">
+      <div class="stat-card">
+        <div class="stat-value">42%</div>
+        <div class="stat-label">Total operating cost reduction</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">310 FTEs</div>
+        <div class="stat-label">Redeployed to strategic activities</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">67%</div>
+        <div class="stat-label">Invoice touchless rate achieved</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">3.2 days</div>
+        <div class="stat-label">Average invoice cycle time (from 11.4)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Engagement Overview -->
+<section class="section" style="background:#f4f4f4;">
+  <div class="container">
+    <div class="grid-2" style="gap:3rem;align-items:start;">
+      <div>
+        <h3 style="font-size:1.375rem;font-weight:600;color:#161616;margin-bottom:1.25rem;">Engagement Overview</h3>
+        <p style="font-size:0.9375rem;color:#393939;line-height:1.7;margin-bottom:1rem;">A global manufacturer with operations across 18 countries engaged NextGen BPO to redesign their Source-to-Pay and Record-to-Report operations. The organisation faced fragmented AP processes, inconsistent vendor master governance, and limited spend visibility — resulting in ~35% non-PO invoice volume and $8M in annual late-payment penalties.</p>
+        <p style="font-size:0.9375rem;color:#393939;line-height:1.7;">The engagement followed the Assess → Design → Transform → Operate methodology, spanning 24 months from diagnostic to steady-state BPO operations.</p>
+      </div>
+      <div class="tile tile--accent">
+        <div class="tile-label">Engagement Details</div>
+        <table class="detail-table">
+          <tr>
+            <td>Client Sector</td>
+            <td>Manufacturing &amp; Distribution</td>
+          </tr>
+          <tr>
+            <td>Geography</td>
+            <td>18 countries</td>
+          </tr>
+          <tr>
+            <td>Operating Cost Base</td>
+            <td>~$42M per annum</td>
+          </tr>
+          <tr>
+            <td>Domains in Scope</td>
+            <td>Procurement · Finance</td>
+          </tr>
+          <tr>
+            <td>BPO Provider</td>
+            <td>Tier-1 Global BPO</td>
+          </tr>
+          <tr>
+            <td>Programme Duration</td>
+            <td>24 months</td>
+          </tr>
+          <tr>
+            <td>Status</td>
+            <td>Steady State — Operating</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Phase Outcomes -->
+<section class="section" style="background:#ffffff;">
+  <div class="container">
+    <div class="section-eyebrow">TRANSFORMATION PHASES</div>
+    <h2 style="font-size:1.625rem;font-weight:600;color:#161616;margin-bottom:0.5rem;">Phase-by-Phase Outcomes</h2>
+    <p style="color:#6f6f6f;margin-bottom:2.5rem;max-width:640px;">Structured delivery across four phases, from diagnostic through to steady-state BPO operations.</p>
+    <div class="grid-4">
+      <!-- Phase 1 -->
+      <div class="phase-card">
+        <div class="phase-number">01</div>
+        <div class="phase-title">Assess</div>
+        <div class="phase-duration">Months 1–3</div>
+        <ul>
+          <li>BPO maturity score: 38/80 — BPO Candidate band</li>
+          <li>No spend analytics capability identified</li>
+          <li>45% non-PO invoice rate at baseline</li>
+          <li>Fragmented vendor master across 7 ERP instances</li>
+        </ul>
+        <div class="phase-deliverable">BPO Readiness Report with prioritised gap list delivered to SteerCo</div>
+      </div>
+      <!-- Phase 2 -->
+      <div class="phase-card">
+        <div class="phase-number">02</div>
+        <div class="phase-title">Design</div>
+        <div class="phase-duration">Months 4–8</div>
+        <ul>
+          <li>Target operating model defined across AP, Contract Admin, Procurement Ops</li>
+          <li>280 FTEs scoped for outsource</li>
+          <li>SLA framework agreed with BPO provider</li>
+          <li>Technology stack selected: SAP S/4HANA + Ariba</li>
+        </ul>
+        <div class="phase-deliverable">Target Operating Model document and BPO transition blueprint signed off</div>
+      </div>
+      <!-- Phase 3 -->
+      <div class="phase-card">
+        <div class="phase-number">03</div>
+        <div class="phase-title">Transform</div>
+        <div class="phase-duration">Months 9–20</div>
+        <ul>
+          <li>Wave-based transition across 4 geographic clusters</li>
+          <li>P2P process redesign completed</li>
+          <li>E-invoicing rollout across top-100 suppliers</li>
+          <li>Vendor rationalisation: 12,400 → 6,800 active suppliers</li>
+        </ul>
+        <div class="phase-deliverable">Live BPO operations with signed-off SLAs and transition completion report</div>
+      </div>
+      <!-- Phase 4 -->
+      <div class="phase-card">
+        <div class="phase-number">04</div>
+        <div class="phase-title">Operate</div>
+        <div class="phase-duration">Months 21+</div>
+        <ul>
+          <li>KPI dashboard live and integrated with client BI</li>
+          <li>Invoice touchless rate: 67%</li>
+          <li>PO compliance rate: 89%</li>
+          <li>Average payment terms improved by 8 days</li>
+        </ul>
+        <div class="phase-deliverable">Steady-state operations dashboard and continuous improvement register active</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Operational Benchmarks -->
+<section class="section" style="background:#ffffff;border-top:1px solid #e0e0e0;">
+  <div class="container">
+    <div class="section-eyebrow">PERFORMANCE DATA</div>
+    <h3 style="font-size:1.375rem;font-weight:600;color:#161616;margin-bottom:0.5rem;">Operational Performance Benchmarks</h3>
+    <p style="color:#6f6f6f;margin-bottom:2rem;max-width:620px;">Post-transformation KPI comparison — baseline vs steady-state BPO operations.</p>
+    <div style="overflow-x:auto;">
+      <table class="benchmark-table cds-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Baseline</th>
+            <th>Steady State</th>
+            <th>Change</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Invoice Processing Time</td>
+            <td>11.4 days</td>
+            <td>3.2 days</td>
+            <td><span class="change-positive">&#9660; 72%</span></td>
+          </tr>
+          <tr>
+            <td>PO-Based Invoice Rate</td>
+            <td>55%</td>
+            <td>89%</td>
+            <td><span class="change-teal">&#9650; +34pts</span></td>
+          </tr>
+          <tr>
+            <td>Invoice Exception Rate</td>
+            <td>18%</td>
+            <td>4.2%</td>
+            <td><span class="change-positive">&#9660; 77%</span></td>
+          </tr>
+          <tr>
+            <td>Vendor Master Active Suppliers</td>
+            <td>12,400</td>
+            <td>6,800</td>
+            <td><span class="change-positive">&#9660; 45%</span></td>
+          </tr>
+          <tr>
+            <td>AP Operating Cost per Invoice</td>
+            <td>$14.20</td>
+            <td>$5.90</td>
+            <td><span class="change-positive">&#9660; 58%</span></td>
+          </tr>
+          <tr>
+            <td>Procurement Compliance Rate</td>
+            <td>61%</td>
+            <td>88%</td>
+            <td><span class="change-teal">&#9650; +27pts</span></td>
+          </tr>
+          <tr>
+            <td>Month-End Close Cycle</td>
+            <td>8.5 days</td>
+            <td>4.1 days</td>
+            <td><span class="change-positive">&#9660; 52%</span></td>
+          </tr>
+          <tr>
+            <td>FP&amp;A Report Cycle Time</td>
+            <td>6.2 days</td>
+            <td>2.4 days</td>
+            <td><span class="change-positive">&#9660; 61%</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Lessons Learned -->
+<section class="section" style="background:#d9fbfb;">
+  <div class="container">
+    <div class="tile" style="background:transparent;border:none;padding:0;">
+      <div class="section-eyebrow" style="color:#007d79;">LESSONS LEARNED &amp; REPLICATION</div>
+      <h3 style="font-size:1.375rem;font-weight:600;color:#161616;margin-bottom:2rem;">What Made This Work</h3>
+      <div class="lessons-grid">
+        <div class="lesson-col">
+          <div class="lesson-icon">&#9632;</div>
+          <div class="lesson-title">Executive Sponsorship</div>
+          <p class="lesson-text">CFO and CPO co-sponsored the programme, ensuring cross-functional alignment from the outset. Governance cadence — fortnightly SteerCo with CFO attendance — maintained decision velocity and alignment throughout the transformation.</p>
+        </div>
+        <div class="lesson-col">
+          <div class="lesson-icon">&#9632;</div>
+          <div class="lesson-title">Data-First Approach</div>
+          <p class="lesson-text">Spend analytics and vendor master cleansing were completed before any process redesign commenced. Clean, structured data enabled accurate SLA baselining and a credible, defensible business case for BPO transition.</p>
+        </div>
+        <div class="lesson-col">
+          <div class="lesson-icon">&#9632;</div>
+          <div class="lesson-title">Wave-Based Transition</div>
+          <p class="lesson-text">Phased cutover by geography reduced transition risk and allowed lessons from early waves to be applied in later ones. Parallel-run periods for critical AP and payroll processes ensured zero service disruption throughout.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-strip">
+  <div class="container">
+    <h3>Apply This Model to Your Organisation</h3>
+    <p>Use the NextGen BPO Platform to run your own maturity assessment and build a transformation roadmap based on proven methodology.</p>
+    <div class="btn-group">
+      <a href="/assess.html" class="btn btn-primary">Run Maturity Assessment</a>
+      <a href="/platform.html" class="btn btn-secondary">Explore the Platform</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="c-footer">
+  <div class="container">
+    <div class="grid-2" style="gap:2rem;">
+      <div>
+        <div class="footer-brand">NextGen BPO Intelligence Platform</div>
+        <div class="footer-tagline" style="margin-top:4px;">Assess. Transform. Operate.</div>
+        <p style="margin-top:1rem;font-size:0.75rem;color:#6f6f6f;">Enabling operational excellence across Procurement, Finance, and HR through structured BPO transformation.</p>
+      </div>
+      <div style="display:flex;gap:3rem;justify-content:flex-end;">
+        <div>
+          <div style="font-size:0.75rem;font-weight:600;color:#8d8d8d;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.75rem;">Platform</div>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            <a href="/assess.html" style="font-size:0.875rem;">Maturity Assessment</a>
+            <a href="/tracker.html" style="font-size:0.875rem;">Transformation Pipeline</a>
+            <a href="/roi.html" style="font-size:0.875rem;">ROI Tracker</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;font-weight:600;color:#8d8d8d;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.75rem;">Domains</div>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            <a href="/assets.html" style="font-size:0.875rem;">Procurement</a>
+            <a href="/assets.html" style="font-size:0.875rem;">Finance</a>
+            <a href="/assets.html" style="font-size:0.875rem;">HR</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section-rule" style="margin:2rem 0;"></div>
+    <p style="font-size:0.75rem;color:#6f6f6f;">© 2025 NextGen BPO Intelligence Platform. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

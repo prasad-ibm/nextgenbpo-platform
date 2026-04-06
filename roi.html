@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROI Tracker | NextGen BPO</title>
+  <link rel="stylesheet" href="/bpo-theme.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Sidebar layout ── */
+    .sidebar-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .sidebar-layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      background: #f4f4f4;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 1.25rem;
+      position: sticky;
+      top: 1.5rem;
+    }
+    .sidebar-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #525252;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .sidebar-section {
+      margin-bottom: 1.5rem;
+    }
+    .cds-select {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #c6c6c6;
+      background: white;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.875rem;
+      color: #161616;
+      border-radius: 2px;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23525252' d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      padding-right: 2rem;
+    }
+    .cds-select:focus { outline: 2px solid #007d79; outline-offset: 0; }
+
+    /* ── Domain filter button group ── */
+    .domain-btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .domain-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.375rem 0.625rem;
+      font-size: 0.8125rem;
+      font-family: 'IBM Plex Sans', sans-serif;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #525252;
+      cursor: pointer;
+      border-radius: 2px;
+      text-align: left;
+      transition: all 0.12s;
+    }
+    .domain-btn:hover { background: #e8e8e8; }
+    .domain-btn.active { background: white; border-color: #c6c6c6; color: #161616; font-weight: 600; }
+
+    /* ── KPI cards row ── */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 900px) { .kpi-strip { grid-template-columns: repeat(2, 1fr); } }
+    .kpi-card {
+      background: white;
+      border: 1px solid #c6c6c6;
+      border-top: 3px solid #007d79;
+      padding: 1.5rem;
+      border-radius: 2px;
+    }
+    .kpi-card-value {
+      font-size: 2rem;
+      font-weight: 300;
+      color: #161616;
+      line-height: 1.1;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+    .kpi-card-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6f6f6f;
+      margin-top: 0.375rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .kpi-card-delta {
+      font-size: 0.75rem;
+      color: #24a148;
+      margin-top: 0.375rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* ── Domain tiles ── */
+    .domain-tiles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 900px) { .domain-tiles { grid-template-columns: 1fr; } }
+    .domain-tile {
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 1.25rem;
+    }
+    .domain-tile-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .domain-tile-title {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: #161616;
+    }
+    .domain-tile-count {
+      font-size: 0.75rem;
+      font-family: 'IBM Plex Mono', monospace;
+      background: #e0e0e0;
+      color: #525252;
+      padding: 2px 7px;
+      border-radius: 8px;
+    }
+    .domain-tile-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8125rem;
+      margin-bottom: 0.375rem;
+    }
+    .domain-tile-row-label { color: #6f6f6f; }
+    .domain-tile-row-value { font-weight: 600; color: #161616; font-family: 'IBM Plex Mono', monospace; }
+    .domain-progress-wrap {
+      background: #e0e0e0;
+      border-radius: 2px;
+      height: 6px;
+      margin-top: 0.75rem;
+      overflow: hidden;
+    }
+    .domain-progress-fill {
+      height: 100%;
+      background: #24a148;
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+    .domain-progress-label {
+      font-size: 0.6875rem;
+      color: #8d8d8d;
+      font-family: 'IBM Plex Mono', monospace;
+      margin-top: 0.25rem;
+    }
+
+    /* ── Section headings ── */
+    .section-heading {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #161616;
+      margin: 0 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .section-block {
+      margin-bottom: 2rem;
+    }
+
+    /* ── Engagement table ── */
+    .cds-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+    .cds-table th {
+      background: #f4f4f4;
+      border-bottom: 2px solid #c6c6c6;
+      padding: 0.625rem 0.875rem;
+      text-align: left;
+      font-size: 0.75rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      color: #525252;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+    .cds-table td {
+      padding: 0.625rem 0.875rem;
+      border-bottom: 1px solid #e0e0e0;
+      color: #161616;
+      vertical-align: middle;
+    }
+    .cds-table tbody tr:hover { background: #f4f4f4; }
+    .cds-table-wrap {
+      overflow-x: auto;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+    }
+
+    /* ── Status badges ── */
+    .badge {
+      display: inline-block;
+      font-size: 0.6875rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-discovery    { background: #e5f6ff; color: #0043ce; }
+    .badge-assessment   { background: #fdf6dd; color: #8a3800; }
+    .badge-design       { background: #ede8ff; color: #6929c4; }
+    .badge-transition   { background: #fff1f1; color: #a2191f; }
+    .badge-steady-state { background: #defbe6; color: #0e6027; }
+    .badge-completed    { background: #defbe6; color: #0e6027; }
+    .badge-live         { background: #defbe6; color: #0e6027; }
+    .badge-paused       { background: #f4f4f4; color: #6f6f6f; }
+    .badge-default      { background: #e0e0e0; color: #525252; }
+
+    /* ── Benchmark table domain tags ── */
+    .domain-tag {
+      display: inline-block;
+      font-size: 0.6875rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+    .domain-tag-procurement { background: #ede8ff; color: #6929c4; }
+    .domain-tag-finance     { background: #e5f6ff; color: #0043ce; }
+    .domain-tag-hr          { background: #fdf6dd; color: #8a3800; }
+
+    /* ── ROI Estimator ── */
+    .estimator-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    @media (max-width: 700px) { .estimator-grid { grid-template-columns: 1fr 1fr; } }
+    .form-field { display: flex; flex-direction: column; gap: 0.375rem; }
+    .form-label {
+      font-size: 0.75rem;
+      font-family: 'IBM Plex Mono', monospace;
+      color: #525252;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .form-input {
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #c6c6c6;
+      background: white;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.875rem;
+      color: #161616;
+      border-radius: 2px;
+    }
+    .form-input:focus { outline: 2px solid #007d79; outline-offset: 0; border-color: #007d79; }
+    .estimator-results {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    @media (max-width: 900px) { .estimator-results { grid-template-columns: repeat(2, 1fr); } }
+    .result-card {
+      background: #f4f4f4;
+      border: 1px solid #e0e0e0;
+      border-top: 3px solid #007d79;
+      padding: 1rem 1.25rem;
+      border-radius: 2px;
+    }
+    .result-card-value {
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: #161616;
+      font-family: 'IBM Plex Sans', sans-serif;
+      line-height: 1.1;
+    }
+    .result-card-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #6f6f6f;
+      margin-top: 0.375rem;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* ── Loading / empty states ── */
+    .state-msg {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #8d8d8d;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.875rem;
+    }
+    .mono { font-family: 'IBM Plex Mono', monospace; }
+
+    @media print {
+      .sidebar, nav, footer, .c-footer, .c-nav { display: none !important; }
+      .sidebar-layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Auth -->
+<script src="/config.js"></script>
+<script>
+(async () => {
+  await new Promise(r => setTimeout(r, 50));
+  if (window.PLATFORM_CONFIG?.protectedMode) {
+    const token = sessionStorage.getItem('bpo_token');
+    if (!token) { window.location.href = '/login.html'; return; }
+    const r = await fetch('/api/verify', { headers: { 'Authorization': 'Bearer ' + token } });
+    if (!r.ok) { sessionStorage.clear(); window.location.href = '/login.html'; }
+  }
+})();
+</script>
+
+<!-- Nav -->
+<nav class="c-nav">
+  <div class="container">
+    <a href="/" class="c-nav-brand">
+      <svg width="24" height="24" viewBox="0 0 32 32"><rect width="32" height="32" fill="#007d79"/><text x="4" y="22" font-family="IBM Plex Sans" font-size="13" font-weight="700" fill="white">BPO</text></svg>
+      NextGen BPO
+    </a>
+    <div class="c-nav-links">
+      <a href="/"><span>Home</span></a>
+      <a href="/client-zero.html"><span>Client Zero</span></a>
+      <a href="/platform.html"><span>Platform</span></a>
+      <a href="/assets.html"><span>Playbooks</span></a>
+      <a href="/assess.html"><span>Assess</span></a>
+      <a href="/tracker.html"><span>Pipeline</span></a>
+      <a href="/roi.html" class="active"><span>ROI</span></a>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <span id="nav-client" style="font-size:0.75rem;color:#8d8d8d;font-family:'IBM Plex Mono',monospace;"></span>
+      <a href="/login.html" onclick="sessionStorage.clear()" style="font-size:0.75rem;color:#6f6f6f;" id="nav-logout" hidden>Sign out</a>
+    </div>
+  </div>
+</nav>
+<script>const _c=sessionStorage.getItem('bpo_client');if(_c){document.getElementById('nav-client').textContent=_c;document.getElementById('nav-logout').hidden=false;}</script>
+
+<!-- Main -->
+<main class="container" style="padding-top:2rem;padding-bottom:3rem;">
+
+  <!-- Page header -->
+  <div class="page-header" style="margin-bottom:2rem;">
+    <p class="eyebrow">ROI &amp; VALUE TRACKING</p>
+    <h1 style="font-size:2rem;font-weight:300;color:#161616;margin:0.5rem 0 0.75rem;">BPO Transformation ROI Tracker</h1>
+    <p style="color:#525252;max-width:680px;margin:0;font-size:0.9375rem;">Track FTE redeployment, cycle time reduction, cost savings, and overall transformation value across your BPO portfolio.</p>
+  </div>
+
+  <!-- Sidebar layout -->
+  <div class="sidebar-layout">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">Client</div>
+        <select class="cds-select" id="clientSelect">
+          <option value="">— Select client —</option>
+        </select>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">Domain</div>
+        <div class="domain-btn-group" id="domainFilter">
+          <button class="domain-btn active" data-domain="all">All Domains</button>
+          <button class="domain-btn" data-domain="Procurement">Procurement</button>
+          <button class="domain-btn" data-domain="Finance">Finance</button>
+          <button class="domain-btn" data-domain="HR">HR</button>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <button class="btn btn-ghost btn-sm" onclick="window.print()" style="width:100%;">
+          ↓ Export Summary
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- RIGHT MAIN CONTENT -->
+    <div id="mainContent">
+
+      <!-- Placeholder when no client selected -->
+      <div id="noClientMsg" class="state-msg">
+        Select a client to view ROI data.
+      </div>
+
+      <!-- Content shown after client load -->
+      <div id="roiContent" hidden>
+
+        <!-- SECTION A: KPI Cards -->
+        <div class="section-block">
+          <div class="kpi-strip" id="kpiStrip">
+            <div class="kpi-card">
+              <div class="kpi-card-value" id="kpiInvestment">—</div>
+              <div class="kpi-card-label">Total Investment</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-card-value" id="kpiProjected">—</div>
+              <div class="kpi-card-label">Projected Savings</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-card-value" id="kpiActual">—</div>
+              <div class="kpi-card-label">Actual Savings</div>
+              <div class="kpi-card-delta" id="kpiActualDelta" hidden></div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-card-value" id="kpiFTE">—</div>
+              <div class="kpi-card-label">FTEs Redeployed</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION B: Domain Tiles -->
+        <div class="section-block">
+          <h2 class="section-heading">Value by Domain</h2>
+          <div class="domain-tiles" id="domainTiles">
+            <div class="state-msg" style="grid-column:1/-1;">Loading domain data…</div>
+          </div>
+        </div>
+
+        <!-- SECTION C: Engagement ROI Detail -->
+        <div class="section-block">
+          <h2 class="section-heading">Engagement ROI Detail</h2>
+          <div class="cds-table-wrap">
+            <table class="cds-table" id="engagementTable">
+              <thead>
+                <tr>
+                  <th>Engagement Name</th>
+                  <th>Domain</th>
+                  <th>Status</th>
+                  <th>Investment</th>
+                  <th>Projected Savings</th>
+                  <th>Actual Savings</th>
+                  <th>FTE Redeployed</th>
+                  <th>Cycle Time Reduction</th>
+                  <th>ROI %</th>
+                </tr>
+              </thead>
+              <tbody id="engagementTableBody">
+                <tr><td colspan="9" class="state-msg">Loading engagements…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div><!-- /roiContent -->
+
+    </div><!-- /mainContent -->
+  </div><!-- /sidebar-layout -->
+
+  <!-- SECTION D: Industry Benchmarks (always visible) -->
+  <div class="section-block" style="margin-top:2.5rem;">
+    <h2 class="section-heading">Industry Benchmarks — BPO Value Delivery</h2>
+    <div class="cds-table-wrap">
+      <table class="cds-table">
+        <thead>
+          <tr>
+            <th>Domain</th>
+            <th>KPI</th>
+            <th>Typical Improvement</th>
+            <th>Best-in-Class</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="domain-tag domain-tag-procurement">Procurement</span></td>
+            <td>AP Cost per Invoice</td>
+            <td>35–50% reduction</td>
+            <td>58%+ reduction</td>
+          </tr>
+          <tr>
+            <td><span class="domain-tag domain-tag-procurement">Procurement</span></td>
+            <td>Invoice Processing Time</td>
+            <td>60–70% reduction</td>
+            <td>72%+ reduction</td>
+          </tr>
+          <tr>
+            <td><span class="domain-tag domain-tag-procurement">Procurement</span></td>
+            <td>PO Compliance Rate</td>
+            <td>+20–30 percentage points</td>
+            <td>+35pts</td>
+          </tr>
+          <tr>
+            <td><span class="domain-tag domain-tag-procurement">Procurement</span></td>
+            <td>Vendor Master Size</td>
+            <td>30–40% rationalisation</td>
+            <td>45%+ rationalisation</td>
+          </tr>
+          <tr>
+            <td><span class="domain-tag domain-tag-finance">Finance</span></td>
+            <td>Month-End Close Cycle</td>
+            <td>40–55% reduction</td>
+            <td>60%+ reduction</td>
+          </tr>
+          <tr>
+            <td><span class="domain-tag domain-tag-finance">Finance</span></td>
+            <td>Reconciliation Exceptions</td>
+            <td>50–65% reduction</td>
+            <td>70%+ reduction</td>
+          </tr>
+          <tr>
+            <td><span class="domain-tag domain-tag-finance">Finance</span></td>
+            <td>FP&amp;A Report Cycle</td>
+            <td>50–60% reduction</td>
+            <td>65%+ reduction</td>
+          </tr>
+          <tr>
+            <td><span class="domain-tag domain-tag-hr">HR</span></td>
+            <td>Cost per Hire</td>
+            <td>20–30% reduction</td>
+            <td>35%+ reduction</td>
+          </tr>
+          <tr>
+            <td><span class="domain-tag domain-tag-hr">HR</span></td>
+            <td>Payroll Processing Cost</td>
+            <td>25–40% reduction</td>
+            <td>45%+ reduction</td>
+          </tr>
+          <tr>
+            <td><span class="domain-tag domain-tag-hr">HR</span></td>
+            <td>HR Query Resolution Time</td>
+            <td>50–65% reduction</td>
+            <td>70%+ reduction</td>
+          </tr>
+          <tr>
+            <td><span class="domain-tag domain-tag-hr">HR</span></td>
+            <td>Employee Self-Service Adoption</td>
+            <td>+25–35 percentage points</td>
+            <td>+40pts</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION E: Quick ROI Estimator -->
+  <div class="section-block" style="margin-top:2.5rem;">
+    <h2 class="section-heading">Quick ROI Estimator</h2>
+    <p style="font-size:0.875rem;color:#525252;margin:0 0 1.25rem;">Use this calculator to estimate BPO transformation value based on your baseline metrics.</p>
+
+    <div class="estimator-grid">
+      <div class="form-field">
+        <label class="form-label" for="calcInvoices">AP Invoices per Year</label>
+        <input class="form-input" type="number" id="calcInvoices" placeholder="e.g. 100000" min="0" />
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="calcAPCost">Current AP Cost per Invoice (£)</label>
+        <input class="form-input" type="number" id="calcAPCost" placeholder="e.g. 8.50" min="0" step="0.01" />
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="calcFTE">FTEs in Scope</label>
+        <input class="form-input" type="number" id="calcFTE" placeholder="e.g. 40" min="0" />
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="calcFTECost">Average FTE Cost (£/year)</label>
+        <input class="form-input" type="number" id="calcFTECost" placeholder="e.g. 35000" min="0" />
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="calcTouchless">Target Touchless Rate (%)</label>
+        <input class="form-input" type="number" id="calcTouchless" value="65" min="0" max="100" />
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="calcFTEReduction">Target FTE Reduction (%)</label>
+        <input class="form-input" type="number" id="calcFTEReduction" value="30" min="0" max="100" />
+      </div>
+    </div>
+
+    <button class="btn btn-primary" onclick="runEstimator()">Calculate Potential Value</button>
+
+    <div class="estimator-results" id="estimatorResults" hidden>
+      <div class="result-card">
+        <div class="result-card-value" id="resAPSavings">—</div>
+        <div class="result-card-label">Annual AP Savings</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-value" id="resFTESavings">—</div>
+        <div class="result-card-label">Annual FTE Savings</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-value" id="resTotal">—</div>
+        <div class="result-card-label">Total Annual Saving</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-value" id="res3Year">—</div>
+        <div class="result-card-label">3-Year Value</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="c-footer">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap;">
+      <div>
+        <div class="footer-brand">NextGen BPO Intelligence Platform</div>
+        <div class="footer-tagline" style="margin-top:4px;">Assess. Transform. Operate.</div>
+      </div>
+      <div style="display:flex;gap:2rem;">
+        <a href="/assess.html" style="font-size:0.875rem;">Assessment</a>
+        <a href="/tracker.html" style="font-size:0.875rem;">Pipeline</a>
+        <a href="/roi.html" style="font-size:0.875rem;">ROI</a>
+      </div>
+    </div>
+    <div class="section-rule" style="margin:1.5rem 0;border-color:#393939;"></div>
+    <p style="font-size:0.75rem;color:#6f6f6f;">© 2025 NextGen BPO Intelligence Platform. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  /* ── Utility ── */
+  function formatCurrency(n) {
+    if (n == null || isNaN(n)) return '—';
+    const abs = Math.abs(n);
+    let str;
+    if (abs >= 1000000) {
+      str = '£' + (n / 1000000).toFixed(1) + 'm';
+    } else if (abs >= 1000) {
+      str = '£' + n.toLocaleString('en-GB');
+    } else {
+      str = '£' + n.toFixed(0);
+    }
+    return str;
+  }
+
+  function authHeaders() {
+    const token = sessionStorage.getItem('bpo_token');
+    const h = { 'Content-Type': 'application/json' };
+    if (token) h['Authorization'] = 'Bearer ' + token;
+    return h;
+  }
+
+  function statusBadge(status) {
+    if (!status) return '<span class="badge badge-default">Unknown</span>';
+    const s = status.toLowerCase().replace(/[\s_]+/g, '-');
+    const cls = {
+      'discovery':    'badge-discovery',
+      'assessment':   'badge-assessment',
+      'design':       'badge-design',
+      'transition':   'badge-transition',
+      'steady-state': 'badge-steady-state',
+      'completed':    'badge-completed',
+      'live':         'badge-live',
+      'paused':       'badge-paused',
+    }[s] || 'badge-default';
+    return `<span class="badge ${cls}">${status}</span>`;
+  }
+
+  /* ── State ── */
+  let currentClient = null;
+  let currentDomain = 'all';
+  let allEngagements = [];
+
+  /* ── Load clients ── */
+  async function loadClients() {
+    try {
+      const res = await fetch('/api/clients', { headers: authHeaders() });
+      if (!res.ok) return;
+      const clients = await res.json();
+      const sel = document.getElementById('clientSelect');
+      const savedClient = sessionStorage.getItem('bpo_client_id');
+      clients.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id || c.client_id || c._id || c.value || c.name;
+        opt.textContent = c.name || c.client_name || c.label || c.id;
+        if (savedClient && opt.value == savedClient) opt.selected = true;
+        sel.appendChild(opt);
+      });
+      if (sel.value && sel.value !== '') {
+        currentClient = sel.value;
+        showROIContent(currentClient);
+      }
+    } catch (e) {
+      console.warn('loadClients error:', e);
+    }
+  }
+
+  /* ── Load ROI summary ── */
+  async function loadROI(clientId) {
+    try {
+      const res = await fetch(`/api/roi-summary/${encodeURIComponent(clientId)}`, { headers: authHeaders() });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (e) {
+      console.warn('loadROI error:', e);
+      return null;
+    }
+  }
+
+  /* ── Load engagements ── */
+  async function loadEngagements(clientId, domain) {
+    try {
+      let url = `/api/engagements?client_id=${encodeURIComponent(clientId)}`;
+      if (domain && domain !== 'all') url += `&domain=${encodeURIComponent(domain)}`;
+      const res = await fetch(url, { headers: authHeaders() });
+      if (!res.ok) return [];
+      return await res.json();
+    } catch (e) {
+      console.warn('loadEngagements error:', e);
+      return [];
+    }
+  }
+
+  /* ── Render KPI cards ── */
+  function renderKPIs(summary, engagements) {
+    const totalInvestment  = summary?.total_investment  ?? engagements.reduce((s, e) => s + (e.investment || 0), 0);
+    const projectedSavings = summary?.projected_savings ?? engagements.reduce((s, e) => s + (e.projected_savings || 0), 0);
+    const actualSavings    = summary?.actual_savings    ?? engagements.reduce((s, e) => s + (e.actual_savings || 0), 0);
+    const ftesRedeployed   = summary?.ftes_redeployed   ?? engagements.reduce((s, e) => s + (e.fte_redeployed || 0), 0);
+
+    document.getElementById('kpiInvestment').textContent = formatCurrency(totalInvestment);
+    document.getElementById('kpiProjected').textContent  = formatCurrency(projectedSavings);
+    document.getElementById('kpiActual').textContent     = formatCurrency(actualSavings);
+    document.getElementById('kpiFTE').textContent        = ftesRedeployed > 0 ? ftesRedeployed.toLocaleString('en-GB') : '0';
+
+    const deltaEl = document.getElementById('kpiActualDelta');
+    if (actualSavings > 0 && projectedSavings > 0) {
+      const pct = ((actualSavings / projectedSavings) * 100).toFixed(0);
+      deltaEl.textContent = `▲ ${pct}% vs projected`;
+      deltaEl.hidden = false;
+    } else {
+      deltaEl.hidden = true;
+    }
+  }
+
+  /* ── Render domain tiles ── */
+  function renderDomainTiles(summary, engagements) {
+    const container = document.getElementById('domainTiles');
+    const domains = ['Procurement', 'Finance', 'HR'];
+
+    // Build per-domain data either from summary.by_domain or from engagements
+    const byDomain = summary?.by_domain || {};
+
+    const html = domains.map(domain => {
+      let data = byDomain[domain] || byDomain[domain.toLowerCase()] || null;
+      if (!data) {
+        // Build from engagements
+        const de = engagements.filter(e => (e.domain || '').toLowerCase() === domain.toLowerCase());
+        data = {
+          count:             de.length,
+          investment:        de.reduce((s, e) => s + (e.investment || 0), 0),
+          projected_savings: de.reduce((s, e) => s + (e.projected_savings || 0), 0),
+          actual_savings:    de.reduce((s, e) => s + (e.actual_savings || 0), 0),
+          fte_redeployed:    de.reduce((s, e) => s + (e.fte_redeployed || 0), 0),
+        };
+      }
+      const count    = data.count             || 0;
+      const inv      = data.investment        || 0;
+      const proj     = data.projected_savings || 0;
+      const actual   = data.actual_savings    || 0;
+      const fte      = data.fte_redeployed    || 0;
+      const progress = proj > 0 ? Math.min(100, (actual / proj) * 100).toFixed(0) : 0;
+
+      return `
+        <div class="domain-tile">
+          <div class="domain-tile-header">
+            <span class="domain-tile-title">${domain}</span>
+            <span class="domain-tile-count">${count} engagement${count !== 1 ? 's' : ''}</span>
+          </div>
+          <div class="domain-tile-row">
+            <span class="domain-tile-row-label">Investment</span>
+            <span class="domain-tile-row-value">${formatCurrency(inv)}</span>
+          </div>
+          <div class="domain-tile-row">
+            <span class="domain-tile-row-label">Projected Savings</span>
+            <span class="domain-tile-row-value">${formatCurrency(proj)}</span>
+          </div>
+          <div class="domain-tile-row">
+            <span class="domain-tile-row-label">Actual Savings</span>
+            <span class="domain-tile-row-value">${formatCurrency(actual)}</span>
+          </div>
+          <div class="domain-tile-row">
+            <span class="domain-tile-row-label">FTEs Redeployed</span>
+            <span class="domain-tile-row-value">${fte}</span>
+          </div>
+          <div class="domain-progress-wrap">
+            <div class="domain-progress-fill" style="width:${progress}%"></div>
+          </div>
+          <div class="domain-progress-label">${progress}% of projected savings delivered</div>
+        </div>
+      `;
+    }).join('');
+
+    container.innerHTML = html;
+  }
+
+  /* ── Render engagement table ── */
+  function renderEngagementTable(engagements) {
+    const tbody = document.getElementById('engagementTableBody');
+    if (!engagements.length) {
+      tbody.innerHTML = '<tr><td colspan="9" class="state-msg">No engagements found for this selection.</td></tr>';
+      return;
+    }
+
+    // Sort: domain then status
+    const sorted = [...engagements].sort((a, b) => {
+      const da = (a.domain || '').toLowerCase();
+      const db = (b.domain || '').toLowerCase();
+      if (da < db) return -1;
+      if (da > db) return 1;
+      return (a.status || '').localeCompare(b.status || '');
+    });
+
+    tbody.innerHTML = sorted.map(e => {
+      const inv    = e.investment         || 0;
+      const proj   = e.projected_savings  || 0;
+      const actual = e.actual_savings     || 0;
+      const fte    = e.fte_redeployed     || 0;
+      const ctr    = e.cycle_time_reduction;
+
+      let roi = 'N/A';
+      if (inv > 0) {
+        roi = ((actual - inv) / inv * 100).toFixed(1) + '%';
+      }
+
+      const ctrDisplay = (ctr != null && ctr > 0) ? `${ctr}%` : '–';
+
+      return `
+        <tr>
+          <td style="font-weight:600;">${e.name || e.engagement_name || '—'}</td>
+          <td>${e.domain || '—'}</td>
+          <td>${statusBadge(e.status)}</td>
+          <td class="mono">${formatCurrency(inv)}</td>
+          <td class="mono">${formatCurrency(proj)}</td>
+          <td class="mono">${formatCurrency(actual)}</td>
+          <td class="mono" style="text-align:center;">${fte}</td>
+          <td class="mono" style="text-align:center;">${ctrDisplay}</td>
+          <td class="mono" style="font-weight:600;color:${roi !== 'N/A' && parseFloat(roi) >= 0 ? '#24a148' : '#da1e28'};">${roi}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  /* ── Show / refresh ROI content ── */
+  async function showROIContent(clientId) {
+    document.getElementById('noClientMsg').hidden = true;
+    document.getElementById('roiContent').hidden = false;
+
+    // Reset to loading state
+    document.getElementById('engagementTableBody').innerHTML =
+      '<tr><td colspan="9" class="state-msg">Loading engagements…</td></tr>';
+    document.getElementById('domainTiles').innerHTML =
+      '<div class="state-msg" style="grid-column:1/-1;">Loading domain data…</div>';
+
+    const [summary, engagements] = await Promise.all([
+      loadROI(clientId),
+      loadEngagements(clientId, currentDomain)
+    ]);
+
+    allEngagements = engagements;
+
+    renderKPIs(summary, engagements);
+    renderDomainTiles(summary, engagements);
+    renderEngagementTable(engagements);
+  }
+
+  /* ── Client select handler ── */
+  document.getElementById('clientSelect').addEventListener('change', function () {
+    const val = this.value;
+    if (!val) {
+      document.getElementById('noClientMsg').hidden = false;
+      document.getElementById('roiContent').hidden = true;
+      currentClient = null;
+      return;
+    }
+    currentClient = val;
+    sessionStorage.setItem('bpo_client_id', val);
+    showROIContent(val);
+  });
+
+  /* ── Domain filter handler ── */
+  document.getElementById('domainFilter').addEventListener('click', function (e) {
+    const btn = e.target.closest('.domain-btn');
+    if (!btn) return;
+    document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentDomain = btn.dataset.domain;
+    if (currentClient) showROIContent(currentClient);
+  });
+
+  /* ── ROI Estimator ── */
+  function runEstimator() {
+    const invoices     = parseFloat(document.getElementById('calcInvoices').value)     || 0;
+    const apCost       = parseFloat(document.getElementById('calcAPCost').value)       || 0;
+    const fte          = parseFloat(document.getElementById('calcFTE').value)          || 0;
+    const fteCost      = parseFloat(document.getElementById('calcFTECost').value)      || 0;
+    const touchless    = parseFloat(document.getElementById('calcTouchless').value)    || 65;
+    const fteReduction = parseFloat(document.getElementById('calcFTEReduction').value) || 30;
+
+    const newCost  = apCost * (1 - (touchless / 100) * 0.6);
+    const apSavings  = invoices * (apCost - newCost);
+    const fteSavings = fte * fteCost * (fteReduction / 100) * 0.7;
+    const totalAnnual = apSavings + fteSavings;
+    const threeYear   = totalAnnual * 3;
+
+    document.getElementById('resAPSavings').textContent  = formatCurrency(Math.round(apSavings));
+    document.getElementById('resFTESavings').textContent = formatCurrency(Math.round(fteSavings));
+    document.getElementById('resTotal').textContent      = formatCurrency(Math.round(totalAnnual));
+    document.getElementById('res3Year').textContent      = formatCurrency(Math.round(threeYear));
+
+    document.getElementById('estimatorResults').hidden = false;
+  }
+
+  /* ── Init ── */
+  loadClients();
+</script>
+
+</body>
+</html>
