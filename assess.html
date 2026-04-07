@@ -401,165 +401,165 @@ const ASSESSMENTS = {
   finance: {
     label: 'Finance',
     questions: [
-      { id:'f1', domain:'R2R Operating Model',
-        text:'How mature is your Record-to-Report operating model with respect to Retained vs Outsourced FTE split across journal entry, reconciliation, consolidation, and reporting?',
+      { id:'f1', domain:'AP Invoice First Pass Yield',
+        text:'What percentage of your AP invoices are processed touchless — auto-matched, auto-coded, and posted without human intervention (First Pass Yield)?',
         options:[
-          {label:'A',text:'Clearly defined split with documented roles, FTE counts, and governance by R2R sub-process'},
-          {label:'B',text:'Partially defined with approximate headcount; some roles documented'},
-          {label:'C',text:'Limited visibility into split; aggregate totals only'},
-          {label:'D',text:'No formal tracking of Retained vs Outsourced FTEs in Finance'}
+          {label:'A',text:'>70% touchless; AI-assisted GL coding for non-PO invoices; automated PO 3-way matching; humans handle exceptions only'},
+          {label:'B',text:'40–70% touchless; PO matching works but non-PO invoices require manual coding; exceptions managed reactively'},
+          {label:'C',text:'10–40% touchless; most invoices need manual intervention; No-PO-No-Pay policy not enforced'},
+          {label:'D',text:'<10% touchless; invoices manually keyed and routed; no automated matching or GL coding'}
         ]},
-      { id:'f2', domain:'Finance Cost Transparency',
-        text:'How well do you track annual Finance operating costs by function (AP, AR, R2R, FP&A, Treasury, Tax) and by Retained vs Outsourced?',
+      { id:'f2', domain:'Invoice Receipt & Digitisation',
+        text:'How do you receive and digitise supplier invoices, and what is your OCR capture rate across paper, PDF, and electronic channels?',
         options:[
-          {label:'A',text:'Fully allocated costs by Finance sub-function and sourcing model, reconciled to management accounts'},
-          {label:'B',text:'Partially allocated with some gaps; estimates used for some functions'},
-          {label:'C',text:'High-level Finance cost totals without sub-functional breakdown'},
-          {label:'D',text:'No consistent Finance cost tracking by function'}
+          {label:'A',text:'>60% electronic/EDI/e-invoicing; intelligent OCR with >90% header-and-line extraction; centralised single mailbox per entity'},
+          {label:'B',text:'Partial OCR deployed (header-only); mix of paper/PDF/EDI; multiple inboxes without full standardisation'},
+          {label:'C',text:'PDF/email to multiple inboxes; manual data entry; header-only or no OCR; paper scanned ad-hoc'},
+          {label:'D',text:'Predominantly paper invoices; fully manual keying; no digitisation strategy or central mailbox'}
         ]},
-      { id:'f3', domain:'Financial Close',
-        text:'How mature is your month-end close process in terms of cycle time, task ownership, and exception management?',
+      { id:'f3', domain:'AP Operating Model',
+        text:'What proportion of your Accounts Payable FTE effort (invoice processing, payment runs, vendor queries, reconciliation) is centralised in an SSC, GBS, or BPO?',
         options:[
-          {label:'A',text:'Defined close calendar with task-level ownership, target cycle under 5 days, and tracked exceptions'},
-          {label:'B',text:'Structured close process with some task ownership gaps; cycle 6–8 days'},
-          {label:'C',text:'Close managed informally; cycle 9+ days with recurring issues'},
-          {label:'D',text:'No formal close management; cycle unpredictable'}
+          {label:'A',text:'>70% of AP work centralised in a single SSC/GBS/BPO with defined scope, SLAs, and a formal governance framework'},
+          {label:'B',text:'40–70% centralised; some entities or AP sub-processes remain local with inconsistent governance'},
+          {label:'C',text:'<40% centralised; predominantly decentralised with only partial process standardisation'},
+          {label:'D',text:'Fully distributed model; no AP centralisation; each entity manages AP independently'}
         ]},
-      { id:'f4', domain:'AP Process Maturity',
-        text:'How do you measure and manage Accounts Payable performance (invoice turnaround, exception rate, first-pass yield, on-time payment)?',
+      { id:'f4', domain:'Payment Processing Automation',
+        text:'How automated are your payment runs — from proposal generation through bank file submission, remittance dispatch, and payment clearing?',
         options:[
-          {label:'A',text:'Defined KPI targets with regular reporting, root-cause analysis, and corrective actions'},
-          {label:'B',text:'Metrics tracked but without consistent targets or structured improvement'},
-          {label:'C',text:'Ad-hoc measurement with limited visibility into performance drivers'},
-          {label:'D',text:'No formal AP performance measurement'}
+          {label:'A',text:'Fully automated: system-scheduled proposals, straight-through bank submission, auto-remittance to suppliers, and auto-clearing of open items'},
+          {label:'B',text:'Payment proposals generated in ERP but require manual review/approval before submission; remittance and clearing partially automated'},
+          {label:'C',text:'Payment runs manually initiated and reviewed; bank files manually uploaded; limited auto-clearing of posted items'},
+          {label:'D',text:'Payments processed transaction-by-transaction; no automated payment runs, bank file integration, or auto-clearing'}
         ]},
-      { id:'f5', domain:'AR & Collections',
-        text:'How mature are your Accounts Receivable and collections processes (DSO management, aging analysis, dispute resolution, cash application)?',
+      { id:'f5', domain:'AP Performance Metrics',
+        text:'How mature is your AP metrics framework covering First Pass Yield, on-time payment %, duplicate payment rate, cost per invoice, and FTE productivity?',
         options:[
-          {label:'A',text:'Actively managed DSO with automated cash application, structured dispute resolution, and aged debt targets'},
-          {label:'B',text:'AR processes managed with periodic review; some manual cash application'},
-          {label:'C',text:'Basic AR tracking; limited dispute or collections discipline'},
-          {label:'D',text:'Minimal AR process structure; reactive collections only'}
+          {label:'A',text:'All five KPIs defined, tracked monthly, benchmarked against external peers, with structured improvement actions and root-cause analysis'},
+          {label:'B',text:'3–4 KPIs tracked regularly; benchmarking informal or internal only; improvement actions ad hoc'},
+          {label:'C',text:'1–2 KPIs tracked (typically on-time payment only); no external benchmarking; no structured improvement programme'},
+          {label:'D',text:'No formal AP KPI framework; AP performance discussed anecdotally only during escalations'}
         ]},
-      { id:'f6', domain:'FP&A Capability',
-        text:'How standardised and efficient is your Financial Planning & Analysis (budgeting, forecasting, management reporting) process?',
+      { id:'f6', domain:'Vendor Master Data Quality',
+        text:'How well-governed is your vendor master data — duplicate detection, invalid bank accounts, payment terms accuracy, SOD controls, and cleansing frequency?',
         options:[
-          {label:'A',text:'Standardised FP&A processes with defined timelines, driver-based models, and automated data feeds'},
-          {label:'B',text:'FP&A processes structured but relying on significant manual data consolidation'},
-          {label:'C',text:'FP&A largely spreadsheet-based with inconsistent timelines and formats'},
-          {label:'D',text:'No standardised FP&A process; reporting is ad-hoc'}
+          {label:'A',text:'Centralised VMD governance with SOD (requestor ≠ approver), automated duplicate detection, annual cleansing, and <2% duplicate vendor rate'},
+          {label:'B',text:'VMD process and SOD defined; known duplicates exist; cleansing performed reactively rather than on a scheduled cycle'},
+          {label:'C',text:'VMD governed locally per entity; no central duplicate detection; ad-hoc cleansing only; bank account changes without controls'},
+          {label:'D',text:'No VMD governance; duplicates unchecked; bank account amendments processed without segregation of duties'}
         ]},
-      { id:'f7', domain:'Treasury & Cash',
-        text:'How mature is your Treasury and Cash Management capability (cash forecasting, bank reconciliation, payment authorisation, liquidity management)?',
+      { id:'f7', domain:'Vendor Query Management',
+        text:'How do you manage supplier queries (payment status, balance confirmations, disputed invoices) and what is your first-contact resolution rate and query-to-invoice ratio?',
         options:[
-          {label:'A',text:'Centralised treasury with daily cash positioning, automated bank reconciliation, and documented controls'},
-          {label:'B',text:'Treasury processes structured with periodic cash forecasting and manual reconciliation'},
-          {label:'C',text:'Basic cash management; limited forecasting and manual bank reconciliation'},
-          {label:'D',text:'Minimal treasury structure; cash positions managed reactively'}
+          {label:'A',text:'Supplier self-service portal with ≥60% adoption; ticketing system tracks volume/SLA; >70% first-contact resolution; query-to-invoice ratio <5%'},
+          {label:'B',text:'Generic email mailbox with ticketing; SLAs tracked; portal adoption <40%; query-to-invoice ratio 5–10%'},
+          {label:'C',text:'Queries by phone/email without ticketing; SLA adherence unmeasured; query-to-invoice ratio >10%'},
+          {label:'D',text:'No structured query management; suppliers contact multiple people; no tracking, SLA, or portal'}
         ]},
-      { id:'f8', domain:'Tax Compliance',
-        text:'How well-managed is your Tax Compliance function (indirect tax, direct tax, statutory filings, transfer pricing) across jurisdictions?',
+      { id:'f8', domain:'Cash Application Auto-Match',
+        text:'What is your cash application auto-match rate (payments matched to open invoices without manual intervention) and how is unallocated cash managed?',
         options:[
-          {label:'A',text:'Centralised tax compliance calendar with defined ownership, technology support, and cross-jurisdiction visibility'},
-          {label:'B',text:'Tax compliance managed with some central oversight; gaps in smaller jurisdictions'},
-          {label:'C',text:'Tax compliance largely decentralised with limited process standardisation'},
-          {label:'D',text:'Tax compliance managed reactively; risk of missed filings or penalties'}
+          {label:'A',text:'>85% auto-match using remittance data and AI/ML pattern recognition; bank statements auto-uploaded; unallocated cash resolved same day'},
+          {label:'B',text:'60–85% auto-match; remittance-based matching with manual resolution of unidentified receipts; unallocated cash aged up to 5 days'},
+          {label:'C',text:'30–60% auto-match; significant manual cash allocation effort; unallocated cash aged >10 days is common'},
+          {label:'D',text:'<30% auto-match; predominantly manual cash application; no systematic management of unallocated cash'}
         ]},
-      { id:'f9', domain:'Consolidation & Reporting',
-        text:'How mature is your financial consolidation and statutory/group reporting process?',
+      { id:'f9', domain:'Collections Process Maturity',
+        text:'How mature are your collections processes in terms of risk-stratified dunning, daily prioritisation, monthly contact rate, and DSO vs. best-possible DSO gap?',
         options:[
-          {label:'A',text:'Automated consolidation with defined elimination rules, intercompany reconciliation, and consistent chart of accounts'},
-          {label:'B',text:'Consolidation process structured but partially manual; some intercompany reconciliation gaps'},
-          {label:'C',text:'Consolidation managed with significant manual effort and recurring adjustments'},
-          {label:'D',text:'No standardised consolidation process; high dependency on key individuals'}
+          {label:'A',text:'Risk-stratified collections; automated dunning; daily work-list generation; >80% monthly contact rate; DSO within 5 days of BPDSO'},
+          {label:'B',text:'Collections structured with dunning templates; prioritisation partially automated; contact rate 50–80%; DSO 6–15 days above BPDSO'},
+          {label:'C',text:'Collections managed manually; no risk stratification; contact rate <50%; DSO 16–30 days above BPDSO'},
+          {label:'D',text:'Reactive collections only; no dunning structure or prioritisation; DSO >30 days above BPDSO'}
         ]},
-      { id:'f10', domain:'Financial Controls',
-        text:'How robust are your financial controls and internal audit processes (SOX/equivalent, segregation of duties, control testing)?',
+      { id:'f10', domain:'Credit Management Automation',
+        text:'What proportion of credit assessments and credit limit decisions are automated or supported by risk-scoring models versus fully manual review?',
         options:[
-          {label:'A',text:'Documented control framework with regular testing, clear ownership, and audit findings tracked to closure'},
-          {label:'B',text:'Controls documented with periodic testing; some gaps in smaller entities or processes'},
-          {label:'C',text:'Control documentation exists but testing is infrequent or incomplete'},
-          {label:'D',text:'No formal financial control framework'}
+          {label:'A',text:'>60% of credit decisions auto-approved via risk-scoring model; limits calculated and maintained in ERP; order holds managed by workflow with escalation matrix'},
+          {label:'B',text:'Risk-scoring model in use but <60% auto-decisions; ERP-managed limits; order block management partially manual'},
+          {label:'C',text:'Credit assessments primarily manual; some standard rules applied; order holds managed outside ERP'},
+          {label:'D',text:'No credit-scoring model; credit limits set informally; order blocks managed reactively with no defined escalation'}
         ]},
-      { id:'f11', domain:'Management Reporting',
-        text:'How effective is your management reporting process (timeliness, accuracy, self-service BI availability)?',
+      { id:'f11', domain:'O2C Operating Model',
+        text:'What proportion of your Order-to-Cash FTE effort (billing, cash application, collections, credit management, disputes) is centralised in an SSC, GBS, or BPO?',
         options:[
-          {label:'A',text:'Management reports published within 3 days of close with self-service BI and drill-down capability'},
-          {label:'B',text:'Management reports published within 5–7 days; limited self-service analytics'},
-          {label:'C',text:'Management reports take 8+ days; primarily static Excel/PDF format'},
-          {label:'D',text:'No standardised management reporting process'}
+          {label:'A',text:'>70% centralised; defined scope per O2C sub-process; single governance framework with SLAs across billing, cash app, collections, and credit'},
+          {label:'B',text:'40–70% centralised; billing and cash app in SSC but collections and credit remain local'},
+          {label:'C',text:'<40% centralised; key O2C sub-processes split across countries with inconsistent governance'},
+          {label:'D',text:'Fully distributed; no O2C centralisation; each business unit or country operates independently'}
         ]},
-      { id:'f12', domain:'Intercompany Processing',
-        text:'How well-governed are your intercompany transactions (agreements, netting, reconciliation, dispute resolution)?',
+      { id:'f12', domain:'Disputes & Deductions Management',
+        text:'How mature is your dispute and deductions management process in terms of digitisation, resolution cycle time, root-cause tracking, and aged dispute ratio?',
         options:[
-          {label:'A',text:'All intercompany flows covered by agreements, netted where possible, and reconciled pre-close'},
-          {label:'B',text:'Most intercompany flows covered; some reconciliation performed post-close'},
-          {label:'C',text:'Intercompany processes partially documented; disputes common at period end'},
-          {label:'D',text:'No formal intercompany governance; reconciliation is reactive'}
+          {label:'A',text:'Disputes digitised on receipt in a workflow; average resolution cycle <15 days; root-cause analysis drives upstream fix; <5% disputes aged >60 days'},
+          {label:'B',text:'Disputes tracked in a system; 15–30-day average resolution; root-cause analysis periodic; 5–15% disputes aged >60 days'},
+          {label:'C',text:'Disputes tracked in spreadsheets; 30–60-day resolution cycle; root-cause analysis rare; >15% disputes aged >60 days'},
+          {label:'D',text:'No systematic dispute tracking; disputes managed via email threads; no aging discipline or root-cause analysis'}
         ]},
-      { id:'f13', domain:'Finance Automation',
-        text:'What is your level of Finance process automation (journal automation, workflow approvals, reconciliation tools, RPA)?',
+      { id:'f13', domain:'Month-End Close Cycle Time',
+        text:'What is your monthly close cycle time (period end to signed-off trial balance) and how are close activities task-tracked with owner and deadline visibility?',
         options:[
-          {label:'A',text:'High automation across core Finance processes; significant touchless transaction processing'},
-          {label:'B',text:'Moderate automation with targeted tools in place; manual steps remain in several processes'},
-          {label:'C',text:'Limited automation; most Finance processes are manual or spreadsheet-driven'},
-          {label:'D',text:'Minimal or no Finance process automation'}
+          {label:'A',text:'Close cycle ≤5 calendar days; close cockpit tool with task-level owner/due-date/status; >90% activities on time; significant workload pre-levelled before period end'},
+          {label:'B',text:'Close cycle 6–8 days; manual close checklist (Excel/shared drive); 70–90% activities completed on time'},
+          {label:'C',text:'Close cycle 9–12 days; close managed via email; <70% activities tracked with owner visibility'},
+          {label:'D',text:'Close cycle >12 days or unpredictable; no formal close management tool; significant recurring issues and re-openers'}
         ]},
-      { id:'f14', domain:'Data Quality & Governance',
-        text:'How well do you govern Finance master data quality (CoA structure, cost centres, legal entity data, intercompany mappings)?',
+      { id:'f14', domain:'Journal Entry Automation',
+        text:'What percentage of your journal entries are system-generated (recurring, reversing, allocation, accrual journals in ERP) vs. manually prepared and uploaded?',
         options:[
-          {label:'A',text:'Centralised master data governance with change control, data quality metrics, and regular cleansing'},
-          {label:'B',text:'Master data governance partially in place; some inconsistency across systems or entities'},
-          {label:'C',text:'Master data managed locally; known quality issues affect reporting accuracy'},
-          {label:'D',text:'No Finance master data governance; data quality managed reactively'}
+          {label:'A',text:'>60% journals automated via ERP (recurring, reversing, allocation); workflow approval for all manual JEs; <5% JE error/rejection rate'},
+          {label:'B',text:'30–60% automated; ERP recurring/reversing JEs in use; manual JEs reviewed informally; 5–10% error rate'},
+          {label:'C',text:'<30% automated; most journals manually prepared and uploaded as flat files; no workflow approval; >10% error rate'},
+          {label:'D',text:'Minimal JE automation; all journals manually prepared and posted directly; no workflow, approval control, or error tracking'}
         ]},
-      { id:'f15', domain:'Finance Technology',
-        text:'How would you describe your Finance technology landscape (ERP, consolidation tool, reconciliation platform, FP&A tool, Treasury system)?',
+      { id:'f15', domain:'Account Reconciliation Automation',
+        text:'What percentage of your balance sheet reconciliations are auto-certified or managed via a dedicated reconciliation tool, and how is risk-based review scheduling applied?',
         options:[
-          {label:'A',text:'Modern, integrated Finance technology stack with clear ownership and high adoption across entities'},
-          {label:'B',text:'Finance technology partially modernised; some legacy tools and integration gaps remain'},
-          {label:'C',text:'Fragmented Finance technology with significant manual bridging between systems'},
-          {label:'D',text:'Legacy Finance systems with minimal integration; heavy reliance on spreadsheets'}
+          {label:'A',text:'>50% auto-certified (zero-balance or system-matched); dedicated recon tool (BlackLine/SAP MR/equivalent); risk-based cadence; open items aged <30 days'},
+          {label:'B',text:'20–50% auto-certified; recon tool partially deployed; monthly recon performed but risk-based scheduling not applied'},
+          {label:'C',text:'<20% auto-certified; reconciliations performed in Excel; all accounts reconciled monthly regardless of risk or balance'},
+          {label:'D',text:'No formal reconciliation programme; balance sheet reconciled only at year-end or during audit preparation'}
         ]},
-      { id:'f16', domain:'Shared Services Maturity',
-        text:'How mature is your Finance Shared Services or GBS model?',
+      { id:'f16', domain:'Consolidation & COA Governance',
+        text:'How mature is your financial consolidation process — single COA, system-driven eliminations, and time from close to consolidated P&L availability?',
         options:[
-          {label:'A',text:'Mature SSC/GBS in operation with documented scope, SLAs, and continuous improvement programme'},
-          {label:'B',text:'SSC/GBS established but with partial scope coverage and informal SLA governance'},
-          {label:'C',text:'Shared services model in planning or early stages with limited process standardisation'},
-          {label:'D',text:'No shared services model; Finance operations remain fully distributed'}
+          {label:'A',text:'Single global COA; automated consolidation in CPM tool or ERP; system-driven eliminations; consolidated P&L available within 2 days of close'},
+          {label:'B',text:'Largely harmonised COA with minor local additions; consolidation partially automated; consolidated P&L within 3–5 days of close'},
+          {label:'C',text:'Multiple COAs with manual mapping; consolidation significantly manual; consolidated P&L takes 6–10 days post-close'},
+          {label:'D',text:'No standardised COA; consolidation performed entirely in Excel; consolidated P&L takes >10 days or is unreliable'}
         ]},
-      { id:'f17', domain:'BPO Provider Governance',
-        text:'If Finance processes are outsourced, how mature is your BPO provider governance and performance management?',
+      { id:'f17', domain:'Management Reporting Cycle',
+        text:'How quickly and automatically is your management reporting pack (P&L, BS, cash flow with variance commentary) published post-close, and how many revision cycles does it require?',
         options:[
-          {label:'A',text:'Structured governance with monthly/quarterly performance reviews, KPI scorecards, and escalation framework'},
-          {label:'B',text:'BPO governance in place but review cadence or KPI tracking is inconsistent'},
-          {label:'C',text:'BPO governance is informal; performance issues managed reactively'},
-          {label:'D',text:'No BPO relationship or no formal governance structure in place'}
+          {label:'A',text:'Management pack published ≤3 days post-close; BI-tool automated with self-service drill-down; ≤2 revision cycles before sign-off'},
+          {label:'B',text:'Management pack published 4–7 days post-close; partially automated (some Excel); 3–4 revision cycles'},
+          {label:'C',text:'Management pack published 8–12 days post-close; primarily manual Excel consolidation; 5+ revision cycles'},
+          {label:'D',text:'Management pack published >12 days post-close or on an ad-hoc basis; fully manual; no standard format or version control'}
         ]},
-      { id:'f18', domain:'Finance Talent & Skills',
-        text:'How well-matched is your Finance talent model to your operating requirements (right skills in retained vs outsourced roles)?',
+      { id:'f18', domain:'R2R Operating Model',
+        text:'What proportion of your Record-to-Report FTE effort (journals, reconciliations, close, consolidation, reporting, intercompany) is centralised in an SSC, GBS, or BPO?',
         options:[
-          {label:'A',text:'Retained Finance team focused on value-add, analytical, and control activities; transactional work appropriately outsourced or automated'},
-          {label:'B',text:'Finance team broadly aligned but with some retained capacity in transactional work'},
-          {label:'C',text:'Significant retained capacity in transactional or administrative Finance roles'},
-          {label:'D',text:'No clear alignment of Finance skills to operating model'}
+          {label:'A',text:'>70% centralised; defined scope by R2R sub-process; single governance model with SLAs; continuous improvement programme in place'},
+          {label:'B',text:'40–70% centralised; core R2R functions (JE, recon) in SSC but consolidation and reporting remain local'},
+          {label:'C',text:'<40% centralised; R2R fragmented across entities with inconsistent practices and no global standard'},
+          {label:'D',text:'Fully distributed; no R2R centralisation; each legal entity operates independently without process standards'}
         ]},
-      { id:'f19', domain:'Finance Compliance & Audit',
-        text:'How effectively do you manage external audit, regulatory compliance, and statutory filing obligations across jurisdictions?',
+      { id:'f19', domain:'Finance Master Data Governance',
+        text:'How mature is your Chart of Accounts and cost centre governance — new account approval, COA rationalisation, mapping integrity, and cleansing frequency?',
         options:[
-          {label:'A',text:'Audit and compliance calendar fully managed with minimal surprises; clean audit history'},
-          {label:'B',text:'Audit and compliance managed adequately; occasional issues in smaller jurisdictions'},
-          {label:'C',text:'Audit and compliance management is reactive; repeat findings or late filings occur'},
-          {label:'D',text:'No structured audit or compliance management process'}
+          {label:'A',text:'Global COA governance body; system-enforced new account approval; annual rationalisation cycle; <500 active accounts per reporting layer; mapping validated quarterly'},
+          {label:'B',text:'COA governance process defined; account approval requires sign-off; clean-up performed reactively; known redundant accounts exist but are tracked'},
+          {label:'C',text:'COA managed locally per entity; account creation approval inconsistent; no formal rationalisation programme; mapping issues affect reporting'},
+          {label:'D',text:'No COA governance; accounts created on demand without approval; significant redundancy and broken mapping across entities'}
         ]},
-      { id:'f20', domain:'Finance Global Coverage',
-        text:'How well does your Finance operating model cover global/regional entities (non-HQ countries, local statutory requirements, multi-currency)?',
+      { id:'f20', domain:'Intercompany Process Maturity',
+        text:'How mature is your intercompany process — pre-agreed IC framework, automated matching, pre-close balance agreement, and dispute resolution cycle time?',
         options:[
-          {label:'A',text:'Consistent Finance operating model across all entities with local statutory compliance managed centrally'},
-          {label:'B',text:'Finance model covers major entities; smaller countries have local variation'},
-          {label:'C',text:'Finance operations are predominantly centralised around HQ; limited visibility of outlying entities'},
-          {label:'D',text:'Each country/entity manages Finance independently with no standardised model'}
+          {label:'A',text:'>90% of IC flows covered by pre-negotiated agreements; automated IC matching in ERP (AGIS/ICR); balances agreed before month-end close; disputes resolved within 48 hours'},
+          {label:'B',text:'IC agreements cover 50–90% of flows; matching partially automated; IC balances agreed within 2 days of close; disputes resolved within 5 days'},
+          {label:'C',text:'IC agreements ad hoc; manual IC matching; balances reconciled post-close; disputes take 5–15 days to resolve'},
+          {label:'D',text:'No IC framework; matching done manually at year-end only; recurring out-of-balance at close; no defined dispute resolution process'}
         ]}
     ]
   },
