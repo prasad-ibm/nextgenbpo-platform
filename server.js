@@ -320,9 +320,20 @@ app.get('/{*path}', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// ── BOOT ───────────────────────────────────────────────────────────────────
-initDB()
-  .then(() => app.listen(PORT, () =>
-    console.log(`🚀 NextGen BPO Intelligence Platform running on http://localhost:${PORT}`)
-  ))
-  .catch(err => { console.error('❌ DB init failed:', err.message); process.exit(1); });
+// ── BOOT (with retry for DB startup race on Railway) ───────────────────────
+async function bootWithRetry(maxAttempts = 10, delayMs = 3000) {
+  for (let i = 1; i <= maxAttempts; i++) {
+    try {
+      await initDB();
+      app.listen(PORT, () =>
+        console.log(`🚀 NextGen BPO Intelligence Platform running on http://localhost:${PORT}`)
+      );
+      return;
+    } catch (err) {
+      console.error(`❌ DB init attempt ${i}/${maxAttempts} failed: ${err.message}`);
+      if (i === maxAttempts) { process.exit(1); }
+      await new Promise(r => setTimeout(r, delayMs));
+    }
+  }
+}
+bootWithRetry();
