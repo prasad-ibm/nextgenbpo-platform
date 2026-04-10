@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Case Calculator | NextGen BPO</title>
+  <link rel="stylesheet" href="/bpo-theme.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    /* ── Tab Navigation ── */
+    .bc-tabs { display:flex; border-bottom:2px solid #e0e0e0; margin-bottom:1.5rem; gap:0; overflow-x:auto; }
+    .bc-tab { padding:0.75rem 1.25rem; font-size:0.8125rem; font-weight:600; color:#525252; background:none; border:none; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; white-space:nowrap; font-family:'IBM Plex Sans',sans-serif; transition:all 0.15s; }
+    .bc-tab:hover { color:#161616; background:#f4f4f4; }
+    .bc-tab.active { color:#007d79; border-bottom-color:#007d79; }
+    .bc-tab-panel { display:none; }
+    .bc-tab-panel.active { display:block; }
+
+    /* ── Section Cards ── */
+    .bc-section { background:#fff; border:1px solid #e0e0e0; padding:1.5rem; margin-bottom:1.5rem; }
+    .bc-section-title { font-size:0.7rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#007d79; margin-bottom:0.25rem; font-family:'IBM Plex Mono',monospace; }
+    .bc-section-heading { font-size:1.125rem; font-weight:600; color:#161616; margin-bottom:0.25rem; }
+    .bc-section-desc { font-size:0.8125rem; color:#6f6f6f; margin-bottom:1.25rem; line-height:1.5; }
+
+    /* ── Form Grid ── */
+    .bc-form-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:1rem; }
+    .bc-field { display:flex; flex-direction:column; }
+    .bc-label { font-size:0.75rem; font-weight:600; color:#525252; margin-bottom:0.25rem; letter-spacing:0.02em; }
+    .bc-input { padding:0.5rem 0.75rem; border:1px solid #c6c6c6; background:#fff; font-family:'IBM Plex Sans',sans-serif; font-size:0.875rem; color:#161616; border-bottom:1px solid #8d8d8d; }
+    .bc-input:focus { outline:2px solid #007d79; outline-offset:0; border-color:#007d79; }
+    .bc-input::placeholder { color:#a8a8a8; }
+    select.bc-input { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23525252' d='M8 11L3 6h10z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 0.75rem center; padding-right:2rem; cursor:pointer; }
+
+    /* ── Dynamic Process Rows ── */
+    .bc-process-table { width:100%; border-collapse:collapse; font-size:0.8125rem; }
+    .bc-process-table th { text-align:left; padding:0.5rem 0.75rem; font-size:0.7rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#6f6f6f; border-bottom:2px solid #e0e0e0; font-family:'IBM Plex Mono',monospace; }
+    .bc-process-table td { padding:0.375rem 0.75rem; border-bottom:1px solid #e0e0e0; vertical-align:middle; }
+    .bc-process-table input { width:100%; padding:0.375rem 0.5rem; border:1px solid #c6c6c6; font-family:'IBM Plex Sans',sans-serif; font-size:0.8125rem; color:#161616; background:#fff; }
+    .bc-process-table input:focus { outline:2px solid #007d79; }
+    .bc-process-table .row-label { font-weight:600; color:#161616; min-width:160px; }
+    .bc-process-table .computed { background:#f4f4f4; color:#007d79; font-weight:600; font-family:'IBM Plex Mono',monospace; text-align:right; padding:0.375rem 0.75rem; }
+    .bc-process-table tbody tr:hover { background:#f4f4f4; }
+
+    /* ── Benchmark Reference ── */
+    .bm-card { background:#fff; border:1px solid #e0e0e0; margin-bottom:1rem; }
+    .bm-card-header { padding:0.75rem 1rem; background:#f4f4f4; border-bottom:1px solid #e0e0e0; display:flex; justify-content:space-between; align-items:center; cursor:pointer; }
+    .bm-card-header:hover { background:#e8e8e8; }
+    .bm-card-title { font-size:0.875rem; font-weight:600; color:#161616; }
+    .bm-card-toggle { font-size:0.75rem; color:#007d79; font-family:'IBM Plex Mono',monospace; }
+    .bm-card-body { padding:0; display:none; }
+    .bm-card-body.open { display:block; }
+    .bm-table { width:100%; border-collapse:collapse; font-size:0.8125rem; }
+    .bm-table th { text-align:left; padding:0.5rem 0.75rem; font-size:0.675rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6f6f6f; border-bottom:1px solid #e0e0e0; font-family:'IBM Plex Mono',monospace; background:#fafafa; }
+    .bm-table td { padding:0.5rem 0.75rem; border-bottom:1px solid #f4f4f4; color:#161616; }
+    .bm-table tr:hover { background:#d9fbfb; }
+    .bm-source { font-size:0.6875rem; color:#6f6f6f; font-style:italic; }
+    .bm-quartile { font-family:'IBM Plex Mono',monospace; font-size:0.8125rem; font-weight:600; }
+    .bm-top { color:#24a148; }
+    .bm-med { color:#007d79; }
+    .bm-bot { color:#da1e28; }
+    .bm-editable { border:1px solid transparent; padding:2px 4px; border-radius:2px; font-family:'IBM Plex Mono',monospace; font-size:0.8125rem; width:70px; text-align:right; background:transparent; }
+    .bm-editable:hover { border-color:#c6c6c6; background:#fff; }
+    .bm-editable:focus { outline:2px solid #007d79; background:#fff; border-color:#007d79; }
+
+    /* ── KPI Summary Cards ── */
+    .bc-kpi-row { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem; margin-bottom:1.5rem; }
+    .bc-kpi { background:#fff; border:1px solid #e0e0e0; border-top:3px solid #007d79; padding:1.25rem; }
+    .bc-kpi-value { font-size:1.75rem; font-weight:300; color:#161616; font-family:'IBM Plex Sans',sans-serif; }
+    .bc-kpi-label { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:#6f6f6f; margin-top:0.25rem; font-family:'IBM Plex Mono',monospace; }
+    .bc-kpi-delta { font-size:0.75rem; margin-top:0.25rem; font-family:'IBM Plex Mono',monospace; }
+    .delta-green { color:#24a148; }
+    .delta-red { color:#da1e28; }
+
+    /* ── Gap Chart ── */
+    .gap-bar-wrap { display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem; }
+    .gap-bar-label { font-size:0.75rem; color:#525252; min-width:160px; text-align:right; }
+    .gap-bar-track { flex:1; height:20px; background:#e0e0e0; position:relative; border-radius:2px; overflow:hidden; }
+    .gap-bar-fill { height:100%; border-radius:2px; transition:width 0.4s; }
+    .gap-bar-best { position:absolute; top:0; height:100%; width:2px; background:#24a148; z-index:2; }
+    .gap-bar-value { font-size:0.75rem; font-weight:600; color:#161616; min-width:55px; font-family:'IBM Plex Mono',monospace; }
+
+    /* ── Scenario Comparison ── */
+    .scenario-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1rem; }
+    .scenario-card { background:#fff; border:1px solid #e0e0e0; padding:1.25rem; position:relative; }
+    .scenario-card.recommended { border-color:#007d79; border-width:2px; }
+    .scenario-card.recommended::before { content:'RECOMMENDED'; position:absolute; top:-10px; left:1rem; background:#007d79; color:#fff; font-size:0.625rem; font-weight:700; letter-spacing:0.1em; padding:2px 8px; font-family:'IBM Plex Mono',monospace; }
+    .scenario-card-title { font-size:0.9375rem; font-weight:600; color:#161616; margin-bottom:0.75rem; }
+    .scenario-row { display:flex; justify-content:space-between; font-size:0.8125rem; padding:0.25rem 0; border-bottom:1px solid #f4f4f4; }
+    .scenario-row-label { color:#6f6f6f; }
+    .scenario-row-val { font-weight:600; color:#161616; font-family:'IBM Plex Mono',monospace; }
+
+    /* ── Year-by-Year Table ── */
+    .yby-table { width:100%; border-collapse:collapse; font-size:0.8125rem; margin-top:1rem; }
+    .yby-table th { padding:0.5rem 0.75rem; text-align:right; font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6f6f6f; border-bottom:2px solid #e0e0e0; font-family:'IBM Plex Mono',monospace; }
+    .yby-table th:first-child { text-align:left; }
+    .yby-table td { padding:0.5rem 0.75rem; text-align:right; border-bottom:1px solid #e0e0e0; font-family:'IBM Plex Mono',monospace; }
+    .yby-table td:first-child { text-align:left; font-family:'IBM Plex Sans',sans-serif; font-weight:500; color:#161616; }
+    .yby-table tr.total-row { font-weight:700; border-top:2px solid #161616; }
+    .yby-table .positive { color:#24a148; }
+    .yby-table .negative { color:#da1e28; }
+
+    /* ── Chart canvas ── */
+    .chart-wrap { max-width:700px; margin:1.5rem auto; }
+
+    /* ── Misc ── */
+    .bc-btn { padding:0.75rem 1.5rem; font-size:0.875rem; font-weight:600; border:none; cursor:pointer; font-family:'IBM Plex Sans',sans-serif; transition:all 0.15s; }
+    .bc-btn-primary { background:#007d79; color:#fff; }
+    .bc-btn-primary:hover { background:#005b57; }
+    .bc-btn-secondary { background:#fff; color:#007d79; border:1px solid #007d79; }
+    .bc-btn-secondary:hover { background:#d9fbfb; }
+    .bc-btn-ghost { background:none; color:#007d79; border:none; padding:0.5rem 1rem; font-size:0.8125rem; }
+    .bc-btn-ghost:hover { background:#d9fbfb; }
+    .actions-row { display:flex; gap:1rem; margin-top:1.5rem; flex-wrap:wrap; }
+    .bc-helper { font-size:0.75rem; color:#6f6f6f; margin-top:0.25rem; line-height:1.4; }
+    .bc-divider { border:none; border-top:1px solid #e0e0e0; margin:1.5rem 0; }
+    .pill { display:inline-block; padding:2px 8px; font-size:0.6875rem; font-weight:600; border-radius:10px; font-family:'IBM Plex Mono',monospace; }
+    .pill-teal { background:#d9fbfb; color:#004144; }
+    .pill-green { background:#d0f0e0; color:#0a6640; }
+    .pill-red { background:#ffe0e0; color:#a2191f; }
+    .pill-gold { background:#fef3cd; color:#8a6800; }
+    @media(max-width:768px) { .bc-form-grid { grid-template-columns:1fr; } .scenario-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<script src="/config.js"></script>
+<script>
+(async () => {
+  await new Promise(r => setTimeout(r, 50));
+  if (window.PLATFORM_CONFIG?.protectedMode) {
+    const token = sessionStorage.getItem('bpo_token');
+    if (!token) { window.location.href = '/login.html'; return; }
+    try {
+      const r = await fetch('/api/verify', { headers: { 'Authorization': 'Bearer ' + token } });
+      if (!r.ok) throw 0;
+    } catch { window.location.href = '/login.html'; }
+  }
+})();
+</script>
+
+<nav class="c-nav">
+  <div class="container">
+    <a href="/" class="c-nav-brand">
+      <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" fill="#007d79"/>
+        <text x="6" y="22" font-family="IBM Plex Sans" font-size="14" font-weight="700" fill="white">BPO</text>
+      </svg>
+      NextGen BPO
+    </a>
+    <div class="c-nav-links">
+      <a href="/"><span>Home</span></a>
+      <a href="/client-zero.html"><span>Client Zero</span></a>
+      <a href="/platform.html"><span>Platform</span></a>
+      <a href="/assets.html"><span>Playbooks</span></a>
+      <a href="/assess.html"><span>Assess</span></a>
+      <a href="/tracker.html"><span>Pipeline</span></a>
+      <a href="/roi.html"><span>ROI</span></a>
+      <a href="/businesscase.html" class="active"><span>Business Case</span></a>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <span id="nav-client" style="font-size:0.75rem;color:#8d8d8d;font-family:'IBM Plex Mono',monospace;"></span>
+      <a href="/login.html" onclick="sessionStorage.clear()" style="font-size:0.75rem;color:#6f6f6f;" id="nav-logout" hidden>Sign out</a>
+    </div>
+  </div>
+</nav>
+<script>
+const _t = sessionStorage.getItem('bpo_token');
+const _c = sessionStorage.getItem('bpo_client');
+if (_c) { document.getElementById('nav-client').textContent = _c; document.getElementById('nav-logout').hidden = false; }
+</script>
+
+<div style="background:#161616;padding:2.5rem 0 2rem;">
+  <div class="container">
+    <div style="font-size:0.6875rem;font-weight:600;color:#3ddbd9;letter-spacing:0.14em;text-transform:uppercase;font-family:'IBM Plex Mono',monospace;margin-bottom:0.75rem;">SG&A Transformation</div>
+    <h1 style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:300;color:#fff;line-height:1.2;margin-bottom:0.75rem;">Cost Per Transaction <strong style="font-weight:600;color:#3ddbd9;">Business Case Calculator</strong></h1>
+    <p style="font-size:0.9375rem;color:#a8a8a8;max-width:640px;line-height:1.55;">Transform SG&A from opaque FTE-based costs to transparent unit economics. Compare current state against industry benchmarks and model automation, BPO, and hybrid scenarios.</p>
+  </div>
+</div>
+
+<div class="container" style="padding-top:1.5rem;padding-bottom:3rem;">
+
+  <!-- ═══ TAB BAR ═══ -->
+  <div class="bc-tabs" id="bcTabs">
+    <button class="bc-tab active" data-tab="input">1. Input Sheet</button>
+    <button class="bc-tab" data-tab="current">2. Current State</button>
+    <button class="bc-tab" data-tab="scenarios">3. Future Scenarios</button>
+    <button class="bc-tab" data-tab="summary">4. Business Case</button>
+    <button class="bc-tab" data-tab="benchmarks">Benchmarks Reference</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- TAB 1: INPUT SHEET                                                      -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="bc-tab-panel active" id="panel-input">
+
+    <!-- Section A: Company Profile -->
+    <div class="bc-section">
+      <div class="bc-section-title">Section A</div>
+      <div class="bc-section-heading">Company Profile</div>
+      <div class="bc-section-desc">Context that drives benchmark selection and scenario viability. Industry determines SG&A norms — Software (50-60%) vs Manufacturing (10-20%).</div>
+      <div class="bc-form-grid">
+        <div class="bc-field">
+          <label class="bc-label">Company Name</label>
+          <input class="bc-input" id="companyName" placeholder="Acme Corp" />
+        </div>
+        <div class="bc-field">
+          <label class="bc-label">Annual Revenue ($)</label>
+          <input class="bc-input" id="revenue" type="number" placeholder="100000000" />
+          <span class="bc-helper">Used to calculate SG&A as % of revenue</span>
+        </div>
+        <div class="bc-field">
+          <label class="bc-label">Fiscal Year</label>
+          <input class="bc-input" id="fiscalYear" type="number" placeholder="2026" value="2026" />
+        </div>
+        <div class="bc-field">
+          <label class="bc-label">Industry</label>
+          <select class="bc-input" id="industry">
+            <option value="manufacturing">Manufacturing</option>
+            <option value="distribution">Distribution / Wholesale</option>
+            <option value="energy">Energy / Utilities</option>
+            <option value="telecom">Telecom / Technology</option>
+            <option value="retail">Retail / CPG</option>
+            <option value="services">Professional Services</option>
+            <option value="other">Other Industrial</option>
+          </select>
+        </div>
+        <div class="bc-field">
+          <label class="bc-label">Total Employees</label>
+          <input class="bc-input" id="totalEmployees" type="number" placeholder="2500" />
+          <span class="bc-helper">Correlates with HR transaction volumes</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section B: Current SG&A Costs -->
+    <div class="bc-section">
+      <div class="bc-section-title">Section B</div>
+      <div class="bc-section-heading">Current SG&A Costs (Annual)</div>
+      <div class="bc-section-desc">Enter cost and headcount by process. Cost per FTE bridges "people-based" model to transaction economics.</div>
+      <table class="bc-process-table" id="costTable">
+        <thead>
+          <tr>
+            <th style="min-width:180px">Process</th>
+            <th style="width:130px">Annual Cost ($)</th>
+            <th style="width:80px">FTEs</th>
+            <th style="width:110px">Cost / FTE</th>
+          </tr>
+        </thead>
+        <tbody id="costTableBody"></tbody>
+        <tfoot>
+          <tr style="font-weight:700;border-top:2px solid #161616;">
+            <td style="padding:0.5rem 0.75rem;">Total SG&A</td>
+            <td class="computed" id="totalCost">$0</td>
+            <td class="computed" id="totalFTEs">0</td>
+            <td class="computed" id="avgCostFTE">$0</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <!-- Section C: Transaction Volumes -->
+    <div class="bc-section">
+      <div class="bc-section-title">Section C</div>
+      <div class="bc-section-heading">Transaction Volumes (Annual)</div>
+      <div class="bc-section-desc">Convert from headcount to output. Count unique transactions — invoices (not lines), pay slips (not adjustments).</div>
+      <table class="bc-process-table" id="volumeTable">
+        <thead>
+          <tr>
+            <th style="min-width:180px">Transaction Type</th>
+            <th style="width:130px">Annual Volume</th>
+            <th style="width:130px">Monthly Avg</th>
+            <th style="width:110px">Linked Process</th>
+          </tr>
+        </thead>
+        <tbody id="volumeTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="actions-row">
+      <button class="bc-btn bc-btn-primary" onclick="calculateCurrentState()">Calculate Current State &rarr;</button>
+      <button class="bc-btn bc-btn-ghost" onclick="loadSampleData()">Load Sample Data</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- TAB 2: CURRENT STATE ANALYSIS                                           -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="bc-tab-panel" id="panel-current">
+
+    <!-- KPI Strip -->
+    <div class="bc-kpi-row" id="currentKPIs"></div>
+
+    <!-- Cost Per Transaction Table -->
+    <div class="bc-section">
+      <div class="bc-section-title">Unit Economics</div>
+      <div class="bc-section-heading">Cost Per Transaction — Current vs Benchmark</div>
+      <div class="bc-section-desc">Your transaction costs compared to industry best practice. Gap × Volume = annual savings opportunity.</div>
+      <table class="bc-process-table" id="cptTable">
+        <thead>
+          <tr>
+            <th>Process</th>
+            <th style="width:100px;text-align:right">Your CPT</th>
+            <th style="width:100px;text-align:right">Best Practice</th>
+            <th style="width:100px;text-align:right">Median</th>
+            <th style="width:80px;text-align:right">Gap</th>
+            <th style="width:110px;text-align:right">Opportunity ($)</th>
+          </tr>
+        </thead>
+        <tbody id="cptTableBody"></tbody>
+        <tfoot>
+          <tr style="font-weight:700;border-top:2px solid #161616;">
+            <td style="padding:0.5rem 0.75rem;">Total Opportunity</td>
+            <td></td><td></td><td></td><td></td>
+            <td class="computed" id="totalOpportunity">$0</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <!-- Gap Visualization -->
+    <div class="bc-section">
+      <div class="bc-section-title">Visual Gap Analysis</div>
+      <div class="bc-section-heading">Your Position vs Market</div>
+      <div id="gapBars"></div>
+    </div>
+
+    <div class="actions-row">
+      <button class="bc-btn bc-btn-primary" onclick="switchTab('scenarios')">Model Future Scenarios &rarr;</button>
+      <button class="bc-btn bc-btn-secondary" onclick="switchTab('input')">&larr; Edit Inputs</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- TAB 3: FUTURE STATE SCENARIOS                                           -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="bc-tab-panel" id="panel-scenarios">
+
+    <div class="bc-section">
+      <div class="bc-section-title">Scenario Configuration</div>
+      <div class="bc-section-heading">Model Transformation Paths</div>
+      <div class="bc-section-desc">Five scenarios from conservative to aggressive. Each represents a different risk/reward trade-off. Adjust target CPTs and cost assumptions below.</div>
+
+      <!-- Scenario Selector -->
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+        <button class="bc-btn bc-btn-secondary scenario-sel active" data-scenario="doNothing" onclick="selectScenario(this)">Do Nothing</button>
+        <button class="bc-btn bc-btn-secondary scenario-sel" data-scenario="automation" onclick="selectScenario(this)">Automation</button>
+        <button class="bc-btn bc-btn-secondary scenario-sel" data-scenario="bpoOnshore" onclick="selectScenario(this)">BPO — Onshore</button>
+        <button class="bc-btn bc-btn-secondary scenario-sel" data-scenario="bpoNearshore" onclick="selectScenario(this)">BPO — Nearshore</button>
+        <button class="bc-btn bc-btn-secondary scenario-sel" data-scenario="hybrid" onclick="selectScenario(this)">Hybrid</button>
+      </div>
+
+      <!-- Scenario Detail Panels -->
+      <div id="scenarioDetail">
+        <!-- Do Nothing -->
+        <div class="scenario-detail-panel active" id="sd-doNothing">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="bc-field">
+              <label class="bc-label">Annual Cost Inflation (%)</label>
+              <input class="bc-input" id="inflationRate" type="number" value="4" step="0.5" />
+              <span class="bc-helper">Wage + benefit inflation; typically 3-5% annually</span>
+            </div>
+            <div class="bc-field">
+              <label class="bc-label">Volume Growth (%)</label>
+              <input class="bc-input" id="volumeGrowth" type="number" value="2" step="0.5" />
+              <span class="bc-helper">Annual transaction volume increase</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Automation -->
+        <div class="scenario-detail-panel" id="sd-automation">
+          <div class="bc-form-grid" style="margin-bottom:1rem;">
+            <div class="bc-field">
+              <label class="bc-label">Software License (Annual $)</label>
+              <input class="bc-input" id="autoSoftware" type="number" value="250000" />
+            </div>
+            <div class="bc-field">
+              <label class="bc-label">Implementation Cost ($)</label>
+              <input class="bc-input" id="autoImpl" type="number" value="400000" />
+              <span class="bc-helper">One-time; typically 1-2x software cost</span>
+            </div>
+            <div class="bc-field">
+              <label class="bc-label">Change Management ($)</label>
+              <input class="bc-input" id="autoChange" type="number" value="100000" />
+              <span class="bc-helper">15-20% of project cost; critical for adoption</span>
+            </div>
+            <div class="bc-field">
+              <label class="bc-label">Automation Rate (%)</label>
+              <input class="bc-input" id="autoRate" type="number" value="40" step="5" />
+              <span class="bc-helper">% of transactions fully automated (typically 30-50%)</span>
+            </div>
+            <div class="bc-field">
+              <label class="bc-label">FTE Reduction (%)</label>
+              <input class="bc-input" id="autoFTEReduction" type="number" value="25" step="5" />
+              <span class="bc-helper">Headcount reduction (less than automation rate due to exceptions)</span>
+            </div>
+          </div>
+          <div class="bc-section-desc">Target CPT assumes automation eliminates 60-70% of manual touches. Retained staff handle exceptions, governance, and strategic work.</div>
+        </div>
+
+        <!-- BPO Onshore -->
+        <div class="scenario-detail-panel" id="sd-bpoOnshore">
+          <div class="bc-form-grid" style="margin-bottom:1rem;">
+            <div class="bc-field">
+              <label class="bc-label">Transition / Setup ($)</label>
+              <input class="bc-input" id="bpoOnshoreSetup" type="number" value="350000" />
+              <span class="bc-helper">Process doc, system integration, knowledge transfer</span>
+            </div>
+            <div class="bc-field">
+              <label class="bc-label">Retained Governance Team ($)</label>
+              <input class="bc-input" id="bpoOnshoreRetained" type="number" value="400000" />
+              <span class="bc-helper">2-4 people for vendor mgmt, escalation, strategy</span>
+            </div>
+            <div class="bc-field">
+              <label class="bc-label">Contract Management (Annual $)</label>
+              <input class="bc-input" id="bpoOnshoreContract" type="number" value="75000" />
+            </div>
+            <div class="bc-field">
+              <label class="bc-label">Savings vs Current (%)</label>
+              <input class="bc-input" id="bpoOnshoreDiscount" type="number" value="25" step="5" />
+              <span class="bc-helper">N. America BPO typically 20-30% savings</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- BPO Nearshore -->
+        <div class="scenario-detail-panel" id="sd-bpoNearshore">
+          <div class="bc-form-grid" style="margin-bottom:1rem;">
+            <div class="bc-field">
+              <label class="bc-label">Transition / Setup ($)</label>
+              <input class="bc-input" id="bpoNearSetup" type="number" value="450000" />
+              <span class="bc-helper">Higher due to location complexity</span>
+            </div>
+            <div class="bc-field">
+              <label class="bc-label">Retained Governance Team ($)</label>
+              <input class="bc-input" id="bpoNearRetained" type="number" value="400000" />
+            </div>
+            <div class="bc-field">
+              <label class="bc-label">Contract Management (Annual $)</label>
+              <input class="bc-input" id="bpoNearContract" type="number" value="75000" />
+            </div>
+            <div class="bc-field">
+              <label class="bc-label">Savings vs Current (%)</label>
+              <input class="bc-input" id="bpoNearDiscount" type="number" value="45" step="5" />
+              <span class="bc-helper">Nearshore (LatAm / Philippines) typically 40-60%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hybrid -->
+        <div class="scenario-detail-panel" id="sd-hybrid">
+          <div class="bc-form-grid" style="margin-bottom:1rem;">
+            <div class="bc-field">
+              <label class="bc-label">% Automated (Simple)</label>
+              <input class="bc-input" id="hybridAutoP" type="number" value="60" step="5" />
+              <span class="bc-helper">High-volume, low-complexity @ automation CPT</span>
+            </div>
+            <div class="bc-field">
+              <label class="bc-label">% BPO (Moderate)</label>
+              <input class="bc-input" id="hybridBpoP" type="number" value="30" step="5" />
+              <span class="bc-helper">Medium complexity @ nearshore CPT</span>
+            </div>
+            <div class="bc-field">
+              <label class="bc-label">% In-House (Complex)</label>
+              <input class="bc-input" id="hybridInP" type="number" value="10" step="5" />
+              <span class="bc-helper">Disputes, legal, strategic @ current CPT</span>
+            </div>
+            <div class="bc-field">
+              <label class="bc-label">Implementation Cost ($)</label>
+              <input class="bc-input" id="hybridImpl" type="number" value="600000" />
+            </div>
+            <div class="bc-field">
+              <label class="bc-label">Retained Governance ($)</label>
+              <input class="bc-input" id="hybridRetained" type="number" value="350000" />
+            </div>
+          </div>
+          <div class="bc-section-desc">Hybrid = Automation handles simple (60%) + BPO handles moderate (30%) + In-house retains complex (10%). Blended CPT optimizes the cost curve.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions-row">
+      <button class="bc-btn bc-btn-primary" onclick="calculateScenarios()">Calculate All Scenarios &rarr;</button>
+      <button class="bc-btn bc-btn-secondary" onclick="switchTab('current')">&larr; Review Current State</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- TAB 4: BUSINESS CASE SUMMARY                                            -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="bc-tab-panel" id="panel-summary">
+
+    <div class="bc-kpi-row" id="summaryKPIs"></div>
+
+    <!-- Side-by-Side Scenario Cards -->
+    <div class="bc-section">
+      <div class="bc-section-title">Decision Framework</div>
+      <div class="bc-section-heading">Scenario Comparison — 3-Year View</div>
+      <div class="bc-section-desc">Side-by-side comparison enables pattern recognition across risk/return trade-offs. 3-year window balances implementation costs against run-rate savings.</div>
+      <div class="scenario-grid" id="scenarioCards"></div>
+    </div>
+
+    <!-- Year-by-Year Breakdown -->
+    <div class="bc-section">
+      <div class="bc-section-title">Financial Model</div>
+      <div class="bc-section-heading">Year-by-Year Cash Flow</div>
+      <table class="yby-table" id="ybyTable">
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>Year 1</th>
+            <th>Year 2</th>
+            <th>Year 3</th>
+            <th>3-Year Total</th>
+            <th>3-Year ROI</th>
+          </tr>
+        </thead>
+        <tbody id="ybyTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- Chart -->
+    <div class="bc-section">
+      <div class="bc-section-title">Visualization</div>
+      <div class="bc-section-heading">Cumulative Savings Trajectory</div>
+      <div class="chart-wrap">
+        <canvas id="savingsChart" height="300"></canvas>
+      </div>
+    </div>
+
+    <div class="actions-row">
+      <button class="bc-btn bc-btn-primary" onclick="exportSummary()">Export Summary (CSV)</button>
+      <button class="bc-btn bc-btn-secondary" onclick="switchTab('scenarios')">&larr; Adjust Scenarios</button>
+      <button class="bc-btn bc-btn-ghost" onclick="window.print()">Print / PDF</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- TAB 5: BENCHMARKS REFERENCE                                             -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="bc-tab-panel" id="panel-benchmarks">
+
+    <div class="bc-section" style="background:#d9fbfb;border-color:#007d79;">
+      <div class="bc-section-heading" style="color:#004144;">Industry Benchmark Reference Data</div>
+      <div class="bc-section-desc" style="color:#004144;">All values are editable — click any number to override with client-specific data. Overrides apply to the business case calculator. Sources shown for each metric. Data scope: Industrial sector (excludes Financial Services and Healthcare).</div>
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+        <button class="bc-btn bc-btn-secondary" onclick="resetBenchmarks()">Reset to Defaults</button>
+        <button class="bc-btn bc-btn-ghost" onclick="exportBenchmarks()">Export Benchmarks (CSV)</button>
+      </div>
+    </div>
+
+    <div id="benchmarkPanels"></div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   DATA MODEL
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const PROCESSES = [
+  { id:'invoices',   name:'Invoice Processing',      category:'F&A — Accounts Payable', bmId:'fa', bmMetric:'Cost per Invoice Processed' },
+  { id:'payments',   name:'Payment Processing',       category:'F&A — Accounts Payable', bmId:'fa', bmMetric:'Cost per Payment (Disbursement)' },
+  { id:'journals',   name:'Journal Entries',           category:'F&A — Record to Report', bmId:'r2r', bmMetric:'Cost per Journal Entry' },
+  { id:'recon',      name:'Account Reconciliations',   category:'F&A — Record to Report', bmId:'r2r', bmMetric:'Intercompany Reconciliation Cost per Entity' },
+  { id:'po',         name:'Purchase Orders',           category:'Procure-to-Pay',         bmId:'p2p', bmMetric:'Cost per Purchase Order' },
+  { id:'payroll',    name:'Payroll Transactions',      category:'Human Resources',        bmId:'hr',  bmMetric:'Cost per Payroll Transaction' },
+  { id:'hires',      name:'New Hires Onboarded',       category:'Human Resources',        bmId:'hr',  bmMetric:'Cost per Hire' },
+  { id:'orders',     name:'Orders Processed',          category:'Order-to-Cash',          bmId:'o2c', bmMetric:'Cost per Order Processed' },
+  { id:'cashapp',    name:'Cash Applications',         category:'Order-to-Cash',          bmId:'o2c', bmMetric:'Cost per Cash Application' },
+  { id:'tickets',    name:'Service Desk Tickets (L1)', category:'IT Service Management',  bmId:'itsm',bmMetric:'Cost per Ticket - L1 (Service Desk)' },
+  { id:'contacts',   name:'Customer Contacts (Voice)', category:'Customer Service',       bmId:'cs',  bmMetric:'Cost per Contact - Voice' },
+  { id:'freight',    name:'Freight Bill Audits',       category:'Supply Chain',           bmId:'sc',  bmMetric:'Cost per Freight Bill Audit' },
+];
+
+let benchmarkData = null;       // loaded from JSON
+let benchmarkOverrides = {};    // user edits keyed by "catId|metricName" => { topQuartile, median, bottomQuartile }
+let currentStateData = null;    // computed from inputs
+let scenarioResults = null;     // computed from scenarios
+let savingsChart = null;
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // Load benchmark data
+  try {
+    const res = await fetch('/bpo_benchmarks_data.json');
+    benchmarkData = await res.json();
+  } catch (e) {
+    console.error('Failed to load benchmark data:', e);
+    benchmarkData = { categories: [] };
+  }
+
+  initCostTable();
+  initVolumeTable();
+  renderBenchmarkPanels();
+  initTabs();
+});
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TAB SWITCHING
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function initTabs() {
+  document.querySelectorAll('.bc-tab').forEach(tab => {
+    tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+  });
+}
+
+function switchTab(tabId) {
+  document.querySelectorAll('.bc-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tabId));
+  document.querySelectorAll('.bc-tab-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + tabId));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TAB 1: INPUT TABLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function initCostTable() {
+  const body = document.getElementById('costTableBody');
+  body.innerHTML = PROCESSES.map(p => `
+    <tr>
+      <td><span class="row-label">${p.name}</span><br><span style="font-size:0.6875rem;color:#6f6f6f;">${p.category}</span></td>
+      <td><input id="cost_${p.id}" type="number" placeholder="0" oninput="updateCostTotals()" /></td>
+      <td><input id="fte_${p.id}" type="number" placeholder="0" step="0.5" oninput="updateCostTotals()" /></td>
+      <td class="computed" id="cfte_${p.id}">—</td>
+    </tr>
+  `).join('');
+}
+
+function initVolumeTable() {
+  const body = document.getElementById('volumeTableBody');
+  body.innerHTML = PROCESSES.map(p => `
+    <tr>
+      <td><span class="row-label">${p.name}</span></td>
+      <td><input id="vol_${p.id}" type="number" placeholder="0" oninput="updateMonthly('${p.id}')" /></td>
+      <td class="computed" id="mavg_${p.id}">—</td>
+      <td style="font-size:0.75rem;color:#6f6f6f;">${p.category}</td>
+    </tr>
+  `).join('');
+}
+
+function updateCostTotals() {
+  let totalC = 0, totalF = 0;
+  PROCESSES.forEach(p => {
+    const c = num('cost_' + p.id), f = num('fte_' + p.id);
+    totalC += c; totalF += f;
+    document.getElementById('cfte_' + p.id).textContent = f > 0 ? '$' + fmt(Math.round(c / f)) : '—';
+  });
+  document.getElementById('totalCost').textContent = '$' + fmt(totalC);
+  document.getElementById('totalFTEs').textContent = fmt(totalF);
+  document.getElementById('avgCostFTE').textContent = totalF > 0 ? '$' + fmt(Math.round(totalC / totalF)) : '—';
+}
+
+function updateMonthly(id) {
+  const v = num('vol_' + id);
+  document.getElementById('mavg_' + id).textContent = v > 0 ? fmt(Math.round(v / 12)) : '—';
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TAB 2: CURRENT STATE CALCULATION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function calculateCurrentState() {
+  const revenue = num('revenue');
+  let totalCost = 0, totalFTEs = 0, totalOpportunity = 0;
+
+  const processData = PROCESSES.map(p => {
+    const cost = num('cost_' + p.id);
+    const fte = num('fte_' + p.id);
+    const vol = num('vol_' + p.id);
+    totalCost += cost;
+    totalFTEs += fte;
+
+    const cpt = vol > 0 ? cost / vol : 0;
+    const bm = getBenchmark(p.bmId, p.bmMetric);
+    const bestPractice = bm ? bm.topQuartile : 0;
+    const median = bm ? bm.median : 0;
+    const gap = cpt > bestPractice ? cpt - bestPractice : 0;
+    const opportunity = gap * vol;
+    totalOpportunity += opportunity;
+
+    return { ...p, cost, fte, vol, cpt, bestPractice, median, gap, opportunity };
+  });
+
+  currentStateData = { processData, totalCost, totalFTEs, totalOpportunity, revenue };
+
+  // KPIs
+  const sgaPct = revenue > 0 ? (totalCost / revenue * 100) : 0;
+  const totalVol = processData.reduce((s, p) => s + p.vol, 0);
+  const blendedCPT = totalVol > 0 ? totalCost / totalVol : 0;
+  const avgFTECost = totalFTEs > 0 ? totalCost / totalFTEs : 0;
+
+  document.getElementById('currentKPIs').innerHTML = [
+    kpiCard('$' + fmtM(totalCost), 'Total SG&A (In Scope)', sgaPct > 0 ? sgaPct.toFixed(1) + '% of Revenue' : '', sgaPct > 1.2 ? 'delta-red' : 'delta-green'),
+    kpiCard('$' + fmtM(totalOpportunity), 'Gap to Best Practice', 'Annual savings opportunity', 'delta-green'),
+    kpiCard('$' + fmt(Math.round(blendedCPT)), 'Blended CPT', 'All processes combined', ''),
+    kpiCard('$' + fmt(Math.round(avgFTECost)), 'Average Cost / FTE', totalFTEs + ' total FTEs', ''),
+  ].join('');
+
+  // CPT Table
+  const tbody = document.getElementById('cptTableBody');
+  tbody.innerHTML = processData.filter(p => p.vol > 0).map(p => `
+    <tr>
+      <td><span class="row-label">${p.name}</span></td>
+      <td style="text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:600;">$${p.cpt.toFixed(2)}</td>
+      <td style="text-align:right;font-family:'IBM Plex Mono',monospace;" class="bm-top">$${p.bestPractice.toFixed(2)}</td>
+      <td style="text-align:right;font-family:'IBM Plex Mono',monospace;" class="bm-med">$${p.median.toFixed(2)}</td>
+      <td style="text-align:right;font-family:'IBM Plex Mono',monospace;color:${p.gap > 0 ? '#da1e28' : '#24a148'};">$${p.gap.toFixed(2)}</td>
+      <td style="text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:600;color:${p.opportunity > 0 ? '#24a148' : '#161616'};">$${fmt(Math.round(p.opportunity))}</td>
+    </tr>
+  `).join('');
+  document.getElementById('totalOpportunity').textContent = '$' + fmt(Math.round(totalOpportunity));
+
+  // Gap Bars
+  const gapDiv = document.getElementById('gapBars');
+  const maxCPT = Math.max(...processData.filter(p => p.vol > 0).map(p => Math.max(p.cpt, p.median * 1.2, 1)));
+  gapDiv.innerHTML = processData.filter(p => p.vol > 0).map(p => {
+    const pctYou = (p.cpt / maxCPT * 100).toFixed(1);
+    const pctBest = (p.bestPractice / maxCPT * 100).toFixed(1);
+    const color = p.cpt > p.median ? '#da1e28' : p.cpt > p.bestPractice ? '#f1c21b' : '#24a148';
+    return `
+      <div class="gap-bar-wrap">
+        <div class="gap-bar-label">${p.name}</div>
+        <div class="gap-bar-track">
+          <div class="gap-bar-fill" style="width:${pctYou}%;background:${color};"></div>
+          <div class="gap-bar-best" style="left:${pctBest}%;" title="Best Practice: $${p.bestPractice.toFixed(2)}"></div>
+        </div>
+        <div class="gap-bar-value">$${p.cpt.toFixed(2)}</div>
+      </div>`;
+  }).join('');
+
+  switchTab('current');
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TAB 3: SCENARIO CALCULATIONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function selectScenario(btn) {
+  document.querySelectorAll('.scenario-sel').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.scenario-detail-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('sd-' + btn.dataset.scenario).classList.add('active');
+}
+
+function calculateScenarios() {
+  if (!currentStateData) { calculateCurrentState(); }
+  const cs = currentStateData;
+  const totalCost = cs.totalCost;
+
+  const inflRate = num('inflationRate') / 100;
+  const volGrowth = num('volumeGrowth') / 100;
+
+  // Scenario 1: Do Nothing
+  const doNothing = {
+    name: 'Do Nothing',
+    year1: totalCost * (1 + inflRate),
+    year2: totalCost * Math.pow(1 + inflRate, 2),
+    year3: totalCost * Math.pow(1 + inflRate, 3),
+    implCost: 0,
+    riskLevel: 'Low',
+    description: 'Status quo with wage/benefit inflation'
+  };
+
+  // Scenario 2: Automation
+  const autoRate = num('autoRate') / 100;
+  const autoFTEReduc = num('autoFTEReduction') / 100;
+  const autoSoftware = num('autoSoftware');
+  const autoImpl = num('autoImpl');
+  const autoChange = num('autoChange');
+  const autoOngoing = autoSoftware;
+  const autoRetainedCost = totalCost * (1 - autoFTEReduc);
+  const autoTotalAnnual = autoRetainedCost + autoOngoing;
+
+  const automation = {
+    name: 'Automation',
+    year1: autoTotalAnnual * 0.7 + totalCost * 0.3 + autoImpl + autoChange, // 70% ramp Y1
+    year2: autoTotalAnnual,
+    year3: autoTotalAnnual,
+    implCost: autoImpl + autoChange,
+    riskLevel: 'Medium',
+    description: `${(autoRate*100).toFixed(0)}% automated, ${(autoFTEReduc*100).toFixed(0)}% FTE reduction`
+  };
+
+  // Scenario 3: BPO Onshore
+  const onshoreDisc = num('bpoOnshoreDiscount') / 100;
+  const onshoreSetup = num('bpoOnshoreSetup');
+  const onshoreRetained = num('bpoOnshoreRetained');
+  const onshoreContract = num('bpoOnshoreContract');
+  const onshoreAnnual = totalCost * (1 - onshoreDisc) + onshoreRetained + onshoreContract;
+
+  const bpoOnshore = {
+    name: 'BPO — Onshore',
+    year1: onshoreAnnual * 0.6 + totalCost * 0.4 + onshoreSetup, // 60% ramp Y1
+    year2: onshoreAnnual,
+    year3: onshoreAnnual,
+    implCost: onshoreSetup,
+    riskLevel: 'Medium',
+    description: `${(onshoreDisc*100).toFixed(0)}% savings, N. America delivery`
+  };
+
+  // Scenario 4: BPO Nearshore
+  const nearDisc = num('bpoNearDiscount') / 100;
+  const nearSetup = num('bpoNearSetup');
+  const nearRetained = num('bpoNearRetained');
+  const nearContract = num('bpoNearContract');
+  const nearAnnual = totalCost * (1 - nearDisc) + nearRetained + nearContract;
+
+  const bpoNearshore = {
+    name: 'BPO — Nearshore',
+    year1: nearAnnual * 0.5 + totalCost * 0.5 + nearSetup, // 50% ramp Y1
+    year2: nearAnnual,
+    year3: nearAnnual,
+    implCost: nearSetup,
+    riskLevel: 'High',
+    description: `${(nearDisc*100).toFixed(0)}% savings, LatAm/APAC delivery`
+  };
+
+  // Scenario 5: Hybrid
+  const hybAutoP = num('hybridAutoP') / 100;
+  const hybBpoP = num('hybridBpoP') / 100;
+  const hybInP = num('hybridInP') / 100;
+  const hybImpl = num('hybridImpl');
+  const hybRetained = num('hybridRetained');
+
+  // Blended: automation portion at 50% of current, BPO at nearshore rate, in-house at current
+  const hybAutoCost = totalCost * hybAutoP * 0.35;
+  const hybBpoCost = totalCost * hybBpoP * (1 - nearDisc);
+  const hybInCost = totalCost * hybInP;
+  const hybAnnual = hybAutoCost + hybBpoCost + hybInCost + hybRetained + autoSoftware * 0.5;
+
+  const hybrid = {
+    name: 'Hybrid',
+    year1: hybAnnual * 0.55 + totalCost * 0.45 + hybImpl,
+    year2: hybAnnual,
+    year3: hybAnnual,
+    implCost: hybImpl,
+    riskLevel: 'Medium-High',
+    description: `${(hybAutoP*100).toFixed(0)}% auto / ${(hybBpoP*100).toFixed(0)}% BPO / ${(hybInP*100).toFixed(0)}% in-house`
+  };
+
+  scenarioResults = [doNothing, automation, bpoOnshore, bpoNearshore, hybrid];
+
+  // Compute savings vs do-nothing
+  scenarioResults.forEach(s => {
+    s.total3Y = s.year1 + s.year2 + s.year3;
+    s.savingsVsDoNothing = doNothing.year1 + doNothing.year2 + doNothing.year3 - s.total3Y;
+    s.roi = s.implCost > 0 ? (s.savingsVsDoNothing / s.implCost * 100) : 0;
+  });
+
+  renderSummary();
+  switchTab('summary');
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TAB 4: SUMMARY RENDERING
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function renderSummary() {
+  if (!scenarioResults) return;
+  const cs = currentStateData;
+  const dn = scenarioResults[0];
+  const best = scenarioResults.slice(1).reduce((a, b) => b.savingsVsDoNothing > a.savingsVsDoNothing ? b : a);
+
+  // KPIs
+  document.getElementById('summaryKPIs').innerHTML = [
+    kpiCard(best.name, 'Recommended Scenario', fmtM(best.savingsVsDoNothing) + ' 3-yr savings', 'delta-green'),
+    kpiCard('$' + fmtM(best.total3Y), '3-Year Total Cost', 'vs $' + fmtM(dn.total3Y) + ' do-nothing', 'delta-green'),
+    kpiCard(best.roi.toFixed(0) + '%', '3-Year ROI', 'On $' + fmtM(best.implCost) + ' investment', 'delta-green'),
+    kpiCard('$' + fmtM(cs.totalOpportunity), 'Annual Gap to Best', 'Benchmark opportunity', ''),
+  ].join('');
+
+  // Scenario Cards
+  const cards = document.getElementById('scenarioCards');
+  cards.innerHTML = scenarioResults.map((s, i) => {
+    const isRec = s === best && i > 0;
+    const riskPill = s.riskLevel === 'Low' ? 'pill-green' : s.riskLevel === 'High' ? 'pill-red' : 'pill-gold';
+    return `
+      <div class="scenario-card ${isRec ? 'recommended' : ''}">
+        <div class="scenario-card-title">${s.name}</div>
+        <div style="font-size:0.75rem;color:#6f6f6f;margin-bottom:0.75rem;">${s.description}</div>
+        <div class="scenario-row"><span class="scenario-row-label">Year 1</span><span class="scenario-row-val">$${fmtM(s.year1)}</span></div>
+        <div class="scenario-row"><span class="scenario-row-label">Year 2</span><span class="scenario-row-val">$${fmtM(s.year2)}</span></div>
+        <div class="scenario-row"><span class="scenario-row-label">Year 3</span><span class="scenario-row-val">$${fmtM(s.year3)}</span></div>
+        <div class="scenario-row" style="border-top:2px solid #161616;margin-top:0.5rem;padding-top:0.5rem;"><span class="scenario-row-label" style="font-weight:600;">3-Year Total</span><span class="scenario-row-val">$${fmtM(s.total3Y)}</span></div>
+        <div class="scenario-row"><span class="scenario-row-label">vs Do Nothing</span><span class="scenario-row-val ${s.savingsVsDoNothing > 0 ? 'delta-green' : ''}">${s.savingsVsDoNothing > 0 ? '+' : ''}$${fmtM(s.savingsVsDoNothing)}</span></div>
+        ${s.implCost > 0 ? `<div class="scenario-row"><span class="scenario-row-label">Implementation</span><span class="scenario-row-val">$${fmtM(s.implCost)}</span></div>` : ''}
+        ${s.roi > 0 ? `<div class="scenario-row"><span class="scenario-row-label">3-Year ROI</span><span class="scenario-row-val">${s.roi.toFixed(0)}%</span></div>` : ''}
+        <div style="margin-top:0.75rem;"><span class="pill ${riskPill}">${s.riskLevel} Risk</span></div>
+      </div>`;
+  }).join('');
+
+  // Year-by-Year Table
+  const ybyBody = document.getElementById('ybyTableBody');
+  ybyBody.innerHTML = scenarioResults.map(s => {
+    const cls = (v) => v > 0 ? 'positive' : v < 0 ? 'negative' : '';
+    return `<tr>
+      <td>${s.name}</td>
+      <td class="${cls(-s.year1)}">$${fmtM(s.year1)}</td>
+      <td>$${fmtM(s.year2)}</td>
+      <td>$${fmtM(s.year3)}</td>
+      <td style="font-weight:700;">$${fmtM(s.total3Y)}</td>
+      <td class="${s.savingsVsDoNothing > 0 ? 'positive' : ''}">${s.roi > 0 ? s.roi.toFixed(0) + '%' : '—'}</td>
+    </tr>`;
+  }).join('');
+
+  // Savings Chart
+  renderSavingsChart();
+}
+
+function renderSavingsChart() {
+  if (savingsChart) savingsChart.destroy();
+  const ctx = document.getElementById('savingsChart').getContext('2d');
+  const dn = scenarioResults[0];
+  const dnCum = [dn.year1, dn.year1 + dn.year2, dn.year1 + dn.year2 + dn.year3];
+  const colors = ['#8d8d8d', '#007d79', '#0f62fe', '#a56eff', '#da1e28'];
+
+  savingsChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Year 1', 'Year 2', 'Year 3'],
+      datasets: scenarioResults.map((s, i) => {
+        const cum = [s.year1, s.year1 + s.year2, s.year1 + s.year2 + s.year3];
+        return {
+          label: s.name,
+          data: cum.map((v, j) => dnCum[j] - v), // savings vs do-nothing cumulative
+          borderColor: colors[i],
+          backgroundColor: colors[i] + '22',
+          borderWidth: i === 0 ? 1 : 2,
+          borderDash: i === 0 ? [5, 5] : [],
+          fill: false,
+          tension: 0.3,
+          pointRadius: 4,
+        };
+      })
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { family: "'IBM Plex Sans', sans-serif", size: 12 }, usePointStyle: true } },
+        tooltip: { callbacks: { label: (c) => c.dataset.label + ': $' + fmtM(c.raw) } }
+      },
+      scales: {
+        y: {
+          title: { display: true, text: 'Cumulative Savings vs Do-Nothing ($)', font: { family: "'IBM Plex Sans', sans-serif", size: 12 } },
+          ticks: { callback: v => '$' + fmtM(v), font: { family: "'IBM Plex Mono', monospace", size: 11 } },
+          grid: { color: '#e0e0e0' }
+        },
+        x: {
+          ticks: { font: { family: "'IBM Plex Sans', sans-serif", size: 12 } },
+          grid: { display: false }
+        }
+      }
+    }
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TAB 5: BENCHMARK PANELS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function renderBenchmarkPanels() {
+  if (!benchmarkData || !benchmarkData.categories) return;
+  const container = document.getElementById('benchmarkPanels');
+  container.innerHTML = benchmarkData.categories.map((cat, ci) => {
+    const rows = cat.metrics.map(m => {
+      const key = cat.id + '|' + m.metric;
+      const ov = benchmarkOverrides[key] || {};
+      const tq = ov.topQuartile !== undefined ? ov.topQuartile : m.topQuartile;
+      const med = ov.median !== undefined ? ov.median : m.median;
+      const bq = ov.bottomQuartile !== undefined ? ov.bottomQuartile : m.bottomQuartile;
+      return `<tr>
+        <td style="font-weight:500;">${m.metric}<br><span class="bm-source">${m.source}</span></td>
+        <td style="text-align:center;font-size:0.75rem;color:#6f6f6f;">${m.unit}</td>
+        <td style="text-align:right;"><input class="bm-editable bm-top" value="${tq}" data-key="${key}" data-field="topQuartile" data-default="${m.topQuartile}" onchange="updateBenchmarkOverride(this)" /></td>
+        <td style="text-align:right;"><input class="bm-editable bm-med" value="${med}" data-key="${key}" data-field="median" data-default="${m.median}" onchange="updateBenchmarkOverride(this)" /></td>
+        <td style="text-align:right;"><input class="bm-editable bm-bot" value="${bq}" data-key="${key}" data-field="bottomQuartile" data-default="${m.bottomQuartile}" onchange="updateBenchmarkOverride(this)" /></td>
+        <td style="font-size:0.6875rem;color:#6f6f6f;max-width:200px;line-height:1.3;">${m.notes || ''}</td>
+      </tr>`;
+    }).join('');
+
+    return `
+      <div class="bm-card">
+        <div class="bm-card-header" onclick="toggleBmCard(this)">
+          <span class="bm-card-title">${cat.name}</span>
+          <span class="bm-card-toggle">${cat.metrics.length} metrics &#9662;</span>
+        </div>
+        <div class="bm-card-body ${ci === 0 ? 'open' : ''}">
+          <table class="bm-table">
+            <thead><tr><th>Metric</th><th style="text-align:center;">Unit</th><th style="text-align:right;">Top Quartile</th><th style="text-align:right;">Median</th><th style="text-align:right;">Bottom Quartile</th><th>Notes</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function toggleBmCard(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+  const toggle = header.querySelector('.bm-card-toggle');
+  toggle.innerHTML = body.classList.contains('open')
+    ? toggle.textContent.replace('▸', '') + ' &#9662;'
+    : toggle.textContent.replace('▾', '') + ' &#9656;';
+}
+
+function updateBenchmarkOverride(el) {
+  const key = el.dataset.key;
+  const field = el.dataset.field;
+  const val = parseFloat(el.value);
+  if (!benchmarkOverrides[key]) benchmarkOverrides[key] = {};
+  benchmarkOverrides[key][field] = isNaN(val) ? parseFloat(el.dataset.default) : val;
+  el.style.background = val !== parseFloat(el.dataset.default) ? '#fef3cd' : '';
+}
+
+function resetBenchmarks() {
+  benchmarkOverrides = {};
+  renderBenchmarkPanels();
+}
+
+function getBenchmark(catId, metricName) {
+  if (!benchmarkData) return null;
+  const cat = benchmarkData.categories.find(c => c.id === catId);
+  if (!cat) return null;
+  const m = cat.metrics.find(mm => mm.metric === metricName);
+  if (!m) return null;
+  const key = catId + '|' + metricName;
+  const ov = benchmarkOverrides[key] || {};
+  return {
+    topQuartile: ov.topQuartile !== undefined ? ov.topQuartile : m.topQuartile,
+    median: ov.median !== undefined ? ov.median : m.median,
+    bottomQuartile: ov.bottomQuartile !== undefined ? ov.bottomQuartile : m.bottomQuartile,
+  };
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SAMPLE DATA
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function loadSampleData() {
+  const sample = {
+    companyName: 'Acme Industrial Corp',
+    revenue: 500000000,
+    fiscalYear: 2026,
+    industry: 'manufacturing',
+    totalEmployees: 4500,
+    costs: { invoices:800000, payments:300000, journals:250000, recon:200000, po:400000, payroll:180000, hires:350000, orders:500000, cashapp:150000, tickets:600000, contacts:900000, freight:120000 },
+    ftes: { invoices:10, payments:4, journals:3, recon:3, po:5, payroll:2, hires:4, orders:6, cashapp:2, tickets:8, contacts:12, freight:2 },
+    volumes: { invoices:80000, payments:50000, journals:25000, recon:3000, po:12000, payroll:108000, hires:450, orders:65000, cashapp:55000, tickets:36000, contacts:120000, freight:24000 }
+  };
+
+  document.getElementById('companyName').value = sample.companyName;
+  document.getElementById('revenue').value = sample.revenue;
+  document.getElementById('fiscalYear').value = sample.fiscalYear;
+  document.getElementById('industry').value = sample.industry;
+  document.getElementById('totalEmployees').value = sample.totalEmployees;
+
+  PROCESSES.forEach(p => {
+    if (sample.costs[p.id]) document.getElementById('cost_' + p.id).value = sample.costs[p.id];
+    if (sample.ftes[p.id]) document.getElementById('fte_' + p.id).value = sample.ftes[p.id];
+    if (sample.volumes[p.id]) {
+      document.getElementById('vol_' + p.id).value = sample.volumes[p.id];
+      updateMonthly(p.id);
+    }
+  });
+  updateCostTotals();
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EXPORT
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function exportSummary() {
+  if (!scenarioResults) return;
+  let csv = 'Scenario,Year 1,Year 2,Year 3,3-Year Total,Savings vs Do-Nothing,ROI\n';
+  scenarioResults.forEach(s => {
+    csv += `"${s.name}",${Math.round(s.year1)},${Math.round(s.year2)},${Math.round(s.year3)},${Math.round(s.total3Y)},${Math.round(s.savingsVsDoNothing)},${s.roi > 0 ? s.roi.toFixed(1) + '%' : 'N/A'}\n`;
+  });
+  downloadCSV(csv, 'business_case_summary.csv');
+}
+
+function exportBenchmarks() {
+  if (!benchmarkData) return;
+  let csv = 'Category,Metric,Unit,Top Quartile,Median,Bottom Quartile,Source,Notes\n';
+  benchmarkData.categories.forEach(cat => {
+    cat.metrics.forEach(m => {
+      const bm = getBenchmark(cat.id, m.metric);
+      csv += `"${cat.name}","${m.metric}","${m.unit}",${bm.topQuartile},${bm.median},${bm.bottomQuartile},"${m.source}","${(m.notes||'').replace(/"/g,'""')}"\n`;
+    });
+  });
+  downloadCSV(csv, 'bpo_benchmarks.csv');
+}
+
+function downloadCSV(csv, filename) {
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   UTILITIES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function num(id) { return parseFloat(document.getElementById(id)?.value) || 0; }
+function fmt(n) { return n.toLocaleString('en-US'); }
+function fmtM(n) {
+  const abs = Math.abs(n);
+  if (abs >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+  if (abs >= 1e3) return (n / 1e3).toFixed(0) + 'K';
+  return n.toFixed(0);
+}
+function kpiCard(value, label, delta, deltaClass) {
+  return `<div class="bc-kpi"><div class="bc-kpi-value">${value}</div><div class="bc-kpi-label">${label}</div>${delta ? `<div class="bc-kpi-delta ${deltaClass}">${delta}</div>` : ''}</div>`;
+}
+</script>
+</body>
+</html>
