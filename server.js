@@ -1,4 +1,5 @@
 require('dotenv').config();
+const APP_VERSION = '2.1.0'; // updated: assessment questions, summary view, business case calculator
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');

@@ -322,503 +322,525 @@ const ASSESSMENTS = {
     label: 'Supply Chain',
     dimensions: ['Procurement','Supply Chain','Operations & Logistics','Risk & Compliance'],
     questions: [
-      { id:'s1', dimension:'Procurement', axis:'Operating Model', domain:'SCM \u2014 Procurement',
-        text:'How is your procurement function structured and governed across business units?',
+      // ── PROCUREMENT (5) ──────────────────────────────────────────────────────
+      { id:'s1', dimension:'Procurement', axis:'Process & Policy', domain:'SCM \u2014 Procurement',
+        text:'How standardized and documented are your end-to-end Source-to-Contract (S2C) and Procure-to-Pay (P2P) processes?',
         options:[
-          {label:'A',text:'Center-led procurement COE with category management, >90% spend under management, and clear RACI across all BUs'},
-          {label:'B',text:'Hybrid model with some category management; 70\u201390% spend under management with partial BU alignment'},
-          {label:'C',text:'Decentralized procurement with fragmented ownership; 40\u201370% spend under management and inconsistent governance'},
-          {label:'D',text:'No formal procurement organization; <40% spend under management, purchasing handled ad hoc by requisitioners'}
+          {label:'A',text:'Fully documented global procurement policy covering sourcing, contracting, and P2P; standardized across all categories and regions; strategic sourcing methodology (RFx process) for >80% of spend; contract lifecycle management with templates and approval workflows; PO compliance >95%; supplier onboarding <5 days.'},
+          {label:'B',text:'Regional procurement policies with global guidelines; sourcing methodology for 60-80% of spend; standard contract templates for major categories; PO compliance 85-95%; supplier onboarding 5-10 days; some regional variations.'},
+          {label:'C',text:'Basic procurement procedures documented; sourcing methodology for <60% of spend; limited contract standardization; PO compliance 70-85%; supplier onboarding 10-15 days; significant process variations by location.'},
+          {label:'D',text:'Minimal documentation; ad-hoc sourcing approach; no standard contracts; PO compliance <70%; supplier onboarding >15 days; highly decentralized with no consistency.'}
         ]},
-      { id:'s2', dimension:'Procurement', axis:'Metrics', domain:'SCM \u2014 Procurement',
-        text:'What procurement performance metrics are actively tracked and benchmarked?',
-        options:[
-          {label:'A',text:'Full KPI suite tracked in real time: >92% spend under contract, PO cycle time <2.4 days, cost avoidance >3% of addressable spend (APQC top quartile)'},
-          {label:'B',text:'Core KPIs tracked monthly (spend under contract 80\u201392%, PO cycle time 2.4\u20134 days) with periodic benchmarking'},
-          {label:'C',text:'Limited metrics tracked quarterly (spend under contract 60\u201380%, PO cycle time 4\u20137 days), no external benchmarking'},
-          {label:'D',text:'No systematic KPI tracking; PO cycle time >7 days, spend under contract unknown or <60%'}
-        ]},
-      { id:'s3', dimension:'Procurement', axis:'Process & Policy', domain:'SCM \u2014 Procurement',
-        text:'How mature are your source-to-contract and procure-to-pay processes?',
-        options:[
-          {label:'A',text:'End-to-end S2C and P2P processes standardized with >95% PO compliance, 3-way match rate >98%, and touchless invoice processing >75%'},
-          {label:'B',text:'Documented S2C/P2P processes with 85\u201395% PO compliance, 3-way match rate 90\u201398%, touchless invoicing 50\u201375%'},
-          {label:'C',text:'Partially documented processes with 70\u201385% PO compliance, 3-way match rate 75\u201390%, manual invoice handling predominant'},
-          {label:'D',text:'Ad hoc procurement processes; PO compliance <70%, frequent maverick buying, 3-way match rate <75%'}
-        ]},
-      { id:'s4', dimension:'Procurement', axis:'Technology', domain:'SCM \u2014 Procurement',
+      { id:'s2', dimension:'Procurement', axis:'Technology', domain:'SCM \u2014 Procurement',
         text:'What level of technology enablement supports your procurement operations?',
         options:[
-          {label:'A',text:'Integrated e-procurement suite (S2C + P2P) with spend analytics, AI-driven sourcing recommendations, supplier portal, and e-auction capability covering >90% of categories'},
-          {label:'B',text:'ERP-based P2P with bolt-on e-sourcing tools; spend cube analytics covering 70\u201390% of categories'},
-          {label:'C',text:'Basic ERP requisition/PO module with limited reporting; sourcing managed via spreadsheets and email for most categories'},
-          {label:'D',text:'No procurement technology; paper-based or email-driven purchasing with no spend visibility'}
+          {label:'A',text:'Integrated Source-to-Pay platform (Ariba, Coupa, Jaggaer, etc.); e-sourcing with auction capabilities; contract repository with AI-powered search and obligation tracking; supplier portal with self-service; automated PO creation and approval workflows; supplier performance scorecards; spend analytics with AI-driven insights; >80% of spend under management.'},
+          {label:'B',text:'Procurement system for sourcing and PO management; contract repository with search capability; supplier portal for key vendors; workflow-based approvals; standard spend reporting; 60-80% spend visibility.'},
+          {label:'C',text:'Basic e-procurement for PO creation; spreadsheet-based sourcing; contracts stored in shared drives; email-based supplier communication; manual approval routing; limited spend analytics; 40-60% spend visibility.'},
+          {label:'D',text:'Manual procurement processes; paper/email-based RFx; no contract repository; no supplier portal; paper-based approvals; no spend analytics; <40% spend visibility.'}
         ]},
-      { id:'s5', dimension:'Procurement', axis:'Controls', domain:'SCM \u2014 Procurement',
-        text:'How effective are your procurement controls for spend governance and supplier risk?',
+      { id:'s3', dimension:'Procurement', axis:'Controls', domain:'SCM \u2014 Procurement',
+        text:'How effective are your procurement controls and governance?',
         options:[
-          {label:'A',text:'Automated approval workflows with delegation of authority matrix, real-time budget checks, supplier qualification gates, and audit trail; <2% policy exceptions'},
-          {label:'B',text:'Systematic approval workflows and supplier vetting in place; 2\u20135% policy exceptions with periodic audit reviews'},
-          {label:'C',text:'Manual approval processes with inconsistent enforcement; 5\u201310% policy exceptions, reactive supplier reviews'},
-          {label:'D',text:'Minimal controls; >10% unauthorized purchases, no formal supplier qualification or approval thresholds'}
+          {label:'A',text:'Enforced segregation of duties (requester/buyer/approver/receiver); automated 3-way match >98%; real-time spend controls against budget; contract compliance monitoring with alerts for maverick spend; supplier risk assessments conducted annually for 100% of critical suppliers; procurement audit dashboard with KPIs; policy exception rate <2%.'},
+          {label:'B',text:'Segregation of duties documented and monitored; 3-way match 90-98%; monthly spend vs. budget reviews; contract compliance spot-checks; supplier risk assessments for top 80% of spend; quarterly procurement metrics; policy exception rate 2-5%.'},
+          {label:'C',text:'Basic segregation of duties; manual 3-way match 75-90%; quarterly budget reviews; ad-hoc contract compliance; supplier risk assessments for top 20% only; semi-annual metrics; policy exception rate 5-10%.'},
+          {label:'D',text:'Weak segregation of duties; <75% 3-way match; annual or no budget reconciliation; no contract compliance monitoring; no formal supplier risk assessment; no procurement metrics; policy exception rate >10%.'}
         ]},
+      { id:'s4', dimension:'Procurement', axis:'Metrics', domain:'SCM \u2014 Procurement',
+        text:'What procurement performance metrics do you track and report?',
+        options:[
+          {label:'A',text:'Real-time dashboard tracking: sourcing cycle time (<60 days); cost savings vs. baseline (>5% annually); contract utilization rate (>85%); supplier on-time delivery (>95%); supplier quality defect rate (<2%); maverick spend (<5%); e-procurement adoption (>90%); supplier diversity spend tracked by category.'},
+          {label:'B',text:'Monthly reporting on: sourcing cycle time 60-90 days; cost savings 3-5% annually; contract utilization 70-85%; supplier on-time delivery 90-95%; defect rate 2-5%; maverick spend 5-10%; e-procurement adoption 70-90%; basic diversity tracking.'},
+          {label:'C',text:'Quarterly reports on cost savings 1-3%; on-time delivery 80-90%; defect rate 5-10%; maverick spend 10-20%; limited cycle time tracking; e-procurement adoption 50-70%; no diversity metrics.'},
+          {label:'D',text:'Ad-hoc or no reporting; cost savings <1% or not tracked; on-time delivery <80%; defect rate >10%; maverick spend >20%; no cycle time tracking; e-procurement adoption <50%; no diversity tracking.'}
+        ]},
+      { id:'s5', dimension:'Procurement', axis:'Operating Model', domain:'SCM \u2014 Procurement',
+        text:'How is your procurement function organized and what capabilities does it have?',
+        options:[
+          {label:'A',text:'Centralized procurement COE with category management structure; embedded procurement business partners in key functions; strategic sourcing team with category expertise; contract management specialists; supplier relationship management (SRM) program for strategic suppliers; continuous improvement program with documented savings; talent development and certification programs (CPSM, CIPS).'},
+          {label:'B',text:'Centralized procurement team with some category specialization; procurement liaisons in major business units; strategic sourcing for key categories; dedicated contract manager; SRM for top 20% of suppliers; periodic process improvements; basic training programs.'},
+          {label:'C',text:'Hybrid model with central procurement and local buyers; limited category expertise; transactional focus with some strategic sourcing; contracts managed ad-hoc; informal supplier relationships; reactive improvements; on-the-job training only.'},
+          {label:'D',text:'Fully decentralized procurement; no category expertise; transactional purchasing only; no contract management function; no SRM; no improvement initiatives; no formal training.'}
+        ]},
+      // ── SUPPLY CHAIN PLANNING (5) ────────────────────────────────────────────
       { id:'s6', dimension:'Supply Chain', axis:'Operating Model', domain:'SCM \u2014 Supply Chain',
-        text:'How is your supply chain planning function organized and integrated with execution?',
+        text:'How is your supply chain planning function organized and integrated?',
         options:[
-          {label:'A',text:'Integrated S&OP/IBP process with cross-functional alignment, demand-supply balancing at SKU-location level, and planning horizon >12 months with monthly refresh'},
-          {label:'B',text:'Formal S&OP process in place with 6\u201312 month horizon; demand and supply planning coordinated but not fully integrated with financial planning'},
-          {label:'C',text:'Informal demand planning with 3\u20136 month horizon; supply planning reactive to orders, limited cross-functional coordination'},
-          {label:'D',text:'No structured planning process; supply chain operates in firefighting mode with <3 month visibility'}
+          {label:'A',text:'Integrated S&OP/IBP (Integrated Business Planning) process with monthly executive reviews; cross-functional planning team (demand, supply, finance, sales); rolling 18-24 month planning horizon; demand-supply balancing at SKU-location level; scenario planning for what-if analysis; one-number forecast used across the organization; SIOP maturity level 4-5.'},
+          {label:'B',text:'S&OP process with quarterly executive reviews; planning team with demand and supply representation; 12-month rolling forecast; demand-supply balancing at product family level; limited scenario planning; mostly aligned forecast; SIOP maturity level 3.'},
+          {label:'C',text:'Basic demand and supply planning done separately; semi-annual management reviews; 6-12 month planning horizon; product category-level planning; no scenario capability; multiple forecast versions; SIOP maturity level 1-2.'},
+          {label:'D',text:'Disconnected planning functions; annual planning only; <6 month visibility; aggregate planning; no what-if capability; conflicting forecasts across functions; no formal S&OP.'}
         ]},
       { id:'s7', dimension:'Supply Chain', axis:'Metrics', domain:'SCM \u2014 Supply Chain',
-        text:'What supply chain performance metrics are measured against industry benchmarks?',
+        text:'What supply chain performance metrics are measured and tracked?',
         options:[
-          {label:'A',text:'Forecast accuracy >80% at SKU level, OTIF >96%, inventory turns at APQC top quartile for sector, perfect order rate >95%, cash-to-cash cycle <30 days'},
-          {label:'B',text:'Forecast accuracy 65\u201380%, OTIF 90\u201396%, inventory turns at median benchmark, perfect order rate 85\u201395%, cash-to-cash 30\u201350 days'},
-          {label:'C',text:'Forecast accuracy 50\u201365%, OTIF 80\u201390%, inventory turns below median, perfect order rate 70\u201385%, cash-to-cash 50\u201375 days'},
-          {label:'D',text:'Forecast accuracy <50% or unmeasured, OTIF <80%, excessive inventory with no turns tracking, cash-to-cash >75 days'}
+          {label:'A',text:'Integrated KPI dashboard with targets: forecast accuracy >80% (MAPE or bias); demand plan accuracy >85%; inventory turns >8x or days on hand <45 days; perfect order rate >95%; OTIF (on-time in-full) >96%; cash-to-cash cycle <30 days; supply plan attainment >90%; plan vs. actual variance <5%.'},
+          {label:'B',text:'Monthly KPI reporting: forecast accuracy 70-80%; demand plan accuracy 75-85%; inventory turns 5-8x or DOH 45-75 days; perfect order 90-95%; OTIF 91-96%; cash-to-cash 30-60 days; supply plan attainment 80-90%; variance 5-10%.'},
+          {label:'C',text:'Quarterly metrics: forecast accuracy 60-70%; demand accuracy 65-75%; inventory turns 3-5x or DOH 75-120 days; perfect order 80-90%; OTIF 80-90%; cash-to-cash 60-90 days; supply attainment 70-80%; variance 10-15%.'},
+          {label:'D',text:'Ad-hoc or annual metrics: forecast accuracy <60%; demand accuracy <65%; inventory turns <3x or DOH >120 days; perfect order <80%; OTIF <80%; cash-to-cash >90 days; supply attainment <70%; variance >15%.'}
         ]},
       { id:'s8', dimension:'Supply Chain', axis:'Process & Policy', domain:'SCM \u2014 Supply Chain',
-        text:'How standardized are your demand planning, inventory management, and replenishment processes?',
+        text:'How standardized are your demand planning, supply planning, and inventory management processes?',
         options:[
-          {label:'A',text:'Statistical demand sensing with ML augmentation, automated safety stock optimization, VMI/consignment for top 20% suppliers, and ABC-XYZ segmented replenishment policies'},
-          {label:'B',text:'Statistical forecasting with manual adjustments, defined safety stock formulas, periodic inventory reviews with segmented policies for A-items'},
-          {label:'C',text:'Spreadsheet-based forecasting, rule-of-thumb safety stocks, min/max replenishment with infrequent parameter reviews'},
-          {label:'D',text:'No formal demand planning; reorder-point purchasing based on gut feel, frequent stockouts and overstock situations'}
+          {label:'A',text:'Documented global demand planning policy with statistical forecasting and demand sensing; consensus planning process with sales input; supply planning with finite capacity and materials constraints; safety stock optimization models; inventory segmentation (ABC/XYZ) with differentiated policies; demand-driven replenishment; exception-based management with alerts; monthly plan updates.'},
+          {label:'B',text:'Regional demand planning guidelines; statistical forecasting with judgmental overlay; supply planning with capacity checks; rule-based safety stock; ABC inventory classification with basic policies; MRP-driven replenishment; weekly exception reviews.'},
+          {label:'C',text:'Basic demand forecasting procedures; spreadsheet-based statistical methods; supply planning with limited constraints visibility; fixed safety stock levels; single inventory policy; periodic replenishment; monthly exception reviews.'},
+          {label:'D',text:'No formal planning process; judgmental forecasting only; supply planning by availability; no safety stock methodology; no inventory segmentation; ad-hoc replenishment; reactive exception handling.'}
         ]},
       { id:'s9', dimension:'Supply Chain', axis:'Technology', domain:'SCM \u2014 Supply Chain',
-        text:'What planning and visibility technologies support your supply chain?',
+        text:'What planning and visibility technologies support your supply chain operations?',
         options:[
-          {label:'A',text:'Advanced planning system (APS) with digital twin/control tower, real-time multi-tier supplier visibility, and integrated demand sensing covering >90% of supply network'},
-          {label:'B',text:'ERP-based MRP/DRP with supplemental planning tools; supply chain visibility for Tier 1 suppliers and key logistics nodes'},
-          {label:'C',text:'Basic ERP MRP with limited planning capability; visibility confined to internal operations, manual data exchange with suppliers'},
-          {label:'D',text:'No supply chain planning technology; spreadsheets and phone/email for coordination, no end-to-end visibility'}
+          {label:'A',text:'Advanced planning system (APS) with demand planning, supply planning, and inventory optimization modules (e.g., Kinaxis, Blue Yonder, o9, SAP IBP); AI/ML-powered demand forecasting; real-time supply chain visibility platform; digital twin for scenario modeling; integration with ERP, WMS, TMS; control tower with alerts and exception management; cloud-based with mobile access.'},
+          {label:'B',text:'Planning software integrated with ERP; statistical forecasting tools; supply planning with MRP/APS; inventory planning module; supply chain visibility for key nodes; standard integration; monthly plan updates; web-based access.'},
+          {label:'C',text:'ERP-based MRP for supply planning; spreadsheet-based demand planning; basic inventory reports; limited visibility (internal only); manual data integration; weekly updates; desktop access only.'},
+          {label:'D',text:'Spreadsheets for all planning; no forecasting tools; no planning system; no supply chain visibility; email-based communication; ad-hoc updates; no system integration.'}
         ]},
       { id:'s10', dimension:'Supply Chain', axis:'Controls', domain:'SCM \u2014 Supply Chain',
         text:'What controls govern supply chain master data integrity and planning parameter accuracy?',
         options:[
-          {label:'A',text:'Automated master data governance with >98% BOM/routing accuracy, systematic lead time validation, and exception-based review of planning parameters quarterly'},
-          {label:'B',text:'Defined data stewardship with 95\u201398% BOM accuracy, semi-annual planning parameter reviews, and documented change control processes'},
-          {label:'C',text:'Informal data management with 85\u201395% BOM accuracy, planning parameters rarely reviewed, reactive corrections when problems surface'},
-          {label:'D',text:'No master data governance; <85% BOM accuracy, unreliable lead times, planning parameters set at implementation and never updated'}
+          {label:'A',text:'Centralized master data governance with data stewards; automated validation rules for planning parameters (lead times, lot sizes, safety stock, MOQ); data quality dashboard with >98% accuracy; workflow-based approvals for master data changes; regular audits of planning parameters vs. actuals (quarterly); exception alerts for out-of-tolerance variance; full audit trail of changes.'},
+          {label:'B',text:'Master data ownership defined; validation rules for key parameters; data quality checks with 90-98% accuracy; approval process for critical changes; semi-annual parameter audits; exception reporting; audit trail for major changes.'},
+          {label:'C',text:'Informal master data ownership; limited validation; data quality 80-90%; ad-hoc approval for changes; annual review of parameters; manual exception tracking; limited audit trail.'},
+          {label:'D',text:'No master data governance; no validation rules; data quality <80%; no approval process; no parameter audits; no exception tracking; no audit trail.'}
         ]},
-      { id:'s11', dimension:'Operations & Logistics', axis:'Operating Model', domain:'SCM \u2014 Operations & Logistics',
-        text:'How is your warehouse and logistics network designed and governed?',
+      // ── OPERATIONS & LOGISTICS (5) ───────────────────────────────────────────
+      { id:'s11', dimension:'Operations & Logistics', axis:'Process & Policy', domain:'SCM \u2014 Operations & Logistics',
+        text:'How standardized are your warehouse, transportation, and logistics processes?',
         options:[
-          {label:'A',text:'Network-optimized footprint with clear 3PL/in-house strategy, defined service tiers by customer segment, and centralized transportation management across all modes'},
-          {label:'B',text:'Rationalized network with partial 3PL usage; transportation managed regionally with some cross-regional coordination'},
-          {label:'C',text:'Legacy network with ad hoc 3PL relationships; transportation managed locally per site with limited optimization'},
-          {label:'D',text:'Unplanned facility footprint; no logistics strategy, carrier selection based solely on spot rates, no network analysis conducted'}
+          {label:'A',text:'Documented global SOPs for receiving, putaway, picking, packing, shipping, and returns; Lean/Six Sigma methodology applied; cycle counting program with >99% inventory accuracy; defined SLAs for order fulfillment (<24 hours for standard orders); transportation routing guide and carrier selection criteria; freight audit process; continuous improvement culture with documented productivity gains.'},
+          {label:'B',text:'Regional SOPs for warehouse and logistics; some Lean principles applied; cycle counting with 95-99% accuracy; SLA 24-48 hours; transportation guidelines for key lanes; periodic freight audits; improvement initiatives in place.'},
+          {label:'C',text:'Basic procedures documented; limited process optimization; annual physical inventory with 90-95% accuracy; SLA 2-5 days; carrier selection ad-hoc; spot freight audits; reactive improvements.'},
+          {label:'D',text:'Minimal documentation; no process optimization; inventory accuracy <90%; no SLA definition; no transportation standards; no freight audit; no improvement program.'}
         ]},
-      { id:'s12', dimension:'Operations & Logistics', axis:'Metrics', domain:'SCM \u2014 Operations & Logistics',
-        text:'What operational and logistics KPIs are tracked against benchmarks?',
+      { id:'s12', dimension:'Operations & Logistics', axis:'Technology', domain:'SCM \u2014 Operations & Logistics',
+        text:'What technology supports your warehouse and logistics operations?',
         options:[
-          {label:'A',text:'Warehouse picking accuracy >99.5%, dock-to-stock <4 hours, freight cost <5% of revenue, fleet utilization >85%, on-time shipment >98% (Hackett top quartile)'},
-          {label:'B',text:'Picking accuracy 98\u201399.5%, dock-to-stock 4\u20138 hours, freight cost 5\u20137% of revenue, fleet utilization 70\u201385%, on-time shipment 93\u201398%'},
-          {label:'C',text:'Picking accuracy 95\u201398%, dock-to-stock 8\u201324 hours, freight cost 7\u201310% of revenue, fleet utilization 55\u201370%, on-time shipment 85\u201393%'},
-          {label:'D',text:'Picking accuracy <95%, dock-to-stock >24 hours, freight cost >10% of revenue or unknown, fleet utilization <55%, on-time shipment <85%'}
+          {label:'A',text:'Warehouse Management System (WMS) with RF/barcode scanning and directed putaway/picking; Transportation Management System (TMS) with optimization, load planning, and dynamic routing; automated material handling (conveyor, sorter, AS/RS); IoT sensors for real-time asset tracking; yard management system; integration with ERP and carriers; predictive analytics for capacity planning; mobile devices for >95% of warehouse operations.'},
+          {label:'B',text:'WMS with barcode scanning and pick/pack functionality; TMS with load planning and carrier tendering; some automated material handling; tracking for shipments in transit; basic yard management; ERP integration; mobile devices for 70-95% of operations.'},
+          {label:'C',text:'Basic WMS or ERP warehouse module; manual transportation planning; limited automation (forklifts only); tracking via carrier websites; no yard management; limited integration; mobile devices for <70% of operations.'},
+          {label:'D',text:'Paper-based warehouse operations; no WMS or TMS; no automation; no real-time tracking; no yard management; no integration; no mobile technology.'}
         ]},
-      { id:'s13', dimension:'Operations & Logistics', axis:'Process & Policy', domain:'SCM \u2014 Operations & Logistics',
-        text:'How standardized are your warehouse operations and transportation management processes?',
+      { id:'s13', dimension:'Operations & Logistics', axis:'Controls', domain:'SCM \u2014 Operations & Logistics',
+        text:'What controls exist to ensure operational accuracy and compliance?',
         options:[
-          {label:'A',text:'SOPs for all warehouse processes with engineered labor standards, wave/batch planning optimization, automated load building, and carrier allocation rules yielding <1% shipping errors'},
-          {label:'B',text:'Documented SOPs for core processes, defined labor expectations, systematic carrier selection with routing guides; 1\u20133% shipping errors'},
-          {label:'C',text:'Partial SOPs, no labor standards, manual carrier selection and load planning; 3\u20135% shipping errors'},
-          {label:'D',text:'No standardized processes; tribal knowledge-driven operations, ad hoc shipping decisions, >5% error rates'}
+          {label:'A',text:'Automated receiving verification with 3-way match (PO-receipt-invoice); 100% cycle counting program with daily counts; automated put-away and pick verification; quality inspection with <1% defect escape rate; shipment verification with weight/dimension validation; automated carrier compliance checks; daily inventory reconciliation with <0.5% variance; management dashboard with operational KPIs.'},
+          {label:'B',text:'System-based receiving verification; cycle counting covering A items and 80% of SKUs; barcode verification for picking; quality checks for critical items; 1-3% defect rate; shipment verification for high-value orders; periodic carrier audits; weekly inventory reconciliation with 0.5-2% variance; weekly KPI reporting.'},
+          {label:'C',text:'Manual receiving verification; quarterly cycle counting for 50% of SKUs; visual pick verification; spot quality checks; 3-5% defect rate; random shipment verification; annual carrier review; monthly inventory reconciliation with 2-5% variance; monthly KPI reviews.'},
+          {label:'D',text:'No receiving verification; annual physical count only; no pick verification; no quality process; defect rate >5%; no shipment verification; no carrier compliance; inventory reconciliation semi-annually or not at all; >5% variance; no operational metrics.'}
         ]},
-      { id:'s14', dimension:'Operations & Logistics', axis:'Technology', domain:'SCM \u2014 Operations & Logistics',
-        text:'What technology supports your warehouse and transportation operations?',
+      { id:'s14', dimension:'Operations & Logistics', axis:'Metrics', domain:'SCM \u2014 Operations & Logistics',
+        text:'What operational and logistics performance metrics do you track?',
         options:[
-          {label:'A',text:'WMS with RF/barcode scanning, TMS with dynamic routing and rate optimization, yard management system, and IoT-enabled asset tracking across >95% of operations'},
-          {label:'B',text:'WMS and TMS deployed at major sites with barcode scanning; partial IoT adoption for high-value shipments'},
-          {label:'C',text:'Basic WMS or ERP warehouse module at some sites; no TMS, carrier portals used for rate shopping manually'},
-          {label:'D',text:'Paper-based warehouse operations; no WMS or TMS, shipments tracked via carrier websites and phone calls'}
+          {label:'A',text:'Real-time operational dashboard: warehouse utilization >85%; order accuracy >99.5%; on-time shipment >98%; dock-to-stock time <4 hours; order cycle time <24 hours; perfect order rate >95%; inventory accuracy >99%; labor productivity tracked by function; cost per order <$5; transportation cost as % of sales <5%; freight bill accuracy >98%.'},
+          {label:'B',text:'Daily/weekly metrics: warehouse utilization 75-85%; order accuracy 97-99.5%; on-time shipment 95-98%; dock-to-stock 4-8 hours; order cycle time 24-48 hours; perfect order 90-95%; inventory accuracy 95-99%; labor productivity tracked; cost per order $5-10; transportation cost 5-7% of sales; freight accuracy 95-98%.'},
+          {label:'C',text:'Weekly/monthly metrics: warehouse utilization 60-75%; order accuracy 93-97%; on-time shipment 90-95%; dock-to-stock 8-24 hours; order cycle time 2-5 days; perfect order 80-90%; inventory accuracy 90-95%; limited productivity tracking; cost per order $10-15; transportation cost 7-10% of sales; freight accuracy 90-95%.'},
+          {label:'D',text:'Monthly/quarterly or no metrics: warehouse utilization <60%; order accuracy <93%; on-time shipment <90%; dock-to-stock >24 hours; order cycle time >5 days; perfect order <80%; inventory accuracy <90%; no productivity metrics; cost per order >$15; transportation cost >10% of sales; freight accuracy <90%.'}
         ]},
-      { id:'s15', dimension:'Operations & Logistics', axis:'Controls', domain:'SCM \u2014 Operations & Logistics',
-        text:'What controls ensure inventory accuracy, shipment integrity, and logistics compliance?',
+      { id:'s15', dimension:'Operations & Logistics', axis:'Operating Model', domain:'SCM \u2014 Operations & Logistics',
+        text:'How is your warehouse, transportation, and logistics function organized and governed?',
         options:[
-          {label:'A',text:'Cycle counting with >99% inventory record accuracy, automated shipment verification (scan-pack-ship), carrier compliance scorecards, and real-time exception alerts'},
-          {label:'B',text:'Regular cycle counts achieving 95\u201399% accuracy, shipment verification at key checkpoints, periodic carrier performance reviews'},
-          {label:'C',text:'Annual physical inventory with 90\u201395% accuracy, spot-check shipment verification, carrier issues addressed reactively'},
-          {label:'D',text:'Infrequent physical counts with <90% accuracy, no shipment verification process, no carrier performance oversight'}
+          {label:'A',text:'Centralized operations and logistics model with global process ownership; network design, warehousing, and transportation managed through a coordinated operating model; regional execution teams aligned to common KPIs; formal continuous improvement program; dedicated logistics excellence team; clear accountability for service, cost, and productivity outcomes.'},
+          {label:'B',text:'Regional operations teams with some central governance; common KPIs defined for major sites and lanes; periodic coordination across warehousing and transportation; improvement initiatives led at regional level; roles and accountabilities mostly clear.'},
+          {label:'C',text:'Decentralized site-by-site management; limited coordination between warehouse and transportation teams; KPIs differ by location; improvement efforts are local and inconsistent; roles and escalation paths partially defined.'},
+          {label:'D',text:'Highly fragmented operating model; no central governance; warehousing and logistics managed independently with no common standards; inconsistent accountability; no formal improvement structure.'}
         ]},
+      // ── RISK & COMPLIANCE (5) ────────────────────────────────────────────────
       { id:'s16', dimension:'Risk & Compliance', axis:'Operating Model', domain:'SCM \u2014 Risk & Compliance',
-        text:'How is supply chain risk management organized and integrated into business operations?',
+        text:'How is supply chain risk and compliance management organized across the enterprise?',
         options:[
-          {label:'A',text:'Dedicated supply chain risk function with cross-functional risk council, enterprise risk register covering Tier 1\u20133 suppliers, and risk appetite formally defined by leadership'},
-          {label:'B',text:'Risk management responsibility assigned within supply chain; Tier 1 supplier risk assessed, periodic risk reviews with leadership'},
-          {label:'C',text:'Risk management handled informally by procurement; limited to known single-source risks, no structured reporting'},
-          {label:'D',text:'No supply chain risk management function; risks identified only after disruption events occur'}
+          {label:'A',text:'Dedicated supply chain risk and compliance function with enterprise-wide governance; defined ownership across procurement, planning, logistics, quality, legal, and operations; formal risk committees; regular executive reviews; integrated response plans for disruptions, supplier issues, trade compliance, and ESG risks.'},
+          {label:'B',text:'Risk and compliance responsibilities assigned across functions with central coordination for major risks; periodic governance meetings; escalation paths defined for key incidents; executive visibility for high-priority issues.'},
+          {label:'C',text:'Risk and compliance handled within individual functions with limited coordination; issue escalation is informal; governance occurs only when major problems arise; executive involvement is ad hoc.'},
+          {label:'D',text:'No formal operating model for supply chain risk and compliance; responsibilities unclear; reactive response only; no governance forum or defined escalation structure.'}
         ]},
       { id:'s17', dimension:'Risk & Compliance', axis:'Metrics', domain:'SCM \u2014 Risk & Compliance',
-        text:'What risk and compliance metrics are monitored for the supply chain?',
+        text:'What supply chain risk and compliance metrics are tracked and used for decision-making?',
         options:[
-          {label:'A',text:'Supplier risk scores updated continuously, disruption recovery time <48 hours for critical items, >95% supplier compliance audit pass rate, ESG score coverage for >80% of spend'},
-          {label:'B',text:'Supplier risk scores reviewed quarterly, recovery time 48\u201396 hours, 85\u201395% compliance audit pass rate, ESG coverage 50\u201380% of spend'},
-          {label:'C',text:'Basic risk tracking (single source identification), recovery time 4\u201310 days, compliance audits for <50% of critical suppliers, limited ESG metrics'},
-          {label:'D',text:'No risk metrics tracked; disruption recovery time unmeasured, compliance audits ad hoc or absent, no ESG supply chain visibility'}
+          {label:'A',text:'Real-time dashboard tracking supplier risk scores, disruption recovery time, compliance pass rates, inventory exposure, sole-source dependency, trade compliance exceptions, quality incident frequency, and ESG/sustainability indicators; thresholds trigger alerts and action plans; metrics reviewed monthly or more frequently.'},
+          {label:'B',text:'Regular reporting on major supplier risks, disruption incidents, compliance audit results, and service recovery; some thresholds defined; metrics reviewed monthly or quarterly and used to guide mitigation planning.'},
+          {label:'C',text:'Limited reporting focused on major incidents, audit findings, and a small number of supplier or quality risks; metrics reviewed periodically but not consistently tied to decisions.'},
+          {label:'D',text:'Few or no formal risk/compliance metrics tracked; reporting occurs only after incidents or audits; no structured use of metrics in planning or management reviews.'}
         ]},
       { id:'s18', dimension:'Risk & Compliance', axis:'Process & Policy', domain:'SCM \u2014 Risk & Compliance',
-        text:'How mature are your supply chain risk mitigation and business continuity processes?',
+        text:'How mature are your supply chain risk, business continuity, and compliance policies and processes?',
         options:[
-          {label:'A',text:'Documented BCP for all critical supply chains, dual/multi-sourcing policy for strategic items, quarterly disruption simulations, and automated alerts for geopolitical/weather/financial risk events'},
-          {label:'B',text:'BCP for top supply chains, dual-sourcing for some critical items, annual tabletop exercises, manual monitoring of key risk events'},
-          {label:'C',text:'Informal contingency plans for highest-risk items, single-source dependencies identified but not actively mitigated, no simulation exercises'},
-          {label:'D',text:'No business continuity planning for supply chain; single-source dependencies unknown, reactive crisis management only'}
+          {label:'A',text:'Documented global risk and compliance framework covering supplier risk, business continuity, cybersecurity, trade compliance, product compliance, quality, and ESG; formal risk assessments performed regularly; dual-sourcing or contingency strategies in place for critical materials; tested business continuity plans for major sites and suppliers; corrective action process with tracked closure.'},
+          {label:'B',text:'Documented policies for major risk and compliance areas; periodic risk assessments for key suppliers and operations; contingency plans for selected critical materials or locations; business continuity plans exist but are not fully tested; corrective actions tracked for significant findings.'},
+          {label:'C',text:'Basic policies exist for selected compliance areas; supplier and operational risk assessments are ad hoc; contingency planning limited to major known risks; business continuity plans incomplete or outdated; corrective actions managed manually.'},
+          {label:'D',text:'Minimal or no formal policies; risk identification is reactive; no structured supplier or site risk assessment; no continuity planning for critical supply chain dependencies; issues handled case by case.'}
         ]},
       { id:'s19', dimension:'Risk & Compliance', axis:'Technology', domain:'SCM \u2014 Risk & Compliance',
-        text:'What technology enables supply chain risk monitoring and compliance management?',
+        text:'What technology supports supply chain risk monitoring, compliance management, and resilience planning?',
         options:[
-          {label:'A',text:'Integrated risk platform with real-time supplier monitoring (financial, geopolitical, ESG), AI-driven risk scoring, compliance workflow automation, and sub-tier mapping tools'},
-          {label:'B',text:'Risk monitoring tool for Tier 1 suppliers with periodic financial health checks; compliance tracking via GRC platform for key regulations'},
-          {label:'C',text:'Spreadsheet-based risk registers with manual updates; compliance tracked via document repositories and email reminders'},
-          {label:'D',text:'No risk or compliance technology; supplier risk unknown until disruption, compliance documentation scattered or absent'}
+          {label:'A',text:'Integrated risk management platform with supplier risk monitoring, compliance workflows, third-party alerts, traceability, incident management, and scenario modeling; automated screening for sanctions and restricted parties; dashboards for disruptions, quality, trade, and ESG risks; system integration with ERP, procurement, and logistics platforms.'},
+          {label:'B',text:'Technology supports selected areas such as supplier screening, incident tracking, and compliance reporting; some alerts are automated; partial integration with core systems; dashboards available for major risks.'},
+          {label:'C',text:'Basic tools such as spreadsheets, shared databases, or standalone compliance applications are used; limited automation; little integration across procurement, operations, and logistics; reporting largely manual.'},
+          {label:'D',text:'No dedicated technology for risk or compliance management; risk information is fragmented across email and spreadsheets; monitoring is manual and reactive.'}
         ]},
       { id:'s20', dimension:'Risk & Compliance', axis:'Controls', domain:'SCM \u2014 Risk & Compliance',
-        text:'What controls enforce regulatory compliance, trade requirements, and ethical sourcing across your supply chain?',
+        text:'What controls exist to ensure supply chain compliance and mitigate operational risk?',
         options:[
-          {label:'A',text:'Automated trade compliance screening (denied party, export controls), supplier code of conduct with >95% acknowledgment rate, third-party audit program, and conflict minerals/forced labor traceability'},
-          {label:'B',text:'Trade compliance checks at order entry, supplier code of conduct for major suppliers (80\u201395% coverage), periodic audits of high-risk suppliers'},
-          {label:'C',text:'Manual trade compliance for known restricted items, code of conduct distributed but not tracked (<80% coverage), audits only when issues arise'},
-          {label:'D',text:'No systematic trade compliance checks, no supplier code of conduct, no audit program; regulatory compliance is reactive and incident-driven'}
+          {label:'A',text:'Preventive and detective controls embedded across supplier onboarding, material sourcing, planning, warehousing, transportation, and cross-border movements; automated checks for restricted parties, trade documentation, product compliance, and supplier certifications; regular audits and control testing; issue remediation tracked to closure; compliance violations and disruptions are root-caused and used to strengthen controls.'},
+          {label:'B',text:'Key controls exist for supplier onboarding, trade documentation, and operational compliance; audits performed periodically; remediation tracked for major issues; some automated checks in place; control effectiveness reviewed at least annually.'},
+          {label:'C',text:'Manual controls exist for selected compliance requirements; audits are infrequent; remediation is inconsistent; little formal testing of control effectiveness; root cause analysis performed only for major incidents.'},
+          {label:'D',text:'Few formal controls; compliance depends on individual knowledge and manual checks; audits are rare or absent; remediation is reactive; no structured control testing or root cause process.'}
         ]}
     ]
   },
-
   finance: {
     label: 'Finance',
-    dimensions: ['Invoice Processing','Payment Processing','Journals','Close','Reconciliation','Fixed Assets','FP&A','Reporting','Intercompany','Query Management','Risk Management','T&E','Reporting/Analytics'],
+    dimensions: ['Journals','Reconciliation','Fixed Asset','FP&A','Reporting','Intercompany','Close','Invoice Processing','Payment Processing','Query Management','Risk Management','T&E','Reporting/Analytics'],
     questions: [
-      { id:'f1', dimension:'Invoice Processing', axis:'Technology', domain:'AP \u2014 Invoice Processing',
-        text:'What level of automation exists in your invoice capture and matching process?',
+      // ── JOURNALS (2) ─────────────────────────────────────────────────────────
+      { id:'f1', dimension:'Journals', axis:'Process & Policy', domain:'Finance \u2014 Journals',
+        text:'How standardized and documented are your journal entry processes?',
         options:[
-          {label:'A',text:'AI/ML-powered OCR with >90% straight-through processing; auto-3-way match with ERP integration and exception-only human review'},
-          {label:'B',text:'OCR-based capture with 70\u201390% auto-match rate; rules-based 3-way matching with manual handling of exceptions'},
-          {label:'C',text:'Semi-automated capture (template-based OCR) with 40\u201370% auto-match; significant manual intervention for PO matching'},
-          {label:'D',text:'Predominantly manual invoice entry and matching (<40% automation); paper-based or email-driven intake with spreadsheet tracking'}
+          {label:'A',text:'Fully documented global journal entry policy with segregation of duties; all journal types have standardized templates; approval workflows based on materiality thresholds; <1% error rate in journal postings.'},
+          {label:'B',text:'Regional policies exist with some standardization; approval workflows for material entries; templates for recurring journals only; 1-3% error rate.'},
+          {label:'C',text:'Basic approval requirements documented; limited standardization across entities; manual ad-hoc journals common; 3-5% error rate.'},
+          {label:'D',text:'Minimal documentation; inconsistent approval processes; high manual intervention; >5% error rate.'}
         ]},
-      { id:'f2', dimension:'Invoice Processing', axis:'Metrics', domain:'AP \u2014 Invoice Processing',
-        text:'How do you measure and manage invoice processing cycle time and cost-per-invoice?',
+      { id:'f2', dimension:'Journals', axis:'Technology', domain:'Finance \u2014 Journals',
+        text:'What level of technology supports your journal entry management?',
         options:[
-          {label:'A',text:'Real-time dashboards track cost-per-invoice (<$2), cycle time (<3 days), and touchless rate (>85%); KPIs benchmarked quarterly against industry standards'},
-          {label:'B',text:'Monthly reporting on cost-per-invoice ($2\u20135) and cycle time (3\u20137 days); periodic benchmarking with defined improvement targets'},
-          {label:'C',text:'Quarterly or ad-hoc reporting on basic volume metrics; cost-per-invoice ($5\u201310) estimated but not actively managed; cycle time 7\u201314 days'},
-          {label:'D',text:'No formal metrics tracked; cost-per-invoice unknown or >$10; cycle time exceeds 14 days with no visibility into bottlenecks'}
+          {label:'A',text:'Automated recurring journal posting; AI-driven anomaly detection; real-time validation rules; integrated workflow with digital approvals; full audit trail with change tracking.'},
+          {label:'B',text:'System-based recurring journals; automated validation for key fields; electronic approval workflow; basic audit logging.'},
+          {label:'C',text:'Manual journal entry with spreadsheet support; limited system validations; email-based approvals; basic system audit trails.'},
+          {label:'D',text:'Fully manual process; spreadsheet-based tracking; paper/email approvals; minimal audit capability.'}
         ]},
-      { id:'f3', dimension:'Payment Processing', axis:'Controls', domain:'AP \u2014 Payment Processing',
-        text:'What controls and authorization frameworks govern your payment execution process?',
+      // ── RECONCILIATION (1) ───────────────────────────────────────────────────
+      { id:'f3', dimension:'Reconciliation', axis:'Technology', domain:'Finance \u2014 Reconciliation',
+        text:'How mature is your account reconciliation process and platform?',
         options:[
-          {label:'A',text:'Fully automated payment runs with system-enforced dual approval, real-time fraud detection, bank file validation, and segregation of duties; zero unauthorized payments in last 12 months'},
-          {label:'B',text:'Automated payment batches with configurable approval matrices and threshold-based controls; periodic fraud screening; <0.5% payment errors per quarter'},
-          {label:'C',text:'Semi-automated payments with manual approval steps; basic threshold controls but inconsistent enforcement; 0.5\u20132% error rate'},
-          {label:'D',text:'Manual payment initiation with ad-hoc approvals; limited segregation of duties; no automated fraud detection; error rate >2% or unknown'}
+          {label:'A',text:'Dedicated reconciliation platform (e.g., BlackLine, Trintech) covering 100% of balance sheet accounts; >85% auto-match rate; real-time status dashboards; items resolved in <5 days; monthly certification process.'},
+          {label:'B',text:'Reconciliation software for key accounts (>75% coverage); 60-85% auto-match; weekly status reporting; items resolved in 5-15 days; quarterly certification.'},
+          {label:'C',text:'Spreadsheet-based reconciliations; <60% of accounts reconciled monthly; manual matching; items age >15 days; annual sign-off only.'},
+          {label:'D',text:'Ad-hoc reconciliations; no standard tooling; significant aging items; no formal certification process.'}
         ]},
-      { id:'f4', dimension:'Payment Processing', axis:'Process & Policy', domain:'AP \u2014 Payment Processing',
-        text:'How standardized and optimized is your payment method strategy and supplier payment terms management?',
+      // ── FIXED ASSET (2) ──────────────────────────────────────────────────────
+      { id:'f4', dimension:'Fixed Asset', axis:'Process & Policy', domain:'Finance \u2014 Fixed Asset',
+        text:'How mature is your fixed asset lifecycle management?',
         options:[
-          {label:'A',text:'>80% electronic payments (ACH/wire/virtual card); dynamic discounting program captures >3% early-pay discounts; standardized payment terms policy enforced globally with <5% exceptions'},
-          {label:'B',text:'60\u201380% electronic payments; early-pay discount capture on select suppliers; documented payment terms policy with some regional variations'},
-          {label:'C',text:'40\u201360% electronic payments; ad-hoc discount capture; payment terms vary by business unit with limited policy enforcement'},
-          {label:'D',text:'<40% electronic (heavy check usage); no early-pay discount program; payment terms inconsistent and largely supplier-dictated'}
+          {label:'A',text:'Fully documented global fixed asset policy covering acquisition, capitalization, depreciation, transfers, and disposal; physical verification with barcode/RFID annually; >98% accuracy between physical and system records; standardized across all entities.'},
+          {label:'B',text:'Regional policies documented; physical verification every 18-24 months; 90-98% accuracy; some entity-level variations.'},
+          {label:'C',text:'Basic capitalization guidelines; physical counts every 2-3 years; 80-90% accuracy; significant policy differences across entities.'},
+          {label:'D',text:'Minimal documentation; ad-hoc physical verification; <80% accuracy; inconsistent application of policies.'}
         ]},
-      { id:'f5', dimension:'Journals', axis:'Process & Policy', domain:'R2R \u2014 Journals',
-        text:'How standardized is your journal entry process including templates, approval workflows, and posting policies?',
+      { id:'f5', dimension:'Fixed Asset', axis:'Technology', domain:'Finance \u2014 Fixed Asset',
+        text:'What technology supports your fixed asset management?',
         options:[
-          {label:'A',text:'>90% of recurring journals auto-posted via templates with system-enforced approval routing; standardized global journal policy with <5% manual ad-hoc entries; full audit trail'},
-          {label:'B',text:'70\u201390% recurring journals templated; defined approval matrix with some manual routing; documented policy covering most journal types'},
-          {label:'C',text:'40\u201370% journals templated; inconsistent approval workflows across entities; policies exist but are outdated or partially followed'},
-          {label:'D',text:'<40% templated; journals largely manual with email-based approvals; no formal journal entry policy or standardized templates'}
+          {label:'A',text:'Integrated fixed asset module with automated depreciation; barcode/RFID tracking; workflow for additions/disposals; mobile app for physical verification; full integration with GL and procurement.'},
+          {label:'B',text:'Fixed asset system with automated depreciation; manual tracking for locations; system workflow for key transactions; integration with GL.'},
+          {label:'C',text:'Basic fixed asset register in spreadsheets; manual depreciation calculations; limited system integration.'},
+          {label:'D',text:'Spreadsheet-based tracking only; fully manual processes; no system integration.'}
         ]},
-      { id:'f6', dimension:'Journals', axis:'Technology', domain:'R2R \u2014 Journals',
-        text:'What technology capabilities support journal entry automation, validation, and anomaly detection?',
+      // ── FP&A (2) ─────────────────────────────────────────────────────────────
+      { id:'f6', dimension:'FP&A', axis:'Operating Model', domain:'Finance \u2014 FP&A',
+        text:'How is your FP&A function structured and what capabilities does it have?',
         options:[
-          {label:'A',text:'AI-driven anomaly detection flags unusual entries in real time; auto-reversals and accruals system-generated; integrated with sub-ledgers for zero manual re-keying; >95% auto-validation rate'},
-          {label:'B',text:'ERP-native recurring journal scheduling with rules-based validation; automated accruals for standard categories; 80\u201395% auto-validation'},
-          {label:'C',text:'Basic ERP journal entry with some recurring templates; manual validation checks via spreadsheets; 50\u201380% entries require manual review'},
-          {label:'D',text:'Manual journal preparation in spreadsheets uploaded to ERP; no automated validation or anomaly detection; >50% entries require rework'}
+          {label:'A',text:'Centralized CoE with embedded business partners; rolling forecasts updated monthly with driver-based models; scenario planning and sensitivity analysis capabilities; integrated S&OP process; strategic planning aligned to budgets.'},
+          {label:'B',text:'Centralized team with some business unit specialists; quarterly rolling forecasts; some driver-based planning; annual strategic planning cycle.'},
+          {label:'C',text:'Decentralized by business unit; annual budget with mid-year re-forecast; primarily historical trend-based; limited scenario planning.'},
+          {label:'D',text:'Ad-hoc planning by finance teams; annual budget only; spreadsheet-based; no formal rolling forecast or strategic planning.'}
         ]},
-      { id:'f7', dimension:'Reconciliation', axis:'Technology', domain:'R2R \u2014 Reconciliation',
-        text:'What is the level of automation and tool maturity in your account reconciliation process?',
-        options:[
-          {label:'A',text:'Dedicated reconciliation platform (e.g., BlackLine, Trintech) with >85% auto-match rate; risk-based certification workflow; real-time status dashboards covering all balance sheet accounts'},
-          {label:'B',text:'Reconciliation tool deployed for high-risk accounts with 60\u201385% auto-match; standardized templates for remaining accounts; monthly status reporting'},
-          {label:'C',text:'Spreadsheet-based reconciliation with some ERP report support; 30\u201360% auto-match; limited visibility into completion status across entities'},
-          {label:'D',text:'Fully manual reconciliation via spreadsheets; <30% auto-match; no centralized tracking of reconciliation status or aging of open items'}
-        ]},
-      { id:'f8', dimension:'Fixed Assets', axis:'Process & Policy', domain:'R2R \u2014 Fixed Assets',
-        text:'How mature is your fixed asset lifecycle management including capitalization, depreciation, and disposal processes?',
-        options:[
-          {label:'A',text:'Automated asset capitalization triggers from PO/project modules; system-enforced capitalization thresholds; annual physical verification with barcode/RFID reconciliation achieving >98% accuracy; fully documented global policy'},
-          {label:'B',text:'Semi-automated capitalization with defined thresholds; scheduled depreciation runs; periodic physical verification (>90% accuracy); documented policy with minor regional gaps'},
-          {label:'C',text:'Manual capitalization decisions with inconsistent threshold application; depreciation run monthly but with manual adjustments; physical verification irregular; policy partially documented'},
-          {label:'D',text:'Ad-hoc asset tracking in spreadsheets; capitalization thresholds not enforced; depreciation often corrected after close; no regular physical verification; no formal policy'}
-        ]},
-      { id:'f9', dimension:'FP&A', axis:'Operating Model', domain:'R2R \u2014 FP&A',
-        text:'How is your FP&A function structured to deliver business partnering, forecasting, and strategic decision support?',
-        options:[
-          {label:'A',text:'Centralized FP&A CoE with embedded business partners; rolling forecasts updated monthly with driver-based models; scenario planning capabilities; FP&A cycle delivers budget-to-board in \u22646 weeks'},
-          {label:'B',text:'Hybrid FP&A model with some centralization; quarterly forecast updates with top-down/bottom-up reconciliation; budget cycle completes in 8\u201310 weeks'},
-          {label:'C',text:'Decentralized FP&A with limited coordination; semi-annual or annual forecasts; primarily spreadsheet-based planning; budget cycle 10\u201314 weeks'},
-          {label:'D',text:'Fragmented FP&A across business units; annual budget only with no rolling forecast; manual consolidation; budget cycle >14 weeks with extensive rework'}
-        ]},
-      { id:'f10', dimension:'Reporting', axis:'Technology', domain:'R2R \u2014 Reporting',
-        text:'What is the maturity of your financial reporting technology stack and data architecture?',
-        options:[
-          {label:'A',text:'Unified data warehouse/lake with automated ETL from all source systems; self-service BI/analytics platform with governed semantic layer; reports generated in <4 hours post-close'},
-          {label:'B',text:'Centralized reporting tool connected to ERP; standardized report library with scheduled distribution; reports generated within 1\u20132 days post-close'},
-          {label:'C',text:'ERP-native reporting supplemented by spreadsheet manipulation; limited report standardization; report generation takes 3\u20135 days post-close'},
-          {label:'D',text:'Manual report compilation from multiple systems into spreadsheets; no centralized reporting tool; reports take >5 days post-close with frequent accuracy issues'}
-        ]},
-      { id:'f11', dimension:'Reporting', axis:'Metrics', domain:'R2R \u2014 Reporting',
-        text:'How do you measure and assure the quality, timeliness, and completeness of statutory and management reporting?',
-        options:[
-          {label:'A',text:'Automated report quality checks with <1% restatement rate; 100% on-time statutory filing; management reports delivered within 24 hours of close; tracked via reporting scorecard'},
-          {label:'B',text:'Defined quality review process with 1\u20133% restatement rate; >95% on-time statutory filing; management reports within 3 days of close; KPIs reviewed monthly'},
-          {label:'C',text:'Manual quality reviews with 3\u20135% restatement rate; occasional late statutory filings; management reports within 5\u20137 days; limited formal KPI tracking'},
-          {label:'D',text:'No formal quality assurance; >5% restatement rate; frequent late filings or penalties; management reports delayed >7 days with contested accuracy'}
-        ]},
-      { id:'f12', dimension:'Intercompany', axis:'Controls', domain:'R2R \u2014 Intercompany',
-        text:'How effective are your intercompany transaction processing and elimination controls?',
-        options:[
-          {label:'A',text:'Automated IC matching and netting with >95% auto-reconciliation rate; system-enforced transfer pricing compliance; real-time IC balance monitoring; eliminations fully automated with \u22642 day resolution of breaks'},
-          {label:'B',text:'IC matching tool with 75\u201395% auto-reconciliation; quarterly transfer pricing validation; monthly IC reconciliation with breaks resolved within 5 days'},
-          {label:'C',text:'Semi-manual IC reconciliation (50\u201375% match rate); transfer pricing applied but not systematically validated; breaks often persist through close with manual elimination adjustments'},
-          {label:'D',text:'Manual IC tracking in spreadsheets (<50% match rate); no automated netting; transfer pricing inconsistently applied; IC eliminations are a major close bottleneck'}
-        ]},
-      { id:'f13', dimension:'Close', axis:'Process & Policy', domain:'R2R \u2014 Close',
-        text:'How standardized and compressed is your financial close calendar and task management process?',
-        options:[
-          {label:'A',text:'Fully documented close calendar with task-level dependencies in a close management tool; virtual close capability; hard close completed in \u22645 business days; global process standardized across all entities'},
-          {label:'B',text:'Documented close checklist with assigned owners; close completed in 6\u20138 business days; standardized across major entities with some local variations'},
-          {label:'C',text:'Informal close checklist with 8\u201312 day close cycle; process varies significantly across entities; limited visibility into task completion status'},
-          {label:'D',text:'No formal close calendar; close takes >12 business days with frequent extensions; ad-hoc task management; no visibility into bottlenecks or dependencies'}
-        ]},
-      { id:'f14', dimension:'Close', axis:'Operating Model', domain:'R2R \u2014 Close',
-        text:'What operating model supports your financial close execution including roles, governance, and continuous improvement?',
-        options:[
-          {label:'A',text:'Dedicated close CoE with defined RACI across shared services, retained, and BPO teams; daily close stand-ups; post-close retrospective drives \u22652 process improvements per quarter; close cycle reduced by >20% over 2 years'},
-          {label:'B',text:'Defined close team with documented roles; weekly status meetings during close; semi-annual retrospective identifies improvement areas; close cycle stable or improving'},
-          {label:'C',text:'Close responsibilities distributed without formal RACI; limited governance during close; improvements reactive to audit findings; close cycle has not shortened'},
-          {label:'D',text:'Close ownership unclear; no governance cadence; firefighting mode each close cycle; no continuous improvement mechanism; recurring audit findings'}
-        ]},
-      { id:'f15', dimension:'Query Management', axis:'Process & Policy', domain:'AP \u2014 Query Management',
-        text:'How mature is your vendor query and dispute resolution process?',
-        options:[
-          {label:'A',text:'Centralized query portal with automated ticket routing; >90% first-contact resolution; average resolution time <3 business days; root-cause analytics drive \u226515% quarterly query volume reduction'},
-          {label:'B',text:'Ticketing system in place with defined SLAs; 70\u201390% first-contact resolution; resolution within 5 business days; periodic root-cause analysis'},
-          {label:'C',text:'Email-based query management with basic tracking; 50\u201370% first-contact resolution; resolution takes 5\u201310 days; limited root-cause analysis'},
-          {label:'D',text:'Ad-hoc query handling via email/phone with no tracking; <50% first-contact resolution; resolution time unknown or >10 days; recurring queries not analyzed'}
-        ]},
-      { id:'f16', dimension:'Risk Management', axis:'Controls', domain:'AP \u2014 Risk Management',
-        text:'What controls are in place to manage AP fraud risk, duplicate payments, and vendor master data integrity?',
-        options:[
-          {label:'A',text:'Automated duplicate detection (invoice and payment level) catching >99% duplicates pre-payment; continuous vendor master screening against sanctions/watchlists; system-enforced vendor onboarding with SOD; duplicate payment rate <0.1%'},
-          {label:'B',text:'Automated duplicate invoice detection with 90\u201399% catch rate; periodic vendor master cleansing; defined vendor onboarding process; duplicate payment rate 0.1\u20130.5%'},
-          {label:'C',text:'Basic ERP duplicate checks with manual review; annual vendor master cleanup; informal vendor onboarding; duplicate payment rate 0.5\u20131.5%'},
-          {label:'D',text:'No automated duplicate detection; vendor master maintained reactively; no formal onboarding process; duplicate payment rate >1.5% or unknown'}
-        ]},
-      { id:'f17', dimension:'T&E', axis:'Technology', domain:'AP \u2014 T&E',
-        text:'What is the maturity of your travel and expense management technology and policy enforcement?',
-        options:[
-          {label:'A',text:'Integrated T&E platform with mobile receipt capture, corporate card auto-feed, and AI-powered policy compliance checks; >95% policy compliance; auto-audit covers >80% of claims; average reimbursement cycle \u22645 days'},
-          {label:'B',text:'T&E tool deployed with corporate card integration; rules-based policy checks; 80\u201395% compliance; 20\u201350% auto-audit coverage; reimbursement within 7\u201310 days'},
-          {label:'C',text:'Basic expense tool or spreadsheet forms; limited policy enforcement; 60\u201380% compliance; manual audit of select claims; reimbursement in 10\u201315 days'},
-          {label:'D',text:'Paper or email-based expense claims; no automated policy checks; <60% compliance; minimal audit; reimbursement >15 days with frequent errors'}
-        ]},
-      { id:'f18', dimension:'Reporting/Analytics', axis:'Metrics', domain:'AP \u2014 Reporting/Analytics',
-        text:'How mature are your AP analytics capabilities for driving working capital optimization and operational insights?',
-        options:[
-          {label:'A',text:'Real-time AP dashboards tracking DPO, aging, discount capture (>90% of available), payment mix, and supplier risk; predictive cash flow models integrated with treasury; insights drive \u22655% annual working capital improvement'},
-          {label:'B',text:'Monthly AP reporting covering DPO, aging, and payment metrics; discount capture rate 60\u201390%; periodic analysis shared with treasury; some working capital improvement initiatives'},
-          {label:'C',text:'Quarterly AP reports with basic aging and volume data; discount capture 30\u201360%; limited integration with treasury or working capital strategy'},
-          {label:'D',text:'Ad-hoc AP reporting; DPO and aging not actively managed; discount capture <30% or not tracked; no connection between AP data and working capital decisions'}
-        ]},
-      { id:'f19', dimension:'Reconciliation', axis:'Metrics', domain:'R2R \u2014 Reconciliation',
-        text:'How do you track reconciliation effectiveness and the resolution of aged open items?',
-        options:[
-          {label:'A',text:'Real-time dashboards show reconciliation completion rate (100% on time), auto-match rate (>85%), and open item aging; items >30 days escalated automatically; average items resolved in <5 days; KPIs reviewed weekly'},
-          {label:'B',text:'Monthly reconciliation status report tracks completion and open item aging; auto-match rate 60\u201385%; items >60 days reviewed; average resolution 5\u201310 days'},
-          {label:'C',text:'Quarterly summary of reconciliation status; limited visibility into match rates or open item aging; resolution timelines not formally tracked'},
-          {label:'D',text:'No formal tracking of reconciliation timeliness or open item aging; stale items persist unresolved for months; no management visibility'}
-        ]},
-      { id:'f20', dimension:'FP&A', axis:'Technology', domain:'R2R \u2014 FP&A',
+      { id:'f7', dimension:'FP&A', axis:'Technology', domain:'Finance \u2014 FP&A',
         text:'What planning and analytics technology supports your FP&A processes?',
         options:[
-          {label:'A',text:'Enterprise planning platform (e.g., Anaplan, SAP Analytics Cloud) with integrated actuals, driver-based models, and scenario simulation; automated variance commentary generation; single source of truth across P&L, balance sheet, and cash flow'},
-          {label:'B',text:'Dedicated planning tool for budgeting and forecasting with ERP integration; standardized templates; manual but structured variance analysis'},
-          {label:'C',text:'Primarily spreadsheet-based planning with some tool support; fragmented data sources requiring manual consolidation; limited scenario capability'},
-          {label:'D',text:'Fully manual spreadsheet-based planning; no dedicated tool; extensive email-based data collection; no scenario modeling; frequent version-control issues'}
+          {label:'A',text:'Enterprise planning platform (Anaplan, Adaptive, OneStream, etc.) with driver-based modeling; integrated with source systems; self-service analytics with dashboards; version control and workflow; supports what-if scenarios.'},
+          {label:'B',text:'Planning software with some integration; limited driver-based planning; IT-dependent reporting; basic version control.'},
+          {label:'C',text:'Spreadsheet-based planning with manual consolidation; limited integration; static reports; version control via file naming.'},
+          {label:'D',text:'Fully manual spreadsheet planning; no consolidation tool; emailed reports; no version control.'}
+        ]},
+      // ── REPORTING (2) ────────────────────────────────────────────────────────
+      { id:'f8', dimension:'Reporting', axis:'Technology', domain:'Finance \u2014 Reporting',
+        text:'What is the maturity of your financial reporting technology stack?',
+        options:[
+          {label:'A',text:'Unified enterprise data platform (data lake/warehouse); consolidated reporting solution; standardized reports delivered in <4 hours post-close; self-service BI tools for ad-hoc analysis; mobile dashboards for executives.'},
+          {label:'B',text:'Centralized reporting database; most reports automated; reports available within 1-2 business days of close; some self-service capabilities.'},
+          {label:'C',text:'Manual consolidation from multiple sources; standard reports only; 3-5 days post-close; IT-dependent for new reports.'},
+          {label:'D',text:'Spreadsheet-based reporting; fragmented data sources; >5 days post-close; fully manual process.'}
+        ]},
+      { id:'f9', dimension:'Reporting', axis:'Metrics', domain:'Finance \u2014 Reporting',
+        text:'How do you measure and assure the quality of financial reporting?',
+        options:[
+          {label:'A',text:'100% on-time delivery of statutory and management reports; automated reconciliation of GL to reports (>85% auto-match); SLA for variance commentary (<2 business days); digital sign-off workflow; tracking of reporting defects resolved <5 days.'},
+          {label:'B',text:'>90% on-time delivery; automated key reconciliations; variance commentary within 3-5 days; email-based sign-off; defect tracking in place.'},
+          {label:'C',text:'75-90% on-time; manual reconciliations; commentary ad-hoc; paper-based sign-off; informal defect tracking.'},
+          {label:'D',text:'<75% on-time; limited reconciliation to source; no formal commentary process; no defect tracking.'}
+        ]},
+      // ── INTERCOMPANY (1) ─────────────────────────────────────────────────────
+      { id:'f10', dimension:'Intercompany', axis:'Technology', domain:'Finance \u2014 Intercompany',
+        text:'How standardized and automated are your intercompany transactions and eliminations?',
+        options:[
+          {label:'A',text:'Centralized intercompany hub with automated matching (>90% auto-match); real-time transaction submission; dispute resolution workflow with <5-day SLA; automated eliminations at consolidation; standardized pricing and transfer pricing documentation.'},
+          {label:'B',text:'Intercompany system with 70-90% auto-match; monthly submission and matching; defined dispute process; semi-automated eliminations; transfer pricing policy documented.'},
+          {label:'C',text:'Spreadsheet-based intercompany tracking; <70% match rate; quarterly reconciliation; manual eliminations; inconsistent transfer pricing.'},
+          {label:'D',text:'No formal intercompany process; manual tracking; annual reconciliation only; ad-hoc eliminations; no transfer pricing policy.'}
+        ]},
+      // ── CLOSE (1) ────────────────────────────────────────────────────────────
+      { id:'f11', dimension:'Close', axis:'Process & Policy', domain:'Finance \u2014 Close',
+        text:'What is the maturity of your financial close process?',
+        options:[
+          {label:'A',text:'Global close calendar with task dependencies; <5 business day soft close; <8 business day hard close; automated task management system; close checklist completion >95%; lessons learned conducted after each close.'},
+          {label:'B',text:'Documented close calendar; 5-7 day soft close; 8-10 day hard close; spreadsheet task tracking; >85% checklist completion; periodic process reviews.'},
+          {label:'C',text:'Basic close timeline; 8-10 day soft close; 11-15 day hard close; manual tracking; 70-85% checklist compliance; ad-hoc process improvements.'},
+          {label:'D',text:'No formal close calendar; >10 day soft close; >15 day hard close; no task tracking; <70% checklist compliance; reactive approach to issues.'}
+        ]},
+      // ── INVOICE PROCESSING (3: technology, operating model, controls) ─────────
+      { id:'f12', dimension:'Invoice Processing', axis:'Technology', domain:'Finance \u2014 Invoice Processing',
+        text:'How automated and standardized is your invoice-to-pay process?',
+        options:[
+          {label:'A',text:'Touchless invoice processing >75%; OCR/AI-powered capture; automated 3-way match >98%; electronic workflow for exceptions; PO compliance >95%; invoice approval <3 days; centralized shared service center.'},
+          {label:'B',text:'Automated invoice capture for PO invoices; 3-way match 90-98%; workflow for approvals; PO compliance 85-95%; approval cycle 3-5 days; regional processing centers.'},
+          {label:'C',text:'Manual invoice entry; semi-automated 3-way match 75-90%; email-based approvals; PO compliance 70-85%; approval cycle 5-10 days; decentralized processing.'},
+          {label:'D',text:'Fully manual invoice processing; <75% 3-way match; paper-based approvals; <70% PO compliance; approval cycle >10 days; AP staff in each location.'}
+        ]},
+      // ── PAYMENT PROCESSING (2) ───────────────────────────────────────────────
+      { id:'f13', dimension:'Payment Processing', axis:'Controls', domain:'Finance \u2014 Payment Processing',
+        text:'What is the maturity of your payment processing and controls?',
+        options:[
+          {label:'A',text:'Centralized payment factory; multi-bank connectivity via SWIFT/API; >80% electronic payments; automated cash positioning; payment approval workflow with dual authorization; fraud detection tools; same-day payment execution.'},
+          {label:'B',text:'Regional payment hubs; 60-80% electronic payments; system-based approvals; basic cash forecasting; fraud controls in place; 1-2 day payment execution.'},
+          {label:'C',text:'Decentralized payments by entity; 40-60% electronic payments; manual approvals; limited cash visibility; basic fraud controls; 2-5 day payment execution.'},
+          {label:'D',text:'Fully decentralized; <40% electronic payments; paper-based approvals; no cash visibility; minimal fraud controls; >5 day payment cycle.'}
+        ]},
+      { id:'f14', dimension:'Payment Processing', axis:'Metrics', domain:'Finance \u2014 Payment Processing',
+        text:'What payment performance metrics do you track?',
+        options:[
+          {label:'A',text:'Early payment discount capture >95%; days payable outstanding (DPO) managed to target +/-3 days; payment accuracy >99.5%; vendor setup time <24 hours; electronic payment adoption tracked by supplier.'},
+          {label:'B',text:'Discount capture 80-95%; DPO tracked quarterly; payment accuracy 97-99.5%; vendor setup 1-3 days; periodic electronic payment reporting.'},
+          {label:'C',text:'Discount capture 60-80%; DPO measured annually; payment accuracy 95-97%; vendor setup 3-5 days; limited payment analytics.'},
+          {label:'D',text:'Discount capture <60%; DPO not tracked; payment accuracy <95%; vendor setup >5 days; no payment metrics.'}
+        ]},
+      // ── QUERY MANAGEMENT (1) ─────────────────────────────────────────────────
+      { id:'f15', dimension:'Query Management', axis:'Technology', domain:'Finance \u2014 Query Management',
+        text:'How do you manage vendor and internal AP queries?',
+        options:[
+          {label:'A',text:'Centralized query management system with case tracking; SLA <48 hours for acknowledgment, <5 days for resolution; automated escalation; self-service vendor portal; query analytics dashboard showing root cause; resolution rate >95%.'},
+          {label:'B',text:'Ticketing system for queries; SLA 2-5 days acknowledgment, 5-10 days resolution; manual escalation; basic vendor portal; periodic query reporting; resolution rate 85-95%.'},
+          {label:'C',text:'Email-based query management; informal SLA 5-10 days; manual tracking in spreadsheets; no self-service; ad-hoc query reports; resolution rate 75-85%.'},
+          {label:'D',text:'Unstructured query handling; no SLA; no tracking; no self-service; no query analytics; resolution rate <75%.'}
+        ]},
+      // ── RISK MANAGEMENT (1) ──────────────────────────────────────────────────
+      { id:'f16', dimension:'Risk Management', axis:'Controls', domain:'Finance \u2014 Risk Management',
+        text:'What controls exist for vendor risk and compliance management?',
+        options:[
+          {label:'A',text:'Comprehensive vendor onboarding with risk scoring; ongoing vendor performance monitoring; duplicate vendor detection >98%; segregation of duties enforced; vendor master data governance with <1% error rate; tax compliance checks automated (W-9/W-8, 1099 reporting); sanctions screening integrated.'},
+          {label:'B',text:'Vendor onboarding process documented; periodic vendor reviews; duplicate detection 90-98%; segregation of duties for key roles; 1-2% vendor master error rate; semi-automated tax compliance; sanctions screening quarterly.'},
+          {label:'C',text:'Basic vendor approval; ad-hoc vendor reviews; manual duplicate checks 75-90%; limited segregation of duties; 2-5% vendor master error rate; manual tax compliance; annual sanctions screening.'},
+          {label:'D',text:'Minimal vendor onboarding; no ongoing reviews; no duplicate detection; weak segregation of duties; >5% vendor master error rate; reactive tax compliance; no sanctions screening.'}
+        ]},
+      // ── T&E (1) ──────────────────────────────────────────────────────────────
+      { id:'f17', dimension:'T&E', axis:'Technology', domain:'Finance \u2014 T&E',
+        text:'How mature is your travel and expense management?',
+        options:[
+          {label:'A',text:'Integrated T&E platform (Concur, Expensify, etc.) with mobile app; pre-trip approval workflow; corporate card integration with auto-expense creation; policy compliance checks >95%; automated GL coding; receipt matching >90%; reimbursement <5 days; spend analytics dashboard.'},
+          {label:'B',text:'T&E system with card integration; pre-trip approval for international travel; policy checks 85-95%; some automated coding; manual receipt matching; reimbursement 5-10 days; basic reporting.'},
+          {label:'C',text:'Spreadsheet-based expense reports; ad-hoc approval; limited card integration; manual policy checks 70-85%; manual GL coding; paper receipts; reimbursement 10-15 days; limited analytics.'},
+          {label:'D',text:'Paper expense reports; inconsistent approval; no card integration; <70% policy compliance; manual coding; reimbursement >15 days; no T&E analytics.'}
+        ]},
+      // ── AP REPORTING/ANALYTICS (1) ───────────────────────────────────────────
+      { id:'f18', dimension:'Reporting/Analytics', axis:'Metrics', domain:'Finance \u2014 Reporting/Analytics',
+        text:'What AP analytics and reporting capabilities exist?',
+        options:[
+          {label:'A',text:'Real-time AP dashboards (aging, DPO, discount capture, cycle time); spend analytics by category, vendor, entity; predictive cash flow forecasting; exception reporting with automated alerts; self-service reporting; benchmarking against industry standards.'},
+          {label:'B',text:'Weekly AP reports (aging, DPO, discounts); spend reports by major categories; monthly cash forecasting; standard exception reports; IT-dependent reporting; internal benchmarking.'},
+          {label:'C',text:'Monthly AP aging and summary reports; limited spend visibility; quarterly cash estimates; ad-hoc exception analysis; spreadsheet-based reporting; no benchmarking.'},
+          {label:'D',text:'Basic AP reports on request only; no spend analytics; no cash forecasting; no exception reporting; fully manual reports; no benchmarking.'}
+        ]},
+      // ── INVOICE PROCESSING continued: Operating Model & Controls ─────────────
+      { id:'f19', dimension:'Invoice Processing', axis:'Operating Model', domain:'Finance \u2014 Invoice Processing',
+        text:'How is your accounts payable function organized?',
+        options:[
+          {label:'A',text:'Global shared service center with regional hubs; standardized global AP policy; centralized vendor master management; invoice processing COE; robotics/AI deployed for repetitive tasks; continuous improvement program with documented productivity gains.'},
+          {label:'B',text:'Regional shared services; regional AP policies with some global standards; semi-centralized vendor management; some process automation; periodic process improvement initiatives.'},
+          {label:'C',text:'Decentralized AP by business unit or country; local policies and procedures; decentralized vendor management; manual processes; ad-hoc improvements.'},
+          {label:'D',text:'Fully decentralized; no standard policies; uncoordinated vendor management; siloed manual processes; reactive firefighting mode.'}
+        ]},
+      { id:'f20', dimension:'Invoice Processing', axis:'Controls', domain:'Finance \u2014 Invoice Processing',
+        text:'What controls govern the accounts payable process?',
+        options:[
+          {label:'A',text:'Automated 3-way match for >95% of invoices; duplicate invoice detection >99%; segregation of duties enforced in system; automated GL coding with validation; accrual automation for uninvoiced receipts; monthly AP reconciliation with <1% variance; management review dashboard.'},
+          {label:'B',text:'3-way match for 85-95% of invoices; duplicate detection 95-99%; segregation of duties documented; GL coding rules in system; quarterly accrual review; monthly reconciliation with 1-3% variance; periodic management review.'},
+          {label:'C',text:'Manual 3-way match for 70-85% of invoices; duplicate detection 85-95%; limited segregation of duties; manual GL coding; semi-annual accrual review; quarterly reconciliation with 3-5% variance; ad-hoc management review.'},
+          {label:'D',text:'<70% 3-way match; <85% duplicate detection; weak segregation of duties; inconsistent GL coding; no formal accrual process; annual or no reconciliation; >5% variance; no management oversight.'}
         ]}
     ]
   },
-
   hr: {
     label: 'HR',
     dimensions: ['Source & Recruit','Manage Employee Info','Develop & Counsel','Retain & Reward','Re-deploy & Retire','HR Technology'],
     questions: [
+      // ── SOURCE & RECRUIT (4) ─────────────────────────────────────────────────
       { id:'h1', dimension:'Source & Recruit', axis:'Operating Model', domain:'HR \u2014 Source & Recruit',
-        text:'How is your recruitment function structured and governed across the organization?',
+        text:'How is your recruiting function organized and governed?',
         options:[
-          {label:'A',text:'Centralized COE with dedicated sourcing specialists, standardized SLAs (time-to-fill <28 days, cost-per-hire <$2,700 per SHRM benchmarks), and a formal demand-planning process integrated with workforce planning'},
-          {label:'B',text:'Shared services model with some centralized oversight; time-to-fill averages 29\u201342 days and cost-per-hire is $2,700\u2013$4,000, with partially standardized intake processes'},
-          {label:'C',text:'Decentralized hiring managed by individual business units with limited coordination; time-to-fill exceeds 42 days and cost-per-hire exceeds $4,000, no formal SLAs'},
-          {label:'D',text:'Ad hoc hiring with no defined operating model; no tracking of time-to-fill or cost-per-hire, requisitions handled reactively by hiring managers without HR governance'}
+          {label:'A',text:'Recruiting is managed through a centralized talent acquisition operating model with clear ownership across sourcing, screening, interviewing, and offer management; specialist recruiters support priority talent segments; hiring manager engagement is structured through SLAs and governance reviews; workforce planning is integrated with recruiting demand.'},
+          {label:'B',text:'Recruiting is centrally coordinated with some specialization by business unit or geography; clear ownership exists for core recruiting activities; hiring manager engagement is mostly consistent; workforce planning input is used for larger hiring needs.'},
+          {label:'C',text:'Recruiting is managed separately by business units or geographies with limited coordination; roles and responsibilities exist but are inconsistently applied; hiring manager engagement varies; workforce planning is informal.'},
+          {label:'D',text:'Recruiting is highly decentralized and reactive; ownership is unclear; hiring processes vary widely; little or no connection exists between workforce planning and recruiting activity.'}
         ]},
       { id:'h2', dimension:'Source & Recruit', axis:'Metrics', domain:'HR \u2014 Source & Recruit',
-        text:'What recruiting quality and efficiency metrics are actively tracked and used to drive decisions?',
+        text:'What recruiting performance metrics are tracked and used for decision-making?',
         options:[
-          {label:'A',text:'Full dashboard tracking first-year turnover of new hires (<15%), offer-acceptance rate (>90%), quality-of-hire scores, source-channel ROI, and recruiter-to-open-req ratio (\u22641:15 per Hackett), reviewed monthly with action plans'},
-          {label:'B',text:'Core metrics such as time-to-fill, offer-acceptance rate, and cost-per-hire tracked quarterly; first-year turnover monitored but not formally linked to sourcing channel analysis'},
-          {label:'C',text:'Only time-to-fill and headcount fulfilled are tracked; data is lagging by 1+ quarters and not used for sourcing strategy adjustments'},
-          {label:'D',text:'No formal recruiting metrics; success is measured anecdotally by hiring manager satisfaction with no quantitative benchmarks'}
+          {label:'A',text:'Real-time dashboard tracks time-to-fill, time-to-start, offer acceptance rate, quality of hire, first-year attrition, source effectiveness, recruiter productivity, candidate satisfaction, diversity pipeline, and hiring manager satisfaction; metrics reviewed regularly and used to improve hiring outcomes.'},
+          {label:'B',text:'Standard recruiting metrics such as time-to-fill, offer acceptance, source effectiveness, and recruiter workload are tracked monthly; some quality and diversity metrics are reviewed periodically; results are used in operational reviews.'},
+          {label:'C',text:'A limited set of recruiting metrics is tracked, typically time-to-fill and open requisitions; reporting is periodic and mostly descriptive; limited use of metrics for improvement decisions.'},
+          {label:'D',text:'Few or no recruiting metrics are consistently tracked; reporting is ad hoc; hiring decisions are made without structured performance data.'}
         ]},
-      { id:'h3', dimension:'Source & Recruit', axis:'Technology', domain:'HR \u2014 Source & Recruit',
-        text:'What technology supports your end-to-end recruitment lifecycle from requisition to onboarding?',
+      { id:'h3', dimension:'Source & Recruit', axis:'Process & Policy', domain:'HR \u2014 Source & Recruit',
+        text:'How standardized and effective are your recruiting processes and policies?',
         options:[
-          {label:'A',text:'Integrated ATS with AI-powered candidate matching, automated interview scheduling, digital offer management, and seamless handoff to onboarding; >85% of requisitions flow through the system with real-time analytics'},
-          {label:'B',text:'ATS deployed for requisition tracking and candidate management; some automation for screening and scheduling but manual handoffs to onboarding; 60\u201385% system adoption'},
-          {label:'C',text:'Basic ATS or job-board tools used inconsistently; significant manual data entry, email-based coordination, and paper-based offer processes; <60% adoption'},
-          {label:'D',text:'No ATS; recruitment managed via spreadsheets, email, and paper files with no centralized candidate database'}
+          {label:'A',text:'Recruiting policies and workflows are fully documented and standardized across the enterprise; structured job requisition approval, competency-based interview guides, candidate evaluation criteria, and offer approval controls are consistently applied; employer branding and talent pipeline processes are formalized.'},
+          {label:'B',text:'Core recruiting processes are documented and mostly standardized across regions or business units; job requisition and offer approvals are defined; interview practices are generally structured, though some variation remains.'},
+          {label:'C',text:'Basic recruiting procedures exist, but they vary by team or location; approvals are inconsistently applied; interview and candidate assessment approaches are not fully standardized.'},
+          {label:'D',text:'Recruiting processes are informal and inconsistent; approvals, assessments, and hiring practices vary significantly; little documentation or policy enforcement exists.'}
         ]},
-      { id:'h4', dimension:'Manage Employee Info', axis:'Process & Policy', domain:'HR \u2014 Manage Employee Info',
-        text:'How standardized and documented are your employee data management processes (new hire entry, life-event changes, terminations)?',
+      { id:'h4', dimension:'Source & Recruit', axis:'Technology', domain:'HR \u2014 Source & Recruit',
+        text:'What technology supports your end-to-end recruitment lifecycle?',
         options:[
-          {label:'A',text:'Fully documented SOPs for all employee data transactions with <2% error rate (per APQC top quartile), SLA of \u22642 business days for data changes, and mandatory dual-approval workflows for sensitive fields'},
-          {label:'B',text:'Documented processes for most transaction types; error rate 2\u20135%, average turnaround 3\u20135 business days, with some approval workflows in place'},
-          {label:'C',text:'Partially documented processes; error rate 5\u201310%, inconsistent turnaround times, and limited approval controls for data changes'},
-          {label:'D',text:'No standardized processes; data changes are ad hoc with >10% error rate, no defined SLAs, and no approval workflows'}
+          {label:'A',text:'Integrated applicant tracking and recruiting platform supports requisition management, candidate sourcing, CRM, interview scheduling, offer management, analytics, and onboarding handoff; AI-enabled screening and talent pipeline tools are used; candidate and hiring manager self-service is widely adopted.'},
+          {label:'B',text:'Applicant tracking technology supports requisition management, candidate workflows, and reporting; some automation exists for scheduling and communications; partial integration with onboarding and HR systems is in place.'},
+          {label:'C',text:'Basic ATS or recruiting modules are used for job posting and applicant tracking; significant manual work remains for screening, scheduling, and reporting; integration with other HR systems is limited.'},
+          {label:'D',text:'Recruiting is managed through email, spreadsheets, or disconnected tools; there is no integrated applicant tracking capability; reporting and coordination are largely manual.'}
         ]},
-      { id:'h5', dimension:'Manage Employee Info', axis:'Controls', domain:'HR \u2014 Manage Employee Info',
-        text:'What controls govern employee data integrity, access, and regulatory compliance (GDPR, SOX, local labor law)?',
+      // ── MANAGE EMPLOYEE INFO (4) ──────────────────────────────────────────────
+      { id:'h5', dimension:'Manage Employee Info', axis:'Operating Model', domain:'HR \u2014 Manage Employee Info',
+        text:'How is employee data management organized across HR?',
         options:[
-          {label:'A',text:'Role-based access controls with quarterly audits, automated SOX/GDPR compliance checks, data retention policies enforced systemically, and audit trails for 100% of data changes with <1% compliance exceptions'},
-          {label:'B',text:'Role-based access defined but audited annually; compliance checks performed manually on a sample basis; audit trails exist for most transactions'},
-          {label:'C',text:'Basic access restrictions in place but not regularly audited; compliance reviews triggered only by incidents or external audits; incomplete audit trails'},
-          {label:'D',text:'No formal access controls or compliance framework; employee data accessible broadly with no audit trail or data retention policies'}
+          {label:'A',text:'A clearly defined HR operations/shared services model manages employee master data with global process ownership, defined service levels, role clarity, and escalation paths; responsibilities for data creation, approval, maintenance, and governance are standardized enterprise-wide.'},
+          {label:'B',text:'Employee data management is centrally coordinated with defined responsibilities and service levels for key activities; some regional variation exists, but governance is mostly consistent.'},
+          {label:'C',text:'Employee data management is handled by multiple teams with partial role clarity; service levels are informal; ownership and escalation vary across locations.'},
+          {label:'D',text:'Employee data management is fragmented with unclear ownership; updates are handled inconsistently; no formal service structure or governance exists.'}
         ]},
-      { id:'h6', dimension:'Manage Employee Info', axis:'Technology', domain:'HR \u2014 Manage Employee Info',
-        text:'To what extent is employee master data managed through a single system of record with self-service capabilities?',
+      { id:'h6', dimension:'Manage Employee Info', axis:'Process & Policy', domain:'HR \u2014 Manage Employee Info',
+        text:'How standardized and documented are your employee data management processes?',
         options:[
-          {label:'A',text:'Single HRIS as system of record with >70% employee self-service adoption for address, banking, and dependent changes (per Hackett top-quartile targets); real-time data sync across payroll, benefits, and time systems'},
-          {label:'B',text:'Primary HRIS in place with 40\u201370% self-service adoption; some integrations to downstream systems but occasional batch-sync delays of 24\u201348 hours'},
-          {label:'C',text:'Multiple systems with partial integration; <40% self-service adoption; HR staff manually re-key data across 2+ platforms'},
-          {label:'D',text:'No centralized HRIS; employee data scattered across spreadsheets, paper files, and disconnected tools with no self-service capability'}
+          {label:'A',text:'End-to-end employee data processes are fully documented and standardized for hire, transfer, promotion, compensation changes, leave, organizational assignment, and termination; data definitions and standards are clearly maintained; changes are processed with SLA discipline and minimal errors.'},
+          {label:'B',text:'Most employee data processes are documented and standardized for major lifecycle events; data standards exist for key fields; SLAs are defined for core transactions.'},
+          {label:'C',text:'Basic procedures exist for common employee changes, but standards vary by location or HR team; documentation is incomplete; SLAs are not consistently applied.'},
+          {label:'D',text:'Employee data processes are informal or inconsistently documented; changes are handled manually with frequent variation and no clear service expectations.'}
         ]},
-      { id:'h7', dimension:'Develop & Counsel', axis:'Process & Policy', domain:'HR \u2014 Develop & Counsel',
-        text:'How structured is your performance management and employee development lifecycle?',
+      { id:'h7', dimension:'Manage Employee Info', axis:'Controls', domain:'HR \u2014 Manage Employee Info',
+        text:'What controls govern employee data integrity, privacy, and compliance?',
         options:[
-          {label:'A',text:'Continuous performance management with quarterly check-ins, calibrated talent reviews, individual development plans for >80% of employees, and formal succession planning for critical roles aligned to APQC best practices'},
-          {label:'B',text:'Annual performance reviews with mid-year check-ins; IDPs created for high-potential employees (30\u201380% coverage); succession planning limited to senior leadership'},
-          {label:'C',text:'Annual performance reviews only; IDPs exist informally with <30% coverage; no systematic succession planning'},
-          {label:'D',text:'No formal performance review cycle; development is entirely manager-discretionary with no documentation or organizational oversight'}
+          {label:'A',text:'Strong controls exist for role-based access, sensitive data handling, approvals for employee record changes, audit trails, periodic data quality reviews, privacy compliance, and segregation of duties; master data accuracy is actively monitored and exceptions are remediated quickly.'},
+          {label:'B',text:'Core controls exist for access, approvals, and audit logging; periodic data reviews are performed; privacy and compliance requirements are addressed for major processes.'},
+          {label:'C',text:'Some controls exist but are inconsistently applied; access reviews and data quality checks are manual or occasional; privacy and approval practices vary by team or system.'},
+          {label:'D',text:'Few formal controls exist over employee data; access, approvals, and compliance activities are weak or inconsistent; issues are usually addressed only after errors occur.'}
         ]},
-      { id:'h8', dimension:'Develop & Counsel', axis:'Metrics', domain:'HR \u2014 Develop & Counsel',
-        text:'What metrics are used to measure the effectiveness and ROI of learning and development programs?',
+      { id:'h8', dimension:'Manage Employee Info', axis:'Technology', domain:'HR \u2014 Manage Employee Info',
+        text:'To what extent is employee master data managed through integrated HR technology?',
         options:[
-          {label:'A',text:'L&D effectiveness tracked through Kirkpatrick Levels 1\u20134, training hours per FTE (\u226540 hours/year per APQC median), internal mobility rate (>15%), skill gap closure rates, and L&D cost as % of payroll (\u22642.5%), reviewed quarterly'},
-          {label:'B',text:'Training completion rates, hours per FTE, and participant satisfaction (Level 1) tracked; some measurement of on-the-job application for flagship programs'},
-          {label:'C',text:'Only training completion rates and headcount trained are tracked; no measurement of business impact or knowledge transfer'},
-          {label:'D',text:'No L&D metrics tracked; training is delivered ad hoc with no visibility into participation, completion, or outcomes'}
+          {label:'A',text:'Employee master data is maintained in an integrated core HCM platform with workflow-driven updates, role-based access, audit trails, document management, data validation rules, and integration to payroll, benefits, talent, and analytics systems; employee and manager self-service is widely used.'},
+          {label:'B',text:'Core employee data is maintained in an HR system with workflow and access controls for major transactions; some integration exists with payroll and related HR processes; self-service is used for common updates.'},
+          {label:'C',text:'Employee data is managed in a core HR system, but many updates require manual intervention or offline forms; system integration is limited; self-service is partial.'},
+          {label:'D',text:'Employee data is spread across multiple systems, spreadsheets, or local files; manual updates are common; integration and workflow are minimal or absent.'}
         ]},
+      // ── DEVELOP & COUNSEL (3) ─────────────────────────────────────────────────
       { id:'h9', dimension:'Develop & Counsel', axis:'Operating Model', domain:'HR \u2014 Develop & Counsel',
-        text:'How is the employee counseling, grievance, and employee relations function organized?',
+        text:'How is learning, development, performance support, and employee counseling organized?',
         options:[
-          {label:'A',text:'Dedicated ER/counseling team or COE with defined case management workflows, SLA of <5 business days for grievance resolution, EAP utilization tracked (benchmark >5% per SHRM), and proactive climate surveys conducted biannually'},
-          {label:'B',text:'ER responsibilities assigned to HR generalists with documented escalation paths; grievances resolved in 5\u201315 business days; EAP available but utilization not tracked'},
-          {label:'C',text:'ER handled informally by managers and HR on a case-by-case basis; no defined resolution timelines or case tracking'},
-          {label:'D',text:'No formal ER function; grievances are untracked, resolution is inconsistent, and no employee assistance resources are offered'}
+          {label:'A',text:'A structured operating model exists for learning, development, performance support, employee relations, and counseling; responsibilities are clearly assigned across HR COEs, HR business partners, and managers; career development and employee support services are integrated into talent strategy.'},
+          {label:'B',text:'Learning and employee support activities are centrally coordinated with defined ownership for major programs; HR business partners and managers participate in execution; governance exists for priority processes.'},
+          {label:'C',text:'Learning and counseling responsibilities are distributed across teams with limited coordination; programs are delivered inconsistently; manager involvement varies.'},
+          {label:'D',text:'No clear operating model exists for employee development or counseling; support is ad hoc and largely dependent on local HR or individual managers.'}
         ]},
-      { id:'h10', dimension:'Retain & Reward', axis:'Metrics', domain:'HR \u2014 Retain & Reward',
-        text:'What retention and reward metrics does the organization actively monitor and benchmark?',
+      { id:'h10', dimension:'Develop & Counsel', axis:'Process & Policy', domain:'HR \u2014 Develop & Counsel',
+        text:'How mature are your employee development, performance guidance, and counseling processes?',
         options:[
-          {label:'A',text:'Comprehensive dashboard tracking voluntary turnover (<12% per APQC top quartile), regrettable loss rate, compa-ratio distribution, total rewards cost per FTE, pay equity ratios, and engagement scores (>75th percentile), benchmarked externally annually'},
-          {label:'B',text:'Voluntary turnover and engagement scores tracked organization-wide; compa-ratios reviewed during annual compensation cycles; some external benchmarking'},
-          {label:'C',text:'Overall turnover tracked but not segmented by voluntary/involuntary or regrettable/non-regrettable; engagement surveys conducted irregularly'},
-          {label:'D',text:'No systematic retention or reward metrics; turnover data is anecdotal and compensation decisions are made without market benchmarking'}
+          {label:'A',text:'Standardized processes exist for learning needs assessment, development planning, performance coaching, grievance management, counseling support, and employee well-being; formal policies define escalation, confidentiality, documentation, and follow-up; development plans are linked to skills and career paths.'},
+          {label:'B',text:'Key development and counseling processes are documented and followed for major employee groups; policies exist for grievances and employee support; development planning is used in many parts of the organization.'},
+          {label:'C',text:'Basic development and counseling practices exist, but process consistency varies; grievance handling and development planning are not applied uniformly.'},
+          {label:'D',text:'Development and counseling processes are informal; limited documentation or policy guidance exists; employee support depends on individual manager or HR discretion.'}
         ]},
-      { id:'h11', dimension:'Retain & Reward', axis:'Process & Policy', domain:'HR \u2014 Retain & Reward',
-        text:'How mature are your compensation and benefits administration processes?',
+      { id:'h11', dimension:'Develop & Counsel', axis:'Metrics', domain:'HR \u2014 Develop & Counsel',
+        text:'What metrics are used to evaluate employee development and counseling effectiveness?',
         options:[
-          {label:'A',text:'Formal compensation philosophy with defined pay bands, annual market-pricing using \u22653 salary surveys, total rewards statements issued to all employees, and benefits enrollment error rate <1% with straight-through processing'},
-          {label:'B',text:'Pay bands established for most roles with biennial market review; total rewards statements for select populations; benefits enrollment mostly automated with 1\u20133% error rate'},
-          {label:'C',text:'Informal pay ranges with infrequent market comparisons; no total rewards statements; benefits enrollment partially manual with 3\u20135% error rate'},
-          {label:'D',text:'No formal pay structure or market-pricing; compensation decisions are ad hoc and non-transparent; benefits enrollment is fully manual with >5% error rate'}
+          {label:'A',text:'Metrics track learning completion, skill progression, development plan completion, internal mobility from development programs, employee relations case resolution time, repeat issue rates, employee well-being participation, and employee sentiment; results are used to improve support and capability-building.'},
+          {label:'B',text:'Core metrics such as training completion, participation rates, and case resolution volumes are tracked; some reporting exists on development activity and employee support outcomes.'},
+          {label:'C',text:'Limited metrics are tracked, usually training attendance and basic case counts; reporting is periodic and not consistently used for improvement.'},
+          {label:'D',text:'Few or no formal metrics are used to assess development or counseling effectiveness; insights are anecdotal and reactive.'}
         ]},
-      { id:'h12', dimension:'Retain & Reward', axis:'Controls', domain:'HR \u2014 Retain & Reward',
-        text:'What controls exist to ensure pay equity, policy compliance, and accurate incentive payouts?',
+      // ── RETAIN & REWARD (4) ──────────────────────────────────────────────────
+      { id:'h12', dimension:'Retain & Reward', axis:'Operating Model', domain:'HR \u2014 Retain & Reward',
+        text:'How is your compensation, benefits, recognition, and retention function organized and governed?',
         options:[
-          {label:'A',text:'Automated pay equity analysis run semi-annually with remediation plans, SOX-compliant compensation approval workflows, incentive calculations validated through dual reconciliation with <0.5% payout error rate'},
-          {label:'B',text:'Annual pay equity review with manual analysis; compensation approvals follow defined authority matrix; incentive payouts verified by finance with 0.5\u20132% error rate'},
-          {label:'C',text:'Pay equity reviewed only when prompted by complaints or legal risk; limited approval controls; incentive errors identified reactively with 2\u20135% error rate'},
-          {label:'D',text:'No pay equity analysis or compensation controls; incentive calculations are manual and unverified with >5% error rate and frequent disputes'}
+          {label:'A',text:'A centralized rewards and retention operating model is in place with clear ownership for compensation, benefits, recognition, and retention strategy; enterprise governance aligns reward programs to workforce strategy; HR, finance, and business leaders regularly review outcomes and priorities.'},
+          {label:'B',text:'Rewards and retention activities are centrally coordinated for major programs, with clear ownership for compensation and benefits and some structured governance; business participation occurs for key annual cycles.'},
+          {label:'C',text:'Rewards and retention responsibilities are split across teams or regions with limited coordination; governance exists mainly for annual compensation or benefits cycles.'},
+          {label:'D',text:'Rewards and retention are managed inconsistently across the organization; ownership is unclear; governance is weak or reactive.'}
         ]},
-      { id:'h13', dimension:'Retain & Reward', axis:'Technology', domain:'HR \u2014 Retain & Reward',
-        text:'What technology supports your compensation planning, rewards administration, and engagement measurement?',
+      { id:'h13', dimension:'Retain & Reward', axis:'Metrics', domain:'HR \u2014 Retain & Reward',
+        text:'What metrics are tracked to assess retention, compensation, and rewards effectiveness?',
         options:[
-          {label:'A',text:'Integrated compensation management platform with real-time modeling, automated merit/bonus cycle workflows, digital total rewards portal, and pulse survey tool with AI-driven sentiment analytics; >80% manager adoption'},
-          {label:'B',text:'Compensation planning tool used for annual cycles; benefits administered through HRIS module; engagement surveys run through a standalone survey platform; 50\u201380% manager adoption'},
-          {label:'C',text:'Spreadsheet-based compensation planning with limited system support; benefits enrollment via paper or basic portal; engagement surveys conducted via email or ad hoc tools'},
-          {label:'D',text:'No compensation or engagement technology; all processes managed via email, paper forms, and manual spreadsheets'}
+          {label:'A',text:'A comprehensive dashboard tracks voluntary attrition, regrettable loss, pay competitiveness, pay equity, promotion rates, benefit participation, reward program utilization, high-performer retention, employee engagement, and retention risk by segment; metrics are used proactively in workforce decisions.'},
+          {label:'B',text:'Core metrics such as attrition, compensation benchmarks, benefits participation, and engagement are tracked regularly; some segmentation exists for critical roles or populations.'},
+          {label:'C',text:'A limited set of metrics is tracked, mainly overall attrition and selected compensation or benefits data; analysis is mostly backward-looking.'},
+          {label:'D',text:'Few or no meaningful retention and reward metrics are consistently tracked; reporting is ad hoc and rarely used in decision-making.'}
         ]},
-      { id:'h14', dimension:'Re-deploy & Retire', axis:'Operating Model', domain:'HR \u2014 Re-deploy & Retire',
-        text:'How is the internal mobility, redeployment, and workforce transition function structured?',
+      { id:'h14', dimension:'Retain & Reward', axis:'Process & Policy', domain:'HR \u2014 Retain & Reward',
+        text:'How mature are your compensation, benefits, recognition, and retention processes and policies?',
         options:[
-          {label:'A',text:'Formal internal mobility program with a talent marketplace, cross-functional rotation assignments, redeployment SLAs (placement within 30 days), and outplacement services for all involuntary separations; internal fill rate >25% (per Hackett benchmark)'},
-          {label:'B',text:'Internal job postings with preferential consideration for internal candidates; redeployment handled on a case-by-case basis; outplacement offered to management-level separations; internal fill rate 15\u201325%'},
-          {label:'C',text:'Internal transfers possible but no formal program; redeployment is reactive; outplacement offered only during large-scale reductions; internal fill rate <15%'},
-          {label:'D',text:'No internal mobility infrastructure; positions filled externally by default; no redeployment or outplacement support'}
+          {label:'A',text:'Enterprise-wide policies and processes are standardized for salary planning, incentive compensation, benefits administration, recognition, pay review, retention actions, and employee communication; documented workflows, approval rules, and governance support fairness, transparency, and consistency.'},
+          {label:'B',text:'Most reward and retention processes are documented and standardized for major employee groups; annual compensation and benefits cycles are well managed; some variation exists by geography or business unit.'},
+          {label:'C',text:'Basic reward and retention processes are in place, but standardization is incomplete; policy application varies; recognition and retention programs are not consistently managed.'},
+          {label:'D',text:'Reward and retention practices are informal or fragmented; policies are incomplete or inconsistently applied; retention efforts are mostly reactive.'}
         ]},
-      { id:'h15', dimension:'Re-deploy & Retire', axis:'Process & Policy', domain:'HR \u2014 Re-deploy & Retire',
-        text:'How standardized are your offboarding, retirement, and separation processes?',
+      { id:'h15', dimension:'Retain & Reward', axis:'Controls', domain:'HR \u2014 Retain & Reward',
+        text:'What controls and technology support compensation, benefits, and retention management?',
         options:[
-          {label:'A',text:'Fully documented separation workflows covering voluntary, involuntary, and retirement scenarios with automated system deprovisioning within 24 hours, exit interview completion >85%, structured knowledge transfer checklists, and final pay compliance at 100%'},
-          {label:'B',text:'Documented offboarding checklists for most scenarios; system deprovisioning within 48\u201372 hours; exit interviews conducted for 50\u201385% of departures; final pay processed within statutory timelines'},
-          {label:'C',text:'Basic offboarding process exists but inconsistently followed; system deprovisioning takes >72 hours; exit interviews conducted for <50% of departures'},
-          {label:'D',text:'No standardized offboarding; system access removal is ad hoc and often delayed beyond one week; no exit interviews or knowledge transfer protocols'}
+          {label:'A',text:'Integrated technology supports compensation planning, pay review workflows, benefits administration, recognition, analytics, and retention insights; strong controls exist for approvals, pay equity review, eligibility, audit trails, and role-based access; automated validations reduce processing errors and compliance risk.'},
+          {label:'B',text:'Technology supports major compensation and benefits processes with workflow and approval controls; reporting is available for key decisions; some retention insights and audit capabilities exist.'},
+          {label:'C',text:'Basic systems or modules support compensation and benefits administration, but many tasks are manual; controls are partly manual and inconsistently monitored; retention analysis is limited.'},
+          {label:'D',text:'Compensation, benefits, and retention management rely heavily on spreadsheets, emails, or disconnected tools; controls are weak; visibility and reporting are limited.'}
         ]},
-      { id:'h16', dimension:'Re-deploy & Retire', axis:'Metrics', domain:'HR \u2014 Re-deploy & Retire',
-        text:'What metrics are tracked for workforce transitions, separations, and retirement readiness?',
+      // ── RE-DEPLOY & RETIRE (2) ───────────────────────────────────────────────
+      { id:'h16', dimension:'Re-deploy & Retire', axis:'Operating Model', domain:'HR \u2014 Re-deploy & Retire',
+        text:'How is internal mobility, workforce redeployment, exit management, and retirement administration organized?',
         options:[
-          {label:'A',text:'Retirement eligibility forecasting (3\u20135 year horizon), internal placement rate for redeployed employees (>80%), separation cost per employee, average time-to-offboard (<3 business days), and exit survey themes analyzed quarterly to inform retention strategy'},
-          {label:'B',text:'Retirement-eligible population tracked annually; separation volumes and types reported quarterly; exit survey results summarized but not systematically linked to retention actions'},
-          {label:'C',text:'Basic headcount attrition tracked; retirement eligibility reviewed reactively; exit surveys collected but rarely analyzed'},
-          {label:'D',text:'No workforce transition metrics; separations and retirements are not forecast or analyzed'}
+          {label:'A',text:'A defined operating model governs internal mobility, redeployment, succession-linked movement, exit management, retirement administration, and workforce transition support; HR, managers, and business leaders coordinate through clear ownership, governance, and service standards.'},
+          {label:'B',text:'Internal mobility and exit processes are centrally coordinated for major employee groups; responsibilities are defined for redeployment and retirement administration; governance exists for key workforce transitions.'},
+          {label:'C',text:'Mobility, exit, and retirement activities are managed by multiple teams with limited coordination; processes are partially defined and vary by location or function.'},
+          {label:'D',text:'No clear operating model exists for redeployment or retirement; internal movement and exits are handled inconsistently and reactively.'}
         ]},
-      { id:'h17', dimension:'HR Technology', axis:'Technology', domain:'HR \u2014 HR Technology',
-        text:'What is the state of your core HR technology architecture and integration landscape?',
+      { id:'h17', dimension:'Re-deploy & Retire', axis:'Process & Policy', domain:'HR \u2014 Re-deploy & Retire',
+        text:'How mature are your processes, policies, and measures for redeployment, offboarding, and retirement?',
         options:[
-          {label:'A',text:'Unified cloud HCM platform (e.g., Workday, SAP SuccessFactors, Oracle HCM) serving as single source of truth with API-based integrations to payroll, finance, and downstream systems; <5% of HR processes require manual workarounds; system uptime >99.5%'},
-          {label:'B',text:'Primary HRIS with module coverage for core HR, payroll, and benefits; integrations via middleware or scheduled batch files; 5\u201315% of processes require manual workarounds'},
-          {label:'C',text:'Legacy HRIS with limited module coverage; point-to-point integrations that are fragile and require manual intervention; 15\u201330% of processes handled outside the system'},
-          {label:'D',text:'No integrated HR platform; multiple disconnected tools and spreadsheets with >30% of processes managed manually; frequent data reconciliation issues'}
+          {label:'A',text:'Standardized processes and policies exist for internal job movement, redeployment, offboarding, knowledge transfer, retirement readiness, and alumni/transition support; metrics track internal fill rates, redeployment success, regrettable exits, offboarding completion, retirement processing accuracy, and time to close employee records.'},
+          {label:'B',text:'Core processes are documented for internal mobility, offboarding, and retirement; some metrics are tracked such as internal transfers, exit completion, and retirement case handling; practices are mostly consistent for major populations.'},
+          {label:'C',text:'Basic procedures exist for offboarding and retirement administration, but redeployment and knowledge transfer are less structured; few metrics are tracked consistently.'},
+          {label:'D',text:'Processes are informal or inconsistent; offboarding and retirement activities depend on local practice; little or no measurement exists for redeployment or transition effectiveness.'}
         ]},
-      { id:'h18', dimension:'HR Technology', axis:'Operating Model', domain:'HR \u2014 HR Technology',
-        text:'How is HR technology governance, roadmap ownership, and vendor management structured?',
+      // ── HR TECHNOLOGY (3) ────────────────────────────────────────────────────
+      { id:'h18', dimension:'HR Technology', axis:'Technology', domain:'HR \u2014 HR Technology',
+        text:'What is the maturity of your core HR technology architecture?',
         options:[
-          {label:'A',text:'Dedicated HR technology team or HRIS COE with a 3-year roadmap aligned to HR strategy, formal vendor SLA management, annual system optimization reviews, and a defined business case/ROI process for new technology investments'},
-          {label:'B',text:'HRIS team manages day-to-day operations with a 1-year roadmap; vendor relationships managed through procurement; periodic system reviews conducted'},
-          {label:'C',text:'HRIS support is part-time or shared with IT; no formal technology roadmap; vendor management is reactive and contract-renewal-driven'},
-          {label:'D',text:'No dedicated HRIS function; HR technology decisions are ad hoc, driven by individual tool purchases with no strategic alignment or vendor oversight'}
+          {label:'A',text:'HR operates on an integrated cloud-based technology architecture with a core HCM platform connected to recruiting, employee data, learning, performance, compensation, workforce analytics, and service delivery tools; integration is standardized and user experience is consistent across the employee lifecycle.'},
+          {label:'B',text:'Core HR technology is established with integration across major HR processes; some point solutions remain, but architecture supports most critical workflows and reporting needs.'},
+          {label:'C',text:'HR uses a mix of core systems and standalone tools with partial integration; data movement between systems requires manual effort; user experience is inconsistent.'},
+          {label:'D',text:'HR technology is fragmented across disconnected systems, spreadsheets, and local tools; integration is limited; the employee and HR user experience is poor.'}
         ]},
       { id:'h19', dimension:'HR Technology', axis:'Controls', domain:'HR \u2014 HR Technology',
-        text:'What controls govern HR system data quality, change management, and security?',
+        text:'How is HR technology governed and controlled?',
         options:[
-          {label:'A',text:'Automated data quality rules with monthly exception reports (<2% data defects per APQC top quartile), formal change management (test/UAT/prod environments), SOC 2/ISO 27001-aligned security controls, and disaster recovery tested semi-annually with RPO <4 hours'},
-          {label:'B',text:'Data quality monitored quarterly with 2\u20135% defect rate; change management process in place but UAT coverage is partial; security policies defined and audited annually; DR plan documented but tested infrequently'},
-          {label:'C',text:'Data quality issues identified reactively with 5\u201310% defect rate; changes applied directly to production with limited testing; security policies exist but are not regularly enforced; no DR testing'},
-          {label:'D',text:'No data quality monitoring (>10% defect rate); no change management process; minimal security controls; no documented disaster recovery plan for HR systems'}
+          {label:'A',text:'Formal governance exists for HR systems, data standards, security, privacy, integrations, release management, and change prioritization; role-based access, audit trails, data quality monitoring, and control testing are embedded; HR and IT jointly manage the roadmap.'},
+          {label:'B',text:'Governance exists for major HR systems and data controls; access, privacy, and change management are managed for key applications; roadmap decisions are coordinated across HR and IT for major initiatives.'},
+          {label:'C',text:'Governance and controls exist for selected systems, but standards vary; access reviews, data quality checks, and change management are inconsistently applied.'},
+          {label:'D',text:'HR technology governance is weak or informal; controls vary by system; roadmap, security, and data quality activities are reactive.'}
         ]},
       { id:'h20', dimension:'HR Technology', axis:'Metrics', domain:'HR \u2014 HR Technology',
-        text:'What metrics are used to measure HR technology effectiveness and adoption?',
+        text:'What metrics are used to measure HR technology effectiveness and user adoption?',
         options:[
-          {label:'A',text:'Comprehensive HR tech scorecard tracking system adoption rate (>90%), employee self-service utilization (>70%), HR cost per FTE (<$1,400 per Hackett top quartile), case resolution SLA compliance (>95%), and HR staff-to-employee ratio (\u22641:80), reviewed monthly'},
-          {label:'B',text:'System adoption and self-service utilization tracked (60\u201390% and 40\u201370% respectively); HR cost per FTE monitored annually; some SLA tracking for tier-1 inquiries'},
-          {label:'C',text:'Basic login/usage statistics available but not actionable; HR cost per FTE not benchmarked; no SLA tracking for HR service delivery'},
-          {label:'D',text:'No HR technology or service delivery metrics; no visibility into system adoption, cost efficiency, or service quality'}
+          {label:'A',text:'A technology performance dashboard tracks system availability, case resolution, transaction automation, self-service adoption, user satisfaction, release quality, data quality, integration performance, and HR process cycle time improvements; insights are used to prioritize enhancement and adoption actions.'},
+          {label:'B',text:'Core technology metrics such as uptime, ticket volume, adoption, and major process turnaround times are tracked regularly; some user feedback is used to guide improvements.'},
+          {label:'C',text:'Limited HR technology metrics are tracked, primarily uptime and support tickets; adoption and business impact are reviewed occasionally.'},
+          {label:'D',text:'Few or no HR technology effectiveness metrics are consistently tracked; decisions are based on anecdotal feedback or issue escalation.'}
         ]}
     ]
   }
-};
+};;
 
 // ── STATE ────────────────────────────────────────────────────────────────────
 let currentDomain = 'supplychain';
