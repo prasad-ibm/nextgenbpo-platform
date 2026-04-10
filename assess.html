@@ -55,6 +55,35 @@
     .dim-radar-card { background:#fff; border:1px solid #c6c6c6; padding:1.25rem; }
     .dim-radar-title { font-size:0.8125rem; font-weight:700; color:#161616; margin-bottom:0.25rem; }
     .dim-radar-score { font-size:0.75rem; color:#007d79; font-weight:600; margin-bottom:0.75rem; }
+    /* ── Summary Panel ── */
+    .summary-toggle { display:flex; gap:0.5rem; margin-bottom:0; }
+    .summary-toggle-btn { flex:1; padding:0.5rem; font-size:0.75rem; font-weight:600; border:1px solid #c6c6c6; background:#fff; cursor:pointer; text-align:center; color:#525252; font-family:'IBM Plex Sans',sans-serif; transition:all 0.15s; }
+    .summary-toggle-btn:hover { background:#f4f4f4; }
+    .summary-toggle-btn.active { background:#007d79; color:#fff; border-color:#007d79; }
+    .sum-domain-card { background:#fff; border:1px solid #e0e0e0; margin-bottom:1rem; }
+    .sum-domain-header { padding:0.75rem 1rem; border-bottom:1px solid #e0e0e0; display:flex; justify-content:space-between; align-items:center; cursor:pointer; }
+    .sum-domain-header:hover { background:#f4f4f4; }
+    .sum-domain-name { font-size:0.875rem; font-weight:600; color:#161616; }
+    .sum-domain-badge { font-size:0.6875rem; font-weight:700; padding:2px 8px; border-radius:10px; font-family:'IBM Plex Mono',monospace; }
+    .sum-domain-body { padding:1rem; display:none; }
+    .sum-domain-body.open { display:block; }
+    .sum-score-big { font-size:1.75rem; font-weight:300; color:#161616; line-height:1; }
+    .sum-score-label { font-size:0.6875rem; text-transform:uppercase; letter-spacing:0.1em; color:#6f6f6f; font-family:'IBM Plex Mono',monospace; margin-top:0.25rem; }
+    .sum-respondent { font-size:0.75rem; color:#525252; padding:0.375rem 0; border-bottom:1px solid #f4f4f4; display:flex; justify-content:space-between; }
+    .sum-respondent-name { font-weight:600; color:#161616; }
+    .sum-respondent-score { font-family:'IBM Plex Mono',monospace; font-weight:600; }
+    .sum-dim-row { display:flex; align-items:center; gap:0.5rem; padding:0.25rem 0; font-size:0.75rem; }
+    .sum-dim-label { color:#525252; flex:1; }
+    .sum-dim-bar-wrap { width:80px; height:5px; background:#e0e0e0; border-radius:2px; }
+    .sum-dim-bar { height:100%; border-radius:2px; }
+    .sum-dim-val { font-family:'IBM Plex Mono',monospace; font-weight:600; color:#161616; min-width:28px; text-align:right; font-size:0.6875rem; }
+    .sum-empty { text-align:center; padding:2rem; color:#6f6f6f; font-size:0.8125rem; }
+    .sum-mini-radar-wrap { display:flex; justify-content:center; margin:0.75rem 0; }
+    .sum-history-row { padding:0.5rem 0.75rem; border-bottom:1px solid #e0e0e0; font-size:0.75rem; cursor:pointer; transition:background 0.1s; }
+    .sum-history-row:hover { background:#d9fbfb; }
+    .sum-history-date { color:#6f6f6f; font-family:'IBM Plex Mono',monospace; }
+    .sum-history-name { font-weight:600; color:#161616; }
+    .sum-history-band { font-size:0.625rem; font-weight:700; padding:1px 6px; border-radius:8px; }
   </style>
 </head>
 <body>
@@ -109,14 +138,22 @@
   <div class="sidebar" style="background:#fff;">
 
     <div class="sidebar-section">
+      <div class="sidebar-section-label">View</div>
+      <div class="summary-toggle">
+        <button class="summary-toggle-btn active" id="togAssess" onclick="showAssessView()">New Assessment</button>
+        <button class="summary-toggle-btn" id="togSummary" onclick="showSummaryView()">Summary</button>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
       <div class="sidebar-section-label">Client</div>
-      <select class="cds-select" id="clientSelect" style="margin-bottom:0.5rem;">
+      <select class="cds-select" id="clientSelect" style="margin-bottom:0.5rem;" onchange="onClientChange()">
         <option value="">Loading clients...</option>
       </select>
       <button class="btn-ghost btn-sm" onclick="document.getElementById('addClientModal').classList.add('open')" style="font-size:0.75rem;padding:0;color:#007d79;background:none;border:none;cursor:pointer;">+ Add New Client</button>
     </div>
 
-    <div class="sidebar-section">
+    <div class="sidebar-section assess-only">
       <div class="sidebar-section-label">Respondent</div>
       <div style="margin-bottom:0.5rem;">
         <input class="cds-input" id="respName" placeholder="Full name" style="height:36px;font-size:0.8125rem;">
@@ -129,7 +166,7 @@
       </div>
     </div>
 
-    <div class="sidebar-section">
+    <div class="sidebar-section assess-only">
       <div class="sidebar-section-label">Assessment Domain</div>
       <button class="domain-btn active" id="dBtn-supplychain" onclick="switchDomain('supplychain')">
         <div class="domain-btn-name">Supply Chain</div>
@@ -145,13 +182,13 @@
       </button>
     </div>
 
-    <div class="sidebar-section">
+    <div class="sidebar-section assess-only">
       <div class="sidebar-section-label">Progress</div>
       <div style="font-size:0.875rem;color:#161616;margin-bottom:0.5rem;"><span id="progressCount">0</span> / 20 answered</div>
       <div class="progress-bar-track"><div class="progress-bar-fill" id="progressBar" style="width:0%"></div></div>
     </div>
 
-    <div class="sidebar-section" style="border-bottom:none;">
+    <div class="sidebar-section assess-only" style="border-bottom:none;">
       <button class="btn btn-primary" id="submitBtn" onclick="submitAssessment()" disabled style="width:100%;justify-content:center;min-width:0;">Submit Assessment</button>
       <div id="submitMsg" style="font-size:0.75rem;color:#da1e28;margin-top:0.5rem;"></div>
     </div>
@@ -163,6 +200,18 @@
     <!-- Questions Panel -->
     <div id="questionsPanel">
       <div id="questionsContainer"></div>
+    </div>
+
+    <!-- Summary Panel (historical results) -->
+    <div id="summaryPanel" style="display:none;">
+      <div style="background:#fff;border:1px solid #c6c6c6;padding:1.5rem;margin-bottom:1.5rem;">
+        <div class="eyebrow-teal" style="margin-bottom:0.5rem;">ASSESSMENT HISTORY</div>
+        <h2 style="margin-bottom:0.25rem;" id="sumClientName">Select a client to view results</h2>
+        <p style="font-size:0.8125rem;color:#6f6f6f;" id="sumSubtitle">Aggregated maturity scores across all completed assessments by domain.</p>
+      </div>
+      <div id="sumContent">
+        <div class="sum-empty">Select a client from the sidebar to view their assessment history.</div>
+      </div>
     </div>
 
     <!-- Results Panel (hidden until submit) -->
@@ -1107,6 +1156,251 @@ function drawDimensionRadars(dimLabels, dimData) {
     });
     dimChartInstances.push(chart);
   });
+}
+
+// ── SUMMARY VIEW ────────────────────────────────────────────────────────────
+let currentView = 'assess'; // 'assess' | 'summary'
+let summaryCharts = [];
+
+function showAssessView() {
+  currentView = 'assess';
+  document.getElementById('togAssess').classList.add('active');
+  document.getElementById('togSummary').classList.remove('active');
+  document.getElementById('summaryPanel').style.display = 'none';
+  // Show whichever panel was active before
+  if (document.getElementById('resultsPanel').dataset.wasShowing === 'true') {
+    document.getElementById('resultsPanel').style.display = '';
+    document.getElementById('questionsPanel').style.display = 'none';
+  } else {
+    document.getElementById('questionsPanel').style.display = '';
+    document.getElementById('resultsPanel').style.display = 'none';
+  }
+  // Show assess-only sidebar sections
+  document.querySelectorAll('.assess-only').forEach(el => el.style.display = '');
+}
+
+function showSummaryView() {
+  currentView = 'summary';
+  document.getElementById('togSummary').classList.add('active');
+  document.getElementById('togAssess').classList.remove('active');
+  // Remember if results were showing
+  document.getElementById('resultsPanel').dataset.wasShowing =
+    document.getElementById('resultsPanel').style.display !== 'none' ? 'true' : 'false';
+  document.getElementById('questionsPanel').style.display = 'none';
+  document.getElementById('resultsPanel').style.display = 'none';
+  document.getElementById('summaryPanel').style.display = '';
+  // Hide assess-only sidebar sections
+  document.querySelectorAll('.assess-only').forEach(el => el.style.display = 'none');
+  loadSummaryData();
+}
+
+function onClientChange() {
+  const clientId = document.getElementById('clientSelect').value;
+  if (clientId) sessionStorage.setItem('bpo_selected_client', clientId);
+  if (currentView === 'summary') loadSummaryData();
+}
+
+async function loadSummaryData() {
+  const clientId = document.getElementById('clientSelect').value;
+  const content = document.getElementById('sumContent');
+  const nameEl = document.getElementById('sumClientName');
+  const subEl = document.getElementById('sumSubtitle');
+
+  if (!clientId) {
+    nameEl.textContent = 'Select a client to view results';
+    subEl.textContent = 'Aggregated maturity scores across all completed assessments by domain.';
+    content.innerHTML = '<div class="sum-empty">Select a client from the sidebar to view their assessment history.</div>';
+    return;
+  }
+
+  // Get client name from dropdown
+  const clientName = document.getElementById('clientSelect').selectedOptions[0]?.textContent || 'Client';
+  nameEl.textContent = clientName + ' — Assessment Summary';
+  subEl.textContent = 'Loading...';
+  content.innerHTML = '';
+
+  try {
+    const r = await fetch('/api/assessments/aggregate/' + clientId, { headers: authHeaders() });
+    const data = await r.json();
+
+    if (!data.domains || data.domains.length === 0) {
+      subEl.textContent = 'No assessments completed yet for this client.';
+      content.innerHTML = '<div class="sum-empty">No assessments have been submitted for ' + clientName + ' yet. Complete an assessment using the "New Assessment" view.</div>';
+      return;
+    }
+
+    // Also fetch raw assessments for history
+    const r2 = await fetch('/api/assessments?client_id=' + clientId, { headers: authHeaders() });
+    const allAssessments = await r2.json();
+
+    const totalRespondents = new Set();
+    data.domains.forEach(d => d.stakeholders.forEach(s => totalRespondents.add(s.name)));
+    subEl.textContent = data.domains.length + ' domain(s) assessed · ' + totalRespondents.size + ' respondent(s) · ' + (Array.isArray(allAssessments) ? allAssessments.length : 0) + ' total assessment(s)';
+
+    // Destroy old charts
+    summaryCharts.forEach(c => c.destroy());
+    summaryCharts = [];
+
+    const domainLabels = { supplychain: 'Supply Chain', finance: 'Finance', hr: 'HR' };
+    const domainOrder = ['supplychain', 'finance', 'hr'];
+
+    // Sort domains
+    const sortedDomains = data.domains.sort((a, b) => {
+      const ai = domainOrder.indexOf(a.domain);
+      const bi = domainOrder.indexOf(b.domain);
+      return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+    });
+
+    sortedDomains.forEach((d, di) => {
+      const label = domainLabels[d.domain] || d.domain;
+      const avgPct = Math.round((d.overallAvg / (20 * 4)) * 100); // overall_score is raw total, 20 questions × 4 max
+      const band = getMaturityBand(avgPct);
+      const bandBg = band.cls === 'band-ready' ? '#d0f0e0' : band.cls === 'band-opp' ? '#d9fbfb' : band.cls === 'band-candidate' ? '#fef3cd' : '#ffe0e0';
+      const bandColor = band.cls === 'band-ready' ? '#0a6640' : band.cls === 'band-opp' ? '#004144' : band.cls === 'band-candidate' ? '#8a6800' : '#a2191f';
+
+      // Filter assessments for this domain
+      const domainAssessments = Array.isArray(allAssessments) ? allAssessments.filter(a => a.domain === d.domain) : [];
+
+      const canvasId = 'sumRadar_' + d.domain;
+      const card = document.createElement('div');
+      card.className = 'sum-domain-card';
+      card.innerHTML = `
+        <div class="sum-domain-header" onclick="this.nextElementSibling.classList.toggle('open')">
+          <div>
+            <span class="sum-domain-name">${label}</span>
+            <span style="font-size:0.75rem;color:#6f6f6f;margin-left:0.5rem;">${d.stakeholders.length} respondent(s)</span>
+          </div>
+          <div>
+            <span class="sum-domain-badge" style="background:${bandBg};color:${bandColor};">${band.label} · ${avgPct}%</span>
+          </div>
+        </div>
+        <div class="sum-domain-body ${di === 0 ? 'open' : ''}">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1rem;">
+            <div>
+              <div class="sum-score-big">${avgPct}%</div>
+              <div class="sum-score-label">Average Maturity</div>
+              <div style="margin-top:1rem;">
+                <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6f6f6f;margin-bottom:0.5rem;">Dimension Scores</div>
+                ${Object.entries(d.avgScores).map(([dim, val]) => {
+                  const pctVal = Math.round((val / 4) * 100);
+                  let barColor = '#007d79';
+                  if (val <= 1.5) barColor = '#da1e28';
+                  else if (val <= 2.5) barColor = '#e68a00';
+                  return `<div class="sum-dim-row">
+                    <span class="sum-dim-label">${dim}</span>
+                    <div class="sum-dim-bar-wrap"><div class="sum-dim-bar" style="width:${pctVal}%;background:${barColor};"></div></div>
+                    <span class="sum-dim-val">${pctVal}%</span>
+                  </div>`;
+                }).join('')}
+              </div>
+            </div>
+            <div>
+              <div class="sum-mini-radar-wrap">
+                <canvas id="${canvasId}" width="240" height="240"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:1rem;border-top:1px solid #e0e0e0;padding-top:0.75rem;">
+            <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6f6f6f;margin-bottom:0.5rem;">Respondents</div>
+            ${d.stakeholders.map(s => {
+              const sPct = Math.round((s.overall / (20 * 4)) * 100);
+              const sBand = getMaturityBand(sPct);
+              return `<div class="sum-respondent">
+                <span class="sum-respondent-name">${s.name}${s.role ? ' <span style="font-weight:400;color:#6f6f6f;">· ' + s.role + '</span>' : ''}</span>
+                <span class="sum-respondent-score" style="color:${sPct >= 60 ? '#24a148' : sPct >= 40 ? '#e68a00' : '#da1e28'};">${sPct}% · ${sBand.label}</span>
+              </div>`;
+            }).join('')}
+          </div>
+
+          ${domainAssessments.length > 0 ? `
+          <div style="margin-top:1rem;border-top:1px solid #e0e0e0;padding-top:0.75rem;">
+            <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6f6f6f;margin-bottom:0.5rem;">Assessment History</div>
+            ${domainAssessments.map(a => {
+              const aDate = new Date(a.created_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+              const aPct = Math.round((a.overall_score / (20 * 4)) * 100);
+              const aBand = getMaturityBand(aPct);
+              const aBandBg = aBand.cls === 'band-ready' ? '#d0f0e0' : aBand.cls === 'band-opp' ? '#d9fbfb' : aBand.cls === 'band-candidate' ? '#fef3cd' : '#ffe0e0';
+              const aBandColor = aBand.cls === 'band-ready' ? '#0a6640' : aBand.cls === 'band-opp' ? '#004144' : aBand.cls === 'band-candidate' ? '#8a6800' : '#a2191f';
+              return `<div class="sum-history-row" onclick="viewHistoricalAssessment('${a.id}', '${d.domain}')">
+                <span class="sum-history-date">${aDate}</span>
+                <span class="sum-history-name" style="margin-left:0.75rem;">${a.stakeholder_name}</span>
+                <span class="sum-history-band" style="background:${aBandBg};color:${aBandColor};margin-left:0.5rem;">${aBand.label} · ${aPct}%</span>
+              </div>`;
+            }).join('')}
+          </div>` : ''}
+        </div>
+      `;
+      content.appendChild(card);
+
+      // Draw mini radar chart
+      const dims = Object.keys(d.avgScores);
+      const vals = dims.map(k => d.avgScores[k]);
+      const ctx = document.getElementById(canvasId).getContext('2d');
+      const chart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: dims,
+          datasets: [{
+            label: 'Average',
+            data: vals,
+            backgroundColor: 'rgba(0,125,121,0.15)',
+            borderColor: '#007d79',
+            borderWidth: 2,
+            pointBackgroundColor: '#007d79',
+            pointRadius: 3
+          }]
+        },
+        options: {
+          responsive: false,
+          scales: {
+            r: {
+              min: 0, max: 4,
+              ticks: { stepSize: 1, font: { size: 8 }, display: false },
+              pointLabels: { font: { size: 8 }, color: '#525252' },
+              grid: { color: '#e0e0e0' },
+              angleLines: { color: '#e0e0e0' }
+            }
+          },
+          plugins: { legend: { display: false } }
+        }
+      });
+      summaryCharts.push(chart);
+    });
+
+  } catch(e) {
+    subEl.textContent = 'Error loading assessment data.';
+    content.innerHTML = '<div class="sum-empty">Could not load assessment history. ' + e.message + '</div>';
+  }
+}
+
+async function viewHistoricalAssessment(assessmentId, domain) {
+  try {
+    const clientId = document.getElementById('clientSelect').value;
+    const r = await fetch('/api/assessments?client_id=' + clientId, { headers: authHeaders() });
+    const all = await r.json();
+    const a = all.find(x => x.id === assessmentId);
+    if (!a) return;
+
+    // Parse stored scores and reconstruct dimData
+    const scores = typeof a.scores === 'string' ? JSON.parse(a.scores) : a.scores;
+    const answersData = typeof a.answers === 'string' ? JSON.parse(a.answers) : a.answers;
+
+    // Build dimData from answers
+    const dimData = {};
+    answersData.forEach(ans => {
+      if (!dimData[ans.dimension]) dimData[ans.dimension] = {};
+      dimData[ans.dimension][ans.axis] = ans.score || 0;
+    });
+
+    const pct = Math.round((a.overall_score / (20 * 4)) * 100);
+    const band = getMaturityBand(pct);
+
+    // Switch to assess view and show results
+    currentDomain = domain;
+    showAssessView();
+    showResults(pct, scores, dimData, band);
+  } catch(e) { console.error('Error loading historical assessment:', e); }
 }
 
 // ── RETAKE ───────────────────────────────────────────────────────────────────
