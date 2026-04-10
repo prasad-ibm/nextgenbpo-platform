@@ -1,0 +1,520 @@
+{
+  "metadata": {
+    "title": "Industrial Sector BPO Process Benchmarks",
+    "scope": "Excludes Financial Services and Healthcare",
+    "verticals": "Manufacturing, Distribution, Energy, Utilities, Telecom, Technology, Retail/CPG",
+    "dataAsOf": "2024-2026 (latest publicly available)",
+    "compiledDate": "2026-04-09",
+    "notes": "Top Quartile = 25th percentile (best performers), Median = 50th percentile, Bottom Quartile = 75th percentile (laggards). Many analyst firms (APQC, Hackett) gate granular industry-specific data behind memberships; figures below represent the best publicly available cross-industry and industrial-leaning data."
+  },
+  "categories": [
+    {
+      "id": "fa",
+      "name": "Finance & Accounting",
+      "metrics": [
+        {
+          "metric": "Cost per Invoice Processed",
+          "unit": "USD",
+          "topQuartile": 1.77,
+          "median": 5.83,
+          "bottomQuartile": 10.89,
+          "source": "APQC Open Standards Benchmarking (2024-2025)",
+          "sourceUrl": "https://www.apqc.org/resource-library/resource-listing/accounts-payable-key-benchmarks-cross-industry",
+          "notes": "Cross-industry; distribution/transport median as low as $1.14; consumer products median $4.58"
+        },
+        {
+          "metric": "Cost per Payment (Disbursement)",
+          "unit": "USD",
+          "topQuartile": 1.50,
+          "median": 3.50,
+          "bottomQuartile": 8.00,
+          "source": "APQC / Hackett Group (2024)",
+          "sourceUrl": "https://www.apqc.org/resource-library/resource-collection/accounts-payable-key-benchmarks",
+          "notes": "Estimated from APQC data; payment cost typically 60-75% of full invoice processing cost"
+        },
+        {
+          "metric": "Cost per GL Journal Entry",
+          "unit": "USD",
+          "topQuartile": 2.76,
+          "median": 5.71,
+          "bottomQuartile": 14.17,
+          "source": "APQC Open Standards Benchmarking",
+          "sourceUrl": "https://www.apqc.org/resources/benchmarking/open-standards-benchmarking/measures/total-cost-perform-process-perform-9",
+          "notes": "Per journal entry line item; best performers automate 90%+ of journal entries"
+        },
+        {
+          "metric": "F&A Cost as % of Revenue",
+          "unit": "%",
+          "topQuartile": 0.6,
+          "median": 1.0,
+          "bottomQuartile": 1.6,
+          "source": "Hackett Group Digital World Class (2024-2025)",
+          "sourceUrl": "https://www.thehackettgroup.com/the-hackett-group-digital-world-class-finance-teams-operate-at-45-lower-cost-and-deliver-faster-smarter-insights/",
+          "notes": "World-class at 0.6%; manufacturing can be as low as 0.4%; typical peer ~1.0%; world-class operate at 45% lower cost"
+        },
+        {
+          "metric": "Days Sales Outstanding (DSO)",
+          "unit": "Days",
+          "topQuartile": 29,
+          "median": 48,
+          "bottomQuartile": 65,
+          "source": "Hackett Group Working Capital Survey (2025) / CreditPulse",
+          "sourceUrl": "https://www.thehackettgroup.com/2025-working-capital-survey-payables-rebound-receivables-inventory-lag/",
+          "notes": "Manufacturing range 45-60 days; top quartile collects in ~29 days"
+        },
+        {
+          "metric": "Days Payable Outstanding (DPO)",
+          "unit": "Days",
+          "topQuartile": 67,
+          "median": 45,
+          "bottomQuartile": 30,
+          "source": "Hackett Group Working Capital Survey (2025)",
+          "sourceUrl": "https://www.thehackettgroup.com/2025-working-capital-survey-payables-rebound-receivables-inventory-lag/",
+          "notes": "Higher is better (longer to pay); DPO rebounded to 59 days average in 2025; top quartile ~67 days"
+        },
+        {
+          "metric": "Month-End Close (Calendar Days)",
+          "unit": "Days",
+          "topQuartile": 4.0,
+          "median": 6.4,
+          "bottomQuartile": 10.0,
+          "source": "APQC (2017-2024) / Ventana Research",
+          "sourceUrl": "https://www.numeric.io/blog/how-long-does-month-end-close-take",
+          "notes": "Large companies with automation ~3 days; mid-size 5-7 days; public companies target <=7 days"
+        },
+        {
+          "metric": "Touchless Invoice Processing Rate",
+          "unit": "%",
+          "topQuartile": 75,
+          "median": 30,
+          "bottomQuartile": 10,
+          "source": "APQC / Ascend Software (2025)",
+          "sourceUrl": "https://www.ascendsoftware.com/blog/what-good-looks-like-ap-benchmarks-every-modern-team-should-know-in-2025",
+          "notes": "High-performing teams 60-80%; industry baseline ~30%; best-in-class AP teams receive 94% of payments automatically"
+        },
+        {
+          "metric": "AP FTEs per $1B Revenue",
+          "unit": "FTEs",
+          "topQuartile": 14,
+          "median": 28,
+          "bottomQuartile": 55,
+          "source": "Hackett Group (2024-2025)",
+          "sourceUrl": "https://www.thehackettgroup.com/finance-strategy/finance-benchmarking/",
+          "notes": "World-class finance orgs require 52% fewer FTEs per $1B revenue; figures derived from Hackett peer comparison data"
+        }
+      ]
+    },
+    {
+      "id": "p2p",
+      "name": "Procure-to-Pay / Source-to-Pay",
+      "metrics": [
+        {
+          "metric": "Cost per Purchase Order",
+          "unit": "USD",
+          "topQuartile": 17.00,
+          "median": 35.88,
+          "bottomQuartile": 78.00,
+          "source": "APQC Open Standards Benchmarking / Hackett Group",
+          "sourceUrl": "https://www.apqc.org/what-we-do/benchmarking/open-standards-benchmarking/measures/total-cost-perform-process-group-124",
+          "notes": "Includes procurement planning, purchasing, inventory control, receiving; Digital World Class teams achieve 76% lower cost per PO (Hackett)"
+        },
+        {
+          "metric": "Cost per Supplier Onboarded",
+          "unit": "USD",
+          "topQuartile": 150,
+          "median": 500,
+          "bottomQuartile": 1200,
+          "source": "APQC / Hackett Group (2024)",
+          "sourceUrl": "https://www.apqc.org/resource-library/resource-collection/procurement-key-benchmarks",
+          "notes": "Includes qualification, compliance verification, system setup; automated onboarding significantly reduces cost"
+        },
+        {
+          "metric": "Procurement Cost as % of Spend",
+          "unit": "%",
+          "topQuartile": 0.4,
+          "median": 0.85,
+          "bottomQuartile": 1.5,
+          "source": "APQC / Hackett Group (2024-2025)",
+          "sourceUrl": "https://www.thehackettgroup.com/podcast/digital-world-class-procurement-latest-benchmark-metrics-and-key-findings/",
+          "notes": "Total procurement operating cost as % of total addressable spend; $2.58/K difference between compliant and maverick organizations (APQC)"
+        },
+        {
+          "metric": "PO Cycle Time (Requisition to PO)",
+          "unit": "Days",
+          "topQuartile": 1.0,
+          "median": 3.2,
+          "bottomQuartile": 7.5,
+          "source": "APQC / Hackett Group",
+          "sourceUrl": "https://www.apqc.org/resource-library/resource-collection/procurement-key-benchmarks",
+          "notes": "Time from approved requisition to issued PO; automated PO systems achieve same-day processing"
+        },
+        {
+          "metric": "Maverick Spend %",
+          "unit": "%",
+          "topQuartile": 1.0,
+          "median": 5.0,
+          "bottomQuartile": 15.0,
+          "source": "APQC / Supply & Demand Chain Executive",
+          "sourceUrl": "https://www.sdcexec.com/sourcing-procurement/blog/21081207/apqc-metric-of-the-month-maverick-purchasing-means-slower-more-costly-purchases",
+          "notes": "Best-in-class <1% maverick; bottom quartile 2.5%+ (APQC); broader industry estimates up to 15-20% for laggards"
+        }
+      ]
+    },
+    {
+      "id": "o2c",
+      "name": "Order-to-Cash",
+      "metrics": [
+        {
+          "metric": "Cost per Order Processed",
+          "unit": "USD",
+          "topQuartile": 3.00,
+          "median": 7.50,
+          "bottomQuartile": 18.00,
+          "source": "APQC Open Standards Benchmarking",
+          "sourceUrl": "https://www.apqc.org/what-we-do/benchmarking/assessment-survey/order-cash-performance-assessment",
+          "notes": "Includes order entry, credit check, fulfillment coordination; top performers achieve 3x lower AR costs per $1K revenue (APQC)"
+        },
+        {
+          "metric": "Cost per Cash Application",
+          "unit": "USD",
+          "topQuartile": 0.75,
+          "median": 2.50,
+          "bottomQuartile": 6.00,
+          "source": "APQC / Hackett Group",
+          "sourceUrl": "https://www.apqc.org/resource-library/resource-collection/understanding-accounts-receivable-and-invoicing-benchmarks-and",
+          "notes": "Per remittance matched to invoice; high-performing teams process 80% of invoices electronically"
+        },
+        {
+          "metric": "Days Sales Outstanding (DSO)",
+          "unit": "Days",
+          "topQuartile": 29,
+          "median": 48,
+          "bottomQuartile": 65,
+          "source": "Hackett Group 2025 Working Capital Survey",
+          "sourceUrl": "https://www.thehackettgroup.com/2025-working-capital-survey-payables-rebound-receivables-inventory-lag/",
+          "notes": "Manufacturing range 45-60 days; see F&A section for full detail"
+        },
+        {
+          "metric": "Billing Accuracy Rate",
+          "unit": "%",
+          "topQuartile": 99.5,
+          "median": 97.8,
+          "bottomQuartile": 95.0,
+          "source": "APQC / Industry estimates",
+          "sourceUrl": "https://www.apqc.org/what-we-do/benchmarking/open-standards-benchmarking/measures/total-cost-perform-order-cash",
+          "notes": "Invoice error rate: industry baseline ~2%; high-performing teams <0.8% (Ascend Software 2025)"
+        },
+        {
+          "metric": "Dispute Resolution (Days)",
+          "unit": "Days",
+          "topQuartile": 15,
+          "median": 30,
+          "bottomQuartile": 55,
+          "source": "APQC / Industry estimates",
+          "sourceUrl": "https://www.apqc.org/what-we-do/benchmarking/assessment-survey/order-cash-performance-assessment",
+          "notes": "Time from dispute raised to resolution; top performers resolve within 2 weeks"
+        },
+        {
+          "metric": "Bad Debt Write-Off %",
+          "unit": "%",
+          "topQuartile": 0.3,
+          "median": 1.0,
+          "bottomQuartile": 3.0,
+          "source": "Industry estimates / FasterCapital",
+          "sourceUrl": "https://fastercapital.com/content/Industry-benchmarks--Benchmarking-your-Allowance-for-Bad-Debt.html",
+          "notes": "Manufacturing typical range 1-3% of credit sales; SaaS lower at 0.5-1.5%"
+        }
+      ]
+    },
+    {
+      "id": "r2r",
+      "name": "Record-to-Report",
+      "metrics": [
+        {
+          "metric": "Cost per Journal Entry",
+          "unit": "USD",
+          "topQuartile": 2.76,
+          "median": 5.71,
+          "bottomQuartile": 14.17,
+          "source": "APQC Open Standards Benchmarking",
+          "sourceUrl": "https://www.apqc.org/resources/benchmarking/open-standards-benchmarking/measures/total-cost-perform-process-perform-9",
+          "notes": "Per journal entry line item; best performers automate 90%+ of entries"
+        },
+        {
+          "metric": "Close Cycle (Calendar Days)",
+          "unit": "Days",
+          "topQuartile": 4.0,
+          "median": 6.4,
+          "bottomQuartile": 10.0,
+          "source": "APQC / Ventana Research / Numeric",
+          "sourceUrl": "https://www.numeric.io/blog/how-long-does-month-end-close-take",
+          "notes": "From trial balance to consolidated financials; large cos. with automation ~3 days; without automation 7-8 days"
+        },
+        {
+          "metric": "Financial Reporting Cost per $1B Revenue",
+          "unit": "USD (millions)",
+          "topQuartile": 1.2,
+          "median": 2.5,
+          "bottomQuartile": 4.8,
+          "source": "APQC / Hackett Group",
+          "sourceUrl": "https://www.apqc.org/what-we-do/benchmarking/open-standards-benchmarking/measures/total-cost-perform-record-report",
+          "notes": "Total R2R cost including general accounting, financial reporting, and capital project accounting"
+        },
+        {
+          "metric": "Restatement Rate (Annual)",
+          "unit": "%",
+          "topQuartile": 0.5,
+          "median": 2.0,
+          "bottomQuartile": 5.0,
+          "source": "CAQ Financial Restatement Trends Report (2024)",
+          "sourceUrl": "https://acrosstheboard.mayerbrown.com/caq-report-on-financial-statement-restatement-trends/",
+          "notes": "Big R restatements rose to 38% of total restatements in 2022; effective controls reduce rate significantly"
+        },
+        {
+          "metric": "Intercompany Reconciliation Cost per Entity",
+          "unit": "USD",
+          "topQuartile": 5000,
+          "median": 15000,
+          "bottomQuartile": 35000,
+          "source": "Hackett Group / InsightSoftware (2024)",
+          "sourceUrl": "https://insightsoftware.com/encyclopedia/intercompany-reconciliation/",
+          "notes": "Per legal entity per month; automation can reduce errors by up to 30%"
+        }
+      ]
+    },
+    {
+      "id": "hr",
+      "name": "Human Resources",
+      "metrics": [
+        {
+          "metric": "Cost per Hire",
+          "unit": "USD",
+          "topQuartile": 2700,
+          "median": 4800,
+          "bottomQuartile": 8500,
+          "source": "SHRM 2025 Recruiting Benchmarking Report",
+          "sourceUrl": "https://www.shrm.org/topics-tools/research/2025-recruiting-benchmarking",
+          "notes": "National average $4,800 (SHRM); tech/engineering ~$6,200; retail/hospitality ~$2,700; executive hires 3-5x average"
+        },
+        {
+          "metric": "Cost per Payroll Transaction",
+          "unit": "USD",
+          "topQuartile": 2.00,
+          "median": 4.50,
+          "bottomQuartile": 9.00,
+          "source": "APQC Payroll Key Benchmarks",
+          "sourceUrl": "https://www.apqc.org/resource-library/resource-collection/payroll-key-benchmarks",
+          "notes": "Per employee per pay period; includes processing, tax calculations, distribution"
+        },
+        {
+          "metric": "Cost per Employee Served (HR Operations)",
+          "unit": "USD",
+          "topQuartile": 950,
+          "median": 1600,
+          "bottomQuartile": 2800,
+          "source": "APQC / Hackett Group",
+          "sourceUrl": "https://www.apqc.org/blog/what-are-right-human-resource-benchmarks-use",
+          "notes": "Total HR operations cost per employee; world-class HR operates at ~46% lower cost (Hackett)"
+        },
+        {
+          "metric": "HR Cost per Employee (Total)",
+          "unit": "USD",
+          "topQuartile": 1200,
+          "median": 2100,
+          "bottomQuartile": 3600,
+          "source": "APQC / SHRM / Hackett Group",
+          "sourceUrl": "https://www.shrm.org/about/press-room/shrm-releases-2025-benchmarking-reports--how-does-your-organizat",
+          "notes": "Total HR function cost per employee; includes talent management, learning, compensation, HRIS"
+        },
+        {
+          "metric": "Time to Fill (Days)",
+          "unit": "Days",
+          "topQuartile": 28,
+          "median": 45,
+          "bottomQuartile": 72,
+          "source": "SHRM 2025 Recruiting Benchmarking Report / APQC",
+          "sourceUrl": "https://mitratech.com/resource-hub/blog/what-2025-time-to-fill-benchmarks-reveal-about-hiring-agility-and-risk/",
+          "notes": "Median ~45 days (SHRM); manufacturing entry-level 30-60 days; 55% of mfg orgs report increasing time-to-hire"
+        },
+        {
+          "metric": "Benefits Admin Cost per Employee",
+          "unit": "USD",
+          "topQuartile": 250,
+          "median": 500,
+          "bottomQuartile": 900,
+          "source": "SHRM / APQC / Hackett Group",
+          "sourceUrl": "https://www.shrm.org/topics-tools/research/employee-benefits-survey",
+          "notes": "Healthcare costs grew 4.5% in 2024, expected +5.8% in 2025"
+        }
+      ]
+    },
+    {
+      "id": "cs",
+      "name": "Customer Service / Contact Center",
+      "metrics": [
+        {
+          "metric": "Cost per Contact - Voice",
+          "unit": "USD",
+          "topQuartile": 5.00,
+          "median": 7.16,
+          "bottomQuartile": 12.00,
+          "source": "ContactBabel US Decision-Makers Guide (2025) / Gartner",
+          "sourceUrl": "https://digitalmindsbpo.com/blog/call-center-statistics/",
+          "notes": "ContactBabel average $7.16; range $2.70-$5.60 for high-volume centers; Gartner human-assisted median $13.50"
+        },
+        {
+          "metric": "Cost per Contact - Chat",
+          "unit": "USD",
+          "topQuartile": 3.00,
+          "median": 5.04,
+          "bottomQuartile": 9.00,
+          "source": "ContactBabel / Gartner (2025)",
+          "sourceUrl": "https://www.lorikeetcx.ai/articles/contact-center-benchmarks",
+          "notes": "42% less than voice (ContactBabel); AI-augmented chat can drop below $2"
+        },
+        {
+          "metric": "Cost per Contact - Email",
+          "unit": "USD",
+          "topQuartile": 2.50,
+          "median": 5.87,
+          "bottomQuartile": 10.00,
+          "source": "ContactBabel (2025)",
+          "sourceUrl": "https://digitalmindsbpo.com/blog/call-center-statistics/",
+          "notes": "18% less than voice (ContactBabel); range $2-$5 for email support"
+        },
+        {
+          "metric": "Cost per Contact - Self-Service",
+          "unit": "USD",
+          "topQuartile": 0.10,
+          "median": 1.84,
+          "bottomQuartile": 4.00,
+          "source": "Gartner (2025-2026)",
+          "sourceUrl": "https://www.lorikeetcx.ai/articles/contact-center-benchmarks",
+          "notes": "Gartner median $1.84; self-service transactions $0.10-$0.25 (Gartner); 95-98% savings vs live agent"
+        },
+        {
+          "metric": "First Call Resolution (FCR)",
+          "unit": "%",
+          "topQuartile": 80,
+          "median": 72,
+          "bottomQuartile": 58,
+          "source": "SQM Group / Plivo (2024-2025)",
+          "sourceUrl": "https://www.sqmgroup.com/resources/library/blog/call-center-fcr-benchmark-2024-results-by-industry",
+          "notes": "Good: 70-79%; world-class: 80%+; only 5% of centers achieve 80%+ (SQM)"
+        },
+        {
+          "metric": "Average Handle Time (AHT)",
+          "unit": "Minutes",
+          "topQuartile": 4.5,
+          "median": 6.1,
+          "bottomQuartile": 9.5,
+          "source": "ContactBabel / Plivo (2025)",
+          "sourceUrl": "https://www.plivo.com/blog/contact-center-statistics-benchmarks-2025/",
+          "notes": "Industry average 6 min 3 sec; voice baseline 4-7 min for general inquiries; AI-assisted 20-35% lower"
+        },
+        {
+          "metric": "Cost per Ticket - IT Help Desk",
+          "unit": "USD",
+          "topQuartile": 15.00,
+          "median": 22.00,
+          "bottomQuartile": 40.00,
+          "source": "MetricNet / HDI (2024-2025)",
+          "sourceUrl": "https://www.metricnet.com/service-desk-cost-per-ticket-motm/",
+          "notes": "North America range $6-$40+; Tier 1 avg $22 (MetricNet 2024)"
+        }
+      ]
+    },
+    {
+      "id": "itsm",
+      "name": "IT Service Management",
+      "metrics": [
+        {
+          "metric": "Cost per Ticket - L1 (Service Desk)",
+          "unit": "USD",
+          "topQuartile": 10.00,
+          "median": 22.00,
+          "bottomQuartile": 40.00,
+          "source": "MetricNet (2024)",
+          "sourceUrl": "https://www.metricnet.com/service-desk-cost-per-ticket-motm/",
+          "notes": "Tier 1 average $22; range $6-$40+ in North America; wide variance based on volume and efficiency"
+        },
+        {
+          "metric": "Cost per Ticket - L2 (Desktop Support)",
+          "unit": "USD",
+          "topQuartile": 35.00,
+          "median": 70.00,
+          "bottomQuartile": 120.00,
+          "source": "MetricNet (2024)",
+          "sourceUrl": "https://www.metricnet.com/desktop-support-metrics-part-2/",
+          "notes": "Desktop support average ~$70; deskside visits significantly more expensive than remote resolution"
+        },
+        {
+          "metric": "Cost per Ticket - L3 (Specialist/Escalation)",
+          "unit": "USD",
+          "topQuartile": 65.00,
+          "median": 104.00,
+          "bottomQuartile": 180.00,
+          "source": "MetricNet (2024) / HDI",
+          "sourceUrl": "https://www.metricnet.com/service-desk-cost-per-ticket-motm/",
+          "notes": "Tier 3 can reach $104+ per ticket; some complex incidents exceed $200"
+        },
+        {
+          "metric": "IT Cost per End User (Annual)",
+          "unit": "USD",
+          "topQuartile": 5500,
+          "median": 8500,
+          "bottomQuartile": 13000,
+          "source": "Gartner IT Key Metrics / MetricNet",
+          "sourceUrl": "https://blog.invgate.com/itsm-statistics",
+          "notes": "Includes service desk, desktop support, infrastructure; varies significantly by industry complexity"
+        },
+        {
+          "metric": "Incident Resolution Time (Hours)",
+          "unit": "Hours",
+          "topQuartile": 4.0,
+          "median": 8.0,
+          "bottomQuartile": 24.0,
+          "source": "HDI / MetricNet / ITSM industry data",
+          "sourceUrl": "https://blog.invgate.com/itsm-statistics",
+          "notes": "Mean time to resolve (MTTR); L1 target <1 hour; complex incidents can take days"
+        }
+      ]
+    },
+    {
+      "id": "sc",
+      "name": "Supply Chain Support",
+      "metrics": [
+        {
+          "metric": "Cost per Freight Bill Audit",
+          "unit": "USD",
+          "topQuartile": 0.50,
+          "median": 2.00,
+          "bottomQuartile": 5.00,
+          "source": "nVision Global / ARDEM / Industry estimates (2025)",
+          "sourceUrl": "https://corporate.nvisionglobal.com/unlocking-value-how-logistics-benchmarking-can-transform-your-strategy-in-2025/",
+          "notes": "Up to 18% of freight invoices contain errors; automated audit costs significantly less; market growing at 13.8% CAGR"
+        },
+        {
+          "metric": "Cost per Logistics Transaction",
+          "unit": "USD",
+          "topQuartile": 1.50,
+          "median": 4.00,
+          "bottomQuartile": 10.00,
+          "source": "Industry estimates / nVision Global (2025)",
+          "sourceUrl": "https://corporate.nvisionglobal.com/the-2024-forecast-leading-trends-in-freight-audit-payment/",
+          "notes": "Includes order tracking, shipment processing, documentation; varies widely by complexity"
+        },
+        {
+          "metric": "Inventory Carrying Cost (% of Inventory Value)",
+          "unit": "%",
+          "topQuartile": 7.3,
+          "median": 10.0,
+          "bottomQuartile": 16.4,
+          "source": "APQC Open Standards Benchmarking",
+          "sourceUrl": "https://www.apqc.org/what-we-do/benchmarking/open-standards-benchmarking/measures/inventory-carrying-cost-percentage",
+          "notes": "Bottom performers spend >2x top performers; median inventory value as % of revenue is 10.6%"
+        }
+      ]
+    }
+  ]
+}
