@@ -1,5 +1,5 @@
 require('dotenv').config();
-const APP_VERSION = '2.1.0'; // updated: assessment questions, summary view, business case calculator
+const APP_VERSION = '2.2.0'; // updated: domain-specific maturity output, spider charts, scorecard drill-downs
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
