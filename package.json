@@ -1,6 +1,6 @@
 {
   "name": "nextgenbpo-platform",
-  "version": "1.0.0",
+  "version": "2.2.0",
   "description": "NextGen BPO Intelligence Platform — BPO Maturity Assessment, Process Transformation & ROI Tracking",
   "main": "server.js",
   "engines": {
