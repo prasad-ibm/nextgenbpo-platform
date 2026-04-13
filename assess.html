@@ -55,6 +55,72 @@
     .dim-radar-card { background:#fff; border:1px solid #c6c6c6; padding:1.25rem; }
     .dim-radar-title { font-size:0.8125rem; font-weight:700; color:#161616; margin-bottom:0.25rem; }
     .dim-radar-score { font-size:0.75rem; color:#007d79; font-weight:600; margin-bottom:0.75rem; }
+
+    /* ── Domain Results View Tabs ── */
+    .res-view-tabs { display:flex; gap:0; border-bottom:2px solid #e0e0e0; margin-bottom:1.25rem; }
+    .res-view-tab { padding:0.625rem 1rem; font-size:0.8125rem; font-weight:600; color:#525252; background:none; border:none; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; font-family:'IBM Plex Sans',sans-serif; transition:all 0.15s; }
+    .res-view-tab:hover { color:#161616; background:#f4f4f4; }
+    .res-view-tab.active { color:#007d79; border-bottom-color:#007d79; }
+    .res-view-panel { display:none; }
+    .res-view-panel.active { display:block; }
+
+    /* ── Sub-domain Scorecard ── */
+    .sd-card { background:#fff; border:1px solid #e0e0e0; margin-bottom:0.75rem; cursor:pointer; transition:border-color 0.15s; }
+    .sd-card:hover { border-color:#007d79; }
+    .sd-card-header { padding:0.75rem 1rem; display:flex; justify-content:space-between; align-items:center; }
+    .sd-card-name { font-size:0.875rem; font-weight:600; color:#161616; }
+    .sd-card-meta { display:flex; align-items:center; gap:0.75rem; }
+    .sd-card-score { font-size:1.25rem; font-weight:300; color:#161616; font-family:'IBM Plex Sans',sans-serif; }
+    .sd-card-band { font-size:0.625rem; font-weight:700; padding:2px 6px; border-radius:8px; font-family:'IBM Plex Mono',monospace; }
+    .sd-card-qcount { font-size:0.6875rem; color:#6f6f6f; font-family:'IBM Plex Mono',monospace; }
+    .sd-card-bar { height:4px; background:#e0e0e0; }
+    .sd-card-bar-fill { height:100%; transition:width 0.4s; }
+
+    /* ── Drill-down Panel ── */
+    .drill-panel { background:#fff; border:1px solid #e0e0e0; padding:1.25rem; margin-bottom:1.5rem; display:none; }
+    .drill-panel.open { display:block; }
+    .drill-back { font-size:0.75rem; color:#007d79; cursor:pointer; border:none; background:none; font-family:'IBM Plex Sans',sans-serif; font-weight:600; padding:0; margin-bottom:0.75rem; }
+    .drill-back:hover { text-decoration:underline; }
+    .drill-q-row { padding:0.625rem 0; border-bottom:1px solid #f4f4f4; }
+    .drill-q-text { font-size:0.8125rem; color:#161616; margin-bottom:0.375rem; font-weight:500; }
+    .drill-q-axis { font-size:0.625rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6f6f6f; margin-bottom:0.25rem; font-family:'IBM Plex Mono',monospace; }
+    .drill-q-score { font-size:0.8125rem; font-weight:600; font-family:'IBM Plex Mono',monospace; }
+    .drill-dist { display:flex; gap:2px; height:16px; margin-top:0.25rem; }
+    .drill-dist-seg { height:100%; min-width:2px; border-radius:1px; }
+
+    /* ── Variance / Disagreement ── */
+    .variance-badge { font-size:0.5625rem; font-weight:700; padding:1px 5px; border-radius:6px; font-family:'IBM Plex Mono',monospace; margin-left:0.5rem; }
+    .var-high { background:#ffe0e0; color:#a2191f; }
+    .var-med { background:#fef3cd; color:#8a6800; }
+    .var-low { background:#d0f0e0; color:#0a6640; }
+
+    /* ── Overlay Toggle ── */
+    .overlay-toggle { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem; }
+    .overlay-chip { padding:0.25rem 0.625rem; font-size:0.6875rem; font-weight:600; border:1px solid #c6c6c6; background:#fff; cursor:pointer; border-radius:12px; font-family:'IBM Plex Sans',sans-serif; transition:all 0.15s; }
+    .overlay-chip:hover { border-color:#007d79; }
+    .overlay-chip.active { background:#007d79; color:#fff; border-color:#007d79; }
+
+    /* ── Strongest / Weakest highlights ── */
+    .highlight-row { display:flex; align-items:center; gap:0.75rem; padding:0.5rem 0; font-size:0.8125rem; }
+    .hl-icon { width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.625rem; font-weight:700; color:#fff; flex-shrink:0; }
+    .hl-strong { background:#24a148; }
+    .hl-weak { background:#da1e28; }
+    .hl-name { color:#161616; font-weight:600; flex:1; }
+    .hl-val { font-family:'IBM Plex Mono',monospace; font-weight:600; color:#161616; }
+
+    /* ── Portfolio Cross-Domain ── */
+    .portfolio-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1rem; margin-bottom:1.5rem; }
+    .portfolio-card { background:#fff; border:1px solid #e0e0e0; padding:1.25rem; cursor:pointer; transition:border-color 0.15s; border-top:3px solid #007d79; }
+    .portfolio-card:hover { border-color:#007d79; }
+    .portfolio-card-title { font-size:0.875rem; font-weight:600; color:#161616; margin-bottom:0.5rem; }
+    .portfolio-card-pct { font-size:2rem; font-weight:300; color:#161616; }
+    .portfolio-card-band { margin-top:0.25rem; }
+    .portfolio-card-meta { font-size:0.6875rem; color:#6f6f6f; font-family:'IBM Plex Mono',monospace; margin-top:0.5rem; }
+
+    /* ── Chart export button ── */
+    .chart-export-btn { position:absolute; top:0.5rem; right:0.5rem; font-size:0.625rem; padding:2px 6px; background:#f4f4f4; border:1px solid #c6c6c6; cursor:pointer; color:#525252; font-family:'IBM Plex Mono',monospace; border-radius:2px; }
+    .chart-export-btn:hover { background:#e0e0e0; }
+
     /* ── Summary Panel ── */
     .summary-toggle { display:flex; gap:0.5rem; margin-bottom:0; }
     .summary-toggle-btn { flex:1; padding:0.5rem; font-size:0.75rem; font-weight:600; border:1px solid #c6c6c6; background:#fff; cursor:pointer; text-align:center; color:#525252; font-family:'IBM Plex Sans',sans-serif; transition:all 0.15s; }
@@ -237,34 +303,10 @@
           <a href="/tracker.html" class="btn btn-ghost btn-sm" style="min-width:0;">View in Pipeline &rarr;</a>
         </div>
       </div>
-
-      <!-- Summary Radar + Dimension Scores -->
-      <div class="grid-2" style="gap:1.5rem;margin-bottom:1.5rem;">
-        <div style="background:#fff;border:1px solid #c6c6c6;padding:1.5rem;">
-          <h4 style="margin-bottom:1rem;">Dimension Maturity Radar</h4>
-          <div style="max-width:360px;margin:0 auto;">
-            <canvas id="radarChart"></canvas>
-          </div>
-        </div>
-        <div style="background:#fff;border:1px solid #c6c6c6;padding:1.5rem;">
-          <h4 style="margin-bottom:1rem;">Dimension Scores</h4>
-          <div id="subScores"></div>
-        </div>
-      </div>
-
-      <!-- Per-Dimension Radar Charts (CHPK style) -->
-      <div style="background:#fff;border:1px solid #c6c6c6;padding:1.5rem;margin-bottom:1.5rem;">
-        <h4 style="margin-bottom:0.25rem;">Detailed Assessment by Dimension</h4>
-        <p style="font-size:0.8125rem;color:#525252;margin-bottom:0;">Each dimension scored across 5 maturity axes: Operating Model, Metrics, Process & Policy, Technology, Controls.</p>
-        <div class="dim-radar-grid" id="dimRadarGrid"></div>
-      </div>
-
-      <!-- Focus Areas -->
-      <div style="background:#fff;border:1px solid #c6c6c6;padding:1.5rem;">
-        <h4 style="margin-bottom:0.25rem;">Recommended Focus Areas</h4>
-        <p style="font-size:0.8125rem;margin-bottom:1rem;">The 5 lowest-scoring dimensions &mdash; prioritised transformation opportunities.</p>
-        <div id="focusAreas"></div>
-      </div>
+      <!-- Domain View Tabs (Finance: R2R / AP / Combined) -->
+      <div id="resViewTabs" class="res-view-tabs" style="display:none;"></div>
+      <!-- Dynamic domain results content (spider charts, scorecards, drill-downs) -->
+      <div id="resDomainContent"></div>
     </div>
   </div>
 </div>
@@ -847,6 +889,7 @@ let currentDomain = 'supplychain';
 let answers = {}; // { qId: { label, score } }
 let radarChartInstance = null;
 let dimChartInstances = [];
+let activeResultCharts = [];
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
@@ -1036,74 +1079,306 @@ function getMaturityBand(pct) {
 }
 
 // ── SHOW RESULTS ──────────────────────────────────────────────────────────────
+// Finance dimension groups
+const FIN_R2R = ['Journals','Reconciliation','Fixed Asset','FP&A','Reporting','Intercompany','Close'];
+const FIN_AP  = ['Invoice Processing','Payment Processing','Query Management','Risk Management','T&E','Reporting/Analytics'];
+
 function showResults(pct, dimScores, dimData, band) {
   document.getElementById('questionsPanel').style.display = 'none';
   document.getElementById('resultsPanel').style.display = '';
 
-  // Overall score
+  // Overall score header
   document.getElementById('resScorePct').textContent = pct + '%';
   const bandEl = document.getElementById('resBand');
   bandEl.textContent = band.label;
   bandEl.className = 'result-band ' + band.cls;
   document.getElementById('resSummary').textContent = band.desc;
-
-  // Maturity pointer
   document.getElementById('maturityPointer').style.left = pct + '%';
 
-  // Summary radar chart (dimension-level)
-  const dims = ASSESSMENTS[currentDomain].dimensions;
-  const dimLabels = dims.filter(d => dimScores[d] !== undefined);
-  const dimValues = dimLabels.map(d => dimScores[d]);
-  drawSummaryRadar(dimLabels, dimValues);
+  // Destroy any previous result charts
+  activeResultCharts.forEach(c => c.destroy());
+  activeResultCharts = [];
+  document.getElementById('resDomainContent').innerHTML = '';
 
-  // Sub-domain scores table
-  const subEl = document.getElementById('subScores');
-  subEl.innerHTML = dimLabels.map(dim => {
-    const score = dimScores[dim];
-    const pctBar = (score / 4) * 100;
-    const matPct = Math.round(pctBar);
-    let barColor = '#007d79';
-    if (score <= 1.5) barColor = '#da1e28';
-    else if (score <= 2.5) barColor = '#e68a00';
-    return `
-      <div class="sub-score-row">
-        <span class="sub-score-label">${dim}</span>
-        <div class="sub-score-bar-wrap"><div class="sub-score-bar" style="width:${pctBar}%;background:${barColor};"></div></div>
-        <span class="sub-score-val">${matPct}%</span>
-      </div>`;
-  }).join('');
-
-  // Per-dimension radar charts (CHPK style: 5 axes each)
-  drawDimensionRadars(dimLabels, dimData);
-
-  // Focus areas (lowest-scoring dimensions)
-  const sorted = dimLabels.map(d => [d, dimScores[d]]).sort((a,b) => a[1]-b[1]).slice(0,5);
-  document.getElementById('focusAreas').innerHTML = sorted.map(([dim, score]) => {
-    const matPct = Math.round((score / 4) * 100);
-    return `
-    <div class="focus-item">
-      <div class="focus-item-title">${dim} \u2014 ${matPct}%</div>
-      <div class="focus-item-text">Prioritise transformation in this dimension. Review Operating Model, Metrics, Process & Policy, Technology, and Controls maturity to identify specific improvement levers.</div>
-    </div>`;
-  }).join('');
+  // Domain-specific rendering
+  if (currentDomain === 'finance') {
+    renderFinanceTabs(dimScores, dimData);
+  } else {
+    document.getElementById('resViewTabs').style.display = 'none';
+    const dims = ASSESSMENTS[currentDomain].dimensions;
+    renderDomainView('resDomainContent', dims, dimScores, dimData);
+  }
 }
 
-// ── SUMMARY RADAR CHART ─────────────────────────────────────────────────────
-function drawSummaryRadar(labels, data) {
-  if (radarChartInstance) { radarChartInstance.destroy(); }
-  const ctx = document.getElementById('radarChart').getContext('2d');
-  radarChartInstance = new Chart(ctx, {
+// ── FINANCE TAB SYSTEM ────────────────────────────────────────────────────────
+function renderFinanceTabs(dimScores, dimData) {
+  const tabsEl = document.getElementById('resViewTabs');
+  tabsEl.style.display = 'flex';
+  tabsEl.innerHTML = `
+    <button class="res-view-tab active" onclick="switchFinTab('r2r',this)">R2R (7 dims)</button>
+    <button class="res-view-tab" onclick="switchFinTab('ap',this)">AP (6 dims)</button>
+    <button class="res-view-tab" onclick="switchFinTab('combined',this)">Combined</button>
+  `;
+  // Stash data on element for tab switching
+  tabsEl._ds = dimScores;
+  tabsEl._dd = dimData;
+  renderDomainView('resDomainContent', FIN_R2R, dimScores, dimData, 'Record to Report (R2R)');
+}
+
+function switchFinTab(tab, btn) {
+  const tabsEl = document.getElementById('resViewTabs');
+  tabsEl.querySelectorAll('.res-view-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeResultCharts.forEach(c => c.destroy());
+  activeResultCharts = [];
+  const ds = tabsEl._ds, dd = tabsEl._dd;
+  if (tab === 'r2r')      renderDomainView('resDomainContent', FIN_R2R, ds, dd, 'Record to Report (R2R)');
+  else if (tab === 'ap')  renderDomainView('resDomainContent', FIN_AP,  ds, dd, 'Accounts Payable (AP)');
+  else                    renderCombinedFinance('resDomainContent', ds, dd);
+}
+
+// ── COMBINED FINANCE VIEW ─────────────────────────────────────────────────────
+function renderCombinedFinance(containerId, dimScores, dimData) {
+  const container = document.getElementById(containerId);
+  const r2rAvg = FIN_R2R.reduce((s,d) => s + (dimScores[d]||0), 0) / FIN_R2R.length;
+  const apAvg  = FIN_AP.reduce((s,d)  => s + (dimScores[d]||0), 0) / FIN_AP.length;
+  const r2rPct = Math.round((r2rAvg / 4) * 100);
+  const apPct  = Math.round((apAvg  / 4) * 100);
+
+  container.innerHTML = `
+    <div style="background:#fff;border:1px solid #c6c6c6;padding:1.5rem;margin-bottom:1.5rem;">
+      <h4 style="margin-bottom:1rem;">Finance — Combined Overview</h4>
+      <div class="grid-2" style="gap:1.5rem;margin-bottom:1.5rem;">
+        <div style="text-align:center;border:1px solid #e0e0e0;padding:1.25rem;">
+          <div style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#6f6f6f;margin-bottom:0.5rem;">R2R Average</div>
+          <div style="font-size:2.25rem;font-weight:300;color:#161616;line-height:1;">${r2rPct}%</div>
+          <div style="font-size:0.8125rem;color:#525252;margin-top:0.25rem;">${getMaturityBand(r2rPct).label}</div>
+        </div>
+        <div style="text-align:center;border:1px solid #e0e0e0;padding:1.25rem;">
+          <div style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#6f6f6f;margin-bottom:0.5rem;">AP Average</div>
+          <div style="font-size:2.25rem;font-weight:300;color:#161616;line-height:1;">${apPct}%</div>
+          <div style="font-size:0.8125rem;color:#525252;margin-top:0.25rem;">${getMaturityBand(apPct).label}</div>
+        </div>
+      </div>
+      <div class="grid-2" style="gap:2rem;">
+        <div style="position:relative;">
+          <div style="font-size:0.8125rem;font-weight:600;margin-bottom:0.75rem;">R2R Dimensions</div>
+          <canvas id="combinedR2RChart"></canvas>
+          <button class="chart-export-btn" style="position:absolute;top:0;right:0;" onclick="exportChart('combinedR2RChart','Finance_R2R')">&#8595; Export</button>
+        </div>
+        <div style="position:relative;">
+          <div style="font-size:0.8125rem;font-weight:600;margin-bottom:0.75rem;">AP Dimensions</div>
+          <canvas id="combinedAPChart"></canvas>
+          <button class="chart-export-btn" style="position:absolute;top:0;right:0;" onclick="exportChart('combinedAPChart','Finance_AP')">&#8595; Export</button>
+        </div>
+      </div>
+    </div>
+    <div id="combinedCards"></div>
+  `;
+
+  const c1 = drawSpiderChart('combinedR2RChart', FIN_R2R, FIN_R2R.map(d => dimScores[d]||0));
+  const c2 = drawSpiderChart('combinedAPChart',  FIN_AP,  FIN_AP.map(d  => dimScores[d]||0));
+  if (c1) activeResultCharts.push(c1);
+  if (c2) activeResultCharts.push(c2);
+
+  const cardsEl = document.getElementById('combinedCards');
+  cardsEl.innerHTML =
+    renderScorecardBlock('Record to Report', FIN_R2R, dimScores, dimData) +
+    renderScorecardBlock('Accounts Payable', FIN_AP, dimScores, dimData);
+}
+
+// ── SINGLE-DOMAIN VIEW (SC, HR, or finance R2R/AP tab) ───────────────────────
+function renderDomainView(containerId, dims, dimScores, dimData, label) {
+  const container = document.getElementById(containerId);
+  const scores  = dims.map(d => dimScores[d] || 0);
+  const avgScore = scores.reduce((s,v) => s+v, 0) / scores.length;
+  const avgPct   = Math.round((avgScore / 4) * 100);
+
+  const scored   = dims.map(d => ({ dim:d, pct: Math.round(((dimScores[d]||0)/4)*100) }))
+                       .sort((a,b) => b.pct - a.pct);
+  const strongest = scored[0];
+  const weakest   = scored[scored.length - 1];
+  const chartId   = 'domSpider_' + (label || 'main').replace(/[^a-zA-Z0-9]/g,'_');
+
+  container.innerHTML = `
+    <div style="background:#fff;border:1px solid #c6c6c6;padding:1.5rem;margin-bottom:1.5rem;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;margin-bottom:1.25rem;">
+        <div>
+          <h4 style="margin:0 0 0.25rem;">${label ? label + ' — ' : ''}Maturity Spider Chart</h4>
+          <p style="font-size:0.8125rem;color:#525252;margin:0;">Hover for scores · Click a dimension label to expand its scorecard</p>
+        </div>
+        <div style="position:relative;">
+          <button class="chart-export-btn" style="position:relative;" onclick="exportChart('${chartId}','${(label||'Domain').replace(/[^a-zA-Z0-9]/g,'_')}')">&#8595; Export Chart</button>
+        </div>
+      </div>
+      <div class="grid-2" style="gap:2rem;align-items:center;">
+        <div><canvas id="${chartId}"></canvas></div>
+        <div>
+          <div style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#6f6f6f;margin-bottom:0.375rem;">Overall Average</div>
+          <div style="font-size:2.75rem;font-weight:300;color:#161616;line-height:1;">${avgPct}%</div>
+          <div style="font-size:0.875rem;color:#525252;margin-bottom:1.5rem;">${getMaturityBand(avgPct).label}</div>
+          <div class="highlight-row hl-strong" style="margin-bottom:0.5rem;display:flex;justify-content:space-between;padding:0.5rem 0.75rem;">
+            <span style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#0a6640;">&#9650; Strongest</span>
+            <span style="font-size:0.8125rem;color:#161616;">${strongest.dim} — ${strongest.pct}%</span>
+          </div>
+          <div class="highlight-row hl-weak" style="display:flex;justify-content:space-between;padding:0.5rem 0.75rem;">
+            <span style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#a2191f;">&#9660; Needs Focus</span>
+            <span style="font-size:0.8125rem;color:#161616;">${weakest.dim} — ${weakest.pct}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid #c6c6c6;padding:1.5rem;margin-bottom:1.5rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+        <h4 style="margin:0;">Sub-Domain Scorecards</h4>
+        <span style="font-size:0.8125rem;color:#6f6f6f;">Click any card to expand question details</span>
+      </div>
+      <div id="sdGrid_${chartId}" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0.875rem;"></div>
+    </div>
+  `;
+
+  // Draw spider chart — clicking a point opens that dimension's drill-down
+  const chart = drawSpiderChart(chartId, dims, scores, (dimLabel) => {
+    const cardId = 'sdCard_' + dimLabel.replace(/[^a-zA-Z0-9]/g,'_');
+    const drill  = document.getElementById('drill_' + cardId);
+    if (drill) {
+      drill.classList.add('open');
+      document.getElementById(cardId)?.scrollIntoView({ behavior:'smooth', block:'nearest' });
+    }
+  });
+  if (chart) activeResultCharts.push(chart);
+
+  // Render scorecard cards
+  const grid = document.getElementById('sdGrid_' + chartId);
+  dims.forEach(dim => {
+    const dimPct  = Math.round(((dimScores[dim]||0)/4)*100);
+    const dimBand = getMaturityBand(dimPct);
+    const qs      = ASSESSMENTS[currentDomain].questions.filter(q => q.dimension === dim);
+    const cardId  = 'sdCard_' + dim.replace(/[^a-zA-Z0-9]/g,'_');
+    const drillId = 'drill_' + cardId;
+    const [bBg, bColor] = bandColors(dimBand.cls);
+    const barColor = dimPct >= 60 ? '#007d79' : dimPct >= 40 ? '#e68a00' : '#da1e28';
+
+    const card = document.createElement('div');
+    card.className = 'sd-card';
+    card.id = cardId;
+    card.innerHTML = `
+      <div class="sd-card-header" onclick="toggleDrill('${drillId}')">
+        <div>
+          <div class="sd-card-name">${dim}</div>
+          <div class="sd-card-qcount">${qs.length} question${qs.length!==1?'s':''} · 1 respondent</div>
+        </div>
+        <div class="sd-card-meta">
+          <span class="sd-card-score">${dimPct}%</span>
+          <span class="sd-card-band" style="background:${bBg};color:${bColor};">${dimBand.label}</span>
+        </div>
+      </div>
+      <div class="sd-card-bar"><div class="sd-card-bar-fill" style="width:${dimPct}%;background:${barColor};"></div></div>
+      <div class="drill-panel" id="${drillId}">
+        <div style="padding:0.875rem 1rem 0;font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#6f6f6f;margin-bottom:0.75rem;">Question Details</div>
+        ${qs.map(q => {
+          const ans   = answers[q.id];
+          const qScore= ans?.score || 0;
+          const qPct  = Math.round((qScore/4)*100);
+          const qLabel= ans?.label || 'Not answered';
+          const qColor= qPct >= 60 ? '#007d79' : qPct >= 40 ? '#e68a00' : '#da1e28';
+          return `<div class="drill-q-row">
+            <div style="font-size:0.8125rem;color:#161616;line-height:1.45;margin-bottom:0.375rem;">${q.text}</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.25rem;">
+              <span style="font-size:0.6875rem;color:#6f6f6f;font-style:italic;">${q.axis}</span>
+              <div style="display:flex;align-items:center;gap:0.625rem;">
+                <span style="font-size:0.75rem;color:#525252;">${qLabel}</span>
+                <span style="font-size:0.75rem;font-weight:700;color:${qColor};">${qScore}/4</span>
+              </div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ── SCORECARD BLOCK (HTML string, for combined finance view) ──────────────────
+function renderScorecardBlock(title, dims, dimScores, dimData) {
+  return `
+    <div style="background:#fff;border:1px solid #c6c6c6;padding:1.5rem;margin-bottom:1rem;">
+      <div style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#6f6f6f;margin-bottom:0.875rem;border-bottom:1px solid #e0e0e0;padding-bottom:0.625rem;">${title}</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0.75rem;">
+        ${dims.map(dim => {
+          const dimPct  = Math.round(((dimScores[dim]||0)/4)*100);
+          const dimBand = getMaturityBand(dimPct);
+          const qs      = ASSESSMENTS[currentDomain].questions.filter(q => q.dimension === dim);
+          const cardId  = 'sdCard_comb_' + dim.replace(/[^a-zA-Z0-9]/g,'_');
+          const drillId = 'drill_' + cardId;
+          const [bBg, bColor] = bandColors(dimBand.cls);
+          const barColor = dimPct >= 60 ? '#007d79' : dimPct >= 40 ? '#e68a00' : '#da1e28';
+          return `
+            <div class="sd-card" id="${cardId}">
+              <div class="sd-card-header" onclick="toggleDrill('${drillId}')">
+                <div>
+                  <div class="sd-card-name">${dim}</div>
+                  <div class="sd-card-qcount">${qs.length} q · 1 resp</div>
+                </div>
+                <div class="sd-card-meta">
+                  <span class="sd-card-score">${dimPct}%</span>
+                  <span class="sd-card-band" style="background:${bBg};color:${bColor};">${dimBand.label}</span>
+                </div>
+              </div>
+              <div class="sd-card-bar"><div class="sd-card-bar-fill" style="width:${dimPct}%;background:${barColor};"></div></div>
+              <div class="drill-panel" id="${drillId}">
+                <div style="padding:0.875rem 1rem 0;font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#6f6f6f;margin-bottom:0.75rem;">Question Details</div>
+                ${qs.map(q => {
+                  const ans=answers[q.id], qScore=ans?.score||0, qPct=Math.round((qScore/4)*100);
+                  const qColor=qPct>=60?'#007d79':qPct>=40?'#e68a00':'#da1e28';
+                  return `<div class="drill-q-row">
+                    <div style="font-size:0.8125rem;color:#161616;line-height:1.45;margin-bottom:0.375rem;">${q.text}</div>
+                    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.25rem;">
+                      <span style="font-size:0.6875rem;color:#6f6f6f;font-style:italic;">${q.axis}</span>
+                      <div><span style="font-size:0.75rem;color:#525252;margin-right:0.5rem;">${ans?.label||'Not answered'}</span><span style="font-size:0.75rem;font-weight:700;color:${qColor};">${qScore}/4</span></div>
+                    </div>
+                  </div>`;
+                }).join('')}
+              </div>
+            </div>`;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function bandColors(cls) {
+  if (cls === 'band-ready')     return ['#d0f0e0','#0a6640'];
+  if (cls === 'band-opp')       return ['#d9fbfb','#004144'];
+  if (cls === 'band-candidate') return ['#fef3cd','#8a6800'];
+  return ['#ffe0e0','#a2191f'];
+}
+
+function toggleDrill(drillId) {
+  const el = document.getElementById(drillId);
+  if (el) el.classList.toggle('open');
+}
+
+// ── SPIDER CHART ──────────────────────────────────────────────────────────────
+function drawSpiderChart(canvasId, labels, data, onClickDim) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return null;
+  const ctx = canvas.getContext('2d');
+  return new Chart(ctx, {
     type: 'radar',
     data: {
-      labels: labels,
+      labels,
       datasets: [{
-        label: 'AS-IS',
-        data: data,
-        backgroundColor: 'rgba(0,125,121,0.15)',
+        label: 'Score',
+        data,
+        backgroundColor: 'rgba(0,125,121,0.12)',
         borderColor: '#007d79',
         borderWidth: 2,
         pointBackgroundColor: '#007d79',
-        pointRadius: 4
+        pointRadius: 4,
+        pointHoverRadius: 7,
+        pointHoverBackgroundColor: '#005c59'
       }]
     },
     options: {
@@ -1111,74 +1386,46 @@ function drawSummaryRadar(labels, data) {
       scales: {
         r: {
           min: 0, max: 4,
-          ticks: { stepSize: 1, font: { size: 10 }, callback: v => ['','Aware','Developing','Practicing','Leading'][v] || '' },
-          pointLabels: { font: { size: 9 }, color: '#525252' },
+          ticks: { stepSize: 1, font: { size: 9 },
+                   callback: v => (['','Aware','Developing','Practicing','Leading'][v]||'') },
+          pointLabels: { font: { size: 10 }, color: '#525252' },
           grid: { color: '#e0e0e0' },
           angleLines: { color: '#e0e0e0' }
         }
       },
-      plugins: { legend: { display: false } }
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const pct = Math.round((ctx.raw / 4) * 100);
+              return ` ${ctx.raw.toFixed(1)}/4  (${pct}%)`;
+            }
+          }
+        }
+      },
+      onClick: (evt, elements) => {
+        if (onClickDim && elements.length > 0) {
+          onClickDim(labels[elements[0].index]);
+        }
+      }
     }
   });
 }
 
-// ── PER-DIMENSION RADAR CHARTS (CHPK style) ─────────────────────────────────
-function drawDimensionRadars(dimLabels, dimData) {
-  // Destroy old instances
-  dimChartInstances.forEach(c => c.destroy());
-  dimChartInstances = [];
-
-  const grid = document.getElementById('dimRadarGrid');
-  grid.innerHTML = '';
-
-  dimLabels.forEach(dim => {
-    const axes = dimData[dim] || {};
-    const axisLabels = AXES;
-    const axisValues = axisLabels.map(a => axes[a] || 0);
-    const dimPct = Math.round((axisValues.reduce((s,v) => s+v, 0) / (axisLabels.length * 4)) * 100);
-
-    const card = document.createElement('div');
-    card.className = 'dim-radar-card';
-    card.innerHTML = `
-      <div class="dim-radar-title">${dim}</div>
-      <div class="dim-radar-score">Maturity: ${dimPct}%</div>
-      <canvas id="dimRadar-${dim.replace(/[^a-zA-Z0-9]/g,'_')}" width="260" height="260"></canvas>
-    `;
-    grid.appendChild(card);
-
-    const canvas = card.querySelector('canvas');
-    const ctx = canvas.getContext('2d');
-    const chart = new Chart(ctx, {
-      type: 'radar',
-      data: {
-        labels: axisLabels,
-        datasets: [{
-          label: 'AS-IS',
-          data: axisValues,
-          backgroundColor: 'rgba(0,125,121,0.15)',
-          borderColor: '#007d79',
-          borderWidth: 2,
-          pointBackgroundColor: '#007d79',
-          pointRadius: 3
-        }]
-      },
-      options: {
-        responsive: false,
-        scales: {
-          r: {
-            min: 0, max: 4,
-            ticks: { stepSize: 1, font: { size: 8 }, display: false },
-            pointLabels: { font: { size: 8 }, color: '#525252' },
-            grid: { color: '#e0e0e0' },
-            angleLines: { color: '#e0e0e0' }
-          }
-        },
-        plugins: { legend: { display: false } }
-      }
-    });
-    dimChartInstances.push(chart);
-  });
+// ── CHART EXPORT ──────────────────────────────────────────────────────────────
+function exportChart(canvasId, filename) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const link = document.createElement('a');
+  link.download = (filename || 'chart') + '.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
 }
+
+// ── LEGACY STUBS (kept for safety) ───────────────────────────────────────────
+function drawSummaryRadar() {}
+function drawDimensionRadars() {}
 
 // ── SUMMARY VIEW ────────────────────────────────────────────────────────────
 let currentView = 'assess'; // 'assess' | 'summary'
@@ -1222,6 +1469,10 @@ function onClientChange() {
   if (currentView === 'summary') loadSummaryData();
 }
 
+// ── DUMMY showResults placeholder for the old code refs removed below ─────────
+// (nothing needed — showResults is fully defined above)
+
+// ── SUMMARY DATA LOADER ──────────────────────────────────────────────────────
 async function loadSummaryData() {
   const clientId = document.getElementById('clientSelect').value;
   const content = document.getElementById('sumContent');
@@ -1413,6 +1664,12 @@ async function viewHistoricalAssessment(assessmentId, domain) {
     answersData.forEach(ans => {
       if (!dimData[ans.dimension]) dimData[ans.dimension] = {};
       dimData[ans.dimension][ans.axis] = ans.score || 0;
+    });
+
+    // Repopulate global answers so drill-down question details render correctly
+    answers = {};
+    answersData.forEach(ans => {
+      answers[ans.questionId] = { label: ans.answer, score: ans.score || 0 };
     });
 
     const pct = Math.round((a.overall_score / (20 * 4)) * 100);
