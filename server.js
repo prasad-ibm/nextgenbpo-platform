@@ -1,5 +1,5 @@
 require('dotenv').config();
-const APP_VERSION = '2.2.0'; // updated: domain-specific maturity output, spider charts, scorecard drill-downs
+const APP_VERSION = '3.0.0'; // updated: transformation roadmap module
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
@@ -94,6 +94,60 @@ async function initDB() {
       notes           TEXT DEFAULT '',
       created_at      TIMESTAMPTZ DEFAULT NOW(),
       updated_at      TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+
+  // ── Roadmap tables ──
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS roadmaps (
+      id              TEXT PRIMARY KEY,
+      client_id       TEXT NOT NULL REFERENCES clients(id),
+      name            TEXT NOT NULL,
+      scope_type      TEXT NOT NULL DEFAULT 'single_domain',
+      domains         JSONB NOT NULL DEFAULT '[]',
+      target_maturity DOUBLE PRECISION NOT NULL DEFAULT 3.75,
+      priority_weights JSONB NOT NULL DEFAULT '{"gap":0.30,"strategic":0.25,"stakeholder":0.20,"value":0.15,"risk":0.10}',
+      status          TEXT NOT NULL DEFAULT 'draft',
+      created_at      TIMESTAMPTZ DEFAULT NOW(),
+      updated_at      TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS roadmap_gaps (
+      id              TEXT PRIMARY KEY,
+      roadmap_id      TEXT NOT NULL REFERENCES roadmaps(id) ON DELETE CASCADE,
+      domain          TEXT NOT NULL,
+      dimension       TEXT NOT NULL,
+      current_score   DOUBLE PRECISION NOT NULL DEFAULT 0,
+      target_score    DOUBLE PRECISION NOT NULL DEFAULT 3.75,
+      gap             DOUBLE PRECISION NOT NULL DEFAULT 0,
+      priority_score  DOUBLE PRECISION NOT NULL DEFAULT 0,
+      priority_rank   INTEGER NOT NULL DEFAULT 0
+    )
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS roadmap_initiatives (
+      id                    TEXT PRIMARY KEY,
+      roadmap_id            TEXT NOT NULL REFERENCES roadmaps(id) ON DELETE CASCADE,
+      gap_id                TEXT REFERENCES roadmap_gaps(id) ON DELETE SET NULL,
+      library_ref           TEXT NOT NULL DEFAULT '',
+      name                  TEXT NOT NULL,
+      description           TEXT NOT NULL DEFAULT '',
+      horizon               TEXT NOT NULL DEFAULT 'short',
+      horizon_override      TEXT,
+      estimated_annual_value DOUBLE PRECISION NOT NULL DEFAULT 0,
+      implementation_cost   DOUBLE PRECISION NOT NULL DEFAULT 0,
+      roi_pct               DOUBLE PRECISION NOT NULL DEFAULT 0,
+      payback_months        INTEGER NOT NULL DEFAULT 0,
+      impact_categories     JSONB NOT NULL DEFAULT '{}',
+      start_month           INTEGER NOT NULL DEFAULT 1,
+      duration_months       INTEGER NOT NULL DEFAULT 3,
+      effort_size           TEXT NOT NULL DEFAULT 'M',
+      status                TEXT NOT NULL DEFAULT 'planned',
+      dependencies          JSONB NOT NULL DEFAULT '[]',
+      engagement_template   JSONB NOT NULL DEFAULT '{}'
     )
   `);
 
@@ -254,6 +308,124 @@ app.delete('/api/engagements/:id', async (req, res) => {
   try {
     await pool.query('DELETE FROM engagements WHERE id = $1', [req.params.id]);
     res.json({ message: 'Deleted' });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ── ROADMAP ROUTES ────────────────────────────────────────────────────────
+app.get('/api/roadmaps', async (req, res) => {
+  const { client_id } = req.query;
+  try {
+    let q = 'SELECT * FROM roadmaps';
+    const params = [];
+    if (client_id) { q += ' WHERE client_id = $1'; params.push(client_id); }
+    q += ' ORDER BY created_at DESC';
+    const { rows } = await pool.query(q, params);
+    res.json(rows);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/roadmaps/:id', async (req, res) => {
+  try {
+    const { rows: [roadmap] } = await pool.query('SELECT * FROM roadmaps WHERE id = $1', [req.params.id]);
+    if (!roadmap) return res.status(404).json({ error: 'Roadmap not found' });
+    const { rows: gaps } = await pool.query('SELECT * FROM roadmap_gaps WHERE roadmap_id = $1 ORDER BY priority_rank', [req.params.id]);
+    const { rows: initiatives } = await pool.query('SELECT * FROM roadmap_initiatives WHERE roadmap_id = $1 ORDER BY start_month, horizon', [req.params.id]);
+    res.json({ ...roadmap, gaps, initiatives });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/roadmaps', async (req, res) => {
+  const { client_id, name, scope_type, domains, target_maturity, priority_weights } = req.body;
+  if (!client_id || !name) return res.status(400).json({ error: 'client_id and name required' });
+  try {
+    const id = uuidv4();
+    await pool.query(
+      `INSERT INTO roadmaps (id,client_id,name,scope_type,domains,target_maturity,priority_weights)
+       VALUES ($1,$2,$3,$4,$5,$6,$7)`,
+      [id, client_id, name, scope_type || 'single_domain',
+       JSON.stringify(domains || []), target_maturity || 3.75,
+       JSON.stringify(priority_weights || {gap:0.30,strategic:0.25,stakeholder:0.20,value:0.15,risk:0.10})]
+    );
+    res.json({ id, message: 'Roadmap created' });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.put('/api/roadmaps/:id', async (req, res) => {
+  const { name, target_maturity, priority_weights, status } = req.body;
+  try {
+    await pool.query(
+      `UPDATE roadmaps SET
+        name = COALESCE($1, name), target_maturity = COALESCE($2, target_maturity),
+        priority_weights = COALESCE($3, priority_weights), status = COALESCE($4, status),
+        updated_at = NOW()
+       WHERE id = $5`,
+      [name ?? null, target_maturity ?? null,
+       priority_weights ? JSON.stringify(priority_weights) : null,
+       status ?? null, req.params.id]
+    );
+    res.json({ message: 'Roadmap updated' });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/roadmaps/:id', async (req, res) => {
+  try {
+    await pool.query('DELETE FROM roadmaps WHERE id = $1', [req.params.id]);
+    res.json({ message: 'Roadmap deleted' });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// Bulk-save gaps + initiatives for a roadmap (generated client-side)
+app.post('/api/roadmaps/:id/generate', async (req, res) => {
+  const { gaps, initiatives } = req.body;
+  if (!gaps || !initiatives) return res.status(400).json({ error: 'gaps and initiatives required' });
+  try {
+    // Clear existing
+    await pool.query('DELETE FROM roadmap_initiatives WHERE roadmap_id = $1', [req.params.id]);
+    await pool.query('DELETE FROM roadmap_gaps WHERE roadmap_id = $1', [req.params.id]);
+    // Insert gaps
+    for (const g of gaps) {
+      await pool.query(
+        `INSERT INTO roadmap_gaps (id,roadmap_id,domain,dimension,current_score,target_score,gap,priority_score,priority_rank)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+        [g.id, req.params.id, g.domain, g.dimension, g.current_score, g.target_score, g.gap, g.priority_score, g.priority_rank]
+      );
+    }
+    // Insert initiatives
+    for (const i of initiatives) {
+      await pool.query(
+        `INSERT INTO roadmap_initiatives
+          (id,roadmap_id,gap_id,library_ref,name,description,horizon,estimated_annual_value,
+           implementation_cost,roi_pct,payback_months,impact_categories,start_month,
+           duration_months,effort_size,status,dependencies,engagement_template)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)`,
+        [i.id, req.params.id, i.gap_id, i.library_ref, i.name, i.description, i.horizon,
+         i.estimated_annual_value, i.implementation_cost, i.roi_pct, i.payback_months,
+         JSON.stringify(i.impact_categories), i.start_month, i.duration_months,
+         i.effort_size, i.status || 'planned', JSON.stringify(i.dependencies || []),
+         JSON.stringify(i.engagement_template || {})]
+      );
+    }
+    await pool.query("UPDATE roadmaps SET status='active', updated_at=NOW() WHERE id=$1", [req.params.id]);
+    res.json({ message: 'Roadmap generated', gaps: gaps.length, initiatives: initiatives.length });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.put('/api/roadmaps/:roadmap_id/initiatives/:id', async (req, res) => {
+  const { horizon_override, start_month, status, estimated_annual_value, implementation_cost } = req.body;
+  try {
+    await pool.query(
+      `UPDATE roadmap_initiatives SET
+        horizon_override = COALESCE($1, horizon_override),
+        start_month = COALESCE($2, start_month),
+        status = COALESCE($3, status),
+        estimated_annual_value = COALESCE($4, estimated_annual_value),
+        implementation_cost = COALESCE($5, implementation_cost)
+       WHERE id = $6 AND roadmap_id = $7`,
+      [horizon_override ?? null, start_month ?? null, status ?? null,
+       estimated_annual_value ?? null, implementation_cost ?? null,
+       req.params.id, req.params.roadmap_id]
+    );
+    res.json({ message: 'Initiative updated' });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 

@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transformation Roadmap | NextGen BPO</title>
+  <link rel="stylesheet" href="/bpo-theme.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    /* ── Layout ── */
+    .rm-layout { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: calc(100vh - 48px); }
+    .rm-sidebar { background: #f4f4f4; border-right: 1px solid #e0e0e0; padding: 1.25rem; overflow-y: auto; max-height: calc(100vh - 48px); position: sticky; top: 48px; }
+    .rm-main { padding: 1.5rem 2rem; background: #fff; overflow-y: auto; }
+
+    /* ── Sidebar ── */
+    .rm-sb-section { margin-bottom: 1.5rem; }
+    .rm-sb-label { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #6f6f6f; margin-bottom: 0.5rem; font-family: 'IBM Plex Mono', monospace; }
+    .rm-sb-select { width: 100%; padding: 0.5rem; font-size: 0.8125rem; border: 1px solid #c6c6c6; background: #fff; font-family: 'IBM Plex Sans', sans-serif; }
+    .rm-sb-btn { width: 100%; padding: 0.625rem; font-size: 0.8125rem; font-weight: 600; border: none; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif; margin-bottom: 0.5rem; transition: background 0.15s; }
+    .rm-sb-btn-primary { background: #007d79; color: #fff; }
+    .rm-sb-btn-primary:hover { background: #005c59; }
+    .rm-sb-btn-secondary { background: #e0e0e0; color: #161616; }
+    .rm-sb-btn-secondary:hover { background: #c6c6c6; }
+
+    /* Weight Sliders */
+    .rm-weight-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.625rem; }
+    .rm-weight-label { font-size: 0.6875rem; color: #525252; min-width: 80px; }
+    .rm-weight-slider { flex: 1; accent-color: #007d79; }
+    .rm-weight-val { font-size: 0.6875rem; font-weight: 600; color: #161616; min-width: 30px; text-align: right; font-family: 'IBM Plex Mono', monospace; }
+
+    /* Target slider */
+    .rm-target-row { display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem; }
+    .rm-target-val { font-size: 1.25rem; font-weight: 300; color: #161616; font-family: 'IBM Plex Mono', monospace; }
+
+    /* ── Roadmap List ── */
+    .rm-roadmap-item { padding: 0.625rem 0.75rem; border: 1px solid #e0e0e0; background: #fff; margin-bottom: 0.375rem; cursor: pointer; transition: border-color 0.15s; }
+    .rm-roadmap-item:hover, .rm-roadmap-item.active { border-color: #007d79; }
+    .rm-roadmap-item-name { font-size: 0.8125rem; font-weight: 600; color: #161616; }
+    .rm-roadmap-item-meta { font-size: 0.6875rem; color: #6f6f6f; margin-top: 0.125rem; }
+    .rm-status-badge { font-size: 0.5625rem; font-weight: 700; padding: 1px 6px; border-radius: 8px; font-family: 'IBM Plex Mono', monospace; }
+    .rm-status-draft { background: #e0e0e0; color: #525252; }
+    .rm-status-active { background: #d9fbfb; color: #004144; }
+
+    /* ── Value Summary Bar ── */
+    .rm-value-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #e0e0e0; border: 1px solid #c6c6c6; margin-bottom: 1.5rem; }
+    .rm-value-cell { background: #fff; padding: 1rem 1.25rem; text-align: center; }
+    .rm-value-cell-label { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #6f6f6f; margin-bottom: 0.375rem; font-family: 'IBM Plex Mono', monospace; }
+    .rm-value-cell-big { font-size: 1.5rem; font-weight: 300; color: #161616; line-height: 1.2; }
+    .rm-value-cell-sub { font-size: 0.6875rem; color: #525252; margin-top: 0.125rem; }
+    .rm-value-cell-sm { font-size: 0.8125rem; color: #161616; font-weight: 600; }
+
+    /* ── View Tabs ── */
+    .rm-view-tabs { display: flex; gap: 0; border-bottom: 2px solid #e0e0e0; margin-bottom: 1.5rem; }
+    .rm-view-tab { padding: 0.625rem 1.25rem; font-size: 0.8125rem; font-weight: 600; color: #525252; background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; font-family: 'IBM Plex Sans', sans-serif; transition: all 0.15s; }
+    .rm-view-tab:hover { color: #161616; background: #f4f4f4; }
+    .rm-view-tab.active { color: #007d79; border-bottom-color: #007d79; }
+
+    /* ── Initiative List Table ── */
+    .rm-table-wrap { overflow-x: auto; }
+    .rm-table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+    .rm-table th { text-align: left; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6f6f6f; padding: 0.625rem 0.75rem; border-bottom: 2px solid #e0e0e0; cursor: pointer; white-space: nowrap; font-family: 'IBM Plex Mono', monospace; }
+    .rm-table th:hover { color: #161616; }
+    .rm-table td { padding: 0.625rem 0.75rem; border-bottom: 1px solid #f4f4f4; color: #161616; vertical-align: middle; }
+    .rm-table tr:hover td { background: #f9f9f9; }
+    .rm-table tr { cursor: pointer; }
+
+    /* Horizon badges */
+    .rm-hz-short { background: #d9fbfb; color: #004144; font-size: 0.625rem; font-weight: 700; padding: 2px 6px; border-radius: 8px; font-family: 'IBM Plex Mono', monospace; }
+    .rm-hz-medium { background: #d0e2ff; color: #002d6b; font-size: 0.625rem; font-weight: 700; padding: 2px 6px; border-radius: 8px; font-family: 'IBM Plex Mono', monospace; }
+    .rm-hz-long { background: #e8daff; color: #491d8b; font-size: 0.625rem; font-weight: 700; padding: 2px 6px; border-radius: 8px; font-family: 'IBM Plex Mono', monospace; }
+
+    /* Effort badges */
+    .rm-effort { font-size: 0.625rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; font-family: 'IBM Plex Mono', monospace; background: #f4f4f4; color: #525252; }
+
+    /* Filter chips */
+    .rm-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .rm-chip { padding: 0.25rem 0.625rem; font-size: 0.6875rem; font-weight: 600; border: 1px solid #c6c6c6; background: #fff; cursor: pointer; border-radius: 12px; font-family: 'IBM Plex Sans', sans-serif; transition: all 0.15s; }
+    .rm-chip:hover { border-color: #007d79; }
+    .rm-chip.active { background: #007d79; color: #fff; border-color: #007d79; }
+
+    /* ── Gantt ── */
+    .rm-gantt-wrap { overflow-x: auto; border: 1px solid #e0e0e0; }
+    .rm-gantt { min-width: 1200px; }
+    .rm-gantt-header { display: flex; border-bottom: 2px solid #e0e0e0; background: #f4f4f4; }
+    .rm-gantt-label-col { min-width: 220px; max-width: 220px; padding: 0.5rem 0.75rem; font-size: 0.6875rem; font-weight: 700; color: #6f6f6f; }
+    .rm-gantt-months { display: flex; flex: 1; }
+    .rm-gantt-month { flex: 0 0 calc(100% / 36); text-align: center; font-size: 0.5625rem; font-weight: 600; color: #6f6f6f; padding: 0.375rem 0; border-left: 1px solid #e0e0e0; font-family: 'IBM Plex Mono', monospace; }
+    .rm-gantt-swimlane { border-bottom: 1px solid #f4f4f4; }
+    .rm-gantt-swimlane-label { padding: 0.375rem 0.75rem; font-size: 0.6875rem; font-weight: 700; color: #007d79; text-transform: uppercase; letter-spacing: 0.08em; background: #f9f9f9; border-bottom: 1px solid #e0e0e0; }
+    .rm-gantt-row { display: flex; align-items: center; min-height: 32px; }
+    .rm-gantt-row-label { min-width: 220px; max-width: 220px; padding: 0.25rem 0.75rem; font-size: 0.6875rem; color: #161616; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rm-gantt-row-bars { display: flex; flex: 1; position: relative; height: 24px; }
+    .rm-gantt-bar { position: absolute; height: 18px; top: 3px; border-radius: 2px; font-size: 0.5rem; color: #fff; font-weight: 700; display: flex; align-items: center; padding: 0 4px; overflow: hidden; white-space: nowrap; cursor: pointer; transition: opacity 0.15s; }
+    .rm-gantt-bar:hover { opacity: 0.85; }
+    .rm-gantt-bar-short { background: #007d79; }
+    .rm-gantt-bar-medium { background: #0f62fe; }
+    .rm-gantt-bar-long { background: #8a3ffc; }
+
+    /* Horizon headers */
+    .rm-gantt-hz-headers { display: flex; }
+    .rm-gantt-hz-header { text-align: center; font-size: 0.5625rem; font-weight: 700; padding: 0.25rem 0; color: #fff; font-family: 'IBM Plex Mono', monospace; }
+
+    /* ── Value Map (bubble chart) ── */
+    .rm-valuemap-wrap { background: #fff; border: 1px solid #c6c6c6; padding: 1.5rem; }
+    .rm-valuemap-legend { display: flex; gap: 1.5rem; margin-top: 1rem; justify-content: center; }
+    .rm-valuemap-legend-item { display: flex; align-items: center; gap: 0.375rem; font-size: 0.6875rem; color: #525252; }
+    .rm-valuemap-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    /* ── Detail Drawer ── */
+    .rm-drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); z-index: 1000; display: none; }
+    .rm-drawer-overlay.open { display: block; }
+    .rm-drawer { position: fixed; top: 0; right: 0; width: 460px; max-width: 90vw; height: 100vh; background: #fff; z-index: 1001; box-shadow: -4px 0 20px rgba(0,0,0,0.12); overflow-y: auto; transform: translateX(100%); transition: transform 0.25s ease; }
+    .rm-drawer-overlay.open .rm-drawer { transform: translateX(0); }
+    .rm-drawer-close { position: absolute; top: 1rem; right: 1rem; font-size: 1.25rem; background: none; border: none; cursor: pointer; color: #525252; }
+    .rm-drawer-section { padding: 1rem 1.5rem; border-bottom: 1px solid #e0e0e0; }
+    .rm-drawer-section:last-child { border-bottom: none; }
+    .rm-drawer-title { font-size: 1rem; font-weight: 600; color: #161616; margin: 0; }
+    .rm-drawer-subtitle { font-size: 0.75rem; color: #6f6f6f; margin-top: 0.25rem; }
+    .rm-drawer-kv { display: flex; justify-content: space-between; padding: 0.375rem 0; font-size: 0.8125rem; }
+    .rm-drawer-kv-label { color: #6f6f6f; }
+    .rm-drawer-kv-val { color: #161616; font-weight: 600; }
+    .rm-impact-bar { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.375rem; }
+    .rm-impact-bar-label { font-size: 0.6875rem; color: #525252; min-width: 100px; }
+    .rm-impact-bar-track { flex: 1; height: 8px; background: #e0e0e0; border-radius: 4px; overflow: hidden; }
+    .rm-impact-bar-fill { height: 100%; border-radius: 4px; }
+    .rm-impact-bar-val { font-size: 0.6875rem; font-weight: 600; color: #161616; min-width: 28px; text-align: right; font-family: 'IBM Plex Mono', monospace; }
+    .rm-dep-tag { display: inline-block; font-size: 0.625rem; padding: 2px 6px; background: #f4f4f4; border: 1px solid #e0e0e0; margin: 0.125rem; border-radius: 4px; font-family: 'IBM Plex Mono', monospace; color: #525252; }
+    .rm-phase-row { display: flex; justify-content: space-between; padding: 0.25rem 0; font-size: 0.75rem; }
+    .rm-maturity-before-after { display: flex; align-items: center; gap: 0.75rem; margin-top: 0.75rem; }
+    .rm-maturity-bar { width: 120px; height: 10px; background: #e0e0e0; border-radius: 5px; overflow: hidden; }
+    .rm-maturity-bar-fill { height: 100%; background: #007d79; border-radius: 5px; transition: width 0.4s; }
+
+    /* ── Create Roadmap Modal ── */
+    .rm-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 1100; display: none; justify-content: center; align-items: center; }
+    .rm-modal-overlay.open { display: flex; }
+    .rm-modal { background: #fff; padding: 2rem; width: 520px; max-width: 90vw; max-height: 85vh; overflow-y: auto; box-shadow: 0 8px 32px rgba(0,0,0,0.18); }
+    .rm-modal h3 { margin: 0 0 1.25rem; }
+    .rm-form-group { margin-bottom: 1rem; }
+    .rm-form-label { font-size: 0.75rem; font-weight: 600; color: #525252; display: block; margin-bottom: 0.25rem; }
+    .rm-form-input, .rm-form-select { width: 100%; padding: 0.5rem; font-size: 0.8125rem; border: 1px solid #c6c6c6; font-family: 'IBM Plex Sans', sans-serif; }
+    .rm-domain-check { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .rm-domain-check label { font-size: 0.8125rem; display: flex; align-items: center; gap: 0.375rem; cursor: pointer; }
+
+    /* ── Empty state ── */
+    .rm-empty { text-align: center; padding: 4rem 2rem; color: #6f6f6f; }
+    .rm-empty h3 { color: #161616; margin-bottom: 0.5rem; }
+  </style>
+</head>
+<body>
+
+<nav class="c-nav">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
+    <a class="c-nav-brand" href="/">
+      <svg width="24" height="24" viewBox="0 0 32 32" fill="#007d79" style="vertical-align:middle;margin-right:0.5rem;">
+        <rect x="4" y="4" width="10" height="10" rx="2"/><rect x="18" y="4" width="10" height="10" rx="2" opacity=".6"/>
+        <rect x="4" y="18" width="10" height="10" rx="2" opacity=".6"/><rect x="18" y="18" width="10" height="10" rx="2" opacity=".3"/>
+      </svg>
+      NextGen BPO
+    </a>
+    <div class="c-nav-links">
+      <a href="/"><span>Home</span></a>
+      <a href="/client-zero.html"><span>Client Zero</span></a>
+      <a href="/platform.html"><span>Platform</span></a>
+      <a href="/assets.html"><span>Playbooks</span></a>
+      <a href="/assess.html"><span>Assess</span></a>
+      <a href="/tracker.html"><span>Pipeline</span></a>
+      <a href="/roi.html"><span>ROI</span></a>
+      <a href="/businesscase.html"><span>Business Case</span></a>
+      <a href="/roadmap.html" class="active"><span>Roadmap</span></a>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <span id="nav-client" style="font-size:0.75rem;color:#8d8d8d;font-family:'IBM Plex Mono',monospace;"></span>
+      <a href="/login.html" onclick="sessionStorage.clear()" style="font-size:0.75rem;color:#6f6f6f;" id="nav-logout" hidden>Sign out</a>
+    </div>
+  </div>
+</nav>
+<script>
+const _t = sessionStorage.getItem('bpo_token');
+const _c = sessionStorage.getItem('bpo_client');
+if (_c) { document.getElementById('nav-client').textContent = _c; document.getElementById('nav-logout').hidden = false; }
+</script>
+
+<div class="rm-layout">
+  <!-- SIDEBAR -->
+  <div class="rm-sidebar">
+    <div class="rm-sb-section">
+      <div class="rm-sb-label">Client</div>
+      <select class="rm-sb-select" id="rmClientSelect" onchange="onRmClientChange()">
+        <option value="">-- Select Client --</option>
+      </select>
+    </div>
+    <div class="rm-sb-section">
+      <button class="rm-sb-btn rm-sb-btn-primary" onclick="openCreateModal()">+ New Roadmap</button>
+      <div class="rm-sb-label" style="margin-top:1rem;">Roadmaps</div>
+      <div id="rmRoadmapList"><div style="font-size:0.75rem;color:#8d8d8d;">Select a client first.</div></div>
+    </div>
+    <div class="rm-sb-section" id="rmWeightsSection" style="display:none;">
+      <div class="rm-sb-label">Priority Weights</div>
+      <div class="rm-weight-row"><span class="rm-weight-label">Gap Magnitude</span><input type="range" class="rm-weight-slider" id="wGap" min="0" max="100" value="30" oninput="onWeightChange()"><span class="rm-weight-val" id="wGapV">30</span></div>
+      <div class="rm-weight-row"><span class="rm-weight-label">Strategic</span><input type="range" class="rm-weight-slider" id="wStrategic" min="0" max="100" value="25" oninput="onWeightChange()"><span class="rm-weight-val" id="wStrategicV">25</span></div>
+      <div class="rm-weight-row"><span class="rm-weight-label">Stakeholder</span><input type="range" class="rm-weight-slider" id="wStakeholder" min="0" max="100" value="20" oninput="onWeightChange()"><span class="rm-weight-val" id="wStakeholderV">20</span></div>
+      <div class="rm-weight-row"><span class="rm-weight-label">Value</span><input type="range" class="rm-weight-slider" id="wValue" min="0" max="100" value="15" oninput="onWeightChange()"><span class="rm-weight-val" id="wValueV">15</span></div>
+      <div class="rm-weight-row"><span class="rm-weight-label">Risk</span><input type="range" class="rm-weight-slider" id="wRisk" min="0" max="100" value="10" oninput="onWeightChange()"><span class="rm-weight-val" id="wRiskV">10</span></div>
+      <div style="margin-top:0.75rem;">
+        <div class="rm-sb-label">Target Maturity</div>
+        <div class="rm-target-row">
+          <input type="range" class="rm-weight-slider" id="rmTargetSlider" min="250" max="400" value="375" step="25" oninput="onTargetChange()" style="flex:1;">
+          <span class="rm-target-val" id="rmTargetVal">3.75</span>
+        </div>
+      </div>
+      <button class="rm-sb-btn rm-sb-btn-secondary" style="margin-top:0.75rem;" onclick="regenerateRoadmap()">Recalculate</button>
+    </div>
+    <div class="rm-sb-section" id="rmExportSection" style="display:none;">
+      <div class="rm-sb-label">Export</div>
+      <button class="rm-sb-btn rm-sb-btn-secondary" onclick="exportCSV()">CSV Export</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="rm-main">
+    <div id="rmEmptyState" class="rm-empty">
+      <h3>Value-Based Transformation Roadmap</h3>
+      <p>Select a client and create or load a roadmap to view prioritized, quantified transformation initiatives.</p>
+      <p style="font-size:0.75rem;margin-top:1rem;color:#8d8d8d;">Roadmaps are auto-generated from maturity assessment results.</p>
+    </div>
+    <div id="rmContent" style="display:none;">
+      <!-- Header -->
+      <div style="background:#fff;border:1px solid #c6c6c6;padding:1.5rem;margin-bottom:1.5rem;">
+        <div style="font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:#007d79;margin-bottom:0.375rem;font-family:'IBM Plex Mono',monospace;">TRANSFORMATION ROADMAP</div>
+        <h2 style="margin:0 0 0.25rem;" id="rmTitle"></h2>
+        <p style="font-size:0.8125rem;color:#6f6f6f;margin:0;" id="rmSubtitle"></p>
+      </div>
+      <!-- Value Summary Bar -->
+      <div class="rm-value-bar" id="rmValueBar"></div>
+      <!-- View Tabs -->
+      <div class="rm-view-tabs">
+        <button class="rm-view-tab active" onclick="switchRmView('list',this)">Initiative List</button>
+        <button class="rm-view-tab" onclick="switchRmView('timeline',this)">Timeline</button>
+        <button class="rm-view-tab" onclick="switchRmView('valuemap',this)">Value Map</button>
+      </div>
+      <!-- Filters -->
+      <div class="rm-filters" id="rmFilters"></div>
+      <!-- View Container -->
+      <div id="rmViewContainer"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Create Roadmap Modal -->
+<div class="rm-modal-overlay" id="rmCreateModal">
+  <div class="rm-modal">
+    <h3>Create Transformation Roadmap</h3>
+    <div class="rm-form-group">
+      <label class="rm-form-label">Roadmap Name *</label>
+      <input class="rm-form-input" id="rmNewName" placeholder="e.g. Finance Transformation Q3 2026">
+    </div>
+    <div class="rm-form-group">
+      <label class="rm-form-label">Scope</label>
+      <select class="rm-form-select" id="rmNewScope" onchange="toggleDomainChecks()">
+        <option value="single_domain">Single Domain</option>
+        <option value="cross_domain">Cross-Domain</option>
+      </select>
+    </div>
+    <div class="rm-form-group">
+      <label class="rm-form-label">Domain(s) *</label>
+      <div class="rm-domain-check" id="rmDomainChecks">
+        <label><input type="checkbox" value="finance" checked> Finance</label>
+        <label><input type="checkbox" value="supplychain"> Supply Chain</label>
+        <label><input type="checkbox" value="hr"> HR</label>
+      </div>
+    </div>
+    <div id="rmCreateError" style="color:#da1e28;font-size:0.75rem;margin-bottom:0.75rem;"></div>
+    <div style="display:flex;gap:0.75rem;">
+      <button class="rm-sb-btn rm-sb-btn-primary" style="width:auto;padding:0.625rem 1.5rem;" onclick="createRoadmap()">Generate Roadmap</button>
+      <button class="rm-sb-btn rm-sb-btn-secondary" style="width:auto;padding:0.625rem 1.5rem;" onclick="closeCreateModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Detail Drawer -->
+<div class="rm-drawer-overlay" id="rmDrawerOverlay" onclick="closeDrawer()">
+  <div class="rm-drawer" onclick="event.stopPropagation()" id="rmDrawer">
+    <button class="rm-drawer-close" onclick="closeDrawer()">&#10005;</button>
+    <div id="rmDrawerContent"></div>
+  </div>
+</div>
+
+<footer class="c-footer">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap;">
+      <div>
+        <div class="footer-brand">NextGen BPO Intelligence Platform</div>
+        <div class="footer-tagline" style="margin-top:4px;">Assess. Transform. Operate.</div>
+      </div>
+      <div style="text-align:right;font-size:0.75rem;color:#6f6f6f;">
+        &copy; 2026 NextGen BPO Advisory
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── STATE ──
+let initiativeLibrary = [];
+let clients = [];
+let currentRoadmap = null;
+let currentView = 'list';
+let activeFilters = { horizon: 'all', domain: 'all', effort: 'all' };
+let bubbleChart = null;
+
+const DOMAIN_LABELS = { finance: 'Finance', supplychain: 'Supply Chain', hr: 'HR' };
+const HZ_ORDER = { short: 0, medium: 1, long: 2 };
+const HZ_COLORS = { short: '#007d79', medium: '#0f62fe', long: '#8a3ffc' };
+
+function authHeaders() {
+  const t = sessionStorage.getItem('bpo_token');
+  return t ? { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + t } : { 'Content-Type': 'application/json' };
+}
+
+function fmt$(v) {
+  if (v >= 1000000) return '$' + (v / 1000000).toFixed(1) + 'M';
+  if (v >= 1000) return '$' + Math.round(v / 1000) + 'K';
+  return '$' + Math.round(v);
+}
+
+// ── BOOT ──
+async function boot() {
+  try {
+    const [libRes, cliRes] = await Promise.all([
+      fetch('/initiative_library.json'),
+      fetch('/api/clients', { headers: authHeaders() })
+    ]);
+    initiativeLibrary = await libRes.json();
+    clients = await cliRes.json();
+  } catch(e) { console.error('Boot error:', e); }
+
+  const sel = document.getElementById('rmClientSelect');
+  clients.forEach(c => {
+    const o = document.createElement('option');
+    o.value = c.id; o.textContent = c.name;
+    sel.appendChild(o);
+  });
+
+  const saved = sessionStorage.getItem('bpo_selected_client');
+  if (saved) { sel.value = saved; onRmClientChange(); }
+
+  // Check if coming from assess with pre-selected domain
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('client_id') && params.get('domain')) {
+    sel.value = params.get('client_id');
+    onRmClientChange();
+  }
+}
+boot();
+
+// ── CLIENT CHANGE ──
+async function onRmClientChange() {
+  const cid = document.getElementById('rmClientSelect').value;
+  if (cid) sessionStorage.setItem('bpo_selected_client', cid);
+  const list = document.getElementById('rmRoadmapList');
+  if (!cid) { list.innerHTML = '<div style="font-size:0.75rem;color:#8d8d8d;">Select a client first.</div>'; return; }
+  try {
+    const r = await fetch('/api/roadmaps?client_id=' + cid, { headers: authHeaders() });
+    const roadmaps = await r.json();
+    if (!roadmaps.length) {
+      list.innerHTML = '<div style="font-size:0.75rem;color:#8d8d8d;">No roadmaps yet. Click "+ New Roadmap".</div>';
+      return;
+    }
+    list.innerHTML = '';
+    roadmaps.forEach(rm => {
+      const div = document.createElement('div');
+      div.className = 'rm-roadmap-item' + (currentRoadmap && currentRoadmap.id === rm.id ? ' active' : '');
+      const domains = (typeof rm.domains === 'string' ? JSON.parse(rm.domains) : rm.domains) || [];
+      div.innerHTML = `
+        <div class="rm-roadmap-item-name">${rm.name}</div>
+        <div class="rm-roadmap-item-meta">
+          ${domains.map(d => DOMAIN_LABELS[d] || d).join(', ')}
+          <span class="rm-status-badge rm-status-${rm.status}">${rm.status}</span>
+        </div>`;
+      div.onclick = () => loadRoadmap(rm.id);
+      list.appendChild(div);
+    });
+  } catch(e) { list.innerHTML = '<div style="font-size:0.75rem;color:#da1e28;">Error loading roadmaps.</div>'; }
+}
+
+// ── LOAD ROADMAP ──
+async function loadRoadmap(id) {
+  try {
+    const r = await fetch('/api/roadmaps/' + id, { headers: authHeaders() });
+    currentRoadmap = await r.json();
+    currentRoadmap.domains = typeof currentRoadmap.domains === 'string' ? JSON.parse(currentRoadmap.domains) : currentRoadmap.domains;
+    currentRoadmap.priority_weights = typeof currentRoadmap.priority_weights === 'string' ? JSON.parse(currentRoadmap.priority_weights) : currentRoadmap.priority_weights;
+    // Parse initiatives impact_categories, dependencies, engagement_template
+    currentRoadmap.initiatives.forEach(i => {
+      if (typeof i.impact_categories === 'string') i.impact_categories = JSON.parse(i.impact_categories);
+      if (typeof i.dependencies === 'string') i.dependencies = JSON.parse(i.dependencies);
+      if (typeof i.engagement_template === 'string') i.engagement_template = JSON.parse(i.engagement_template);
+    });
+    renderRoadmap();
+    onRmClientChange(); // refresh list highlight
+  } catch(e) { console.error('Load roadmap error:', e); }
+}
+
+// ── RENDER ROADMAP ──
+function renderRoadmap() {
+  document.getElementById('rmEmptyState').style.display = 'none';
+  document.getElementById('rmContent').style.display = '';
+  document.getElementById('rmWeightsSection').style.display = '';
+  document.getElementById('rmExportSection').style.display = '';
+
+  const rm = currentRoadmap;
+  document.getElementById('rmTitle').textContent = rm.name;
+  const domainStr = (rm.domains || []).map(d => DOMAIN_LABELS[d] || d).join(' + ');
+  document.getElementById('rmSubtitle').textContent = `${rm.scope_type === 'cross_domain' ? 'Cross-Domain' : 'Single Domain'} | ${domainStr} | Target: ${rm.target_maturity}/4.0 | ${rm.status}`;
+
+  // Set weight sliders
+  const w = rm.priority_weights || {};
+  document.getElementById('wGap').value = (w.gap || 0.3) * 100;
+  document.getElementById('wStrategic').value = (w.strategic || 0.25) * 100;
+  document.getElementById('wStakeholder').value = (w.stakeholder || 0.2) * 100;
+  document.getElementById('wValue').value = (w.value || 0.15) * 100;
+  document.getElementById('wRisk').value = (w.risk || 0.1) * 100;
+  onWeightChange();
+  document.getElementById('rmTargetSlider').value = rm.target_maturity * 100;
+  document.getElementById('rmTargetVal').textContent = rm.target_maturity.toFixed(2);
+
+  renderValueBar();
+  renderFilters();
+  switchRmView(currentView, document.querySelector('.rm-view-tab.active'));
+}
+
+// ── VALUE SUMMARY BAR ──
+function renderValueBar() {
+  const inits = currentRoadmap.initiatives;
+  const bar = document.getElementById('rmValueBar');
+  const horizons = ['short', 'medium', 'long'];
+  const labels = { short: 'Short-term\n0-6 months', medium: 'Medium-term\n6-18 months', long: 'Long-term\n18+ months' };
+
+  let html = '';
+  let totalEAV = 0, totalCost = 0, totalCount = 0;
+  horizons.forEach(h => {
+    const hInits = inits.filter(i => (i.horizon_override || i.horizon) === h);
+    const eav = hInits.reduce((s, i) => s + i.estimated_annual_value, 0);
+    const cost = hInits.reduce((s, i) => s + i.implementation_cost, 0);
+    const avgRoi = hInits.length ? Math.round(hInits.reduce((s, i) => s + i.roi_pct, 0) / hInits.length) : 0;
+    totalEAV += eav; totalCost += cost; totalCount += hInits.length;
+    html += `<div class="rm-value-cell">
+      <div class="rm-value-cell-label">${labels[h].split('\n')[0]}</div>
+      <div class="rm-value-cell-big">${fmt$(eav)}</div>
+      <div class="rm-value-cell-sub">EAV</div>
+      <div class="rm-value-cell-sm" style="margin-top:0.5rem;">${fmt$(cost)} cost</div>
+      <div class="rm-value-cell-sub">${avgRoi}% avg ROI | ${hInits.length} initiatives</div>
+    </div>`;
+  });
+  const totalRoi = totalCount ? Math.round(inits.reduce((s, i) => s + i.roi_pct, 0) / totalCount) : 0;
+  html += `<div class="rm-value-cell" style="background:#f9f9f9;">
+    <div class="rm-value-cell-label">Total</div>
+    <div class="rm-value-cell-big" style="color:#007d79;">${fmt$(totalEAV)}</div>
+    <div class="rm-value-cell-sub">EAV</div>
+    <div class="rm-value-cell-sm" style="margin-top:0.5rem;">${fmt$(totalCost)} cost</div>
+    <div class="rm-value-cell-sub">${totalRoi}% avg ROI | ${totalCount} initiatives</div>
+  </div>`;
+  bar.innerHTML = html;
+}
+
+// ── FILTERS ──
+function renderFilters() {
+  const filtersEl = document.getElementById('rmFilters');
+  const domains = [...new Set(currentRoadmap.gaps.map(g => g.domain))];
+  let html = '<span style="font-size:0.6875rem;color:#6f6f6f;margin-right:0.5rem;">Filter:</span>';
+  // Horizon
+  html += `<button class="rm-chip ${activeFilters.horizon==='all'?'active':''}" onclick="setFilter('horizon','all')">All</button>`;
+  html += `<button class="rm-chip ${activeFilters.horizon==='short'?'active':''}" onclick="setFilter('horizon','short')">Short</button>`;
+  html += `<button class="rm-chip ${activeFilters.horizon==='medium'?'active':''}" onclick="setFilter('horizon','medium')">Medium</button>`;
+  html += `<button class="rm-chip ${activeFilters.horizon==='long'?'active':''}" onclick="setFilter('horizon','long')">Long</button>`;
+  html += '<span style="margin:0 0.25rem;color:#e0e0e0;">|</span>';
+  // Domains
+  domains.forEach(d => {
+    html += `<button class="rm-chip ${activeFilters.domain===d?'active':''}" onclick="setFilter('domain','${d}')">${DOMAIN_LABELS[d]||d}</button>`;
+  });
+  filtersEl.innerHTML = html;
+}
+
+function setFilter(key, val) {
+  if (activeFilters[key] === val && key !== 'horizon') { activeFilters[key] = 'all'; }
+  else { activeFilters[key] = val; }
+  renderFilters();
+  switchRmView(currentView, document.querySelector('.rm-view-tab.active'));
+}
+
+function filteredInitiatives() {
+  return currentRoadmap.initiatives.filter(i => {
+    const hz = i.horizon_override || i.horizon;
+    if (activeFilters.horizon !== 'all' && hz !== activeFilters.horizon) return false;
+    if (activeFilters.domain !== 'all') {
+      const gap = currentRoadmap.gaps.find(g => g.id === i.gap_id);
+      if (gap && gap.domain !== activeFilters.domain) return false;
+    }
+    return true;
+  });
+}
+
+// ── VIEW SWITCHING ──
+function switchRmView(view, btn) {
+  currentView = view;
+  document.querySelectorAll('.rm-view-tab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const container = document.getElementById('rmViewContainer');
+  if (bubbleChart) { bubbleChart.destroy(); bubbleChart = null; }
+  if (view === 'list') renderListView(container);
+  else if (view === 'timeline') renderTimelineView(container);
+  else renderValueMapView(container);
+}
+
+// ── LIST VIEW ──
+function renderListView(container) {
+  const inits = filteredInitiatives();
+  const gaps = currentRoadmap.gaps;
+  // Sort by priority rank of gap
+  inits.sort((a, b) => {
+    const ga = gaps.find(g => g.id === a.gap_id);
+    const gb = gaps.find(g => g.id === b.gap_id);
+    return (ga?.priority_rank || 99) - (gb?.priority_rank || 99);
+  });
+
+  container.innerHTML = `<div class="rm-table-wrap"><table class="rm-table">
+    <thead><tr>
+      <th>#</th><th>Domain</th><th>Dimension</th><th>Initiative</th>
+      <th>Score</th><th>Gap</th><th>Horizon</th><th>Effort</th>
+      <th>Est. Annual Value</th><th>Impl. Cost</th><th>ROI</th><th>Payback</th>
+    </tr></thead>
+    <tbody id="rmTableBody"></tbody>
+  </table></div>`;
+
+  const tbody = document.getElementById('rmTableBody');
+  inits.forEach((i, idx) => {
+    const gap = gaps.find(g => g.id === i.gap_id) || {};
+    const hz = i.horizon_override || i.horizon;
+    const tr = document.createElement('tr');
+    tr.onclick = () => openDrawer(i);
+    tr.innerHTML = `
+      <td style="font-weight:700;color:#6f6f6f;">${idx + 1}</td>
+      <td>${DOMAIN_LABELS[gap.domain] || gap.domain || ''}</td>
+      <td>${gap.dimension || ''}</td>
+      <td style="font-weight:600;max-width:260px;">${i.name}</td>
+      <td>${gap.current_score?.toFixed(1) || '-'}</td>
+      <td style="color:${gap.gap > 2 ? '#da1e28' : gap.gap > 1 ? '#e68a00' : '#007d79'};font-weight:600;">${gap.gap?.toFixed(1) || '-'}</td>
+      <td><span class="rm-hz-${hz}">${hz}</span></td>
+      <td><span class="rm-effort">${i.effort_size}</span></td>
+      <td style="font-weight:600;">${fmt$(i.estimated_annual_value)}</td>
+      <td>${fmt$(i.implementation_cost)}</td>
+      <td style="font-weight:600;color:${i.roi_pct >= 200 ? '#007d79' : '#161616'};">${Math.round(i.roi_pct)}%</td>
+      <td>${i.payback_months}mo</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// ── TIMELINE VIEW ──
+function renderTimelineView(container) {
+  const inits = filteredInitiatives();
+  const gaps = currentRoadmap.gaps;
+  const months = 36;
+
+  // Group by domain
+  const domainGroups = {};
+  inits.forEach(i => {
+    const gap = gaps.find(g => g.id === i.gap_id) || {};
+    const d = gap.domain || 'other';
+    if (!domainGroups[d]) domainGroups[d] = [];
+    domainGroups[d].push({ ...i, dimension: gap.dimension || '' });
+  });
+
+  let monthHeaders = '';
+  for (let m = 1; m <= months; m++) {
+    monthHeaders += `<div class="rm-gantt-month">${m}</div>`;
+  }
+
+  // Horizon header zones
+  const hzHeaders = `<div class="rm-gantt-hz-headers" style="display:flex;">
+    <div style="min-width:220px;"></div>
+    <div style="flex:1;display:flex;">
+      <div class="rm-gantt-hz-header" style="width:${(6/36)*100}%;background:#007d79;">Short (0-6m)</div>
+      <div class="rm-gantt-hz-header" style="width:${(12/36)*100}%;background:#0f62fe;">Medium (6-18m)</div>
+      <div class="rm-gantt-hz-header" style="width:${(18/36)*100}%;background:#8a3ffc;">Long (18-36m)</div>
+    </div>
+  </div>`;
+
+  let swimlanes = '';
+  Object.entries(domainGroups).forEach(([domain, items]) => {
+    items.sort((a, b) => a.start_month - b.start_month);
+    let rows = '';
+    items.forEach(i => {
+      const hz = i.horizon_override || i.horizon;
+      const left = ((i.start_month - 1) / months) * 100;
+      const width = (i.duration_months / months) * 100;
+      rows += `<div class="rm-gantt-row">
+        <div class="rm-gantt-row-label" title="${i.name}">${i.name}</div>
+        <div class="rm-gantt-row-bars">
+          <div class="rm-gantt-bar rm-gantt-bar-${hz}" style="left:${left}%;width:${width}%;" title="${i.name} | ${fmt$(i.estimated_annual_value)} | ${i.duration_months}mo" onclick="openDrawer(currentRoadmap.initiatives.find(x=>x.id==='${i.id}'))">
+            ${fmt$(i.estimated_annual_value)}
+          </div>
+        </div>
+      </div>`;
+    });
+    swimlanes += `<div class="rm-gantt-swimlane">
+      <div class="rm-gantt-swimlane-label">${DOMAIN_LABELS[domain] || domain}</div>
+      ${rows}
+    </div>`;
+  });
+
+  container.innerHTML = `<div class="rm-gantt-wrap"><div class="rm-gantt">
+    ${hzHeaders}
+    <div class="rm-gantt-header">
+      <div class="rm-gantt-label-col">Initiative</div>
+      <div class="rm-gantt-months">${monthHeaders}</div>
+    </div>
+    ${swimlanes}
+  </div></div>`;
+}
+
+// ── VALUE MAP VIEW ──
+function renderValueMapView(container) {
+  const inits = filteredInitiatives();
+  const gaps = currentRoadmap.gaps;
+
+  container.innerHTML = `
+    <div class="rm-valuemap-wrap">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+        <h4 style="margin:0;">ROI vs. Implementation Cost</h4>
+        <span style="font-size:0.6875rem;color:#6f6f6f;">Bubble size = Est. Annual Value | Hover for details</span>
+      </div>
+      <div style="max-width:800px;margin:0 auto;"><canvas id="rmBubbleChart"></canvas></div>
+      <div class="rm-valuemap-legend">
+        <div class="rm-valuemap-legend-item"><div class="rm-valuemap-dot" style="background:#007d79;"></div>Short-term</div>
+        <div class="rm-valuemap-legend-item"><div class="rm-valuemap-dot" style="background:#0f62fe;"></div>Medium-term</div>
+        <div class="rm-valuemap-legend-item"><div class="rm-valuemap-dot" style="background:#8a3ffc;"></div>Long-term</div>
+      </div>
+    </div>`;
+
+  const datasets = {};
+  inits.forEach(i => {
+    const hz = i.horizon_override || i.horizon;
+    if (!datasets[hz]) datasets[hz] = { label: hz, data: [], backgroundColor: HZ_COLORS[hz] + '80', borderColor: HZ_COLORS[hz], borderWidth: 1 };
+    datasets[hz].data.push({
+      x: i.implementation_cost,
+      y: i.roi_pct,
+      r: Math.max(4, Math.min(30, Math.sqrt(i.estimated_annual_value / 5000))),
+      _init: i,
+      _gap: gaps.find(g => g.id === i.gap_id)
+    });
+  });
+
+  const ctx = document.getElementById('rmBubbleChart').getContext('2d');
+  bubbleChart = new Chart(ctx, {
+    type: 'bubble',
+    data: { datasets: Object.values(datasets) },
+    options: {
+      responsive: true,
+      scales: {
+        x: { title: { display: true, text: 'Implementation Cost ($)', font: { size: 11 } }, ticks: { callback: v => fmt$(v) } },
+        y: { title: { display: true, text: 'ROI (%)', font: { size: 11 } }, min: 0 }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const d = ctx.raw;
+              return [d._init.name, `ROI: ${Math.round(d._init.roi_pct)}% | Cost: ${fmt$(d._init.implementation_cost)}`, `EAV: ${fmt$(d._init.estimated_annual_value)} | ${d._init.effort_size}`];
+            }
+          }
+        }
+      },
+      onClick: (evt, elements) => {
+        if (elements.length > 0) {
+          const el = elements[0];
+          const ds = bubbleChart.data.datasets[el.datasetIndex];
+          const point = ds.data[el.index];
+          openDrawer(point._init);
+        }
+      }
+    }
+  });
+}
+
+// ── DETAIL DRAWER ──
+function openDrawer(init) {
+  if (!init) return;
+  const gap = currentRoadmap.gaps.find(g => g.id === init.gap_id) || {};
+  const hz = init.horizon_override || init.horizon;
+  const impact = init.impact_categories || {};
+  const template = init.engagement_template || {};
+  const threeYearNet = (init.estimated_annual_value * 3) - init.implementation_cost;
+  const libItem = initiativeLibrary.find(l => l.id === init.library_ref) || {};
+  const deps = (init.dependencies || []).map(depId => {
+    const depInit = currentRoadmap.initiatives.find(x => x.library_ref === depId);
+    return depInit ? depInit.name : depId;
+  });
+  const afterScore = Math.min(4, (gap.current_score || 0) + (libItem.maturity_target_delta || 1.0));
+
+  const impactColors = { cost_savings: '#007d79', productivity: '#0f62fe', risk_reduction: '#da1e28', revenue: '#8a3ffc', employee_exp: '#f1c21b', compliance: '#6f6f6f' };
+  const impactLabels = { cost_savings: 'Cost Savings', productivity: 'Productivity', risk_reduction: 'Risk Reduction', revenue: 'Revenue', employee_exp: 'Employee Exp.', compliance: 'Compliance' };
+
+  let impactHTML = '';
+  Object.entries(impactLabels).forEach(([key, label]) => {
+    const val = impact[key] || 0;
+    if (val > 0) {
+      impactHTML += `<div class="rm-impact-bar">
+        <span class="rm-impact-bar-label">${label}</span>
+        <div class="rm-impact-bar-track"><div class="rm-impact-bar-fill" style="width:${val}%;background:${impactColors[key]};"></div></div>
+        <span class="rm-impact-bar-val">${val}%</span>
+      </div>`;
+    }
+  });
+
+  let phasesHTML = '';
+  if (template.phases && template.phases.length) {
+    phasesHTML = template.phases.map(p => `<div class="rm-phase-row"><span>${p.name}</span><span style="color:#6f6f6f;">${p.weeks} weeks</span></div>`).join('');
+  }
+
+  const content = `
+    <div class="rm-drawer-section" style="padding-top:2rem;">
+      <div style="font-size:0.625rem;font-weight:700;color:#6f6f6f;font-family:'IBM Plex Mono',monospace;">${init.library_ref}</div>
+      <div class="rm-drawer-title">${init.name}</div>
+      <div class="rm-drawer-subtitle">${init.description}</div>
+    </div>
+    <div class="rm-drawer-section">
+      <div style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;color:#6f6f6f;margin-bottom:0.5rem;">Overview</div>
+      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Domain</span><span class="rm-drawer-kv-val">${DOMAIN_LABELS[gap.domain]||gap.domain||''}</span></div>
+      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Dimension</span><span class="rm-drawer-kv-val">${gap.dimension||''}</span></div>
+      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Horizon</span><span class="rm-drawer-kv-val"><span class="rm-hz-${hz}">${hz}</span></span></div>
+      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Effort</span><span class="rm-drawer-kv-val"><span class="rm-effort">${init.effort_size}</span></span></div>
+      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Current Maturity</span><span class="rm-drawer-kv-val">${(gap.current_score||0).toFixed(1)} / 4.0</span></div>
+      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Gap</span><span class="rm-drawer-kv-val" style="color:${gap.gap>2?'#da1e28':gap.gap>1?'#e68a00':'#007d79'};">${(gap.gap||0).toFixed(1)}</span></div>
+    </div>
+    <div class="rm-drawer-section">
+      <div style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;color:#6f6f6f;margin-bottom:0.5rem;">Value</div>
+      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Est. Annual Value</span><span class="rm-drawer-kv-val" style="color:#007d79;">${fmt$(init.estimated_annual_value)}</span></div>
+      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Implementation Cost</span><span class="rm-drawer-kv-val">${fmt$(init.implementation_cost)}</span></div>
+      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">ROI</span><span class="rm-drawer-kv-val">${Math.round(init.roi_pct)}%</span></div>
+      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Payback</span><span class="rm-drawer-kv-val">${init.payback_months} months</span></div>
+      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">3-Year Net Value</span><span class="rm-drawer-kv-val" style="color:#007d79;">${fmt$(threeYearNet)}</span></div>
+      <div style="margin-top:0.75rem;font-size:0.6875rem;font-weight:700;color:#6f6f6f;margin-bottom:0.375rem;">Impact Breakdown</div>
+      ${impactHTML}
+    </div>
+    ${deps.length ? `<div class="rm-drawer-section">
+      <div style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;color:#6f6f6f;margin-bottom:0.5rem;">Dependencies</div>
+      <div>${deps.map(d => `<span class="rm-dep-tag">${d}</span>`).join(' ')}</div>
+    </div>` : ''}
+    <div class="rm-drawer-section">
+      <div style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;color:#6f6f6f;margin-bottom:0.5rem;">Engagement Template</div>
+      ${template.scope ? `<div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Scope</span></div><div style="font-size:0.8125rem;color:#161616;margin-bottom:0.5rem;">${template.scope}</div>` : ''}
+      ${template.team ? `<div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Team</span><span class="rm-drawer-kv-val">${template.team}</span></div>` : ''}
+      ${phasesHTML ? `<div style="font-size:0.6875rem;font-weight:600;color:#6f6f6f;margin:0.5rem 0 0.25rem;">Phases</div>${phasesHTML}` : ''}
+      ${template.deliverables ? `<div style="font-size:0.6875rem;font-weight:600;color:#6f6f6f;margin:0.5rem 0 0.25rem;">Deliverables</div><ul style="margin:0;padding-left:1.25rem;font-size:0.8125rem;">${template.deliverables.map(d=>'<li>'+d+'</li>').join('')}</ul>` : ''}
+    </div>
+    <div class="rm-drawer-section">
+      <div style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;color:#6f6f6f;margin-bottom:0.5rem;">Maturity Projection</div>
+      <div class="rm-maturity-before-after">
+        <span style="font-size:0.75rem;color:#6f6f6f;min-width:40px;">Before</span>
+        <div class="rm-maturity-bar"><div class="rm-maturity-bar-fill" style="width:${((gap.current_score||0)/4)*100}%;"></div></div>
+        <span style="font-size:0.75rem;font-weight:600;">${(gap.current_score||0).toFixed(1)}</span>
+      </div>
+      <div class="rm-maturity-before-after">
+        <span style="font-size:0.75rem;color:#6f6f6f;min-width:40px;">After</span>
+        <div class="rm-maturity-bar"><div class="rm-maturity-bar-fill" style="width:${(afterScore/4)*100}%;background:#24a148;"></div></div>
+        <span style="font-size:0.75rem;font-weight:600;color:#24a148;">${afterScore.toFixed(1)}</span>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('rmDrawerContent').innerHTML = content;
+  document.getElementById('rmDrawerOverlay').classList.add('open');
+}
+
+function closeDrawer() {
+  document.getElementById('rmDrawerOverlay').classList.remove('open');
+}
+
+// ── CREATE ROADMAP ──
+function openCreateModal() {
+  if (!document.getElementById('rmClientSelect').value) { alert('Select a client first.'); return; }
+  document.getElementById('rmCreateModal').classList.add('open');
+  document.getElementById('rmCreateError').textContent = '';
+}
+function closeCreateModal() { document.getElementById('rmCreateModal').classList.remove('open'); }
+function toggleDomainChecks() {
+  // Single domain: only allow one checkbox
+  const scope = document.getElementById('rmNewScope').value;
+  if (scope === 'single_domain') {
+    const checks = document.querySelectorAll('#rmDomainChecks input');
+    checks.forEach((c, i) => { if (i > 0) c.checked = false; });
+  }
+}
+
+async function createRoadmap() {
+  const clientId = document.getElementById('rmClientSelect').value;
+  const name = document.getElementById('rmNewName').value.trim();
+  const scope = document.getElementById('rmNewScope').value;
+  const checks = [...document.querySelectorAll('#rmDomainChecks input:checked')].map(c => c.value);
+  const errEl = document.getElementById('rmCreateError');
+
+  if (!name) { errEl.textContent = 'Name is required.'; return; }
+  if (!checks.length) { errEl.textContent = 'Select at least one domain.'; return; }
+  if (scope === 'single_domain' && checks.length > 1) { errEl.textContent = 'Single domain: select only one.'; return; }
+
+  errEl.textContent = 'Generating roadmap...';
+
+  try {
+    // 1. Create roadmap record
+    const target = parseFloat(document.getElementById('rmTargetSlider').value) / 100;
+    const r1 = await fetch('/api/roadmaps', {
+      method: 'POST', headers: authHeaders(),
+      body: JSON.stringify({ client_id: clientId, name, scope_type: scope, domains: checks, target_maturity: target })
+    });
+    const { id: roadmapId } = await r1.json();
+
+    // 2. Fetch assessment data for selected domains
+    const assessRes = await fetch('/api/assessments/aggregate/' + clientId, { headers: authHeaders() });
+    const assessData = await assessRes.json();
+
+    // 3. Calculate gaps and map initiatives
+    const { gaps, initiatives } = generateGapsAndInitiatives(roadmapId, checks, assessData, target);
+
+    // 4. Save to server
+    await fetch('/api/roadmaps/' + roadmapId + '/generate', {
+      method: 'POST', headers: authHeaders(),
+      body: JSON.stringify({ gaps, initiatives })
+    });
+
+    closeCreateModal();
+    await loadRoadmap(roadmapId);
+  } catch(e) { errEl.textContent = 'Error: ' + e.message; }
+}
+
+// ── GAP & INITIATIVE GENERATION ENGINE ──
+function generateGapsAndInitiatives(roadmapId, domains, assessData, target) {
+  const weights = {
+    gap: parseInt(document.getElementById('wGap').value) / 100,
+    strategic: parseInt(document.getElementById('wStrategic').value) / 100,
+    stakeholder: parseInt(document.getElementById('wStakeholder').value) / 100,
+    value: parseInt(document.getElementById('wValue').value) / 100,
+    risk: parseInt(document.getElementById('wRisk').value) / 100
+  };
+
+  const gaps = [];
+  const domainData = (assessData.domains || []).filter(d => domains.includes(d.domain));
+
+  // Build gap for every dimension in selected domains
+  domains.forEach(domain => {
+    const dd = domainData.find(d => d.domain === domain);
+    const avgScores = dd ? dd.avgScores : {};
+    // Get dimensions from library
+    const libDims = [...new Set(initiativeLibrary.filter(l => l.domain === domain).map(l => l.dimension))];
+    libDims.forEach(dim => {
+      const currentScore = avgScores[dim] || 1.0; // default to 1.0 if no assessment
+      const gap = Math.max(0, target - currentScore);
+      // Compute priority factors
+      const gapFactor = (gap / 3) * 100; // normalize gap (max gap is ~3)
+      const dimInitiatives = initiativeLibrary.filter(l => l.domain === domain && l.dimension === dim);
+      const strategicFactor = dimInitiatives.length ? dimInitiatives.reduce((s, l) => s + (l.strategic_importance || 50), 0) / dimInitiatives.length : 50;
+      const stakeholderFactor = 60; // default since we don't have variance data here
+      const valueFactor = dimInitiatives.length ? Math.min(100, dimInitiatives.reduce((s, l) => s + ((l.typical_annual_value.max || 0) / 15000), 0) / dimInitiatives.length) : 30;
+      const riskFactor = dim.toLowerCase().includes('risk') || dim.toLowerCase().includes('compliance') ? 80 : 40;
+
+      const priorityScore = weights.gap * gapFactor + weights.strategic * strategicFactor +
+        weights.stakeholder * stakeholderFactor + weights.value * valueFactor + weights.risk * riskFactor;
+
+      gaps.push({
+        id: crypto.randomUUID(), roadmap_id: roadmapId,
+        domain, dimension: dim,
+        current_score: currentScore, target_score: target,
+        gap, priority_score: Math.round(priorityScore * 10) / 10, priority_rank: 0
+      });
+    });
+  });
+
+  // Rank gaps
+  gaps.sort((a, b) => b.priority_score - a.priority_score);
+  gaps.forEach((g, i) => g.priority_rank = i + 1);
+
+  // Map initiatives from library
+  const initiatives = [];
+  gaps.forEach(gap => {
+    const libItems = initiativeLibrary.filter(l => l.domain === gap.domain && l.dimension === gap.dimension);
+    libItems.forEach(lib => {
+      if (gap.current_score < lib.maturity_prerequisite) return; // skip if prereq not met
+      if (gap.gap <= 0) return; // no gap, no initiative
+
+      // Determine horizon
+      let horizon = lib.horizon_default;
+      if (gap.current_score < 2.0 && lib.effort_size !== 'XL' && lib.effort_size !== 'L') horizon = 'short';
+      else if (gap.current_score >= 2.0 && gap.current_score < 3.0 && lib.effort_size !== 'XL') horizon = 'medium';
+      else if (gap.current_score >= 3.0 || lib.effort_size === 'XL') horizon = 'long';
+
+      // Calibrate values — use midpoint of range
+      const eav = Math.round((lib.typical_annual_value.min + lib.typical_annual_value.max) / 2);
+      const cost = Math.round((lib.typical_cost.min + lib.typical_cost.max) / 2);
+      const roi = cost > 0 ? Math.round((eav / cost) * 100) : 0;
+      const payback = eav > 0 ? Math.round(cost / (eav / 12)) : 0;
+      const duration = Math.round((lib.typical_duration.min + lib.typical_duration.max) / 2);
+
+      // Start month based on horizon
+      let startMonth = 1;
+      if (horizon === 'short') startMonth = Math.floor(Math.random() * 3) + 1;
+      else if (horizon === 'medium') startMonth = Math.floor(Math.random() * 6) + 7;
+      else startMonth = Math.floor(Math.random() * 8) + 19;
+
+      initiatives.push({
+        id: crypto.randomUUID(), roadmap_id: roadmapId, gap_id: gap.id,
+        library_ref: lib.id, name: lib.name, description: lib.description,
+        horizon, estimated_annual_value: eav, implementation_cost: cost,
+        roi_pct: roi, payback_months: payback,
+        impact_categories: lib.impact_profile,
+        start_month: startMonth, duration_months: duration,
+        effort_size: lib.effort_size, status: 'planned',
+        dependencies: lib.dependencies || [],
+        engagement_template: lib.engagement_template || {}
+      });
+    });
+  });
+
+  return { gaps, initiatives };
+}
+
+// ── WEIGHT / TARGET CHANGE ──
+function onWeightChange() {
+  ['Gap','Strategic','Stakeholder','Value','Risk'].forEach(k => {
+    document.getElementById('w'+k+'V').textContent = document.getElementById('w'+k).value;
+  });
+}
+function onTargetChange() {
+  document.getElementById('rmTargetVal').textContent = (parseInt(document.getElementById('rmTargetSlider').value) / 100).toFixed(2);
+}
+
+// ── REGENERATE ──
+async function regenerateRoadmap() {
+  if (!currentRoadmap) return;
+  const clientId = document.getElementById('rmClientSelect').value;
+  const target = parseFloat(document.getElementById('rmTargetSlider').value) / 100;
+  const weights = {
+    gap: parseInt(document.getElementById('wGap').value) / 100,
+    strategic: parseInt(document.getElementById('wStrategic').value) / 100,
+    stakeholder: parseInt(document.getElementById('wStakeholder').value) / 100,
+    value: parseInt(document.getElementById('wValue').value) / 100,
+    risk: parseInt(document.getElementById('wRisk').value) / 100
+  };
+
+  // Update roadmap settings
+  await fetch('/api/roadmaps/' + currentRoadmap.id, {
+    method: 'PUT', headers: authHeaders(),
+    body: JSON.stringify({ target_maturity: target, priority_weights: weights })
+  });
+
+  // Regenerate
+  const assessRes = await fetch('/api/assessments/aggregate/' + clientId, { headers: authHeaders() });
+  const assessData = await assessRes.json();
+  const domains = currentRoadmap.domains;
+  const { gaps, initiatives } = generateGapsAndInitiatives(currentRoadmap.id, domains, assessData, target);
+
+  await fetch('/api/roadmaps/' + currentRoadmap.id + '/generate', {
+    method: 'POST', headers: authHeaders(),
+    body: JSON.stringify({ gaps, initiatives })
+  });
+
+  await loadRoadmap(currentRoadmap.id);
+}
+
+// ── CSV EXPORT ──
+function exportCSV() {
+  if (!currentRoadmap) return;
+  const gaps = currentRoadmap.gaps;
+  const inits = currentRoadmap.initiatives;
+  const headers = ['Rank','Domain','Dimension','Initiative','Current Score','Gap','Horizon','Effort','Est Annual Value','Impl Cost','ROI %','Payback Mo','Start Mo','Duration Mo'];
+  const rows = inits.map(i => {
+    const g = gaps.find(x => x.id === i.gap_id) || {};
+    return [g.priority_rank, DOMAIN_LABELS[g.domain]||g.domain, g.dimension, `"${i.name}"`, (g.current_score||0).toFixed(1), (g.gap||0).toFixed(1), i.horizon_override||i.horizon, i.effort_size, i.estimated_annual_value, i.implementation_cost, Math.round(i.roi_pct), i.payback_months, i.start_month, i.duration_months].join(',');
+  });
+  const csv = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = (currentRoadmap.name || 'roadmap').replace(/[^a-zA-Z0-9]/g, '_') + '.csv';
+  link.click();
+}
+</script>
+</body>
+</html>

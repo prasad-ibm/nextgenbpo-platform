@@ -1,0 +1,781 @@
+[
+  {
+    "id": "FIN-JRNL-01", "domain": "finance", "dimension": "Journals",
+    "name": "Automated Journal Entry Standardization",
+    "description": "Standardize and automate journal entry creation, approval workflows, and posting across all entities. Implement template-based entries with automated validation rules.",
+    "horizon_default": "short", "maturity_prerequisite": 1.0, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 80000, "max": 200000}, "typical_annual_value": {"min": 80000, "max": 250000},
+    "typical_duration": {"min": 2, "max": 5}, "effort_size": "S",
+    "impact_profile": {"cost_savings": 40, "productivity": 35, "risk_reduction": 15, "revenue": 0, "employee_exp": 5, "compliance": 5},
+    "tags": ["automation", "standardization", "journals"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Standardize top 80% journal entries by volume with automated templates and validation",
+      "deliverables": ["Journal entry template library", "Automated validation rule engine", "Approval workflow configuration", "Training materials"],
+      "team": "1 PM, 1 Functional Consultant, 1 Tech Lead",
+      "phases": [{"name": "Assessment & Design", "weeks": 3}, {"name": "Build & Configure", "weeks": 4}, {"name": "Test & Train", "weeks": 2}, {"name": "Go-Live & Hypercare", "weeks": 2}]
+    },
+    "source": "IBM Client Zero",
+    "strategic_importance": 60
+  },
+  {
+    "id": "FIN-JRNL-02", "domain": "finance", "dimension": "Journals",
+    "name": "AI-Powered Journal Anomaly Detection",
+    "description": "Deploy machine learning models to detect anomalous journal entries in real-time, flagging unusual patterns, amounts, or timing for review before posting.",
+    "horizon_default": "long", "maturity_prerequisite": 2.5, "maturity_target_delta": 0.8,
+    "typical_cost": {"min": 150000, "max": 350000}, "typical_annual_value": {"min": 150000, "max": 400000},
+    "typical_duration": {"min": 6, "max": 12}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 15, "productivity": 10, "risk_reduction": 50, "revenue": 0, "employee_exp": 5, "compliance": 20},
+    "tags": ["AI", "anomaly-detection", "controls"],
+    "dependencies": ["FIN-JRNL-01"],
+    "engagement_template": {
+      "scope": "Implement ML-based anomaly detection across all journal entries with automated alerting",
+      "deliverables": ["Trained anomaly detection model", "Real-time alerting dashboard", "Investigation workflow", "Model retraining playbook"],
+      "team": "1 PM, 1 Data Scientist, 1 Functional Consultant, 1 Tech Lead",
+      "phases": [{"name": "Data Preparation", "weeks": 4}, {"name": "Model Development", "weeks": 8}, {"name": "Integration & Testing", "weeks": 6}, {"name": "Deployment & Tuning", "weeks": 4}]
+    },
+    "source": "Industry Best Practice",
+    "strategic_importance": 55
+  },
+  {
+    "id": "FIN-RECON-01", "domain": "finance", "dimension": "Reconciliation",
+    "name": "Automated Matching & Exception Routing",
+    "description": "Implement automated transaction matching with intelligent exception routing. Auto-match 85%+ of transactions with rule-based and fuzzy matching algorithms.",
+    "horizon_default": "short", "maturity_prerequisite": 1.0, "maturity_target_delta": 1.2,
+    "typical_cost": {"min": 100000, "max": 280000}, "typical_annual_value": {"min": 120000, "max": 350000},
+    "typical_duration": {"min": 3, "max": 6}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 45, "productivity": 30, "risk_reduction": 15, "revenue": 0, "employee_exp": 5, "compliance": 5},
+    "tags": ["automation", "reconciliation", "matching"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Deploy automated matching across top 10 reconciliation processes covering 85% of transaction volume",
+      "deliverables": ["Matching rule configuration", "Exception workflow design", "Reconciliation dashboard", "Training materials"],
+      "team": "1 PM, 2 Functional Consultants, 1 Tech Lead",
+      "phases": [{"name": "Assessment & Rule Design", "weeks": 3}, {"name": "Configuration & Build", "weeks": 5}, {"name": "Testing & Validation", "weeks": 3}, {"name": "Go-Live & Hypercare", "weeks": 3}]
+    },
+    "source": "APQC Best Practice",
+    "strategic_importance": 70
+  },
+  {
+    "id": "FIN-RECON-02", "domain": "finance", "dimension": "Reconciliation",
+    "name": "Continuous Reconciliation Platform",
+    "description": "Move from periodic batch reconciliation to continuous, real-time reconciliation with automated escalation and resolution tracking.",
+    "horizon_default": "medium", "maturity_prerequisite": 2.0, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 250000, "max": 650000}, "typical_annual_value": {"min": 300000, "max": 800000},
+    "typical_duration": {"min": 6, "max": 10}, "effort_size": "L",
+    "impact_profile": {"cost_savings": 35, "productivity": 30, "risk_reduction": 20, "revenue": 5, "employee_exp": 5, "compliance": 5},
+    "tags": ["continuous", "platform", "reconciliation"],
+    "dependencies": ["FIN-RECON-01"],
+    "engagement_template": {
+      "scope": "Implement continuous reconciliation platform with real-time matching and automated escalation",
+      "deliverables": ["Platform architecture", "Real-time matching engine", "Escalation workflow", "Management dashboard", "Runbook"],
+      "team": "1 PM, 2 Functional Consultants, 1 Architect, 1 Tech Lead",
+      "phases": [{"name": "Architecture & Design", "weeks": 4}, {"name": "Platform Build", "weeks": 10}, {"name": "Migration & Testing", "weeks": 6}, {"name": "Go-Live & Stabilization", "weeks": 4}]
+    },
+    "source": "IBM Client Zero",
+    "strategic_importance": 65
+  },
+  {
+    "id": "FIN-FA-01", "domain": "finance", "dimension": "Fixed Asset",
+    "name": "Asset Lifecycle Automation",
+    "description": "Automate the full fixed asset lifecycle from capitalization through depreciation to disposal, with automated impairment testing and regulatory compliance.",
+    "horizon_default": "medium", "maturity_prerequisite": 1.5, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 120000, "max": 300000}, "typical_annual_value": {"min": 100000, "max": 300000},
+    "typical_duration": {"min": 4, "max": 8}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 30, "productivity": 25, "risk_reduction": 15, "revenue": 0, "employee_exp": 10, "compliance": 20},
+    "tags": ["automation", "fixed-assets", "lifecycle"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Automate asset capitalization, depreciation scheduling, and disposal workflows",
+      "deliverables": ["Asset master data cleanup", "Automated depreciation engine", "Disposal workflow", "Compliance reporting"],
+      "team": "1 PM, 1 Functional Consultant, 1 Tech Lead",
+      "phases": [{"name": "Data Assessment", "weeks": 3}, {"name": "Build & Configure", "weeks": 6}, {"name": "Test & Validate", "weeks": 3}, {"name": "Go-Live", "weeks": 2}]
+    },
+    "source": "Hackett Group",
+    "strategic_importance": 45
+  },
+  {
+    "id": "FIN-FPA-01", "domain": "finance", "dimension": "FP&A",
+    "name": "Driver-Based Planning & Rolling Forecasts",
+    "description": "Replace static annual budgets with driver-based planning models and rolling 12-18 month forecasts. Enable scenario analysis and what-if modeling.",
+    "horizon_default": "medium", "maturity_prerequisite": 1.5, "maturity_target_delta": 1.2,
+    "typical_cost": {"min": 200000, "max": 550000}, "typical_annual_value": {"min": 250000, "max": 700000},
+    "typical_duration": {"min": 5, "max": 10}, "effort_size": "L",
+    "impact_profile": {"cost_savings": 20, "productivity": 30, "risk_reduction": 10, "revenue": 25, "employee_exp": 10, "compliance": 5},
+    "tags": ["FPA", "planning", "forecasting"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Implement driver-based planning with rolling forecasts across key P&L lines",
+      "deliverables": ["Driver model framework", "Rolling forecast process", "Scenario modeling tool", "Executive dashboards"],
+      "team": "1 PM, 2 FP&A Consultants, 1 Tech Lead",
+      "phases": [{"name": "Driver Identification", "weeks": 3}, {"name": "Model Build", "weeks": 8}, {"name": "Validation & Training", "weeks": 4}, {"name": "Go-Live & Iteration", "weeks": 3}]
+    },
+    "source": "APQC Best Practice",
+    "strategic_importance": 75
+  },
+  {
+    "id": "FIN-FPA-02", "domain": "finance", "dimension": "FP&A",
+    "name": "Predictive Analytics & Scenario Modeling",
+    "description": "Deploy AI/ML-driven predictive analytics for revenue forecasting, cost optimization, and automated scenario modeling with Monte Carlo simulation.",
+    "horizon_default": "long", "maturity_prerequisite": 2.5, "maturity_target_delta": 0.8,
+    "typical_cost": {"min": 350000, "max": 800000}, "typical_annual_value": {"min": 400000, "max": 1000000},
+    "typical_duration": {"min": 8, "max": 14}, "effort_size": "L",
+    "impact_profile": {"cost_savings": 15, "productivity": 20, "risk_reduction": 15, "revenue": 35, "employee_exp": 10, "compliance": 5},
+    "tags": ["AI", "predictive", "analytics", "FPA"],
+    "dependencies": ["FIN-FPA-01"],
+    "engagement_template": {
+      "scope": "Deploy predictive analytics for top revenue and cost drivers with scenario simulation",
+      "deliverables": ["Predictive models (3-5 drivers)", "Monte Carlo simulation engine", "Self-service analytics portal", "Model governance framework"],
+      "team": "1 PM, 1 Data Scientist, 1 FP&A Consultant, 1 Tech Lead",
+      "phases": [{"name": "Data Engineering", "weeks": 5}, {"name": "Model Development", "weeks": 10}, {"name": "Platform Integration", "weeks": 6}, {"name": "Go-Live & Tuning", "weeks": 4}]
+    },
+    "source": "Gartner",
+    "strategic_importance": 70
+  },
+  {
+    "id": "FIN-RPT-01", "domain": "finance", "dimension": "Reporting",
+    "name": "Real-Time Financial Dashboard Suite",
+    "description": "Deploy interactive financial dashboards with real-time data feeds, drill-down capability, and automated commentary generation for key stakeholders.",
+    "horizon_default": "short", "maturity_prerequisite": 1.0, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 80000, "max": 220000}, "typical_annual_value": {"min": 100000, "max": 300000},
+    "typical_duration": {"min": 2, "max": 5}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 25, "productivity": 40, "risk_reduction": 5, "revenue": 10, "employee_exp": 15, "compliance": 5},
+    "tags": ["dashboards", "reporting", "real-time"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Build executive, management, and operational financial dashboards with automated data pipelines",
+      "deliverables": ["Dashboard design specifications", "5-7 interactive dashboards", "Data pipeline automation", "User training"],
+      "team": "1 PM, 1 BI Developer, 1 Functional Consultant",
+      "phases": [{"name": "Requirements & Design", "weeks": 2}, {"name": "Build & Data Integration", "weeks": 5}, {"name": "Testing & Refinement", "weeks": 2}, {"name": "Rollout & Training", "weeks": 2}]
+    },
+    "source": "IBM Client Zero",
+    "strategic_importance": 65
+  },
+  {
+    "id": "FIN-RPT-02", "domain": "finance", "dimension": "Reporting",
+    "name": "Automated Regulatory Reporting",
+    "description": "Automate statutory and regulatory report generation with data validation, XBRL tagging, and multi-jurisdiction compliance.",
+    "horizon_default": "medium", "maturity_prerequisite": 2.0, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 180000, "max": 500000}, "typical_annual_value": {"min": 200000, "max": 600000},
+    "typical_duration": {"min": 5, "max": 10}, "effort_size": "L",
+    "impact_profile": {"cost_savings": 25, "productivity": 20, "risk_reduction": 15, "revenue": 0, "employee_exp": 5, "compliance": 35},
+    "tags": ["regulatory", "compliance", "automation"],
+    "dependencies": ["FIN-RPT-01"],
+    "engagement_template": {
+      "scope": "Automate regulatory reporting across primary jurisdictions with validation and XBRL",
+      "deliverables": ["Report mapping & taxonomy", "Automated report generation", "Validation rule engine", "Compliance audit trail"],
+      "team": "1 PM, 1 Regulatory Specialist, 1 Functional Consultant, 1 Tech Lead",
+      "phases": [{"name": "Regulatory Analysis", "weeks": 4}, {"name": "Build & Configure", "weeks": 8}, {"name": "Validation & Testing", "weeks": 5}, {"name": "Go-Live", "weeks": 3}]
+    },
+    "source": "Hackett Group",
+    "strategic_importance": 60
+  },
+  {
+    "id": "FIN-IC-01", "domain": "finance", "dimension": "Intercompany",
+    "name": "Intercompany Hub & Netting Engine",
+    "description": "Centralize intercompany transactions through a single hub with automated matching, netting, and elimination. Reduce intercompany disputes by 80%+.",
+    "horizon_default": "medium", "maturity_prerequisite": 1.5, "maturity_target_delta": 1.2,
+    "typical_cost": {"min": 300000, "max": 750000}, "typical_annual_value": {"min": 350000, "max": 900000},
+    "typical_duration": {"min": 6, "max": 12}, "effort_size": "L",
+    "impact_profile": {"cost_savings": 40, "productivity": 25, "risk_reduction": 15, "revenue": 5, "employee_exp": 5, "compliance": 10},
+    "tags": ["intercompany", "netting", "hub"],
+    "dependencies": ["FIN-JRNL-01"],
+    "engagement_template": {
+      "scope": "Implement intercompany hub for automated matching, netting, and elimination across all entities",
+      "deliverables": ["IC Hub architecture", "Matching & netting engine", "Dispute resolution workflow", "Elimination automation"],
+      "team": "1 PM, 2 Functional Consultants, 1 Architect, 1 Tech Lead",
+      "phases": [{"name": "IC Process Assessment", "weeks": 3}, {"name": "Hub Design & Build", "weeks": 10}, {"name": "Entity Onboarding", "weeks": 8}, {"name": "Stabilization", "weeks": 3}]
+    },
+    "source": "IBM Client Zero",
+    "strategic_importance": 70
+  },
+  {
+    "id": "FIN-CLOSE-01", "domain": "finance", "dimension": "Close",
+    "name": "Fast Close Task Orchestration",
+    "description": "Implement close task management with automated sequencing, dependency tracking, real-time status dashboards, and bottleneck alerting to reduce close cycle by 40%+.",
+    "horizon_default": "short", "maturity_prerequisite": 1.0, "maturity_target_delta": 1.2,
+    "typical_cost": {"min": 120000, "max": 320000}, "typical_annual_value": {"min": 150000, "max": 400000},
+    "typical_duration": {"min": 3, "max": 6}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 30, "productivity": 35, "risk_reduction": 15, "revenue": 5, "employee_exp": 10, "compliance": 5},
+    "tags": ["close", "orchestration", "fast-close"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Deploy close task management platform with automated sequencing and real-time tracking",
+      "deliverables": ["Close calendar & task library", "Automated task orchestration", "Status dashboard", "Bottleneck alerting"],
+      "team": "1 PM, 1 Functional Consultant, 1 Tech Lead",
+      "phases": [{"name": "Close Process Mapping", "weeks": 3}, {"name": "Platform Configuration", "weeks": 5}, {"name": "Pilot Close Cycle", "weeks": 3}, {"name": "Full Deployment", "weeks": 2}]
+    },
+    "source": "APQC Best Practice",
+    "strategic_importance": 80
+  },
+  {
+    "id": "FIN-CLOSE-02", "domain": "finance", "dimension": "Close",
+    "name": "Continuous Accounting & Virtual Close",
+    "description": "Transform from periodic close to continuous accounting with daily soft close capability. Enable real-time financial reporting and eliminate month-end crunch.",
+    "horizon_default": "long", "maturity_prerequisite": 2.5, "maturity_target_delta": 0.8,
+    "typical_cost": {"min": 450000, "max": 1200000}, "typical_annual_value": {"min": 500000, "max": 1500000},
+    "typical_duration": {"min": 10, "max": 18}, "effort_size": "XL",
+    "impact_profile": {"cost_savings": 30, "productivity": 30, "risk_reduction": 15, "revenue": 10, "employee_exp": 10, "compliance": 5},
+    "tags": ["continuous", "virtual-close", "transformation"],
+    "dependencies": ["FIN-CLOSE-01", "FIN-RECON-02", "FIN-JRNL-01"],
+    "engagement_template": {
+      "scope": "Implement continuous accounting framework with daily soft close and real-time reporting",
+      "deliverables": ["Continuous accounting framework", "Daily close procedures", "Real-time reporting platform", "Change management program"],
+      "team": "1 PM, 2 Senior Consultants, 1 Architect, 1 Tech Lead, 1 Change Manager",
+      "phases": [{"name": "Foundation Assessment", "weeks": 4}, {"name": "Process Redesign", "weeks": 8}, {"name": "Technology Implementation", "weeks": 14}, {"name": "Pilot & Iteration", "weeks": 8}, {"name": "Full Rollout", "weeks": 6}]
+    },
+    "source": "Gartner",
+    "strategic_importance": 75
+  },
+  {
+    "id": "FIN-INV-01", "domain": "finance", "dimension": "Invoice Processing",
+    "name": "Touchless Invoice Processing (OCR + AI)",
+    "description": "Deploy intelligent OCR with AI-powered data extraction, validation, and 3-way matching. Target 80%+ touchless processing rate for standard invoices.",
+    "horizon_default": "short", "maturity_prerequisite": 1.0, "maturity_target_delta": 1.2,
+    "typical_cost": {"min": 150000, "max": 400000}, "typical_annual_value": {"min": 200000, "max": 600000},
+    "typical_duration": {"min": 3, "max": 6}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 50, "productivity": 25, "risk_reduction": 10, "revenue": 0, "employee_exp": 10, "compliance": 5},
+    "tags": ["OCR", "AI", "invoice", "automation"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Deploy OCR + AI invoice capture across top 50 suppliers covering 80% of invoice volume",
+      "deliverables": ["Solution design document", "Configured OCR/AI platform", "Supplier onboarding playbook", "Training materials"],
+      "team": "1 PM, 2 Functional Consultants, 1 Tech Lead",
+      "phases": [{"name": "Assessment & Design", "weeks": 4}, {"name": "Configuration & Build", "weeks": 6}, {"name": "Testing & Training", "weeks": 3}, {"name": "Go-Live & Hypercare", "weeks": 3}]
+    },
+    "source": "IBM Client Zero",
+    "strategic_importance": 85
+  },
+  {
+    "id": "FIN-INV-02", "domain": "finance", "dimension": "Invoice Processing",
+    "name": "Supplier Self-Service Portal",
+    "description": "Implement supplier portal for invoice submission, status tracking, early payment requests, and dispute resolution. Reduce inquiry volume by 60%+.",
+    "horizon_default": "medium", "maturity_prerequisite": 2.0, "maturity_target_delta": 0.8,
+    "typical_cost": {"min": 100000, "max": 280000}, "typical_annual_value": {"min": 100000, "max": 300000},
+    "typical_duration": {"min": 4, "max": 8}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 30, "productivity": 25, "risk_reduction": 5, "revenue": 5, "employee_exp": 15, "compliance": 20},
+    "tags": ["portal", "supplier", "self-service"],
+    "dependencies": ["FIN-INV-01"],
+    "engagement_template": {
+      "scope": "Deploy supplier self-service portal with invoice submission, tracking, and early payment",
+      "deliverables": ["Portal design & UX", "Invoice submission workflow", "Status tracking module", "Supplier onboarding plan"],
+      "team": "1 PM, 1 UX Designer, 1 Functional Consultant, 1 Developer",
+      "phases": [{"name": "Design & UX", "weeks": 3}, {"name": "Development", "weeks": 8}, {"name": "Supplier Onboarding", "weeks": 4}, {"name": "Go-Live", "weeks": 2}]
+    },
+    "source": "Everest Group",
+    "strategic_importance": 55
+  },
+  {
+    "id": "FIN-PAY-01", "domain": "finance", "dimension": "Payment Processing",
+    "name": "Payment Factory & Dynamic Discounting",
+    "description": "Centralize payment execution through a payment factory model with bank connectivity, payment optimization, and dynamic discounting for early payment benefits.",
+    "horizon_default": "medium", "maturity_prerequisite": 1.5, "maturity_target_delta": 1.2,
+    "typical_cost": {"min": 250000, "max": 650000}, "typical_annual_value": {"min": 300000, "max": 800000},
+    "typical_duration": {"min": 6, "max": 12}, "effort_size": "L",
+    "impact_profile": {"cost_savings": 35, "productivity": 20, "risk_reduction": 15, "revenue": 15, "employee_exp": 5, "compliance": 10},
+    "tags": ["payments", "treasury", "discounting"],
+    "dependencies": ["FIN-INV-01"],
+    "engagement_template": {
+      "scope": "Implement centralized payment factory with bank connectivity and dynamic discounting",
+      "deliverables": ["Payment factory design", "Bank connectivity setup", "Dynamic discounting engine", "Payment analytics dashboard"],
+      "team": "1 PM, 1 Treasury Consultant, 1 Functional Consultant, 1 Tech Lead",
+      "phases": [{"name": "Design & Bank Setup", "weeks": 5}, {"name": "Platform Build", "weeks": 10}, {"name": "Testing & Validation", "weeks": 5}, {"name": "Go-Live & Optimization", "weeks": 4}]
+    },
+    "source": "Hackett Group",
+    "strategic_importance": 70
+  },
+  {
+    "id": "FIN-QM-01", "domain": "finance", "dimension": "Query Management",
+    "name": "AI Chatbot for Supplier Queries",
+    "description": "Deploy AI-powered chatbot for handling routine supplier inquiries (payment status, remittance, tax forms). Resolve 70%+ of queries without human intervention.",
+    "horizon_default": "short", "maturity_prerequisite": 1.0, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 60000, "max": 160000}, "typical_annual_value": {"min": 80000, "max": 200000},
+    "typical_duration": {"min": 2, "max": 4}, "effort_size": "S",
+    "impact_profile": {"cost_savings": 40, "productivity": 30, "risk_reduction": 5, "revenue": 0, "employee_exp": 20, "compliance": 5},
+    "tags": ["AI", "chatbot", "supplier", "query"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Implement AI chatbot for supplier query resolution with escalation workflow",
+      "deliverables": ["Chatbot knowledge base", "Conversational AI configuration", "Escalation workflow", "Analytics dashboard"],
+      "team": "1 PM, 1 AI/NLP Specialist, 1 Functional Consultant",
+      "phases": [{"name": "Knowledge Base Build", "weeks": 3}, {"name": "Bot Development", "weeks": 4}, {"name": "Testing & Training", "weeks": 2}, {"name": "Go-Live", "weeks": 1}]
+    },
+    "source": "Industry Best Practice",
+    "strategic_importance": 50
+  },
+  {
+    "id": "FIN-RISK-01", "domain": "finance", "dimension": "Risk Management",
+    "name": "Automated Fraud Detection & Duplicate Payments",
+    "description": "Implement automated fraud detection with duplicate payment identification, vendor master anomaly scanning, and segregation-of-duties monitoring.",
+    "horizon_default": "short", "maturity_prerequisite": 1.0, "maturity_target_delta": 1.2,
+    "typical_cost": {"min": 120000, "max": 350000}, "typical_annual_value": {"min": 150000, "max": 500000},
+    "typical_duration": {"min": 3, "max": 6}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 25, "productivity": 10, "risk_reduction": 45, "revenue": 0, "employee_exp": 5, "compliance": 15},
+    "tags": ["fraud", "risk", "controls", "compliance"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Deploy automated fraud detection across AP processes with real-time monitoring",
+      "deliverables": ["Fraud detection rule engine", "Duplicate payment scanner", "Vendor master audit tool", "SOD monitoring dashboard"],
+      "team": "1 PM, 1 Risk Consultant, 1 Tech Lead",
+      "phases": [{"name": "Risk Assessment", "weeks": 3}, {"name": "Rule Configuration", "weeks": 5}, {"name": "Testing & Validation", "weeks": 3}, {"name": "Go-Live & Monitoring", "weeks": 2}]
+    },
+    "source": "APQC Best Practice",
+    "strategic_importance": 80
+  },
+  {
+    "id": "FIN-TE-01", "domain": "finance", "dimension": "T&E",
+    "name": "Automated Expense Policy Enforcement",
+    "description": "Implement automated expense policy checking at point of submission with real-time violation flagging, receipt validation, and automated approval routing.",
+    "horizon_default": "short", "maturity_prerequisite": 1.0, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 50000, "max": 150000}, "typical_annual_value": {"min": 60000, "max": 180000},
+    "typical_duration": {"min": 2, "max": 4}, "effort_size": "S",
+    "impact_profile": {"cost_savings": 35, "productivity": 25, "risk_reduction": 15, "revenue": 0, "employee_exp": 15, "compliance": 10},
+    "tags": ["expense", "policy", "automation"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Automate expense policy enforcement with receipt AI and approval routing",
+      "deliverables": ["Policy rule engine", "Receipt validation AI", "Approval workflow", "Compliance reporting"],
+      "team": "1 PM, 1 Functional Consultant",
+      "phases": [{"name": "Policy Mapping", "weeks": 2}, {"name": "Configuration", "weeks": 4}, {"name": "Testing", "weeks": 2}, {"name": "Rollout", "weeks": 2}]
+    },
+    "source": "Everest Group",
+    "strategic_importance": 40
+  },
+  {
+    "id": "FIN-TE-02", "domain": "finance", "dimension": "T&E",
+    "name": "Mobile-First Expense with Receipt AI",
+    "description": "Deploy mobile-first expense management with AI receipt scanning, automated categorization, mileage tracking, and per diem calculation.",
+    "horizon_default": "medium", "maturity_prerequisite": 2.0, "maturity_target_delta": 0.8,
+    "typical_cost": {"min": 80000, "max": 220000}, "typical_annual_value": {"min": 100000, "max": 250000},
+    "typical_duration": {"min": 3, "max": 6}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 20, "productivity": 30, "risk_reduction": 5, "revenue": 0, "employee_exp": 40, "compliance": 5},
+    "tags": ["mobile", "AI", "expense"],
+    "dependencies": ["FIN-TE-01"],
+    "engagement_template": {
+      "scope": "Implement mobile expense app with AI receipt scanning and automated categorization",
+      "deliverables": ["Mobile app deployment", "AI receipt engine", "Integration with ERP", "User adoption plan"],
+      "team": "1 PM, 1 Mobile Developer, 1 Functional Consultant",
+      "phases": [{"name": "Design", "weeks": 2}, {"name": "Development", "weeks": 6}, {"name": "Testing", "weeks": 2}, {"name": "Rollout", "weeks": 3}]
+    },
+    "source": "Industry Best Practice",
+    "strategic_importance": 35
+  },
+  {
+    "id": "FIN-ANA-01", "domain": "finance", "dimension": "Reporting/Analytics",
+    "name": "AP Spend Analytics & Dashboards",
+    "description": "Implement AP spend analytics with supplier performance scorecards, payment timing optimization, and working capital impact dashboards.",
+    "horizon_default": "short", "maturity_prerequisite": 1.0, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 60000, "max": 180000}, "typical_annual_value": {"min": 80000, "max": 200000},
+    "typical_duration": {"min": 2, "max": 4}, "effort_size": "S",
+    "impact_profile": {"cost_savings": 25, "productivity": 30, "risk_reduction": 10, "revenue": 15, "employee_exp": 15, "compliance": 5},
+    "tags": ["analytics", "dashboards", "AP"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Build AP analytics dashboards with spend analysis and supplier scorecards",
+      "deliverables": ["Spend analysis dashboard", "Supplier scorecard framework", "Payment optimization model", "Training materials"],
+      "team": "1 PM, 1 BI Developer, 1 Functional Consultant",
+      "phases": [{"name": "Requirements", "weeks": 2}, {"name": "Build", "weeks": 4}, {"name": "Testing", "weeks": 1}, {"name": "Rollout", "weeks": 1}]
+    },
+    "source": "IBM Client Zero",
+    "strategic_importance": 55
+  },
+  {
+    "id": "FIN-ANA-02", "domain": "finance", "dimension": "Reporting/Analytics",
+    "name": "Predictive Cash Flow from AP Data",
+    "description": "Deploy AI-driven cash flow forecasting using AP data, payment patterns, and supplier behavior. Enable proactive working capital optimization.",
+    "horizon_default": "long", "maturity_prerequisite": 2.5, "maturity_target_delta": 0.8,
+    "typical_cost": {"min": 180000, "max": 450000}, "typical_annual_value": {"min": 200000, "max": 500000},
+    "typical_duration": {"min": 5, "max": 10}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 15, "productivity": 15, "risk_reduction": 15, "revenue": 35, "employee_exp": 5, "compliance": 15},
+    "tags": ["AI", "cash-flow", "predictive", "treasury"],
+    "dependencies": ["FIN-ANA-01", "FIN-PAY-01"],
+    "engagement_template": {
+      "scope": "Implement AI-driven cash flow prediction using AP patterns and supplier behavior",
+      "deliverables": ["Cash flow prediction model", "Working capital dashboard", "Scenario analysis tool", "Model governance"],
+      "team": "1 PM, 1 Data Scientist, 1 Treasury Consultant",
+      "phases": [{"name": "Data Engineering", "weeks": 4}, {"name": "Model Development", "weeks": 8}, {"name": "Integration", "weeks": 4}, {"name": "Go-Live", "weeks": 3}]
+    },
+    "source": "Gartner",
+    "strategic_importance": 65
+  },
+  {
+    "id": "SC-PROC-01", "domain": "supplychain", "dimension": "Procurement",
+    "name": "Strategic Sourcing Analytics",
+    "description": "Implement spend analytics, category management dashboards, and supplier performance tracking. Enable data-driven sourcing decisions.",
+    "horizon_default": "short", "maturity_prerequisite": 1.0, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 120000, "max": 320000}, "typical_annual_value": {"min": 150000, "max": 400000},
+    "typical_duration": {"min": 3, "max": 6}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 45, "productivity": 25, "risk_reduction": 10, "revenue": 10, "employee_exp": 5, "compliance": 5},
+    "tags": ["procurement", "analytics", "sourcing"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Deploy strategic sourcing analytics platform with spend visibility and category management",
+      "deliverables": ["Spend cube analytics", "Category strategy framework", "Supplier scorecard", "Savings tracking"],
+      "team": "1 PM, 1 Procurement Consultant, 1 BI Developer",
+      "phases": [{"name": "Spend Data Cleansing", "weeks": 3}, {"name": "Analytics Build", "weeks": 5}, {"name": "Category Analysis", "weeks": 3}, {"name": "Go-Live", "weeks": 2}]
+    },
+    "source": "APQC Best Practice",
+    "strategic_importance": 75
+  },
+  {
+    "id": "SC-PROC-02", "domain": "supplychain", "dimension": "Procurement",
+    "name": "Autonomous Procurement (AI-Driven)",
+    "description": "Deploy AI-driven autonomous procurement for tail spend and routine purchases. Automated supplier selection, negotiation, and PO generation.",
+    "horizon_default": "long", "maturity_prerequisite": 2.5, "maturity_target_delta": 0.8,
+    "typical_cost": {"min": 400000, "max": 1100000}, "typical_annual_value": {"min": 500000, "max": 1500000},
+    "typical_duration": {"min": 10, "max": 18}, "effort_size": "XL",
+    "impact_profile": {"cost_savings": 40, "productivity": 25, "risk_reduction": 10, "revenue": 10, "employee_exp": 10, "compliance": 5},
+    "tags": ["AI", "autonomous", "procurement"],
+    "dependencies": ["SC-PROC-01"],
+    "engagement_template": {
+      "scope": "Implement AI-driven autonomous procurement for tail spend categories",
+      "deliverables": ["AI procurement engine", "Automated supplier selection", "Dynamic negotiation models", "Governance framework"],
+      "team": "1 PM, 1 Data Scientist, 2 Procurement Consultants, 1 Architect",
+      "phases": [{"name": "Category Assessment", "weeks": 4}, {"name": "AI Model Development", "weeks": 12}, {"name": "Platform Integration", "weeks": 10}, {"name": "Pilot & Scale", "weeks": 8}]
+    },
+    "source": "Gartner",
+    "strategic_importance": 70
+  },
+  {
+    "id": "SC-SCM-01", "domain": "supplychain", "dimension": "Supply Chain",
+    "name": "Control Tower & Real-Time Visibility",
+    "description": "Implement supply chain control tower with end-to-end visibility across suppliers, inventory, and logistics. Real-time exception alerting and resolution.",
+    "horizon_default": "medium", "maturity_prerequisite": 1.5, "maturity_target_delta": 1.2,
+    "typical_cost": {"min": 350000, "max": 850000}, "typical_annual_value": {"min": 400000, "max": 1000000},
+    "typical_duration": {"min": 6, "max": 12}, "effort_size": "L",
+    "impact_profile": {"cost_savings": 25, "productivity": 25, "risk_reduction": 25, "revenue": 15, "employee_exp": 5, "compliance": 5},
+    "tags": ["control-tower", "visibility", "real-time"],
+    "dependencies": ["SC-PROC-01"],
+    "engagement_template": {
+      "scope": "Deploy supply chain control tower with multi-tier supplier visibility and exception management",
+      "deliverables": ["Control tower platform", "Supplier data integration", "Exception management workflow", "KPI dashboards"],
+      "team": "1 PM, 2 SC Consultants, 1 Architect, 1 Integration Lead",
+      "phases": [{"name": "Design & Data Strategy", "weeks": 4}, {"name": "Platform Build", "weeks": 10}, {"name": "Supplier Onboarding", "weeks": 8}, {"name": "Go-Live & Optimization", "weeks": 4}]
+    },
+    "source": "IBM Client Zero",
+    "strategic_importance": 80
+  },
+  {
+    "id": "SC-SCM-02", "domain": "supplychain", "dimension": "Supply Chain",
+    "name": "Demand Sensing & ML Forecasting",
+    "description": "Deploy ML-powered demand sensing using POS data, market signals, and external factors. Reduce forecast error by 30-50%.",
+    "horizon_default": "long", "maturity_prerequisite": 2.5, "maturity_target_delta": 0.8,
+    "typical_cost": {"min": 300000, "max": 750000}, "typical_annual_value": {"min": 350000, "max": 900000},
+    "typical_duration": {"min": 8, "max": 14}, "effort_size": "L",
+    "impact_profile": {"cost_savings": 20, "productivity": 15, "risk_reduction": 15, "revenue": 35, "employee_exp": 5, "compliance": 10},
+    "tags": ["ML", "demand-sensing", "forecasting"],
+    "dependencies": ["SC-SCM-01"],
+    "engagement_template": {
+      "scope": "Implement ML demand sensing with external signal integration and forecast optimization",
+      "deliverables": ["Demand sensing models", "Signal integration framework", "Forecast accuracy dashboard", "Model governance"],
+      "team": "1 PM, 1 Data Scientist, 1 SC Consultant, 1 Tech Lead",
+      "phases": [{"name": "Data Engineering", "weeks": 5}, {"name": "Model Development", "weeks": 10}, {"name": "Integration & Validation", "weeks": 6}, {"name": "Go-Live & Tuning", "weeks": 4}]
+    },
+    "source": "Gartner",
+    "strategic_importance": 75
+  },
+  {
+    "id": "SC-OPS-01", "domain": "supplychain", "dimension": "Operations & Logistics",
+    "name": "Warehouse Automation & Optimization",
+    "description": "Implement warehouse management optimization with slotting algorithms, pick-path optimization, and automated inventory tracking.",
+    "horizon_default": "medium", "maturity_prerequisite": 1.5, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 250000, "max": 650000}, "typical_annual_value": {"min": 300000, "max": 800000},
+    "typical_duration": {"min": 5, "max": 10}, "effort_size": "L",
+    "impact_profile": {"cost_savings": 35, "productivity": 35, "risk_reduction": 10, "revenue": 10, "employee_exp": 5, "compliance": 5},
+    "tags": ["warehouse", "automation", "logistics"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Optimize warehouse operations with slotting, pick-path, and inventory tracking automation",
+      "deliverables": ["Warehouse optimization model", "Slotting algorithm", "Pick-path optimization", "Inventory tracking system"],
+      "team": "1 PM, 1 Logistics Consultant, 1 WMS Specialist, 1 Tech Lead",
+      "phases": [{"name": "Assessment & Design", "weeks": 4}, {"name": "Implementation", "weeks": 8}, {"name": "Testing & Optimization", "weeks": 4}, {"name": "Go-Live", "weeks": 3}]
+    },
+    "source": "Everest Group",
+    "strategic_importance": 60
+  },
+  {
+    "id": "SC-OPS-02", "domain": "supplychain", "dimension": "Operations & Logistics",
+    "name": "Last-Mile Delivery Optimization",
+    "description": "Deploy route optimization, dynamic scheduling, and real-time delivery tracking. Reduce logistics costs by 15-25% and improve on-time delivery.",
+    "horizon_default": "medium", "maturity_prerequisite": 2.0, "maturity_target_delta": 0.8,
+    "typical_cost": {"min": 150000, "max": 400000}, "typical_annual_value": {"min": 200000, "max": 500000},
+    "typical_duration": {"min": 4, "max": 8}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 35, "productivity": 20, "risk_reduction": 10, "revenue": 20, "employee_exp": 10, "compliance": 5},
+    "tags": ["logistics", "routing", "delivery"],
+    "dependencies": ["SC-OPS-01"],
+    "engagement_template": {
+      "scope": "Implement route optimization and real-time delivery tracking for last-mile operations",
+      "deliverables": ["Route optimization engine", "Dynamic scheduling", "Real-time tracking portal", "Performance analytics"],
+      "team": "1 PM, 1 Logistics Consultant, 1 Developer",
+      "phases": [{"name": "Route Analysis", "weeks": 3}, {"name": "Development", "weeks": 6}, {"name": "Pilot", "weeks": 3}, {"name": "Rollout", "weeks": 3}]
+    },
+    "source": "Industry Best Practice",
+    "strategic_importance": 55
+  },
+  {
+    "id": "SC-RISK-01", "domain": "supplychain", "dimension": "Risk & Compliance",
+    "name": "Supplier Risk Monitoring Platform",
+    "description": "Implement continuous supplier risk monitoring with financial health, geopolitical, ESG, and operational risk scoring. Automated alerts and mitigation workflows.",
+    "horizon_default": "short", "maturity_prerequisite": 1.0, "maturity_target_delta": 1.2,
+    "typical_cost": {"min": 100000, "max": 280000}, "typical_annual_value": {"min": 120000, "max": 350000},
+    "typical_duration": {"min": 3, "max": 6}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 15, "productivity": 10, "risk_reduction": 50, "revenue": 5, "employee_exp": 5, "compliance": 15},
+    "tags": ["risk", "supplier", "monitoring"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Deploy supplier risk monitoring with multi-factor scoring and automated alerting",
+      "deliverables": ["Risk scoring model", "Monitoring dashboard", "Alert workflow", "Mitigation playbooks"],
+      "team": "1 PM, 1 Risk Consultant, 1 Tech Lead",
+      "phases": [{"name": "Risk Framework", "weeks": 3}, {"name": "Platform Setup", "weeks": 5}, {"name": "Supplier Onboarding", "weeks": 3}, {"name": "Go-Live", "weeks": 2}]
+    },
+    "source": "IBM Client Zero",
+    "strategic_importance": 75
+  },
+  {
+    "id": "SC-RISK-02", "domain": "supplychain", "dimension": "Risk & Compliance",
+    "name": "ESG & Regulatory Compliance Automation",
+    "description": "Automate ESG data collection, scope 3 emissions tracking, and regulatory compliance reporting across the supply chain.",
+    "horizon_default": "medium", "maturity_prerequisite": 2.0, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 180000, "max": 500000}, "typical_annual_value": {"min": 200000, "max": 600000},
+    "typical_duration": {"min": 5, "max": 10}, "effort_size": "L",
+    "impact_profile": {"cost_savings": 10, "productivity": 15, "risk_reduction": 25, "revenue": 10, "employee_exp": 5, "compliance": 35},
+    "tags": ["ESG", "compliance", "sustainability"],
+    "dependencies": ["SC-RISK-01"],
+    "engagement_template": {
+      "scope": "Automate ESG and regulatory compliance across supply chain with scope 3 tracking",
+      "deliverables": ["ESG data collection framework", "Scope 3 calculator", "Compliance dashboard", "Regulatory report automation"],
+      "team": "1 PM, 1 ESG Consultant, 1 Functional Consultant, 1 Tech Lead",
+      "phases": [{"name": "Framework Design", "weeks": 4}, {"name": "Data Integration", "weeks": 8}, {"name": "Reporting Build", "weeks": 5}, {"name": "Validation & Go-Live", "weeks": 3}]
+    },
+    "source": "Hackett Group",
+    "strategic_importance": 65
+  },
+  {
+    "id": "HR-RECRUIT-01", "domain": "hr", "dimension": "Source & Recruit",
+    "name": "AI-Powered Candidate Screening",
+    "description": "Deploy AI-driven resume screening, candidate matching, and automated scheduling. Reduce time-to-shortlist by 60%+ while improving quality-of-hire metrics.",
+    "horizon_default": "short", "maturity_prerequisite": 1.0, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 80000, "max": 250000}, "typical_annual_value": {"min": 100000, "max": 300000},
+    "typical_duration": {"min": 3, "max": 6}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 30, "productivity": 30, "risk_reduction": 5, "revenue": 10, "employee_exp": 20, "compliance": 5},
+    "tags": ["AI", "recruitment", "screening"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Implement AI screening for top 10 high-volume roles with automated scheduling",
+      "deliverables": ["AI screening model", "Candidate matching engine", "Automated scheduling", "Bias monitoring framework"],
+      "team": "1 PM, 1 HR Tech Consultant, 1 AI Specialist",
+      "phases": [{"name": "Requirements & Data Prep", "weeks": 3}, {"name": "Model Training", "weeks": 5}, {"name": "Integration & Testing", "weeks": 3}, {"name": "Go-Live", "weeks": 2}]
+    },
+    "source": "SHRM",
+    "strategic_importance": 65
+  },
+  {
+    "id": "HR-RECRUIT-02", "domain": "hr", "dimension": "Source & Recruit",
+    "name": "Predictive Talent Pipeline",
+    "description": "Build predictive talent pipeline using workforce planning data, attrition models, and labor market intelligence. Proactive pipeline for critical roles.",
+    "horizon_default": "long", "maturity_prerequisite": 2.5, "maturity_target_delta": 0.8,
+    "typical_cost": {"min": 200000, "max": 500000}, "typical_annual_value": {"min": 250000, "max": 600000},
+    "typical_duration": {"min": 6, "max": 12}, "effort_size": "L",
+    "impact_profile": {"cost_savings": 20, "productivity": 15, "risk_reduction": 20, "revenue": 15, "employee_exp": 20, "compliance": 10},
+    "tags": ["predictive", "talent", "pipeline"],
+    "dependencies": ["HR-RECRUIT-01"],
+    "engagement_template": {
+      "scope": "Deploy predictive talent pipeline with attrition modeling and proactive sourcing for critical roles",
+      "deliverables": ["Attrition prediction model", "Talent pipeline dashboard", "Labor market intelligence feed", "Proactive sourcing workflows"],
+      "team": "1 PM, 1 Data Scientist, 1 HR Consultant",
+      "phases": [{"name": "Data Engineering", "weeks": 4}, {"name": "Model Development", "weeks": 8}, {"name": "Integration", "weeks": 5}, {"name": "Go-Live", "weeks": 3}]
+    },
+    "source": "Gartner",
+    "strategic_importance": 60
+  },
+  {
+    "id": "HR-EMP-01", "domain": "hr", "dimension": "Manage Employee Info",
+    "name": "Employee Self-Service & Digital Records",
+    "description": "Implement employee self-service portal for personal data management, document requests, and HR transactions. Digitize employee records and automate workflows.",
+    "horizon_default": "short", "maturity_prerequisite": 1.0, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 70000, "max": 200000}, "typical_annual_value": {"min": 80000, "max": 250000},
+    "typical_duration": {"min": 3, "max": 5}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 30, "productivity": 25, "risk_reduction": 10, "revenue": 0, "employee_exp": 30, "compliance": 5},
+    "tags": ["self-service", "portal", "digital-records"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Deploy employee self-service portal with digital records and automated HR transactions",
+      "deliverables": ["Self-service portal", "Digital records migration", "Automated workflows", "Employee adoption plan"],
+      "team": "1 PM, 1 HR Consultant, 1 Developer",
+      "phases": [{"name": "Design", "weeks": 2}, {"name": "Build", "weeks": 5}, {"name": "Data Migration", "weeks": 3}, {"name": "Rollout", "weeks": 2}]
+    },
+    "source": "SHRM",
+    "strategic_importance": 60
+  },
+  {
+    "id": "HR-EMP-02", "domain": "hr", "dimension": "Manage Employee Info",
+    "name": "Master Data Governance Platform",
+    "description": "Establish HR master data governance with data quality rules, automated cleansing, single source of truth, and cross-system synchronization.",
+    "horizon_default": "medium", "maturity_prerequisite": 2.0, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 130000, "max": 350000}, "typical_annual_value": {"min": 150000, "max": 400000},
+    "typical_duration": {"min": 4, "max": 8}, "effort_size": "L",
+    "impact_profile": {"cost_savings": 20, "productivity": 25, "risk_reduction": 20, "revenue": 5, "employee_exp": 10, "compliance": 20},
+    "tags": ["data-governance", "master-data", "quality"],
+    "dependencies": ["HR-EMP-01"],
+    "engagement_template": {
+      "scope": "Implement HR data governance framework with quality rules and cross-system sync",
+      "deliverables": ["Data governance framework", "Quality rule engine", "Cleansing automation", "Sync architecture"],
+      "team": "1 PM, 1 Data Governance Lead, 1 HR Consultant, 1 Tech Lead",
+      "phases": [{"name": "Assessment", "weeks": 3}, {"name": "Framework Design", "weeks": 4}, {"name": "Implementation", "weeks": 6}, {"name": "Validation & Go-Live", "weeks": 3}]
+    },
+    "source": "Hackett Group",
+    "strategic_importance": 55
+  },
+  {
+    "id": "HR-DEV-01", "domain": "hr", "dimension": "Develop & Counsel",
+    "name": "AI Learning Path Personalization",
+    "description": "Deploy AI-driven personalized learning paths based on role, skill gaps, career aspirations, and performance data. Increase learning completion by 40%+.",
+    "horizon_default": "medium", "maturity_prerequisite": 1.5, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 100000, "max": 280000}, "typical_annual_value": {"min": 120000, "max": 350000},
+    "typical_duration": {"min": 4, "max": 7}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 10, "productivity": 25, "risk_reduction": 5, "revenue": 10, "employee_exp": 45, "compliance": 5},
+    "tags": ["AI", "learning", "personalization"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Implement AI-personalized learning for top 20 roles with skill gap analysis",
+      "deliverables": ["Skills taxonomy", "AI recommendation engine", "Learning path framework", "Analytics dashboard"],
+      "team": "1 PM, 1 L&D Consultant, 1 AI Specialist",
+      "phases": [{"name": "Skills Assessment", "weeks": 3}, {"name": "AI Engine Build", "weeks": 6}, {"name": "Content Mapping", "weeks": 3}, {"name": "Launch", "weeks": 2}]
+    },
+    "source": "Industry Best Practice",
+    "strategic_importance": 50
+  },
+  {
+    "id": "HR-DEV-02", "domain": "hr", "dimension": "Develop & Counsel",
+    "name": "Skills Taxonomy & Career Pathing",
+    "description": "Build comprehensive skills taxonomy with career path mapping, succession planning integration, and development plan automation.",
+    "horizon_default": "medium", "maturity_prerequisite": 1.5, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 160000, "max": 420000}, "typical_annual_value": {"min": 200000, "max": 500000},
+    "typical_duration": {"min": 5, "max": 9}, "effort_size": "L",
+    "impact_profile": {"cost_savings": 10, "productivity": 20, "risk_reduction": 15, "revenue": 10, "employee_exp": 35, "compliance": 10},
+    "tags": ["skills", "career", "succession"],
+    "dependencies": ["HR-DEV-01"],
+    "engagement_template": {
+      "scope": "Build organization-wide skills taxonomy with career pathing and succession planning",
+      "deliverables": ["Skills taxonomy", "Career path maps", "Succession planning framework", "Development plan automation"],
+      "team": "1 PM, 1 OD Consultant, 1 HR Tech Consultant, 1 Developer",
+      "phases": [{"name": "Taxonomy Design", "weeks": 4}, {"name": "Career Path Mapping", "weeks": 6}, {"name": "Platform Build", "weeks": 5}, {"name": "Rollout", "weeks": 3}]
+    },
+    "source": "SHRM",
+    "strategic_importance": 55
+  },
+  {
+    "id": "HR-COMP-01", "domain": "hr", "dimension": "Retain & Reward",
+    "name": "Total Rewards Optimization Engine",
+    "description": "Implement total rewards optimization with competitive benchmarking, pay equity analysis, and benefits personalization. Drive retention through data-driven compensation.",
+    "horizon_default": "medium", "maturity_prerequisite": 1.5, "maturity_target_delta": 1.2,
+    "typical_cost": {"min": 200000, "max": 550000}, "typical_annual_value": {"min": 250000, "max": 700000},
+    "typical_duration": {"min": 5, "max": 10}, "effort_size": "L",
+    "impact_profile": {"cost_savings": 20, "productivity": 10, "risk_reduction": 15, "revenue": 10, "employee_exp": 30, "compliance": 15},
+    "tags": ["compensation", "rewards", "retention"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Implement total rewards platform with benchmarking, equity analysis, and personalization",
+      "deliverables": ["Compensation benchmarking engine", "Pay equity analyzer", "Benefits personalization", "Total rewards dashboard"],
+      "team": "1 PM, 1 Compensation Consultant, 1 HR Analyst, 1 Developer",
+      "phases": [{"name": "Market Analysis", "weeks": 4}, {"name": "Platform Build", "weeks": 8}, {"name": "Equity Analysis", "weeks": 4}, {"name": "Go-Live", "weeks": 3}]
+    },
+    "source": "Hackett Group",
+    "strategic_importance": 70
+  },
+  {
+    "id": "HR-COMP-02", "domain": "hr", "dimension": "Retain & Reward",
+    "name": "Real-Time Compensation Benchmarking",
+    "description": "Deploy real-time compensation benchmarking with market data feeds, automated pay range updates, and proactive retention risk scoring.",
+    "horizon_default": "long", "maturity_prerequisite": 2.5, "maturity_target_delta": 0.8,
+    "typical_cost": {"min": 120000, "max": 350000}, "typical_annual_value": {"min": 150000, "max": 400000},
+    "typical_duration": {"min": 4, "max": 8}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 15, "productivity": 10, "risk_reduction": 20, "revenue": 10, "employee_exp": 30, "compliance": 15},
+    "tags": ["benchmarking", "real-time", "retention"],
+    "dependencies": ["HR-COMP-01"],
+    "engagement_template": {
+      "scope": "Implement real-time compensation benchmarking with retention risk scoring",
+      "deliverables": ["Market data integration", "Automated pay range updates", "Retention risk model", "Manager dashboard"],
+      "team": "1 PM, 1 Compensation Consultant, 1 Data Analyst",
+      "phases": [{"name": "Data Integration", "weeks": 3}, {"name": "Model Development", "weeks": 5}, {"name": "Dashboard Build", "weeks": 3}, {"name": "Go-Live", "weeks": 2}]
+    },
+    "source": "Industry Best Practice",
+    "strategic_importance": 50
+  },
+  {
+    "id": "HR-EXIT-01", "domain": "hr", "dimension": "Re-deploy & Retire",
+    "name": "Automated Offboarding & Knowledge Capture",
+    "description": "Automate offboarding workflows including access revocation, knowledge transfer, exit surveys, and equipment return. Capture institutional knowledge before departure.",
+    "horizon_default": "short", "maturity_prerequisite": 1.0, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 50000, "max": 150000}, "typical_annual_value": {"min": 60000, "max": 180000},
+    "typical_duration": {"min": 2, "max": 4}, "effort_size": "S",
+    "impact_profile": {"cost_savings": 25, "productivity": 20, "risk_reduction": 25, "revenue": 0, "employee_exp": 20, "compliance": 10},
+    "tags": ["offboarding", "knowledge", "automation"],
+    "dependencies": [],
+    "engagement_template": {
+      "scope": "Automate offboarding workflow with knowledge capture and access management",
+      "deliverables": ["Offboarding workflow automation", "Knowledge transfer framework", "Exit survey analytics", "Access revocation automation"],
+      "team": "1 PM, 1 HR Consultant",
+      "phases": [{"name": "Process Mapping", "weeks": 2}, {"name": "Automation Build", "weeks": 4}, {"name": "Testing", "weeks": 1}, {"name": "Go-Live", "weeks": 1}]
+    },
+    "source": "SHRM",
+    "strategic_importance": 45
+  },
+  {
+    "id": "HR-EXIT-02", "domain": "hr", "dimension": "Re-deploy & Retire",
+    "name": "Internal Mobility Marketplace",
+    "description": "Deploy internal talent marketplace for project-based gigs, lateral moves, and stretch assignments. Match employees to opportunities using skills and career aspirations.",
+    "horizon_default": "medium", "maturity_prerequisite": 2.0, "maturity_target_delta": 1.0,
+    "typical_cost": {"min": 160000, "max": 400000}, "typical_annual_value": {"min": 200000, "max": 500000},
+    "typical_duration": {"min": 4, "max": 8}, "effort_size": "M",
+    "impact_profile": {"cost_savings": 15, "productivity": 20, "risk_reduction": 10, "revenue": 10, "employee_exp": 40, "compliance": 5},
+    "tags": ["mobility", "marketplace", "talent"],
+    "dependencies": ["HR-DEV-02"],
+    "engagement_template": {
+      "scope": "Launch internal mobility marketplace with skills-based matching and gig assignments",
+      "deliverables": ["Marketplace platform", "Skills matching engine", "Manager & employee UX", "Adoption playbook"],
+      "team": "1 PM, 1 HR Consultant, 1 UX Designer, 1 Developer",
+      "phases": [{"name": "Design", "weeks": 3}, {"name": "Development", "weeks": 7}, {"name": "Pilot", "weeks": 3}, {"name": "Rollout", "weeks": 3}]
+    },
+    "source": "Gartner",
+    "strategic_importance": 55
+  },
+  {
+    "id": "HR-TECH-01", "domain": "hr", "dimension": "HR Technology",
+    "name": "Unified HCM Platform Implementation",
+    "description": "Consolidate fragmented HR systems onto a unified HCM platform. Standardize processes, eliminate manual handoffs, and enable analytics-ready data.",
+    "horizon_default": "medium", "maturity_prerequisite": 1.5, "maturity_target_delta": 1.2,
+    "typical_cost": {"min": 350000, "max": 1000000}, "typical_annual_value": {"min": 400000, "max": 1200000},
+    "typical_duration": {"min": 8, "max": 16}, "effort_size": "XL",
+    "impact_profile": {"cost_savings": 30, "productivity": 25, "risk_reduction": 10, "revenue": 5, "employee_exp": 20, "compliance": 10},
+    "tags": ["HCM", "platform", "consolidation"],
+    "dependencies": ["HR-EMP-01"],
+    "engagement_template": {
+      "scope": "Implement unified HCM platform consolidating core HR, payroll, talent, and workforce management",
+      "deliverables": ["Platform architecture", "Process standardization", "Data migration", "Change management program", "Training"],
+      "team": "1 PM, 2 Functional Consultants, 1 Architect, 1 Tech Lead, 1 Change Manager",
+      "phases": [{"name": "Discovery & Design", "weeks": 6}, {"name": "Build & Configure", "weeks": 14}, {"name": "Data Migration", "weeks": 6}, {"name": "Testing & Training", "weeks": 6}, {"name": "Go-Live & Stabilization", "weeks": 4}]
+    },
+    "source": "IBM Client Zero",
+    "strategic_importance": 80
+  },
+  {
+    "id": "HR-TECH-02", "domain": "hr", "dimension": "HR Technology",
+    "name": "People Analytics & Workforce Planning",
+    "description": "Deploy advanced people analytics with predictive attrition, workforce planning scenarios, diversity analytics, and real-time organizational health dashboards.",
+    "horizon_default": "long", "maturity_prerequisite": 2.5, "maturity_target_delta": 0.8,
+    "typical_cost": {"min": 250000, "max": 650000}, "typical_annual_value": {"min": 300000, "max": 800000},
+    "typical_duration": {"min": 6, "max": 12}, "effort_size": "L",
+    "impact_profile": {"cost_savings": 15, "productivity": 20, "risk_reduction": 20, "revenue": 10, "employee_exp": 20, "compliance": 15},
+    "tags": ["analytics", "workforce-planning", "predictive"],
+    "dependencies": ["HR-TECH-01"],
+    "engagement_template": {
+      "scope": "Implement people analytics platform with predictive models and workforce planning",
+      "deliverables": ["Analytics platform", "Attrition prediction model", "Workforce planning tool", "Diversity dashboard", "Org health metrics"],
+      "team": "1 PM, 1 Data Scientist, 1 HR Analytics Consultant, 1 Developer",
+      "phases": [{"name": "Data Engineering", "weeks": 5}, {"name": "Model Development", "weeks": 8}, {"name": "Dashboard Build", "weeks": 5}, {"name": "Go-Live & Tuning", "weeks": 4}]
+    },
+    "source": "Gartner",
+    "strategic_importance": 70
+  }
+]
