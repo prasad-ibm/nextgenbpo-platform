@@ -1,5 +1,5 @@
 require('dotenv').config();
-const APP_VERSION = '3.1.0'; // updated: Business Operations rename, nav reorder
+const APP_VERSION = '3.2.0'; // updated: cache-busting for CSS/JS static assets
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
@@ -34,7 +34,14 @@ const PORT = process.env.PORT || 3031;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname), {
+  setHeaders(res, filePath) {
+    // CSS and JS: short cache + must-revalidate so browsers always check for updates
+    if (filePath.endsWith('.css') || filePath.endsWith('.js')) {
+      res.setHeader('Cache-Control', 'public, max-age=60, must-revalidate');
+    }
+  }
+}));
 
 // ── DATABASE SETUP ─────────────────────────────────────────────────────────
 const pool = new Pool({
