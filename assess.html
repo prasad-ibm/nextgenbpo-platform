@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BPO Maturity Assessment | NextGen BPO</title>
+  <title>Business Operations Maturity Assessment | NextGen Business Operations</title>
   <link rel="stylesheet" href="/bpo-theme.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
@@ -169,8 +169,8 @@
 <nav class="c-nav">
   <div class="container">
     <a href="/" class="c-nav-brand">
-      <svg width="24" height="24" viewBox="0 0 32 32"><rect width="32" height="32" fill="#007d79"/><text x="4" y="22" font-family="IBM Plex Sans" font-size="13" font-weight="700" fill="white">BPO</text></svg>
-      NextGen BPO
+      <svg width="24" height="24" viewBox="0 0 32 32"><rect width="32" height="32" fill="#007d79"/><text x="4" y="22" font-family="IBM Plex Sans" font-size="13" font-weight="700" fill="white">BO</text></svg>
+      NextGen Business Operations
     </a>
     <div class="c-nav-links">
       <a href="/"><span>Home</span></a>
@@ -178,10 +178,10 @@
       <a href="/platform.html"><span>Platform</span></a>
       <a href="/assets.html"><span>Playbooks</span></a>
       <a href="/assess.html" class="active"><span>Assess</span></a>
+      <a href="/roadmap.html"><span>Roadmap</span></a>
       <a href="/tracker.html"><span>Pipeline</span></a>
       <a href="/roi.html"><span>ROI</span></a>
       <a href="/businesscase.html"><span>Business Case</span></a>
-      <a href="/roadmap.html"><span>Roadmap</span></a>
     </div>
     <div style="display:flex;align-items:center;gap:1rem;">
       <span id="nav-client" style="font-size:0.75rem;color:#8d8d8d;font-family:'IBM Plex Mono',monospace;"></span>
@@ -193,8 +193,8 @@
 
 <div class="page-header">
   <div class="container">
-    <div class="eyebrow" style="color:#3ddbd9;">BPO OPERATIONAL MATURITY ASSESSMENT</div>
-    <h1 style="color:#f4f4f4;margin-top:0.5rem;">BPO Maturity Assessment</h1>
+    <div class="eyebrow" style="color:#3ddbd9;">Business Operations OPERATIONAL MATURITY ASSESSMENT</div>
+    <h1 style="color:#f4f4f4;margin-top:0.5rem;">Business Operations Maturity Assessment</h1>
     <p style="color:#c6c6c6;max-width:640px;">Complete the 20-question diagnostic for your chosen domain. Receive a maturity score with per-dimension radar charts across Operating Model, Metrics, Process & Policy, Technology, and Controls.</p>
   </div>
 </div>
@@ -341,7 +341,7 @@
   <div class="container">
     <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap;">
       <div>
-        <div class="footer-brand">NextGen BPO Intelligence Platform</div>
+        <div class="footer-brand">NextGen Business Operations Intelligence Platform</div>
         <div class="footer-tagline" style="margin-top:4px;">Assess. Transform. Operate.</div>
       </div>
       <div style="display:flex;gap:2rem;">
@@ -351,7 +351,7 @@
       </div>
     </div>
     <div class="section-rule" style="margin:1.5rem 0;border-color:#393939;"></div>
-    <p style="font-size:0.75rem;color:#6f6f6f;">&copy; 2025 NextGen BPO Intelligence Platform. All rights reserved.</p>
+    <p style="font-size:0.75rem;color:#6f6f6f;">&copy; 2025 NextGen Business Operations Intelligence Platform. All rights reserved.</p>
   </div>
 </footer>
 
@@ -1072,10 +1072,10 @@ async function submitAssessment() {
 
 // ── MATURITY BAND (percentage-based) ─────────────────────────────────────────
 function getMaturityBand(pct) {
-  if (pct >= 80) return { label: 'Leading', cls: 'band-ready', desc: 'Your organisation demonstrates leading maturity. Focus on sustaining excellence, innovating processes, and driving continuous improvement across your BPO operations.' };
+  if (pct >= 80) return { label: 'Leading', cls: 'band-ready', desc: 'Your organisation demonstrates leading maturity. Focus on sustaining excellence, innovating processes, and driving continuous improvement across your Business Operations operations.' };
   if (pct >= 60) return { label: 'Optimizing', cls: 'band-opp', desc: 'Strong operational foundations with clear opportunities for optimization. Target specific dimensions for next-level automation, analytics, and governance maturity.' };
-  if (pct >= 40) return { label: 'Practicing', cls: 'band-candidate', desc: 'Core capabilities are established but significant gaps remain. Prioritise standardisation, technology enablement, and KPI frameworks to build BPO-ready operations.' };
-  if (pct >= 20) return { label: 'Developing', cls: 'band-essential', desc: 'Early-stage maturity with foundational gaps in process, technology, and controls. A structured transformation programme is essential before BPO engagement.' };
+  if (pct >= 40) return { label: 'Practicing', cls: 'band-candidate', desc: 'Core capabilities are established but significant gaps remain. Prioritise standardisation, technology enablement, and KPI frameworks to build Business Operations-ready operations.' };
+  if (pct >= 20) return { label: 'Developing', cls: 'band-essential', desc: 'Early-stage maturity with foundational gaps in process, technology, and controls. A structured transformation programme is essential before Business Operations engagement.' };
   return { label: 'Aware', cls: 'band-essential', desc: 'Minimal maturity across all dimensions. Immediate intervention required to establish basic operational governance and process documentation.' };
 }
 

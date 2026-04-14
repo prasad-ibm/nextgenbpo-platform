@@ -1,5 +1,5 @@
 require('dotenv').config();
-const APP_VERSION = '3.0.0'; // updated: transformation roadmap module
+const APP_VERSION = '3.1.0'; // updated: Business Operations rename, nav reorder
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');

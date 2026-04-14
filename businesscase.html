@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Business Case Calculator | NextGen BPO</title>
+  <title>Business Case Calculator | NextGen Business Operations</title>
   <link rel="stylesheet" href="/bpo-theme.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
@@ -141,9 +141,9 @@
     <a href="/" class="c-nav-brand">
       <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="32" height="32" fill="#007d79"/>
-        <text x="6" y="22" font-family="IBM Plex Sans" font-size="14" font-weight="700" fill="white">BPO</text>
+        <text x="6" y="22" font-family="IBM Plex Sans" font-size="14" font-weight="700" fill="white">BO</text>
       </svg>
-      NextGen BPO
+      NextGen Business Operations
     </a>
     <div class="c-nav-links">
       <a href="/"><span>Home</span></a>
@@ -172,7 +172,7 @@ if (_c) { document.getElementById('nav-client').textContent = _c; document.getEl
   <div class="container">
     <div style="font-size:0.6875rem;font-weight:600;color:#3ddbd9;letter-spacing:0.14em;text-transform:uppercase;font-family:'IBM Plex Mono',monospace;margin-bottom:0.75rem;">SG&A Transformation</div>
     <h1 style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:300;color:#fff;line-height:1.2;margin-bottom:0.75rem;">Cost Per Transaction <strong style="font-weight:600;color:#3ddbd9;">Business Case Calculator</strong></h1>
-    <p style="font-size:0.9375rem;color:#a8a8a8;max-width:640px;line-height:1.55;">Transform SG&A from opaque FTE-based costs to transparent unit economics. Compare current state against industry benchmarks and model automation, BPO, and hybrid scenarios.</p>
+    <p style="font-size:0.9375rem;color:#a8a8a8;max-width:640px;line-height:1.55;">Transform SG&A from opaque FTE-based costs to transparent unit economics. Compare current state against industry benchmarks and model automation, Business Operations, and hybrid scenarios.</p>
   </div>
 </div>
 
@@ -343,8 +343,8 @@ if (_c) { document.getElementById('nav-client').textContent = _c; document.getEl
       <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.5rem;">
         <button class="bc-btn bc-btn-secondary scenario-sel active" data-scenario="doNothing" onclick="selectScenario(this)">Do Nothing</button>
         <button class="bc-btn bc-btn-secondary scenario-sel" data-scenario="automation" onclick="selectScenario(this)">Automation</button>
-        <button class="bc-btn bc-btn-secondary scenario-sel" data-scenario="bpoOnshore" onclick="selectScenario(this)">BPO — Onshore</button>
-        <button class="bc-btn bc-btn-secondary scenario-sel" data-scenario="bpoNearshore" onclick="selectScenario(this)">BPO — Nearshore</button>
+        <button class="bc-btn bc-btn-secondary scenario-sel" data-scenario="bpoOnshore" onclick="selectScenario(this)">Business Operations — Onshore</button>
+        <button class="bc-btn bc-btn-secondary scenario-sel" data-scenario="bpoNearshore" onclick="selectScenario(this)">Business Operations — Nearshore</button>
         <button class="bc-btn bc-btn-secondary scenario-sel" data-scenario="hybrid" onclick="selectScenario(this)">Hybrid</button>
       </div>
 
@@ -397,7 +397,7 @@ if (_c) { document.getElementById('nav-client').textContent = _c; document.getEl
           <div class="bc-section-desc">Target CPT assumes automation eliminates 60-70% of manual touches. Retained staff handle exceptions, governance, and strategic work.</div>
         </div>
 
-        <!-- BPO Onshore -->
+        <!-- Business Operations Onshore -->
         <div class="scenario-detail-panel" id="sd-bpoOnshore">
           <div class="bc-form-grid" style="margin-bottom:1rem;">
             <div class="bc-field">
@@ -417,12 +417,12 @@ if (_c) { document.getElementById('nav-client').textContent = _c; document.getEl
             <div class="bc-field">
               <label class="bc-label">Savings vs Current (%)</label>
               <input class="bc-input" id="bpoOnshoreDiscount" type="number" value="25" step="5" />
-              <span class="bc-helper">N. America BPO typically 20-30% savings</span>
+              <span class="bc-helper">N. America Business Operations typically 20-30% savings</span>
             </div>
           </div>
         </div>
 
-        <!-- BPO Nearshore -->
+        <!-- Business Operations Nearshore -->
         <div class="scenario-detail-panel" id="sd-bpoNearshore">
           <div class="bc-form-grid" style="margin-bottom:1rem;">
             <div class="bc-field">
@@ -455,7 +455,7 @@ if (_c) { document.getElementById('nav-client').textContent = _c; document.getEl
               <span class="bc-helper">High-volume, low-complexity @ automation CPT</span>
             </div>
             <div class="bc-field">
-              <label class="bc-label">% BPO (Moderate)</label>
+              <label class="bc-label">% Business Operations (Moderate)</label>
               <input class="bc-input" id="hybridBpoP" type="number" value="30" step="5" />
               <span class="bc-helper">Medium complexity @ nearshore CPT</span>
             </div>
@@ -473,7 +473,7 @@ if (_c) { document.getElementById('nav-client').textContent = _c; document.getEl
               <input class="bc-input" id="hybridRetained" type="number" value="350000" />
             </div>
           </div>
-          <div class="bc-section-desc">Hybrid = Automation handles simple (60%) + BPO handles moderate (30%) + In-house retains complex (10%). Blended CPT optimizes the cost curve.</div>
+          <div class="bc-section-desc">Hybrid = Automation handles simple (60%) + Business Operations handles moderate (30%) + In-house retains complex (10%). Blended CPT optimizes the cost curve.</div>
         </div>
       </div>
     </div>
@@ -786,7 +786,7 @@ function calculateScenarios() {
     description: `${(autoRate*100).toFixed(0)}% automated, ${(autoFTEReduc*100).toFixed(0)}% FTE reduction`
   };
 
-  // Scenario 3: BPO Onshore
+  // Scenario 3: Business Operations Onshore
   const onshoreDisc = num('bpoOnshoreDiscount') / 100;
   const onshoreSetup = num('bpoOnshoreSetup');
   const onshoreRetained = num('bpoOnshoreRetained');
@@ -794,7 +794,7 @@ function calculateScenarios() {
   const onshoreAnnual = totalCost * (1 - onshoreDisc) + onshoreRetained + onshoreContract;
 
   const bpoOnshore = {
-    name: 'BPO — Onshore',
+    name: 'Business Operations — Onshore',
     year1: onshoreAnnual * 0.6 + totalCost * 0.4 + onshoreSetup, // 60% ramp Y1
     year2: onshoreAnnual,
     year3: onshoreAnnual,
@@ -803,7 +803,7 @@ function calculateScenarios() {
     description: `${(onshoreDisc*100).toFixed(0)}% savings, N. America delivery`
   };
 
-  // Scenario 4: BPO Nearshore
+  // Scenario 4: Business Operations Nearshore
   const nearDisc = num('bpoNearDiscount') / 100;
   const nearSetup = num('bpoNearSetup');
   const nearRetained = num('bpoNearRetained');
@@ -811,7 +811,7 @@ function calculateScenarios() {
   const nearAnnual = totalCost * (1 - nearDisc) + nearRetained + nearContract;
 
   const bpoNearshore = {
-    name: 'BPO — Nearshore',
+    name: 'Business Operations — Nearshore',
     year1: nearAnnual * 0.5 + totalCost * 0.5 + nearSetup, // 50% ramp Y1
     year2: nearAnnual,
     year3: nearAnnual,
@@ -827,7 +827,7 @@ function calculateScenarios() {
   const hybImpl = num('hybridImpl');
   const hybRetained = num('hybridRetained');
 
-  // Blended: automation portion at 50% of current, BPO at nearshore rate, in-house at current
+  // Blended: automation portion at 50% of current, Business Operations at nearshore rate, in-house at current
   const hybAutoCost = totalCost * hybAutoP * 0.35;
   const hybBpoCost = totalCost * hybBpoP * (1 - nearDisc);
   const hybInCost = totalCost * hybInP;
@@ -840,7 +840,7 @@ function calculateScenarios() {
     year3: hybAnnual,
     implCost: hybImpl,
     riskLevel: 'Medium-High',
-    description: `${(hybAutoP*100).toFixed(0)}% auto / ${(hybBpoP*100).toFixed(0)}% BPO / ${(hybInP*100).toFixed(0)}% in-house`
+    description: `${(hybAutoP*100).toFixed(0)}% auto / ${(hybBpoP*100).toFixed(0)}% Business Operations / ${(hybInP*100).toFixed(0)}% in-house`
   };
 
   scenarioResults = [doNothing, automation, bpoOnshore, bpoNearshore, hybrid];
