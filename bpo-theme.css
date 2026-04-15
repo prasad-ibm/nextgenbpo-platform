@@ -249,7 +249,8 @@ p  { color: var(--cds-text-secondary); font-size: var(--cds-body-long-02-size); 
   text-transform: uppercase;
   color: var(--cds-text-helper);
 }
-.label-teal, .eyebrow-teal {
+.label-teal, .eyebrow-teal,
+.section-eyebrow, .section-heading-eyebrow {
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.16em;
