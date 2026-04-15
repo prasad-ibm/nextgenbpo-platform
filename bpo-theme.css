@@ -550,7 +550,7 @@ p  { color: var(--cds-text-secondary); font-size: var(--cds-body-long-02-size); 
   padding: var(--cds-spacing-12) 0 var(--cds-spacing-11);
   border-bottom: 1px solid #e0e0e0;
 }
-.hero-dark h1 { color: #161616; }
+.hero-dark h1 { color: #0f62fe; }
 .hero-dark p  { color: #525252; }
 .hero-dark .eyebrow { color: #0f62fe; }
 

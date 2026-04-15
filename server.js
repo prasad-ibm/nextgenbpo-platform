@@ -1,5 +1,5 @@
 require('dotenv').config();
-const APP_VERSION = '3.4.0'; // updated: IBM blue hero h1, businesscase h1, section-eyebrow color
+const APP_VERSION = '3.5.0'; // updated: remove all teal, fix hero h1 blue, bump CSS v3.4
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
