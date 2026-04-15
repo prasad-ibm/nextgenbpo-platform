@@ -1,5 +1,5 @@
 require('dotenv').config();
-const APP_VERSION = '3.5.0'; // updated: remove all teal, fix hero h1 blue, bump CSS v3.4
+const APP_VERSION = '3.6.0'; // updated: inline page-header white bg override all sub-pages
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
