@@ -1,5 +1,5 @@
 require('dotenv').config();
-const APP_VERSION = '3.2.0'; // updated: cache-busting for CSS/JS static assets
+const APP_VERSION = '3.3.0'; // updated: cache-busting for CSS/JS static assets
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');

@@ -11,12 +11,12 @@
 .c-nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
 .c-nav-dropdown>a::after{content:'';display:inline-block;width:0;height:0;border-left:3px solid transparent;border-right:3px solid transparent;border-top:4px solid currentColor;margin-left:5px;opacity:.55}
 .c-nav-dropdown:hover>a::after{opacity:.85}
-.c-nav-dropdown-menu{position:absolute!important;top:48px!important;left:0;display:flex!important;flex-direction:column;visibility:hidden!important;opacity:0!important;pointer-events:none!important;background:#262626;border:1px solid #393939;border-top:2px solid #3ddbd9;min-width:148px;z-index:1010;box-shadow:0 4px 12px rgba(0,0,0,.35);transition:opacity .12s ease}
+.c-nav-dropdown-menu{position:absolute!important;top:48px!important;left:0;display:flex!important;flex-direction:column;visibility:hidden!important;opacity:0!important;pointer-events:none!important;background:#ffffff;border:1px solid #e0e0e0;border-top:2px solid #0f62fe;min-width:148px;z-index:1010;box-shadow:0 4px 12px rgba(0,0,0,.1);transition:opacity .12s ease}
 .c-nav-dropdown:hover .c-nav-dropdown-menu{visibility:visible!important;opacity:1!important;pointer-events:auto!important}
-.c-nav-dropdown-menu a{display:flex!important;align-items:center!important;height:40px!important;padding:0 1rem!important;border-bottom:1px solid #393939!important;border-left:2px solid transparent!important;font-size:.8125rem!important;white-space:nowrap!important;color:#c6c6c6;text-decoration:none}
+.c-nav-dropdown-menu a{display:flex!important;align-items:center!important;height:40px!important;padding:0 1rem!important;border-bottom:1px solid #e0e0e0!important;border-left:2px solid transparent!important;font-size:.8125rem!important;white-space:nowrap!important;color:#525252;text-decoration:none}
 .c-nav-dropdown-menu a:last-child{border-bottom:none!important}
-.c-nav-dropdown-menu a:hover{background:#353535;border-left-color:#3ddbd9!important;color:#f4f4f4}
-.c-nav-dropdown-menu a.active{color:#f4f4f4;background:#1f3131;border-left-color:#3ddbd9!important}
+.c-nav-dropdown-menu a:hover{background:#f4f4f4;border-left-color:#0f62fe!important;color:#161616}
+.c-nav-dropdown-menu a.active{color:#0f62fe;background:#edf5ff;border-left-color:#0f62fe!important}
 
     *, *::before, *::after { box-sizing: border-box; }
 
@@ -30,7 +30,7 @@
     .rm-sb-label { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #6f6f6f; margin-bottom: 0.5rem; font-family: 'IBM Plex Mono', monospace; }
     .rm-sb-select { width: 100%; padding: 0.5rem; font-size: 0.8125rem; border: 1px solid #c6c6c6; background: #fff; font-family: 'IBM Plex Sans', sans-serif; }
     .rm-sb-btn { width: 100%; padding: 0.625rem; font-size: 0.8125rem; font-weight: 600; border: none; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif; margin-bottom: 0.5rem; transition: background 0.15s; }
-    .rm-sb-btn-primary { background: #007d79; color: #fff; }
+    .rm-sb-btn-primary { background: #0f62fe; color: #fff; }
     .rm-sb-btn-primary:hover { background: #005c59; }
     .rm-sb-btn-secondary { background: #e0e0e0; color: #161616; }
     .rm-sb-btn-secondary:hover { background: #c6c6c6; }
@@ -38,7 +38,7 @@
     /* Weight Sliders */
     .rm-weight-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.625rem; }
     .rm-weight-label { font-size: 0.6875rem; color: #525252; min-width: 80px; }
-    .rm-weight-slider { flex: 1; accent-color: #007d79; }
+    .rm-weight-slider { flex: 1; accent-color: #0f62fe; }
     .rm-weight-val { font-size: 0.6875rem; font-weight: 600; color: #161616; min-width: 30px; text-align: right; font-family: 'IBM Plex Mono', monospace; }
 
     /* Target slider */
@@ -47,12 +47,12 @@
 
     /* ── Roadmap List ── */
     .rm-roadmap-item { padding: 0.625rem 0.75rem; border: 1px solid #e0e0e0; background: #fff; margin-bottom: 0.375rem; cursor: pointer; transition: border-color 0.15s; }
-    .rm-roadmap-item:hover, .rm-roadmap-item.active { border-color: #007d79; }
+    .rm-roadmap-item:hover, .rm-roadmap-item.active { border-color: #0f62fe; }
     .rm-roadmap-item-name { font-size: 0.8125rem; font-weight: 600; color: #161616; }
     .rm-roadmap-item-meta { font-size: 0.6875rem; color: #6f6f6f; margin-top: 0.125rem; }
     .rm-status-badge { font-size: 0.5625rem; font-weight: 700; padding: 1px 6px; border-radius: 8px; font-family: 'IBM Plex Mono', monospace; }
     .rm-status-draft { background: #e0e0e0; color: #525252; }
-    .rm-status-active { background: #d9fbfb; color: #004144; }
+    .rm-status-active { background: #edf5ff; color: #002d9c; }
 
     /* ── Value Summary Bar ── */
     .rm-value-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #e0e0e0; border: 1px solid #c6c6c6; margin-bottom: 1.5rem; }
@@ -66,7 +66,7 @@
     .rm-view-tabs { display: flex; gap: 0; border-bottom: 2px solid #e0e0e0; margin-bottom: 1.5rem; }
     .rm-view-tab { padding: 0.625rem 1.25rem; font-size: 0.8125rem; font-weight: 600; color: #525252; background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; font-family: 'IBM Plex Sans', sans-serif; transition: all 0.15s; }
     .rm-view-tab:hover { color: #161616; background: #f4f4f4; }
-    .rm-view-tab.active { color: #007d79; border-bottom-color: #007d79; }
+    .rm-view-tab.active { color: #0f62fe; border-bottom-color: #0f62fe; }
 
     /* ── Initiative List Table ── */
     .rm-table-wrap { overflow-x: auto; }
@@ -78,7 +78,7 @@
     .rm-table tr { cursor: pointer; }
 
     /* Horizon badges */
-    .rm-hz-short { background: #d9fbfb; color: #004144; font-size: 0.625rem; font-weight: 700; padding: 2px 6px; border-radius: 8px; font-family: 'IBM Plex Mono', monospace; }
+    .rm-hz-short { background: #edf5ff; color: #002d9c; font-size: 0.625rem; font-weight: 700; padding: 2px 6px; border-radius: 8px; font-family: 'IBM Plex Mono', monospace; }
     .rm-hz-medium { background: #d0e2ff; color: #002d6b; font-size: 0.625rem; font-weight: 700; padding: 2px 6px; border-radius: 8px; font-family: 'IBM Plex Mono', monospace; }
     .rm-hz-long { background: #e8daff; color: #491d8b; font-size: 0.625rem; font-weight: 700; padding: 2px 6px; border-radius: 8px; font-family: 'IBM Plex Mono', monospace; }
 
@@ -88,8 +88,8 @@
     /* Filter chips */
     .rm-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
     .rm-chip { padding: 0.25rem 0.625rem; font-size: 0.6875rem; font-weight: 600; border: 1px solid #c6c6c6; background: #fff; cursor: pointer; border-radius: 12px; font-family: 'IBM Plex Sans', sans-serif; transition: all 0.15s; }
-    .rm-chip:hover { border-color: #007d79; }
-    .rm-chip.active { background: #007d79; color: #fff; border-color: #007d79; }
+    .rm-chip:hover { border-color: #0f62fe; }
+    .rm-chip.active { background: #0f62fe; color: #fff; border-color: #0f62fe; }
 
     /* ── Gantt ── */
     .rm-gantt-wrap { overflow-x: auto; border: 1px solid #e0e0e0; }
@@ -99,13 +99,13 @@
     .rm-gantt-months { display: flex; flex: 1; }
     .rm-gantt-month { flex: 0 0 calc(100% / 36); text-align: center; font-size: 0.5625rem; font-weight: 600; color: #6f6f6f; padding: 0.375rem 0; border-left: 1px solid #e0e0e0; font-family: 'IBM Plex Mono', monospace; }
     .rm-gantt-swimlane { border-bottom: 1px solid #f4f4f4; }
-    .rm-gantt-swimlane-label { padding: 0.375rem 0.75rem; font-size: 0.6875rem; font-weight: 700; color: #007d79; text-transform: uppercase; letter-spacing: 0.08em; background: #f9f9f9; border-bottom: 1px solid #e0e0e0; }
+    .rm-gantt-swimlane-label { padding: 0.375rem 0.75rem; font-size: 0.6875rem; font-weight: 700; color: #0f62fe; text-transform: uppercase; letter-spacing: 0.08em; background: #f9f9f9; border-bottom: 1px solid #e0e0e0; }
     .rm-gantt-row { display: flex; align-items: center; min-height: 32px; }
     .rm-gantt-row-label { min-width: 220px; max-width: 220px; padding: 0.25rem 0.75rem; font-size: 0.6875rem; color: #161616; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .rm-gantt-row-bars { display: flex; flex: 1; position: relative; height: 24px; }
     .rm-gantt-bar { position: absolute; height: 18px; top: 3px; border-radius: 2px; font-size: 0.5rem; color: #fff; font-weight: 700; display: flex; align-items: center; padding: 0 4px; overflow: hidden; white-space: nowrap; cursor: pointer; transition: opacity 0.15s; }
     .rm-gantt-bar:hover { opacity: 0.85; }
-    .rm-gantt-bar-short { background: #007d79; }
+    .rm-gantt-bar-short { background: #0f62fe; }
     .rm-gantt-bar-medium { background: #0f62fe; }
     .rm-gantt-bar-long { background: #8a3ffc; }
 
@@ -141,7 +141,7 @@
     .rm-phase-row { display: flex; justify-content: space-between; padding: 0.25rem 0; font-size: 0.75rem; }
     .rm-maturity-before-after { display: flex; align-items: center; gap: 0.75rem; margin-top: 0.75rem; }
     .rm-maturity-bar { width: 120px; height: 10px; background: #e0e0e0; border-radius: 5px; overflow: hidden; }
-    .rm-maturity-bar-fill { height: 100%; background: #007d79; border-radius: 5px; transition: width 0.4s; }
+    .rm-maturity-bar-fill { height: 100%; background: #0f62fe; border-radius: 5px; transition: width 0.4s; }
 
     /* ── Create Roadmap Modal ── */
     .rm-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 1100; display: none; justify-content: center; align-items: center; }
@@ -164,7 +164,7 @@
 <nav class="c-nav">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
     <a class="c-nav-brand" href="/">
-      <svg width="24" height="24" viewBox="0 0 32 32" fill="#007d79" style="vertical-align:middle;margin-right:0.5rem;">
+      <svg width="24" height="24" viewBox="0 0 32 32" fill="#0f62fe" style="vertical-align:middle;margin-right:0.5rem;">
         <rect x="4" y="4" width="10" height="10" rx="2"/><rect x="18" y="4" width="10" height="10" rx="2" opacity=".6"/>
         <rect x="4" y="18" width="10" height="10" rx="2" opacity=".6"/><rect x="18" y="18" width="10" height="10" rx="2" opacity=".3"/>
       </svg>
@@ -243,7 +243,7 @@ if (_c) { document.getElementById('nav-client').textContent = _c; document.getEl
     <div id="rmContent" style="display:none;">
       <!-- Header -->
       <div style="background:#fff;border:1px solid #c6c6c6;padding:1.5rem;margin-bottom:1.5rem;">
-        <div style="font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:#007d79;margin-bottom:0.375rem;font-family:'IBM Plex Mono',monospace;">TRANSFORMATION ROADMAP</div>
+        <div style="font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:#0f62fe;margin-bottom:0.375rem;font-family:'IBM Plex Mono',monospace;">TRANSFORMATION ROADMAP</div>
         <h2 style="margin:0 0 0.25rem;" id="rmTitle"></h2>
         <p style="font-size:0.8125rem;color:#6f6f6f;margin:0;" id="rmSubtitle"></p>
       </div>
@@ -327,7 +327,7 @@ let bubbleChart = null;
 
 const DOMAIN_LABELS = { finance: 'Finance', supplychain: 'Supply Chain', hr: 'HR' };
 const HZ_ORDER = { short: 0, medium: 1, long: 2 };
-const HZ_COLORS = { short: '#007d79', medium: '#0f62fe', long: '#8a3ffc' };
+const HZ_COLORS = { short: '#0f62fe', medium: '#0f62fe', long: '#8a3ffc' };
 
 function authHeaders() {
   const t = sessionStorage.getItem('bpo_token');
@@ -472,7 +472,7 @@ function renderValueBar() {
   const totalRoi = totalCount ? Math.round(inits.reduce((s, i) => s + i.roi_pct, 0) / totalCount) : 0;
   html += `<div class="rm-value-cell" style="background:#f9f9f9;">
     <div class="rm-value-cell-label">Total</div>
-    <div class="rm-value-cell-big" style="color:#007d79;">${fmt$(totalEAV)}</div>
+    <div class="rm-value-cell-big" style="color:#0f62fe;">${fmt$(totalEAV)}</div>
     <div class="rm-value-cell-sub">EAV</div>
     <div class="rm-value-cell-sm" style="margin-top:0.5rem;">${fmt$(totalCost)} cost</div>
     <div class="rm-value-cell-sub">${totalRoi}% avg ROI | ${totalCount} initiatives</div>
@@ -561,12 +561,12 @@ function renderListView(container) {
       <td>${gap.dimension || ''}</td>
       <td style="font-weight:600;max-width:260px;">${i.name}</td>
       <td>${gap.current_score?.toFixed(1) || '-'}</td>
-      <td style="color:${gap.gap > 2 ? '#da1e28' : gap.gap > 1 ? '#e68a00' : '#007d79'};font-weight:600;">${gap.gap?.toFixed(1) || '-'}</td>
+      <td style="color:${gap.gap > 2 ? '#da1e28' : gap.gap > 1 ? '#e68a00' : '#0f62fe'};font-weight:600;">${gap.gap?.toFixed(1) || '-'}</td>
       <td><span class="rm-hz-${hz}">${hz}</span></td>
       <td><span class="rm-effort">${i.effort_size}</span></td>
       <td style="font-weight:600;">${fmt$(i.estimated_annual_value)}</td>
       <td>${fmt$(i.implementation_cost)}</td>
-      <td style="font-weight:600;color:${i.roi_pct >= 200 ? '#007d79' : '#161616'};">${Math.round(i.roi_pct)}%</td>
+      <td style="font-weight:600;color:${i.roi_pct >= 200 ? '#0f62fe' : '#161616'};">${Math.round(i.roi_pct)}%</td>
       <td>${i.payback_months}mo</td>
     `;
     tbody.appendChild(tr);
@@ -597,7 +597,7 @@ function renderTimelineView(container) {
   const hzHeaders = `<div class="rm-gantt-hz-headers" style="display:flex;">
     <div style="min-width:220px;"></div>
     <div style="flex:1;display:flex;">
-      <div class="rm-gantt-hz-header" style="width:${(6/36)*100}%;background:#007d79;">Short (0-6m)</div>
+      <div class="rm-gantt-hz-header" style="width:${(6/36)*100}%;background:#0f62fe;">Short (0-6m)</div>
       <div class="rm-gantt-hz-header" style="width:${(12/36)*100}%;background:#0f62fe;">Medium (6-18m)</div>
       <div class="rm-gantt-hz-header" style="width:${(18/36)*100}%;background:#8a3ffc;">Long (18-36m)</div>
     </div>
@@ -649,7 +649,7 @@ function renderValueMapView(container) {
       </div>
       <div style="max-width:800px;margin:0 auto;"><canvas id="rmBubbleChart"></canvas></div>
       <div class="rm-valuemap-legend">
-        <div class="rm-valuemap-legend-item"><div class="rm-valuemap-dot" style="background:#007d79;"></div>Short-term</div>
+        <div class="rm-valuemap-legend-item"><div class="rm-valuemap-dot" style="background:#0f62fe;"></div>Short-term</div>
         <div class="rm-valuemap-legend-item"><div class="rm-valuemap-dot" style="background:#0f62fe;"></div>Medium-term</div>
         <div class="rm-valuemap-legend-item"><div class="rm-valuemap-dot" style="background:#8a3ffc;"></div>Long-term</div>
       </div>
@@ -716,7 +716,7 @@ function openDrawer(init) {
   });
   const afterScore = Math.min(4, (gap.current_score || 0) + (libItem.maturity_target_delta || 1.0));
 
-  const impactColors = { cost_savings: '#007d79', productivity: '#0f62fe', risk_reduction: '#da1e28', revenue: '#8a3ffc', employee_exp: '#f1c21b', compliance: '#6f6f6f' };
+  const impactColors = { cost_savings: '#0f62fe', productivity: '#0f62fe', risk_reduction: '#da1e28', revenue: '#8a3ffc', employee_exp: '#f1c21b', compliance: '#6f6f6f' };
   const impactLabels = { cost_savings: 'Cost Savings', productivity: 'Productivity', risk_reduction: 'Risk Reduction', revenue: 'Revenue', employee_exp: 'Employee Exp.', compliance: 'Compliance' };
 
   let impactHTML = '';
@@ -749,15 +749,15 @@ function openDrawer(init) {
       <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Horizon</span><span class="rm-drawer-kv-val"><span class="rm-hz-${hz}">${hz}</span></span></div>
       <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Effort</span><span class="rm-drawer-kv-val"><span class="rm-effort">${init.effort_size}</span></span></div>
       <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Current Maturity</span><span class="rm-drawer-kv-val">${(gap.current_score||0).toFixed(1)} / 4.0</span></div>
-      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Gap</span><span class="rm-drawer-kv-val" style="color:${gap.gap>2?'#da1e28':gap.gap>1?'#e68a00':'#007d79'};">${(gap.gap||0).toFixed(1)}</span></div>
+      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Gap</span><span class="rm-drawer-kv-val" style="color:${gap.gap>2?'#da1e28':gap.gap>1?'#e68a00':'#0f62fe'};">${(gap.gap||0).toFixed(1)}</span></div>
     </div>
     <div class="rm-drawer-section">
       <div style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;color:#6f6f6f;margin-bottom:0.5rem;">Value</div>
-      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Est. Annual Value</span><span class="rm-drawer-kv-val" style="color:#007d79;">${fmt$(init.estimated_annual_value)}</span></div>
+      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Est. Annual Value</span><span class="rm-drawer-kv-val" style="color:#0f62fe;">${fmt$(init.estimated_annual_value)}</span></div>
       <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Implementation Cost</span><span class="rm-drawer-kv-val">${fmt$(init.implementation_cost)}</span></div>
       <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">ROI</span><span class="rm-drawer-kv-val">${Math.round(init.roi_pct)}%</span></div>
       <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">Payback</span><span class="rm-drawer-kv-val">${init.payback_months} months</span></div>
-      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">3-Year Net Value</span><span class="rm-drawer-kv-val" style="color:#007d79;">${fmt$(threeYearNet)}</span></div>
+      <div class="rm-drawer-kv"><span class="rm-drawer-kv-label">3-Year Net Value</span><span class="rm-drawer-kv-val" style="color:#0f62fe;">${fmt$(threeYearNet)}</span></div>
       <div style="margin-top:0.75rem;font-size:0.6875rem;font-weight:700;color:#6f6f6f;margin-bottom:0.375rem;">Impact Breakdown</div>
       ${impactHTML}
     </div>

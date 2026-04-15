@@ -12,12 +12,12 @@
 .c-nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
 .c-nav-dropdown>a::after{content:'';display:inline-block;width:0;height:0;border-left:3px solid transparent;border-right:3px solid transparent;border-top:4px solid currentColor;margin-left:5px;opacity:.55}
 .c-nav-dropdown:hover>a::after{opacity:.85}
-.c-nav-dropdown-menu{position:absolute!important;top:48px!important;left:0;display:flex!important;flex-direction:column;visibility:hidden!important;opacity:0!important;pointer-events:none!important;background:#262626;border:1px solid #393939;border-top:2px solid #3ddbd9;min-width:148px;z-index:1010;box-shadow:0 4px 12px rgba(0,0,0,.35);transition:opacity .12s ease}
+.c-nav-dropdown-menu{position:absolute!important;top:48px!important;left:0;display:flex!important;flex-direction:column;visibility:hidden!important;opacity:0!important;pointer-events:none!important;background:#ffffff;border:1px solid #e0e0e0;border-top:2px solid #0f62fe;min-width:148px;z-index:1010;box-shadow:0 4px 12px rgba(0,0,0,.1);transition:opacity .12s ease}
 .c-nav-dropdown:hover .c-nav-dropdown-menu{visibility:visible!important;opacity:1!important;pointer-events:auto!important}
-.c-nav-dropdown-menu a{display:flex!important;align-items:center!important;height:40px!important;padding:0 1rem!important;border-bottom:1px solid #393939!important;border-left:2px solid transparent!important;font-size:.8125rem!important;white-space:nowrap!important;color:#c6c6c6;text-decoration:none}
+.c-nav-dropdown-menu a{display:flex!important;align-items:center!important;height:40px!important;padding:0 1rem!important;border-bottom:1px solid #e0e0e0!important;border-left:2px solid transparent!important;font-size:.8125rem!important;white-space:nowrap!important;color:#525252;text-decoration:none}
 .c-nav-dropdown-menu a:last-child{border-bottom:none!important}
-.c-nav-dropdown-menu a:hover{background:#353535;border-left-color:#3ddbd9!important;color:#f4f4f4}
-.c-nav-dropdown-menu a.active{color:#f4f4f4;background:#1f3131;border-left-color:#3ddbd9!important}
+.c-nav-dropdown-menu a:hover{background:#f4f4f4;border-left-color:#0f62fe!important;color:#161616}
+.c-nav-dropdown-menu a.active{color:#0f62fe;background:#edf5ff;border-left-color:#0f62fe!important}
 
     /* ── Sidebar layout ── */
     .sidebar-layout {
@@ -67,7 +67,7 @@
       background-position: right 0.75rem center;
       padding-right: 2rem;
     }
-    .cds-select:focus { outline: 2px solid #007d79; outline-offset: 0; }
+    .cds-select:focus { outline: 2px solid #0f62fe; outline-offset: 0; }
 
     /* ── Domain filter button group ── */
     .domain-btn-group {
@@ -104,7 +104,7 @@
     .kpi-card {
       background: white;
       border: 1px solid #c6c6c6;
-      border-top: 3px solid #007d79;
+      border-top: 3px solid #0f62fe;
       padding: 1.5rem;
       border-radius: 2px;
     }
@@ -299,7 +299,7 @@
       color: #161616;
       border-radius: 2px;
     }
-    .form-input:focus { outline: 2px solid #007d79; outline-offset: 0; border-color: #007d79; }
+    .form-input:focus { outline: 2px solid #0f62fe; outline-offset: 0; border-color: #0f62fe; }
     .estimator-results {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -310,7 +310,7 @@
     .result-card {
       background: #f4f4f4;
       border: 1px solid #e0e0e0;
-      border-top: 3px solid #007d79;
+      border-top: 3px solid #0f62fe;
       padding: 1rem 1.25rem;
       border-radius: 2px;
     }
@@ -366,7 +366,7 @@
 <nav class="c-nav">
   <div class="container">
     <a href="/" class="c-nav-brand">
-      <svg width="24" height="24" viewBox="0 0 32 32"><rect width="32" height="32" fill="#007d79"/><text x="4" y="22" font-family="IBM Plex Sans" font-size="13" font-weight="700" fill="white">BO</text></svg>
+      <svg width="24" height="24" viewBox="0 0 32 32"><rect width="32" height="32" fill="#0f62fe"/><text x="4" y="22" font-family="IBM Plex Sans" font-size="13" font-weight="700" fill="white">BO</text></svg>
       NextGen Business Operations
     </a>
     <div class="c-nav-links">

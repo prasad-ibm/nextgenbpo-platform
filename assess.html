@@ -11,28 +11,28 @@
 .c-nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
 .c-nav-dropdown>a::after{content:'';display:inline-block;width:0;height:0;border-left:3px solid transparent;border-right:3px solid transparent;border-top:4px solid currentColor;margin-left:5px;opacity:.55}
 .c-nav-dropdown:hover>a::after{opacity:.85}
-.c-nav-dropdown-menu{position:absolute!important;top:48px!important;left:0;display:flex!important;flex-direction:column;visibility:hidden!important;opacity:0!important;pointer-events:none!important;background:#262626;border:1px solid #393939;border-top:2px solid #3ddbd9;min-width:148px;z-index:1010;box-shadow:0 4px 12px rgba(0,0,0,.35);transition:opacity .12s ease}
+.c-nav-dropdown-menu{position:absolute!important;top:48px!important;left:0;display:flex!important;flex-direction:column;visibility:hidden!important;opacity:0!important;pointer-events:none!important;background:#ffffff;border:1px solid #e0e0e0;border-top:2px solid #0f62fe;min-width:148px;z-index:1010;box-shadow:0 4px 12px rgba(0,0,0,.1);transition:opacity .12s ease}
 .c-nav-dropdown:hover .c-nav-dropdown-menu{visibility:visible!important;opacity:1!important;pointer-events:auto!important}
-.c-nav-dropdown-menu a{display:flex!important;align-items:center!important;height:40px!important;padding:0 1rem!important;border-bottom:1px solid #393939!important;border-left:2px solid transparent!important;font-size:.8125rem!important;white-space:nowrap!important;color:#c6c6c6;text-decoration:none}
+.c-nav-dropdown-menu a{display:flex!important;align-items:center!important;height:40px!important;padding:0 1rem!important;border-bottom:1px solid #e0e0e0!important;border-left:2px solid transparent!important;font-size:.8125rem!important;white-space:nowrap!important;color:#525252;text-decoration:none}
 .c-nav-dropdown-menu a:last-child{border-bottom:none!important}
-.c-nav-dropdown-menu a:hover{background:#353535;border-left-color:#3ddbd9!important;color:#f4f4f4}
-.c-nav-dropdown-menu a.active{color:#f4f4f4;background:#1f3131;border-left-color:#3ddbd9!important}
+.c-nav-dropdown-menu a:hover{background:#f4f4f4;border-left-color:#0f62fe!important;color:#161616}
+.c-nav-dropdown-menu a.active{color:#0f62fe;background:#edf5ff;border-left-color:#0f62fe!important}
 
     .q-tile { background:#fff; border:1px solid #c6c6c6; padding:1.5rem; margin-bottom:1rem; }
-    .q-number { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; background:#007d79; color:#fff; font-size:0.75rem; font-weight:700; border-radius:50%; margin-right:0.75rem; flex-shrink:0; }
-    .q-domain-label { font-size:0.7rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#007d79; margin-bottom:0.5rem; }
+    .q-number { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; background:#0f62fe; color:#fff; font-size:0.75rem; font-weight:700; border-radius:50%; margin-right:0.75rem; flex-shrink:0; }
+    .q-domain-label { font-size:0.7rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#0f62fe; margin-bottom:0.5rem; }
     .q-axis-label { font-size:0.65rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#6f6f6f; margin-bottom:0.25rem; }
     .q-text { font-size:0.9375rem; font-weight:500; color:#161616; line-height:1.45; margin-bottom:1rem; display:flex; align-items:flex-start; gap:0; }
     .q-text-inner { flex:1; }
     .answer-opt { display:flex; align-items:flex-start; gap:0.75rem; padding:0.75rem 1rem; margin-bottom:0.5rem; border:1px solid #e0e0e0; cursor:pointer; transition:all 0.15s; background:#f4f4f4; }
-    .answer-opt:hover { background:#d9fbfb; border-color:#007d79; }
-    .answer-opt.selected { background:#d9fbfb; border-color:#007d79; border-left:3px solid #007d79; }
-    .answer-label { font-size:0.75rem; font-weight:700; color:#007d79; min-width:20px; padding-top:1px; }
+    .answer-opt:hover { background:#edf5ff; border-color:#0f62fe; }
+    .answer-opt.selected { background:#edf5ff; border-color:#0f62fe; border-left:3px solid #0f62fe; }
+    .answer-label { font-size:0.75rem; font-weight:700; color:#0f62fe; min-width:20px; padding-top:1px; }
     .answer-text { font-size:0.875rem; color:#525252; line-height:1.4; }
     .answer-opt.selected .answer-text { color:#161616; }
     .domain-btn { padding:0.875rem 1rem; border:1px solid #c6c6c6; background:#fff; cursor:pointer; text-align:left; margin-bottom:0.5rem; transition:all 0.15s; border-left:3px solid transparent; width:100%; }
     .domain-btn:hover { background:#f4f4f4; }
-    .domain-btn.active { border-left-color:#007d79; background:#d9fbfb; }
+    .domain-btn.active { border-left-color:#0f62fe; background:#edf5ff; }
     .domain-btn-name { font-size:0.875rem; font-weight:600; color:#161616; }
     .domain-btn-sub { font-size:0.75rem; color:#6f6f6f; margin-top:2px; }
     .sidebar-section { padding:1rem 1.25rem; border-bottom:1px solid #e0e0e0; }
@@ -40,13 +40,13 @@
     #submitBtn:disabled { opacity:0.45; cursor:not-allowed; }
     .result-band { display:inline-block; padding:0.5rem 1.5rem; font-size:1.125rem; font-weight:600; margin-bottom:1.5rem; }
     .band-ready { background:#d0f0e0; color:#0a6640; }
-    .band-opp { background:#d9fbfb; color:#004144; }
+    .band-opp { background:#edf5ff; color:#002d9c; }
     .band-candidate { background:#fef3cd; color:#8a6800; }
     .band-essential { background:#ffe0e0; color:#a2191f; }
     .sub-score-row { display:flex; align-items:center; gap:1rem; padding:0.5rem 0; border-bottom:1px solid #e0e0e0; }
     .sub-score-label { font-size:0.8125rem; color:#525252; flex:1; }
     .sub-score-bar-wrap { width:120px; height:6px; background:#e0e0e0; }
-    .sub-score-bar { height:100%; background:#007d79; }
+    .sub-score-bar { height:100%; background:#0f62fe; }
     .sub-score-val { font-size:0.8125rem; font-weight:600; color:#161616; min-width:30px; text-align:right; }
     .focus-item { padding:0.75rem 1rem; background:#f4f4f4; border-left:3px solid #da1e28; margin-bottom:0.5rem; }
     .focus-item-title { font-size:0.875rem; font-weight:600; color:#161616; }
@@ -59,25 +59,25 @@
     .ms-practicing { background:#f1c21b; color:#161616 !important; }
     .ms-optimizing { background:#42be65; }
     .ms-leading { background:#0a6640; }
-    .maturity-pct { font-size:2rem; font-weight:700; color:#007d79; }
+    .maturity-pct { font-size:2rem; font-weight:700; color:#0f62fe; }
     .maturity-label { font-size:0.8125rem; color:#525252; }
     /* Dimension radar grid */
     .dim-radar-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:1.5rem; margin-top:1.5rem; }
     .dim-radar-card { background:#fff; border:1px solid #c6c6c6; padding:1.25rem; }
     .dim-radar-title { font-size:0.8125rem; font-weight:700; color:#161616; margin-bottom:0.25rem; }
-    .dim-radar-score { font-size:0.75rem; color:#007d79; font-weight:600; margin-bottom:0.75rem; }
+    .dim-radar-score { font-size:0.75rem; color:#0f62fe; font-weight:600; margin-bottom:0.75rem; }
 
     /* ── Domain Results View Tabs ── */
     .res-view-tabs { display:flex; gap:0; border-bottom:2px solid #e0e0e0; margin-bottom:1.25rem; }
     .res-view-tab { padding:0.625rem 1rem; font-size:0.8125rem; font-weight:600; color:#525252; background:none; border:none; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; font-family:'IBM Plex Sans',sans-serif; transition:all 0.15s; }
     .res-view-tab:hover { color:#161616; background:#f4f4f4; }
-    .res-view-tab.active { color:#007d79; border-bottom-color:#007d79; }
+    .res-view-tab.active { color:#0f62fe; border-bottom-color:#0f62fe; }
     .res-view-panel { display:none; }
     .res-view-panel.active { display:block; }
 
     /* ── Sub-domain Scorecard ── */
     .sd-card { background:#fff; border:1px solid #e0e0e0; margin-bottom:0.75rem; cursor:pointer; transition:border-color 0.15s; }
-    .sd-card:hover { border-color:#007d79; }
+    .sd-card:hover { border-color:#0f62fe; }
     .sd-card-header { padding:0.75rem 1rem; display:flex; justify-content:space-between; align-items:center; }
     .sd-card-name { font-size:0.875rem; font-weight:600; color:#161616; }
     .sd-card-meta { display:flex; align-items:center; gap:0.75rem; }
@@ -90,7 +90,7 @@
     /* ── Drill-down Panel ── */
     .drill-panel { background:#fff; border:1px solid #e0e0e0; padding:1.25rem; margin-bottom:1.5rem; display:none; }
     .drill-panel.open { display:block; }
-    .drill-back { font-size:0.75rem; color:#007d79; cursor:pointer; border:none; background:none; font-family:'IBM Plex Sans',sans-serif; font-weight:600; padding:0; margin-bottom:0.75rem; }
+    .drill-back { font-size:0.75rem; color:#0f62fe; cursor:pointer; border:none; background:none; font-family:'IBM Plex Sans',sans-serif; font-weight:600; padding:0; margin-bottom:0.75rem; }
     .drill-back:hover { text-decoration:underline; }
     .drill-q-row { padding:0.625rem 0; border-bottom:1px solid #f4f4f4; }
     .drill-q-text { font-size:0.8125rem; color:#161616; margin-bottom:0.375rem; font-weight:500; }
@@ -108,8 +108,8 @@
     /* ── Overlay Toggle ── */
     .overlay-toggle { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem; }
     .overlay-chip { padding:0.25rem 0.625rem; font-size:0.6875rem; font-weight:600; border:1px solid #c6c6c6; background:#fff; cursor:pointer; border-radius:12px; font-family:'IBM Plex Sans',sans-serif; transition:all 0.15s; }
-    .overlay-chip:hover { border-color:#007d79; }
-    .overlay-chip.active { background:#007d79; color:#fff; border-color:#007d79; }
+    .overlay-chip:hover { border-color:#0f62fe; }
+    .overlay-chip.active { background:#0f62fe; color:#fff; border-color:#0f62fe; }
 
     /* ── Strongest / Weakest highlights ── */
     .highlight-row { display:flex; align-items:center; gap:0.75rem; padding:0.5rem 0; font-size:0.8125rem; }
@@ -121,8 +121,8 @@
 
     /* ── Portfolio Cross-Domain ── */
     .portfolio-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1rem; margin-bottom:1.5rem; }
-    .portfolio-card { background:#fff; border:1px solid #e0e0e0; padding:1.25rem; cursor:pointer; transition:border-color 0.15s; border-top:3px solid #007d79; }
-    .portfolio-card:hover { border-color:#007d79; }
+    .portfolio-card { background:#fff; border:1px solid #e0e0e0; padding:1.25rem; cursor:pointer; transition:border-color 0.15s; border-top:3px solid #0f62fe; }
+    .portfolio-card:hover { border-color:#0f62fe; }
     .portfolio-card-title { font-size:0.875rem; font-weight:600; color:#161616; margin-bottom:0.5rem; }
     .portfolio-card-pct { font-size:2rem; font-weight:300; color:#161616; }
     .portfolio-card-band { margin-top:0.25rem; }
@@ -136,7 +136,7 @@
     .summary-toggle { display:flex; gap:0.5rem; margin-bottom:0; }
     .summary-toggle-btn { flex:1; padding:0.5rem; font-size:0.75rem; font-weight:600; border:1px solid #c6c6c6; background:#fff; cursor:pointer; text-align:center; color:#525252; font-family:'IBM Plex Sans',sans-serif; transition:all 0.15s; }
     .summary-toggle-btn:hover { background:#f4f4f4; }
-    .summary-toggle-btn.active { background:#007d79; color:#fff; border-color:#007d79; }
+    .summary-toggle-btn.active { background:#0f62fe; color:#fff; border-color:#0f62fe; }
     .sum-domain-card { background:#fff; border:1px solid #e0e0e0; margin-bottom:1rem; }
     .sum-domain-header { padding:0.75rem 1rem; border-bottom:1px solid #e0e0e0; display:flex; justify-content:space-between; align-items:center; cursor:pointer; }
     .sum-domain-header:hover { background:#f4f4f4; }
@@ -157,7 +157,7 @@
     .sum-empty { text-align:center; padding:2rem; color:#6f6f6f; font-size:0.8125rem; }
     .sum-mini-radar-wrap { display:flex; justify-content:center; margin:0.75rem 0; }
     .sum-history-row { padding:0.5rem 0.75rem; border-bottom:1px solid #e0e0e0; font-size:0.75rem; cursor:pointer; transition:background 0.1s; }
-    .sum-history-row:hover { background:#d9fbfb; }
+    .sum-history-row:hover { background:#edf5ff; }
     .sum-history-date { color:#6f6f6f; font-family:'IBM Plex Mono',monospace; }
     .sum-history-name { font-weight:600; color:#161616; }
     .sum-history-band { font-size:0.625rem; font-weight:700; padding:1px 6px; border-radius:8px; }
@@ -180,7 +180,7 @@
 <nav class="c-nav">
   <div class="container">
     <a href="/" class="c-nav-brand">
-      <svg width="24" height="24" viewBox="0 0 32 32"><rect width="32" height="32" fill="#007d79"/><text x="4" y="22" font-family="IBM Plex Sans" font-size="13" font-weight="700" fill="white">BO</text></svg>
+      <svg width="24" height="24" viewBox="0 0 32 32"><rect width="32" height="32" fill="#0f62fe"/><text x="4" y="22" font-family="IBM Plex Sans" font-size="13" font-weight="700" fill="white">BO</text></svg>
       NextGen Business Operations
     </a>
     <div class="c-nav-links">
@@ -208,7 +208,7 @@
 
 <div class="page-header">
   <div class="container">
-    <div class="eyebrow" style="color:#3ddbd9;">Business Operations OPERATIONAL MATURITY ASSESSMENT</div>
+    <div class="eyebrow" style="color:#78a9ff;">Business Operations OPERATIONAL MATURITY ASSESSMENT</div>
     <h1 style="color:#f4f4f4;margin-top:0.5rem;">Business Operations Maturity Assessment</h1>
     <p style="color:#c6c6c6;max-width:640px;">Complete the 20-question diagnostic for your chosen domain. Receive a maturity score with per-dimension radar charts across Operating Model, Metrics, Process & Policy, Technology, and Controls.</p>
   </div>
@@ -232,7 +232,7 @@
       <select class="cds-select" id="clientSelect" style="margin-bottom:0.5rem;" onchange="onClientChange()">
         <option value="">Loading clients...</option>
       </select>
-      <button class="btn-ghost btn-sm" onclick="document.getElementById('addClientModal').classList.add('open')" style="font-size:0.75rem;padding:0;color:#007d79;background:none;border:none;cursor:pointer;">+ Add New Client</button>
+      <button class="btn-ghost btn-sm" onclick="document.getElementById('addClientModal').classList.add('open')" style="font-size:0.75rem;padding:0;color:#0f62fe;background:none;border:none;cursor:pointer;">+ Add New Client</button>
     </div>
 
     <div class="sidebar-section assess-only">
@@ -1273,7 +1273,7 @@ function renderDomainView(containerId, dims, dimScores, dimData, label) {
     const cardId  = 'sdCard_' + dim.replace(/[^a-zA-Z0-9]/g,'_');
     const drillId = 'drill_' + cardId;
     const [bBg, bColor] = bandColors(dimBand.cls);
-    const barColor = dimPct >= 60 ? '#007d79' : dimPct >= 40 ? '#e68a00' : '#da1e28';
+    const barColor = dimPct >= 60 ? '#0f62fe' : dimPct >= 40 ? '#e68a00' : '#da1e28';
 
     const card = document.createElement('div');
     card.className = 'sd-card';
@@ -1297,7 +1297,7 @@ function renderDomainView(containerId, dims, dimScores, dimData, label) {
           const qScore= ans?.score || 0;
           const qPct  = Math.round((qScore/4)*100);
           const qLabel= ans?.label || 'Not answered';
-          const qColor= qPct >= 60 ? '#007d79' : qPct >= 40 ? '#e68a00' : '#da1e28';
+          const qColor= qPct >= 60 ? '#0f62fe' : qPct >= 40 ? '#e68a00' : '#da1e28';
           return `<div class="drill-q-row">
             <div style="font-size:0.8125rem;color:#161616;line-height:1.45;margin-bottom:0.375rem;">${q.text}</div>
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.25rem;">
@@ -1328,7 +1328,7 @@ function renderScorecardBlock(title, dims, dimScores, dimData) {
           const cardId  = 'sdCard_comb_' + dim.replace(/[^a-zA-Z0-9]/g,'_');
           const drillId = 'drill_' + cardId;
           const [bBg, bColor] = bandColors(dimBand.cls);
-          const barColor = dimPct >= 60 ? '#007d79' : dimPct >= 40 ? '#e68a00' : '#da1e28';
+          const barColor = dimPct >= 60 ? '#0f62fe' : dimPct >= 40 ? '#e68a00' : '#da1e28';
           return `
             <div class="sd-card" id="${cardId}">
               <div class="sd-card-header" onclick="toggleDrill('${drillId}')">
@@ -1346,7 +1346,7 @@ function renderScorecardBlock(title, dims, dimScores, dimData) {
                 <div style="padding:0.875rem 1rem 0;font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#6f6f6f;margin-bottom:0.75rem;">Question Details</div>
                 ${qs.map(q => {
                   const ans=answers[q.id], qScore=ans?.score||0, qPct=Math.round((qScore/4)*100);
-                  const qColor=qPct>=60?'#007d79':qPct>=40?'#e68a00':'#da1e28';
+                  const qColor=qPct>=60?'#0f62fe':qPct>=40?'#e68a00':'#da1e28';
                   return `<div class="drill-q-row">
                     <div style="font-size:0.8125rem;color:#161616;line-height:1.45;margin-bottom:0.375rem;">${q.text}</div>
                     <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.25rem;">
@@ -1366,7 +1366,7 @@ function renderScorecardBlock(title, dims, dimScores, dimData) {
 // ── HELPERS ───────────────────────────────────────────────────────────────────
 function bandColors(cls) {
   if (cls === 'band-ready')     return ['#d0f0e0','#0a6640'];
-  if (cls === 'band-opp')       return ['#d9fbfb','#004144'];
+  if (cls === 'band-opp')       return ['#edf5ff','#002d9c'];
   if (cls === 'band-candidate') return ['#fef3cd','#8a6800'];
   return ['#ffe0e0','#a2191f'];
 }
@@ -1389,9 +1389,9 @@ function drawSpiderChart(canvasId, labels, data, onClickDim) {
         label: 'Score',
         data,
         backgroundColor: 'rgba(0,125,121,0.12)',
-        borderColor: '#007d79',
+        borderColor: '#0f62fe',
         borderWidth: 2,
-        pointBackgroundColor: '#007d79',
+        pointBackgroundColor: '#0f62fe',
         pointRadius: 4,
         pointHoverRadius: 7,
         pointHoverBackgroundColor: '#005c59'
@@ -1544,8 +1544,8 @@ async function loadSummaryData() {
       const label = domainLabels[d.domain] || d.domain;
       const avgPct = Math.round((d.overallAvg / (20 * 4)) * 100); // overall_score is raw total, 20 questions × 4 max
       const band = getMaturityBand(avgPct);
-      const bandBg = band.cls === 'band-ready' ? '#d0f0e0' : band.cls === 'band-opp' ? '#d9fbfb' : band.cls === 'band-candidate' ? '#fef3cd' : '#ffe0e0';
-      const bandColor = band.cls === 'band-ready' ? '#0a6640' : band.cls === 'band-opp' ? '#004144' : band.cls === 'band-candidate' ? '#8a6800' : '#a2191f';
+      const bandBg = band.cls === 'band-ready' ? '#d0f0e0' : band.cls === 'band-opp' ? '#edf5ff' : band.cls === 'band-candidate' ? '#fef3cd' : '#ffe0e0';
+      const bandColor = band.cls === 'band-ready' ? '#0a6640' : band.cls === 'band-opp' ? '#002d9c' : band.cls === 'band-candidate' ? '#8a6800' : '#a2191f';
 
       // Filter assessments for this domain
       const domainAssessments = Array.isArray(allAssessments) ? allAssessments.filter(a => a.domain === d.domain) : [];
@@ -1572,7 +1572,7 @@ async function loadSummaryData() {
                 <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6f6f6f;margin-bottom:0.5rem;">Dimension Scores</div>
                 ${Object.entries(d.avgScores).map(([dim, val]) => {
                   const pctVal = Math.round((val / 4) * 100);
-                  let barColor = '#007d79';
+                  let barColor = '#0f62fe';
                   if (val <= 1.5) barColor = '#da1e28';
                   else if (val <= 2.5) barColor = '#e68a00';
                   return `<div class="sum-dim-row">
@@ -1609,8 +1609,8 @@ async function loadSummaryData() {
               const aDate = new Date(a.created_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
               const aPct = Math.round((a.overall_score / (20 * 4)) * 100);
               const aBand = getMaturityBand(aPct);
-              const aBandBg = aBand.cls === 'band-ready' ? '#d0f0e0' : aBand.cls === 'band-opp' ? '#d9fbfb' : aBand.cls === 'band-candidate' ? '#fef3cd' : '#ffe0e0';
-              const aBandColor = aBand.cls === 'band-ready' ? '#0a6640' : aBand.cls === 'band-opp' ? '#004144' : aBand.cls === 'band-candidate' ? '#8a6800' : '#a2191f';
+              const aBandBg = aBand.cls === 'band-ready' ? '#d0f0e0' : aBand.cls === 'band-opp' ? '#edf5ff' : aBand.cls === 'band-candidate' ? '#fef3cd' : '#ffe0e0';
+              const aBandColor = aBand.cls === 'band-ready' ? '#0a6640' : aBand.cls === 'band-opp' ? '#002d9c' : aBand.cls === 'band-candidate' ? '#8a6800' : '#a2191f';
               return `<div class="sum-history-row" onclick="viewHistoricalAssessment('${a.id}', '${d.domain}')">
                 <span class="sum-history-date">${aDate}</span>
                 <span class="sum-history-name" style="margin-left:0.75rem;">${a.stakeholder_name}</span>
@@ -1634,9 +1634,9 @@ async function loadSummaryData() {
             label: 'Average',
             data: vals,
             backgroundColor: 'rgba(0,125,121,0.15)',
-            borderColor: '#007d79',
+            borderColor: '#0f62fe',
             borderWidth: 2,
-            pointBackgroundColor: '#007d79',
+            pointBackgroundColor: '#0f62fe',
             pointRadius: 3
           }]
         },
