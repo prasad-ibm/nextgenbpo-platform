@@ -1,5 +1,5 @@
 require('dotenv').config();
-const APP_VERSION = '3.7.0'; // updated: Platform nav moved to end
+const APP_VERSION = '3.8.0'; // updated: assets page replaced with agentstart-style asset library
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');

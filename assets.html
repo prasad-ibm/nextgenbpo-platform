@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Business Operations Playbooks &amp; Accelerators | NextGen Business Operations</title>
-  <link rel="stylesheet" href="/bpo-theme.css?v=3.4" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/bpo-theme.css?v=3.4"/>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet"/>
   <style>
 /* ── NAV DROPDOWN (inline) ─────────────────────────────────── */
 .c-nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
@@ -24,134 +22,123 @@
 .page-header p{color:#525252!important;}
 .page-header .eyebrow,.page-header .label-teal,.page-header .section-eyebrow{color:#0f62fe!important;}
 
+/* ── ASSET LIBRARY STYLES ─────────────────────────────────── */
+:root{--bg-0:#ffffff;--bg-1:#f4f4f4;--bg-2:#e0e0e0;--bg-card:#ffffff;--bg-card-h:#f4f4f4;--blue:#0f62fe;--blue-l:#0043ce;--blue-pale:#edf5ff;--cyan:#0072c3;--cyan-d:#00539a;--gold:#b28600;--green:#198038;--green-d:#0e6027;--red:#da1e28;--purple:#6929c4;--text-0:#161616;--text-1:#393939;--text-2:#525252;--border:#e0e0e0;--border-b:#0f62fe;--radius:0px;--radius-lg:2px;--shadow:0 1px 3px rgba(0,0,0,0.1);--transition:0.15s ease;}
+body{overflow-x:hidden;}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+.badge-cyan{background:rgba(69,137,255,0.12);color:var(--cyan);border:1px solid rgba(69,137,255,0.3);}
+.badge-gold{background:rgba(241,194,27,0.1);color:var(--gold);border:1px solid rgba(241,194,27,0.25);}
+.badge-green{background:rgba(66,190,101,0.1);color:var(--green);border:1px solid rgba(66,190,101,0.25);}
+.badge-purple{background:rgba(165,110,255,0.1);color:var(--purple);border:1px solid rgba(165,110,255,0.25);}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #0f62fe;background:transparent;color:#0f62fe;text-decoration:none;transition:var(--transition);}
+.btn-ghost:hover{background:var(--blue-pale);color:#0043ce;text-decoration:none;}
 
-    .filter-tab {
-      padding: 0.5rem 1.5rem;
-      font-size: 0.875rem;
-      cursor: pointer;
-      border: 1px solid #c6c6c6;
-      background: white;
-      color: #525252;
-      transition: all 0.15s;
-      font-family: 'IBM Plex Sans', sans-serif;
-    }
-    .filter-tab.active {
-      background: #0f62fe;
-      color: white;
-      border-color: #0f62fe;
-    }
-    .filter-tab:hover:not(.active) {
-      background: #f4f4f4;
-    }
-    .filter-tabs {
-      display: flex;
-      gap: 0;
-      margin-bottom: 2rem;
-    }
-    .filter-tabs .filter-tab:first-child {
-      border-radius: 4px 0 0 4px;
-    }
-    .filter-tabs .filter-tab:last-child {
-      border-radius: 0 4px 4px 0;
-    }
-    .filter-tabs .filter-tab:not(:first-child) {
-      border-left: none;
-    }
-    .asset-card {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-    .asset-card-body {
-      flex: 1;
-    }
-    .asset-card-footer {
-      margin-top: auto;
-      padding-top: 1rem;
-      border-top: 1px solid #e0e0e0;
-    }
-    .tag-gold {
-      background: #fdf4dc;
-      color: #8a5900;
-      padding: 2px 8px;
-      border-radius: 2px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      font-family: 'IBM Plex Mono', monospace;
-      display: inline-block;
-    }
-    .tag-purple {
-      background: #f2e8fb;
-      color: #6e32c9;
-      padding: 2px 8px;
-      border-radius: 2px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      font-family: 'IBM Plex Mono', monospace;
-      display: inline-block;
-    }
-    .cta-strip {
-      background: #f4f4f4;
-      border: 1px solid #e0e0e0;
-      border-radius: 4px;
-      padding: 2.5rem 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-    .cta-strip h3 {
-      margin: 0 0 0.5rem;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #161616;
-    }
-    .cta-strip p {
-      margin: 0;
-      color: #525252;
-      font-size: 0.9375rem;
-    }
-    .asset-type-tag {
-      display: inline-block;
-      padding: 2px 8px;
-      font-size: 0.75rem;
-      font-family: 'IBM Plex Mono', monospace;
-      font-weight: 600;
-      border-radius: 2px;
-    }
-    .asset-type-playbook { background: #eaf6ff; color: #0050e6; }
-    .asset-type-framework { background: #e8f5e9; color: #198038; }
-    .asset-type-sop { background: #fff8e1; color: #8a5900; }
-    .asset-type-toolkit { background: #f3e8fb; color: #6e32c9; }
-    .asset-type-guide { background: #fff0f0; color: #da1e28; }
-    .tag-count {
-      font-size: 0.75rem;
-      color: #8d8d8d;
-      font-family: 'IBM Plex Mono', monospace;
-      margin-left: 0.75rem;
-    }
+/* PAGE HEADER EXTENSION */
+.ph-hero{padding:80px 0 3rem;background:linear-gradient(180deg,rgba(15,98,254,0.06),transparent);}
+.ph-inner{max-width:700px;}
+
+/* FILTERS */
+.filters{background:var(--bg-1);border-bottom:1px solid var(--border);padding:1rem 0;position:sticky;top:48px;z-index:50;}
+.filter-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.filter-group{display:flex;gap:0.5rem;flex-wrap:wrap;}
+.filter-btn{padding:6px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text-1);font-family:inherit;transition:var(--transition);}
+.filter-btn:hover,.filter-btn.active{border-color:var(--blue-l);color:var(--blue-l);background:rgba(69,137,255,0.12);}
+.filter-sep{width:1px;height:24px;background:var(--border);}
+.search-box{flex:1;max-width:280px;background:var(--bg-card);border:1px solid var(--border);padding:6px 12px;color:var(--text-0);font-family:inherit;font-size:13px;}
+.search-box::placeholder{color:var(--text-2);}
+.search-box:focus{outline:none;border-color:var(--border-b);}
+
+/* ASSET GRID */
+.assets-page{padding:2rem 0 4rem;}
+.asset-count{font-size:12px;color:var(--text-2);margin-bottom:1.5rem;}
+.asset-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.25rem;}
+.asset-card{background:var(--bg-card);border:1px solid var(--border);padding:1.5rem;transition:var(--transition);display:flex;flex-direction:column;}
+.asset-card:hover{background:var(--bg-card-h);border-color:var(--border-b);transform:translateY(-2px);box-shadow:var(--shadow);}
+.ac-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;gap:1rem;}
+.ac-icon{font-size:2rem;flex-shrink:0;}
+.ac-meta{flex:1;}
+.ac-name{font-size:15px;font-weight:700;margin-bottom:4px;color:var(--text-0);}
+.ac-process{font-size:11px;color:var(--text-2);letter-spacing:0.5px;}
+.ac-desc{font-size:13px;color:var(--text-1);line-height:1.6;margin-bottom:1rem;flex:1;}
+.ac-metrics{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:1rem;}
+.acm{background:var(--bg-1);padding:8px;text-align:center;}
+.acm-val{font-size:1.1rem;font-weight:700;line-height:1;}
+.acm-lbl{font-size:10px;color:var(--text-2);margin-top:2px;}
+.ac-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem;}
+.ac-tag{font-size:10px;padding:2px 8px;font-weight:600;background:var(--bg-2);color:var(--text-2);}
+.ac-footer{display:flex;align-items:center;justify-content:space-between;padding-top:0.75rem;border-top:1px solid var(--border);}
+.ac-deploy-time{font-size:11px;color:var(--text-2);}
+.ac-deploy-time strong{color:var(--gold);}
+.ac-btn{padding:6px 14px;background:rgba(15,98,254,0.15);border:1px solid rgba(15,98,254,0.3);color:var(--blue-l);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:var(--transition);}
+.ac-btn:hover{background:var(--blue);color:#fff;}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:200;display:none;align-items:center;justify-content:center;padding:2rem;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--bg-1);border:1px solid var(--border-b);border-radius:4px;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:2rem;}
+.modal-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;}
+.modal-close{background:var(--bg-2);border:none;color:var(--text-1);font-size:1.2rem;cursor:pointer;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;}
+.modal-section{margin-bottom:1.5rem;}
+.modal-section h4{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-2);margin-bottom:0.75rem;}
+.modal-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-bottom:1rem;}
+.mm{background:var(--bg-card);padding:12px;text-align:center;border:1px solid var(--border);}
+.mm-val{font-size:1.5rem;font-weight:700;}
+.mm-lbl{font-size:10px;color:var(--text-2);margin-top:2px;}
+.step-list{display:flex;flex-direction:column;gap:8px;}
+.step-item{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-1);}
+.step-num{width:20px;height:20px;border-radius:50%;background:rgba(15,98,254,0.15);color:var(--cyan);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.int-list{display:flex;gap:6px;flex-wrap:wrap;}
+.int-badge{padding:4px 10px;background:var(--bg-card);border:1px solid var(--border);font-size:11px;color:var(--text-1);}
+
+@media(max-width:768px){.filter-row{flex-direction:column;align-items:flex-start;}.asset-grid{grid-template-columns:1fr;}}
+
+/* ── MOBILE GATE ─────────────────── */
+#mobile-gate{position:fixed;inset:0;z-index:9999;background:#f4f4f4;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center;overflow-y:auto;}
+.mg-logo{width:64px;height:24px;background:#0f62fe;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;letter-spacing:1px;color:#fff;margin:0 auto 1.5rem;}
+.mg-icon{font-size:52px;margin-bottom:1rem;}
+.mg-title{font-size:22px;font-weight:700;color:#161616;margin-bottom:.75rem;line-height:1.2;}
+.mg-body{font-size:14px;color:#525252;line-height:1.6;margin-bottom:1.25rem;max-width:320px;}
+.mg-hint{font-size:11px;color:#8d8d8d;margin-bottom:1.75rem;display:flex;align-items:center;justify-content:center;gap:6px;background:#fff;border:1px solid #e0e0e0;padding:8px 16px;max-width:320px;}
+.mg-btn-p{background:#0f62fe;color:#fff;border:none;padding:14px 28px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;width:100%;max-width:320px;margin-bottom:10px;letter-spacing:.3px;}
+.mg-btn-s{background:transparent;color:#0f62fe;border:1px solid #0f62fe;padding:12px 28px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;width:100%;max-width:320px;}
+@media(min-width:768px){#mobile-gate{display:none!important;}}
   </style>
 </head>
 <body>
 
+<!-- ── AUTH CHECK ── -->
 <script src="/config.js"></script>
 <script>
-(async () => {
-  await new Promise(r => setTimeout(r, 50));
-  if (window.PLATFORM_CONFIG?.protectedMode) {
-    const token = sessionStorage.getItem('bpo_token');
-    if (!token) { window.location.href = '/login.html'; return; }
-    const r = await fetch('/api/verify', { headers: { 'Authorization': 'Bearer ' + token } });
-    if (!r.ok) { sessionStorage.clear(); window.location.href = '/login.html'; }
+(async()=>{
+  await new Promise(r=>setTimeout(r,50));
+  if(window.PLATFORM_CONFIG?.protectedMode){
+    const token=sessionStorage.getItem('bpo_token');
+    if(!token){window.location.href='/login.html';return;}
+    const r=await fetch('/api/verify',{headers:{'Authorization':'Bearer '+token}});
+    if(!r.ok){sessionStorage.clear();window.location.href='/login.html';}
   }
 })();
 </script>
 
+<!-- ── MOBILE GATE ── -->
+<div id="mobile-gate">
+  <div class="mg-logo">BO</div>
+  <div class="mg-icon">🖥️</div>
+  <div class="mg-title">Best on a large screen</div>
+  <div class="mg-body">The Playbooks & Accelerators library contains interactive AI asset cards, capability filters, and integration maps — designed for desktop and large-screen viewing.</div>
+  <div class="mg-hint"><span>📐</span> Recommended: 1280px wide or larger</div>
+  <button class="mg-btn-p" onclick="document.getElementById('mobile-gate').style.display='none'">Continue on this device →</button>
+  <button class="mg-btn-s" onclick="document.getElementById('mobile-gate').style.display='none'">View anyway</button>
+</div>
+
+<!-- ── NAV ── -->
 <nav class="c-nav">
   <div class="container">
     <a href="/" class="c-nav-brand">
-      <svg width="24" height="24" viewBox="0 0 32 32"><rect width="32" height="32" fill="#0f62fe"/><text x="4" y="22" font-family="IBM Plex Sans" font-size="13" font-weight="700" fill="white">BO</text></svg>
+      <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" fill="#0f62fe"/>
+        <text x="6" y="22" font-family="IBM Plex Sans" font-size="14" font-weight="700" fill="white">BO</text>
+      </svg>
       NextGen Business Operations
     </a>
     <div class="c-nav-links">
@@ -180,371 +167,198 @@ const _c=sessionStorage.getItem('bpo_client');
 if(_c){document.getElementById('nav-client').textContent=_c;document.getElementById('nav-logout').hidden=false;}
 </script>
 
-<!-- Page Header -->
-<section class="page-header">
+<!-- ── PAGE HERO ── -->
+<div class="ph-hero">
   <div class="container">
-    <div class="eyebrow">Business Operations PLAYBOOKS &amp; ACCELERATORS</div>
-    <h1>Process Improvement Frameworks &amp; Transformation Toolkits</h1>
-    <p>Ready-to-deploy methodology guides, SOP templates, governance frameworks, and transformation accelerators for HR, Finance, and Procurement Business Operations programmes.</p>
+    <div class="ph-inner">
+      <span class="badge badge-cyan" style="margin-bottom:1rem;">⚡ Pre-Built AI Assets</span>
+      <h1 style="font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;margin-bottom:0.75rem;color:#0f62fe;">Business Operations Playbooks &amp; Accelerators</h1>
+      <p style="font-size:1rem;color:#525252;line-height:1.7;margin-bottom:1.5rem;">16+ pre-built agents, automation accelerators, and process templates — validated across Finance, HR, and Procurement. Each asset ships with integration playbooks, benchmark targets, IBM proof points, and ROI tracking built in.</p>
+      <a href="/assess.html" class="btn-primary" style="display:inline-flex;align-items:center;gap:8px;padding:10px 24px;font-size:13px;font-weight:600;text-decoration:none;background:#0f62fe;color:#fff;">Run Maturity Assessment →</a>
+    </div>
   </div>
-</section>
+</div>
 
-<!-- Filter Tabs + Asset Grid -->
-<section class="section">
+<!-- ── FILTERS ── -->
+<div class="filters">
   <div class="container">
-
-    <div style="display:flex;align-items:center;margin-bottom:2rem;">
-      <div class="filter-tabs" role="tablist" aria-label="Filter by domain">
-        <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">All</button>
-        <button class="filter-tab" data-filter="procurement" role="tab" aria-selected="false">Procurement</button>
-        <button class="filter-tab" data-filter="finance" role="tab" aria-selected="false">Finance</button>
-        <button class="filter-tab" data-filter="hr" role="tab" aria-selected="false">HR</button>
+    <div class="filter-row">
+      <div class="filter-group" id="domainFilters">
+        <button class="filter-btn active" data-domain="all">All Domains</button>
+        <button class="filter-btn" data-domain="finance">💰 Finance</button>
+        <button class="filter-btn" data-domain="hr">👥 HR</button>
+        <button class="filter-btn" data-domain="procurement">🔗 Procurement</button>
       </div>
-      <span class="tag-count" id="assetCount">18 assets</span>
+      <div class="filter-sep"></div>
+      <div class="filter-group" id="maturityFilters">
+        <button class="filter-btn active" data-maturity="all">All Maturity Gaps</button>
+        <button class="filter-btn" data-maturity="1-2">L1–L2 Gaps</button>
+        <button class="filter-btn" data-maturity="3">L3 Gaps</button>
+        <button class="filter-btn" data-maturity="4">L4 Gaps</button>
+      </div>
+      <div class="filter-sep"></div>
+      <input class="search-box" type="text" id="searchBox" placeholder="🔍 Search assets..." oninput="renderAssets()"/>
     </div>
-
-    <div class="grid-3" id="assetGrid">
-
-      <!-- ── PROCUREMENT (6) ── -->
-
-      <!-- 1 -->
-      <div class="tile asset-card" data-domain="procurement">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-teal">Procurement</span>
-            <span class="asset-type-tag asset-type-playbook">Playbook</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">Source-to-Pay Transformation Playbook</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">A comprehensive guide to redesigning your S2P operating model from Category Management through Accounts Payable. Covers FTE baselining, process redesign, technology selection, and transition planning.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- 2 -->
-      <div class="tile asset-card" data-domain="procurement">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-teal">Procurement</span>
-            <span class="asset-type-tag asset-type-framework">Framework</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">Accounts Payable Automation Roadmap</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">Step-by-step approach to increasing AP touchless rates from baseline to 70%+. Covers e-invoicing, EDI/ERS setup, exception management, and vendor enablement.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- 3 -->
-      <div class="tile asset-card" data-domain="procurement">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-teal">Procurement</span>
-            <span class="asset-type-tag asset-type-sop">SOP Template</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">Vendor Master Governance SOP</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">Standardised procedures for vendor add/change/delete workflows, duplicate detection, and audit trail requirements. Includes approval matrix and escalation paths.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- 4 -->
-      <div class="tile asset-card" data-domain="procurement">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-teal">Procurement</span>
-            <span class="asset-type-tag asset-type-framework">Framework</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">Category Management Maturity Model</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">Five-level maturity model for category management from reactive buying through strategic value delivery. Includes self-assessment tool and improvement roadmap.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- 5 -->
-      <div class="tile asset-card" data-domain="procurement">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-teal">Procurement</span>
-            <span class="asset-type-tag asset-type-guide">Guide</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">Procurement Compliance Measurement Guide</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">How to define, measure, and improve procurement compliance rate. Covers spend categorisation, exception tracking, and root-cause analysis templates.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- 6 -->
-      <div class="tile asset-card" data-domain="procurement">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-teal">Procurement</span>
-            <span class="asset-type-tag asset-type-toolkit">Toolkit</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">P-Card &amp; T&amp;E Control Framework</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">Governance model for P-Card programmes and T&amp;E expense management. Includes policy templates, analytics dashboards, and exception monitoring procedures.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- ── FINANCE (6) ── -->
-
-      <!-- 7 -->
-      <div class="tile asset-card" data-domain="finance">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-blue">Finance</span>
-            <span class="asset-type-tag asset-type-playbook">Playbook</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">Record-to-Report Business Operations Transition Playbook</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">End-to-end guide for transitioning R2R activities to a Business Operations provider. Covers journal entry, reconciliation, consolidation, and reporting processes.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- 8 -->
-      <div class="tile asset-card" data-domain="finance">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-blue">Finance</span>
-            <span class="asset-type-tag asset-type-toolkit">Toolkit</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">Financial Close Acceleration Toolkit</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">Proven techniques for reducing month-end close cycle from 8+ days to under 4 days. Includes close calendar templates, activity checklists, and issue escalation protocols.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- 9 -->
-      <div class="tile asset-card" data-domain="finance">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-blue">Finance</span>
-            <span class="asset-type-tag asset-type-framework">Framework</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">AP/AR Process Redesign Framework</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">Structured approach to redesigning Accounts Payable and Receivable processes for a shared services or outsourced environment. Covers SLA design, KPI baselining, and technology prerequisites.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- 10 -->
-      <div class="tile asset-card" data-domain="finance">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-blue">Finance</span>
-            <span class="asset-type-tag asset-type-sop">SOP Template</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">Treasury &amp; Cash Management SOP</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">Operational procedures for daily cash positioning, bank reconciliation, payment authorisation, and short-term liquidity management in an outsourced treasury model.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- 11 -->
-      <div class="tile asset-card" data-domain="finance">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-blue">Finance</span>
-            <span class="asset-type-tag asset-type-guide">Guide</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">FP&amp;A Shared Services Guide</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">How to centralise and standardise FP&amp;A activities including budgeting, forecasting, and management reporting in a shared services environment.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- 12 -->
-      <div class="tile asset-card" data-domain="finance">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-blue">Finance</span>
-            <span class="asset-type-tag asset-type-toolkit">Toolkit</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">Tax Compliance Business Operations Readiness Checklist</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">Assessment checklist and preparation guide for transitioning indirect and direct tax compliance activities to a Business Operations provider across multiple jurisdictions.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- ── HR (6) ── -->
-
-      <!-- 13 -->
-      <div class="tile asset-card" data-domain="hr">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-green">HR</span>
-            <span class="asset-type-tag asset-type-playbook">Playbook</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">Hire-to-Retire Transformation Playbook</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">Comprehensive methodology for redesigning the end-to-end HR operating model. Covers Talent Acquisition, Onboarding, Payroll, Benefits, and Offboarding in a Business Operations context.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- 14 -->
-      <div class="tile asset-card" data-domain="hr">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-green">HR</span>
-            <span class="asset-type-tag asset-type-framework">Framework</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">Payroll Business Operations Transition Framework</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">Risk-managed approach to outsourcing payroll operations. Covers parallel run procedures, reconciliation controls, cut-over planning, and steady-state governance.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- 15 -->
-      <div class="tile asset-card" data-domain="hr">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-green">HR</span>
-            <span class="asset-type-tag asset-type-guide">Guide</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">HR Shared Services Design Guide</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">How to design and stand up an HR Shared Services Centre (SSC) or select and onboard an HR Business Operations provider. Includes tiered service model and help desk design.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- 16 -->
-      <div class="tile asset-card" data-domain="hr">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-green">HR</span>
-            <span class="asset-type-tag asset-type-sop">SOP Template</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">Employee Case Management SOP</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">Standardised procedures for HR case management including ER cases, policy queries, and grievance handling in a shared services environment.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- 17 -->
-      <div class="tile asset-card" data-domain="hr">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-green">HR</span>
-            <span class="asset-type-tag asset-type-toolkit">Toolkit</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">Benefits Administration Efficiency Toolkit</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">Process improvement toolkit for benefits enrolment, claims administration, and vendor management. Includes automation opportunity assessment and SLA templates.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-      <!-- 18 -->
-      <div class="tile asset-card" data-domain="hr">
-        <div class="asset-card-body">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem;">
-            <span class="tag tag-green">HR</span>
-            <span class="asset-type-tag asset-type-framework">Framework</span>
-          </div>
-          <h4 style="margin:0 0 0.625rem;font-size:1rem;font-weight:600;color:#161616;line-height:1.4;">HR Analytics &amp; Reporting Framework</h4>
-          <p style="font-size:0.875rem;color:#525252;line-height:1.6;margin:0;">Methodology for establishing HR data governance, people analytics capability, and workforce reporting in a Business Operations or shared services model.</p>
-        </div>
-        <div class="asset-card-footer">
-          <a href="#" class="ghost-link" style="font-size:0.875rem;">View →</a>
-        </div>
-      </div>
-
-    </div><!-- /grid-3 -->
-
-    <!-- CTA Strip -->
-    <div class="cta-strip">
-      <div>
-        <h3>Need a custom playbook?</h3>
-        <p>Contact the NextGen Business Operations team to develop a bespoke transformation methodology tailored to your operating environment and objectives.</p>
-      </div>
-      <a href="/assess.html" class="btn-primary" style="white-space:nowrap;flex-shrink:0;">Start with an Assessment →</a>
-    </div>
-
   </div>
-</section>
+</div>
 
-<footer class="c-footer">
+<!-- ── ASSET GRID ── -->
+<div class="assets-page">
   <div class="container">
-    <div class="grid-2" style="gap:2rem;">
-      <div>
-        <div class="footer-brand">NextGen Business Operations Intelligence Platform</div>
-        <div class="footer-tagline" style="margin-top:4px;">Assess. Transform. Operate.</div>
-        <p style="margin-top:1rem;font-size:0.75rem;color:#6f6f6f;">Enabling operational excellence across Procurement, Finance, and HR.</p>
-      </div>
-      <div style="display:flex;gap:3rem;justify-content:flex-end;">
-        <div>
-          <div style="font-size:0.75rem;font-weight:600;color:#8d8d8d;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.75rem;">Platform</div>
-          <div style="display:flex;flex-direction:column;gap:0.5rem;">
-            <a href="/assess.html" style="font-size:0.875rem;">Maturity Assessment</a>
-            <a href="/tracker.html" style="font-size:0.875rem;">Transformation Pipeline</a>
-            <a href="/roi.html" style="font-size:0.875rem;">ROI Tracker</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="section-rule" style="margin:2rem 0;"></div>
-    <p style="font-size:0.75rem;color:#6f6f6f;">© 2025 NextGen Business Operations Intelligence Platform. All rights reserved.</p>
+    <div class="asset-count" id="assetCount"></div>
+    <div class="asset-grid" id="assetGrid"></div>
   </div>
-</footer>
+</div>
+
+<!-- ── MODAL ── -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modalContent"></div>
+</div>
 
 <script>
-  // Tab filter
-  const tabs = document.querySelectorAll('.filter-tab');
-  const cards = document.querySelectorAll('.asset-card');
-  const countEl = document.getElementById('assetCount');
+const ASSETS=[
+  // FINANCE
+  {id:'fin1',domain:'finance',icon:'📄',name:'Invoice Processing Agent',process:'Accounts Payable · P2P',desc:'End-to-end AI-powered invoice processing with OCR ingestion, automated 3-way matching (PO–receipt–invoice), intelligent exception routing, and touchless payment scheduling. Reduces human touchpoints by 80%+.',metrics:[{val:'25%',lbl:'Cost Reduction'},{val:'32%',lbl:'Faster Cycle'},{val:'<5%',lbl:'Exception Rate'}],tags:['SAP S/4','Oracle Fusion','Coupa'],deployWeeks:'4-6',maturityGap:'1-2',
+   detail:{ibmProof:'IBM reduced cost-per-invoice by 25% and cycle time by 32% using AI-powered matching across its global AP operations.',steps:['Ingest invoice via email/portal/EDI','OCR extraction and validation','Automated 3-way PO match','AI exception classification and routing','Payment scheduling and supplier notification'],integrations:['SAP S/4HANA','Oracle Fusion','Coupa','Ariba','Basware']}},
+  {id:'fin2',domain:'finance',icon:'📊',name:'FP&A Forecasting Agent',process:'Financial Planning & Analysis',desc:'AI-generated rolling forecasts, driver-based scenario modeling, and natural language variance explanations. Finance teams get instant narrative commentary on plan vs. actual — no manual analysis required.',metrics:[{val:'33%',lbl:'Faster Cycles'},{val:'57%',lbl:'Error Reduction'},{val:'Real-time',lbl:'Insights'}],tags:['Anaplan','SAP BPC','Oracle EPM','Workday Adaptive'],deployWeeks:'6-8',maturityGap:'3',
+   detail:{ibmProof:'IBM\'s Plan-to-Results platform won the Hackettgroup 2024 Digital Award — budget cycles 33% faster, forecast errors reduced 57%.',steps:['Connect to ERP/EPM data sources','Configure driver-based forecast models','Deploy AI variance commentary engine','Enable NL query interface for CFO','Establish rolling forecast cadence'],integrations:['Anaplan','SAP BPC','Oracle PBCS','Workday Adaptive','Microsoft Fabric']}},
+  {id:'fin3',domain:'finance',icon:'💳',name:'Collections & DSO Agent',process:'Order-to-Cash · Accounts Receivable',desc:'AI-powered collections prioritization, automated dunning sequences, predictive payment probability scoring, and dispute detection. Identifies at-risk receivables before they age, reducing DSO and write-offs.',metrics:[{val:'43%',lbl:'Uncollectibles ↓'},{val:'32%',lbl:'DSO Reduction'},{val:'Auto',lbl:'Dunning'}],tags:['Salesforce','SAP','Oracle AR'],deployWeeks:'4-6',maturityGap:'1-2',
+   detail:{ibmProof:'IBM reduced uncollectible balances by 43% and DSO by 32% through AI-driven O2C automation.',steps:['Ingest AR aging and customer data','Score payment probability per invoice','Auto-generate dunning sequences by segment','Route disputes to specialist agents','Report on cash flow impact in real-time'],integrations:['Salesforce CRM','SAP S/4','Oracle AR','HighRadius','Esker']}},
+  {id:'fin4',domain:'finance',icon:'📋',name:'Close Cycle Accelerator',process:'Record-to-Report · Financial Close',desc:'Automated accrual detection, journal entry processing, account reconciliation matching, and variance narrative generation. Compresses the financial close from 10+ days to under 3 — with human review focused on true exceptions only.',metrics:[{val:'33%',lbl:'Faster Close'},{val:'90%',lbl:'Auto-Matched'},{val:'<3 days',lbl:'Close Target'}],tags:['SAP','Oracle','BlackLine'],deployWeeks:'6-10',maturityGap:'1-2',
+   detail:{ibmProof:'IBM shortened close cycles by 33% and eliminated significant manual reconciliation through AI-powered R2R automation.',steps:['Identify sub-ledger close dependencies','Deploy accrual detection AI agent','Automate standard journal entry processing','Configure reconciliation matching engine','Generate auto-variance commentary for CFO pack'],integrations:['SAP S/4HANA','Oracle Cloud Financials','BlackLine','Trintech Cadency','Workiva']}},
+  {id:'fin5',domain:'finance',icon:'🧾',name:'Tax Document Agent',process:'Tax Processing & Compliance',desc:'AI digital workers for tax document classification, data extraction, provision calculation support, and filing preparation. IBM deployed this internally to eliminate ~100,000 hours of manual tax preparation annually.',metrics:[{val:'100K',lbl:'Hours Saved/yr'},{val:'95%',lbl:'Accuracy Rate'},{val:'Auto',lbl:'Classification'}],tags:['Thomson Reuters','Vertex','SAP'],deployWeeks:'6-8',maturityGap:'1-2',
+   detail:{ibmProof:'IBM used digital workers for tax document parsing and preparation — eliminating approximately 100,000 hours of manual effort annually.',steps:['Ingest tax documents via secure channel','AI classification and data extraction','Cross-reference with ERP transactional data','Calculate provision estimates','Generate audit-ready workpapers'],integrations:['Thomson Reuters ONESOURCE','Vertex','SAP Tax','Oracle Tax','Corptax']}},
+  {id:'fin6',domain:'finance',icon:'💬',name:'Conversational Finance BI',process:'Finance Analytics · CFO Insights',desc:'Natural language query interface for financial data — CFOs and finance leaders ask questions in plain English and receive instant AI-generated insights, charts, and narrative from live ERP data.',metrics:[{val:'Instant',lbl:'Insights'},{val:'NL',lbl:'Query Interface'},{val:'Live',lbl:'ERP Data'}],tags:['Tableau','Power BI','Cognos','SAP Analytics'],deployWeeks:'4-6',maturityGap:'3',
+   detail:{ibmProof:'IBM\'s watsonx-powered EPM enables conversational BI — finance leaders get instant answers to business questions from live data.',steps:['Connect data layer to ERP and EPM','Configure semantic layer for finance domain','Deploy NL query processing agent','Enable auto-chart and narrative generation','Train finance team on conversational use'],integrations:['SAP Analytics Cloud','IBM Cognos','Power BI','Tableau','Snowflake']}},
+  {id:'fin7',domain:'finance',icon:'⚖️',name:'Balance Sheet Analysis Agent',process:'Record-to-Report · Balance Sheet Flux',desc:'End-to-end agentic automation of the monthly balance sheet flux process — from data extraction and variance analysis to AI-generated commentary and exception routing. Eliminates 70–80% of monthly manual effort across preparers, local controllers, and account owners.',metrics:[{val:'75%',lbl:'Manual Effort ↓'},{val:'14 mo',lbl:'Payback Period'},{val:'>214%',lbl:'3-Year ROI'}],tags:['SAP S/4','Workiva','BlackLine','OneStream','Trintech'],deployWeeks:'6-8',maturityGap:'1-2',
+   detail:{ibmProof:'5–7 day close cycle compressed through agentic automation across IBM Preparer, LC, Account Owner, and Corporate Review roles. Benefits of £695K in Year 1 scaling to £1.18M by Year 3, with break-even at Month 14 and cumulative ROI of +214% by Year 3.',steps:['Connect ERP/GL data sources (SAP S/4, Oracle) for automated extraction — 90% ingestion effort eliminated','Deploy material variance detection agent (configurable threshold, e.g. >$2M) with auto-escalation','Enable statistical anomaly detection (>2σ) to surface hidden risks before manual review','Deploy LLM commentary agent: AI drafts BUD vs Actual and PY vs Actual narratives using historical context','Configure intelligent exception routing — routes only genuine exceptions to account owners','Generate full audit trail with agent execution logs for internal/external audit requests'],integrations:['SAP S/4HANA','Oracle Cloud Financials','BlackLine','Workiva','OneStream','Trintech Cadency','Microsoft Excel / Power BI']}},
 
-  function updateCount() {
-    const visible = Array.from(cards).filter(c => c.style.display !== 'none').length;
-    countEl.textContent = visible + ' asset' + (visible !== 1 ? 's' : '');
-  }
+  // HR
+  {id:'hr1',domain:'hr',icon:'🤖',name:'AskHR Virtual Agent',process:'HR Service Delivery · All HR Domains',desc:'Multi-domain HR AI agent handling benefits queries, payroll questions, career guidance, policy lookups, and employee letters. Integrates with Workday, SAP SuccessFactors, and Concur. IBM\'s own deployment achieves 94% containment at 11.5M interactions/year.',metrics:[{val:'94%',lbl:'Auto-Resolved'},{val:'75%',lbl:'Ticket Reduction'},{val:'40%',lbl:'Cost Reduction'}],tags:['Workday','SAP SF','ServiceNow'],deployWeeks:'6-10',maturityGap:'1-2',
+   detail:{ibmProof:'IBM\'s AskHR: 94% containment across 11.5M interactions in 2024. 80+ automated tasks. NPS improved from -35 to +74. 40% HR ops cost reduction over 4 years.',steps:['Configure domain intents (Benefits, Payroll, Career, Compliance)','Connect to HRIS and policy knowledge base','Deploy conversational AI with RAG on 7,000+ policy pages','Enable multi-channel (chat, email, voice)','Set up continuous feedback loop and escalation routing'],integrations:['Workday HCM','SAP SuccessFactors','ServiceNow HRSD','Concur','Microsoft Teams']}},
+  {id:'hr2',domain:'hr',icon:'🎯',name:'AI Recruitment Screener',process:'Talent Acquisition · Recruit-to-Hire',desc:'AI-powered resume screening, skills-based candidate ranking, automated interview scheduling, and offer letter generation. Reduces time-to-hire by 40% while improving quality of hire through objective, bias-mitigated screening.',metrics:[{val:'40%',lbl:'Time-to-Hire ↓'},{val:'3×',lbl:'Throughput'},{val:'60%',lbl:'Screen Time ↓'}],tags:['Workday Recruiting','Greenhouse','Taleo'],deployWeeks:'4-6',maturityGap:'1-2',
+   detail:{ibmProof:'IBM HR documented significant productivity gains in talent acquisition through AI-powered screening and scheduling automation.',steps:['Ingest JD and define skills requirements','Configure AI screening criteria and weighting','Deploy automated scheduling agent','Generate ranked shortlists with reasoning','Automate offer letter drafting and approval workflow'],integrations:['Workday Recruiting','Greenhouse','Taleo (Oracle)','LinkedIn','HireVue']}},
+  {id:'hr3',domain:'hr',icon:'💸',name:'Payroll Automation Agent',process:'Payroll Processing · H2R',desc:'End-to-end payroll query resolution, discrepancy detection, and compliance verification agent. Handles common payroll questions automatically, routes complex issues with full context, and monitors payroll data for anomalies before runs.',metrics:[{val:'90%',lbl:'Queries Auto-Resolved'},{val:'<0.1%',lbl:'Error Rate'},{val:'Real-time',lbl:'Anomaly Detection'}],tags:['Workday Payroll','ADP','SAP Payroll'],deployWeeks:'4-6',maturityGap:'1-2',
+   detail:{ibmProof:'IBM automates payroll query handling through AskHR — 94% of payroll-related questions resolved without human escalation.',steps:['Integrate with payroll system of record','Configure query classification for payroll intents','Deploy anomaly detection on payroll data','Enable employee self-service payslip access','Automate discrepancy investigation workflow'],integrations:['Workday Payroll','ADP GlobalView','SAP Payroll','Ceridian Dayforce','ADP Vantage']}},
+  {id:'hr4',domain:'hr',icon:'🎓',name:'Learning & Skills Agent',process:'Learning & Development · Workforce Development',desc:'AI skills gap analysis, personalized learning path recommendations, and L&D administration automation. Connects to LMS to track completion, certifications, and skills attainment — linked to career pathing.',metrics:[{val:'40%',lbl:'Admin Time ↓'},{val:'AI',lbl:'Skills Mapping'},{val:'Personal',lbl:'Learning Paths'}],tags:['Degreed','Cornerstone','SAP SF Learning'],deployWeeks:'3-5',maturityGap:'3',
+   detail:{ibmProof:'IBM registered 119,000 employees for agentic AI education through AI-coordinated learning programs — demonstrating large-scale L&D automation.',steps:['Map current skills inventory from HRIS','Define role-skill requirements for all roles','AI-identify individual skills gaps','Generate personalized learning path recommendations','Automate enrollment, tracking, and certification alerts'],integrations:['Degreed','Cornerstone OnDemand','SAP SuccessFactors Learning','LinkedIn Learning','Workday Learning']}},
+  {id:'hr5',domain:'hr',icon:'📈',name:'Workforce Intelligence Dashboard',process:'People Analytics · Workforce Planning',desc:'Predictive attrition modeling, real-time skills gap tracking, and AI-driven workforce planning recommendations. Gives HR and business leaders a forward-looking view of talent risk and opportunity.',metrics:[{val:'Predictive',lbl:'Attrition Model'},{val:'Real-time',lbl:'Skills Tracking'},{val:'AI',lbl:'Recommendations'}],tags:['Visier','Workday People Analytics','SAP Analytics'],deployWeeks:'4-8',maturityGap:'3',
+   detail:{ibmProof:'IBM HR achieved 75% productivity gains in domain-specific analytics tasks through AI-powered workforce intelligence.',steps:['Aggregate HR data from HRIS, payroll, L&D','Train attrition prediction model on historical data','Deploy skills gap heat map by function/location','Enable manager self-service people analytics','Configure workforce scenario modeling'],integrations:['Visier','Workday People Analytics','SAP Analytics Cloud','Power BI','Tableau']}},
+  {id:'hr6',domain:'hr',icon:'🔐',name:'HR Compliance Monitor',process:'Policy Compliance · Regulatory HR',desc:'Continuous monitoring of HR policy compliance across multiple jurisdictions, automated deviation flagging, and audit-ready documentation generation. Keeps the organisation compliant 24/7 without manual audit cycles.',metrics:[{val:'100%',lbl:'Coverage'},{val:'Real-time',lbl:'Monitoring'},{val:'Auto',lbl:'Audit Docs'}],tags:['ServiceNow','Workday','SAP SF'],deployWeeks:'4-6',maturityGap:'3',
+   detail:{ibmProof:'IBM HR monitors compliance across 175+ countries through AI-powered policy enforcement integrated into AskHR.',steps:['Map regulatory requirements by jurisdiction','Configure policy rules engine','Deploy real-time monitoring agents','Set up deviation alert and escalation workflow','Generate automated compliance reports and audit evidence'],integrations:['ServiceNow GRC','Workday HCM','SAP SuccessFactors','Navex','MetricStream']}},
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
-      tab.classList.add('active');
-      tab.setAttribute('aria-selected', 'true');
-      const filter = tab.dataset.filter;
-      cards.forEach(card => {
-        card.style.display = (filter === 'all' || card.dataset.domain === filter) ? '' : 'none';
-      });
-      updateCount();
-    });
+  // PROCUREMENT
+  {id:'pro1',domain:'procurement',icon:'🔗',name:'PO Automation Agent',process:'Procure-to-Pay · Purchase Order Management',desc:'AI-powered purchase order creation, policy-validated approval routing, supplier notification, and order tracking. Achieves 90%+ touchless PO processing — the benchmark IBM achieved across its global supply chain.',metrics:[{val:'90%',lbl:'Touchless POs'},{val:'$315M',lbl:'IBM 3yr Savings'},{val:'70%',lbl:'Cycle Time ↓'}],tags:['Coupa','SAP Ariba','Oracle Procurement'],deployWeeks:'4-8',maturityGap:'1-2',
+   detail:{ibmProof:'IBM automated 90% of purchase order processing through AI, saving $315M over 3 years across its global supply chain operations.',steps:['Configure PO policy rules and approval thresholds','Deploy AI requisition-to-PO automation','Integrate supplier catalog and preferred vendor lists','Set up intelligent approval routing','Enable real-time PO status tracking for stakeholders'],integrations:['SAP Ariba','Coupa','Oracle Fusion Procurement','Ivalua','GEP SMART']}},
+  {id:'pro2',domain:'procurement',icon:'🏢',name:'Supplier Risk Monitor',process:'Supplier Management · Third-Party Risk',desc:'Real-time supplier risk intelligence using Dun & Bradstreet, financial health signals, ESG data, and news monitoring. Proactively flags at-risk suppliers before disruptions occur and automates remediation workflows.',metrics:[{val:'100K+',lbl:'Hours Saved'},{val:'Real-time',lbl:'Risk Signals'},{val:'Proactive',lbl:'Disruption Alert'}],tags:['Coupa','SAP Ariba','D&B','Riskmethods'],deployWeeks:'4-6',maturityGap:'1-2',
+   detail:{ibmProof:'IBM\'s watsonx Procurement Agents include D&B integration for real-time supplier risk monitoring — saves hundreds of thousands of hours in compliance work.',steps:['Onboard supplier master data','Integrate D&B and ESG data feeds','Configure risk scoring model and thresholds','Deploy automated risk alert and workflow routing','Enable supplier self-service risk remediation portal'],integrations:['Dun & Bradstreet','Riskmethods','Coupa Risk','SAP Ariba Risk','EcoVadis']}},
+  {id:'pro3',domain:'procurement',icon:'📃',name:'Contract Intelligence Agent',process:'Contract Lifecycle Management',desc:'AI contract review, obligation extraction, compliance monitoring, and renewal management. Analyses 100% of contracts for risk clauses, missed obligations, and upcoming renewals — tasks that manual processes miss at scale.',metrics:[{val:'70%',lbl:'Review Time ↓'},{val:'100%',lbl:'Coverage'},{val:'0',lbl:'Missed Renewals'}],tags:['Icertis','Ariba CLM','DocuSign CLM'],deployWeeks:'6-8',maturityGap:'1-2',
+   detail:{ibmProof:'IBM\'s watsonx Sourcing & Contracts Agent streamlines contract workflow management with AI-generated analysis and obligation tracking.',steps:['Ingest contract repository into CLM','Train AI on contract clause library and risk patterns','Extract and tag key obligations and dates','Deploy renewal alert and negotiation prep agent','Enable compliance monitoring against contract terms'],integrations:['Icertis','SAP Ariba CLM','DocuSign CLM','Coupa Contracts','Ironclad']}},
+  {id:'pro4',domain:'procurement',icon:'🔍',name:'Sourcing & RFx Agent',process:'Strategic Sourcing · Supplier Selection',desc:'AI-generated RFP documents, automated supplier shortlisting, digital bid collection and scoring, and sourcing event management. Compresses sourcing cycle time by 50%+ while increasing supplier competition.',metrics:[{val:'50%',lbl:'Cycle Time ↓'},{val:'3×',lbl:'Supplier Coverage'},{val:'AI',lbl:'Bid Analysis'}],tags:['SAP Ariba','Coupa Sourcing','Ivalua'],deployWeeks:'4-6',maturityGap:'3',
+   detail:{ibmProof:'IBM watsonx Sourcing agents automate RFP generation, supplier recommendations, and sourcing event management.',steps:['Define category strategy and sourcing requirements','AI-generate RFP documents from category templates','Identify and invite qualified suppliers','Automate bid collection and normalisation','AI-score responses and generate award recommendation'],integrations:['SAP Ariba Sourcing','Coupa Sourcing Optimization','Ivalua','GEP','Jaggaer']}},
+  {id:'pro5',domain:'procurement',icon:'💰',name:'Spend Analytics Engine',process:'Spend Management · Category Intelligence',desc:'AI-powered spend classification, maverick spend detection, savings opportunity identification, and category performance tracking. Provides 100% spend visibility from day one with continuous AI categorisation.',metrics:[{val:'15.6%',lbl:'Productivity Gain'},{val:'100%',lbl:'Spend Coverage'},{val:'Auto',lbl:'Categorisation'}],tags:['Coupa','Jaggaer Analytics','SpendHQ','Sievo'],deployWeeks:'3-5',maturityGap:'3',
+   detail:{ibmProof:'IBM\'s supply chain achieved 15.6% productivity savings in hardware procurement through AI-driven spend analytics and category optimisation.',steps:['Ingest AP/ERP transactional data','AI-cleanse and categorise spend to L4 UNSPSC','Identify top maverick spend categories','Surface savings opportunities by category','Build category manager self-service dashboards'],integrations:['SAP S/4HANA','Oracle Financials','Coupa','Jaggaer Analytics','SpendHQ']}},
+  {id:'pro6',domain:'procurement',icon:'📦',name:'Inventory & Order Agent',process:'Inventory Management · Order Fulfilment',desc:'AI-powered inventory level monitoring, reorder point automation, reallocation between locations, and order shipment readiness tracking. Reduces carrying costs and eliminates stockouts through predictive demand signals.',metrics:[{val:'30%',lbl:'Logistics Cost ↓'},{val:'AI',lbl:'Reorder Triggers'},{val:'Real-time',lbl:'Stock Visibility'}],tags:['IBM Sterling','SAP SCM','Oracle SCM'],deployWeeks:'4-8',maturityGap:'1-2',
+   detail:{ibmProof:'IBM achieved 30% logistics cost reduction over 3 years through AI-powered inventory optimisation and distribution automation.',steps:['Connect inventory management system','Configure AI reorder point and safety stock models','Deploy reallocation recommendation agent','Automate inter-warehouse transfer workflows','Enable real-time order shipment status tracking'],integrations:['IBM Sterling OMS','SAP SCM','Oracle Supply Chain','Blue Yonder','Kinaxis']}},
+];
+
+let activeDomain='all', activeMaturity='all';
+
+function renderAssets(){
+  const search=document.getElementById('searchBox').value.toLowerCase();
+  const filtered=ASSETS.filter(a=>{
+    if(activeDomain!=='all'&&a.domain!==activeDomain)return false;
+    if(activeMaturity!=='all'&&a.maturityGap!==activeMaturity)return false;
+    if(search&&!a.name.toLowerCase().includes(search)&&!a.desc.toLowerCase().includes(search)&&!a.process.toLowerCase().includes(search))return false;
+    return true;
   });
+  document.getElementById('assetCount').textContent=`Showing ${filtered.length} of ${ASSETS.length} assets`;
+  document.getElementById('assetGrid').innerHTML=filtered.map(a=>`
+    <div class="asset-card">
+      <div class="ac-top">
+        <span class="ac-icon">${a.icon}</span>
+        <div class="ac-meta">
+          <div class="ac-name">${a.name}</div>
+          <div class="ac-process">${a.process}</div>
+        </div>
+        <span class="badge badge-${a.domain==='finance'?'gold':a.domain==='hr'?'cyan':'green'}">${a.domain}</span>
+      </div>
+      <div class="ac-desc">${a.desc}</div>
+      <div class="ac-metrics">
+        ${a.metrics.map(m=>`<div class="acm"><div class="acm-val" style="color:${a.domain==='finance'?'var(--gold)':a.domain==='hr'?'var(--cyan)':'var(--green)'}">${m.val}</div><div class="acm-lbl">${m.lbl}</div></div>`).join('')}
+      </div>
+      <div class="ac-tags">${a.tags.map(t=>`<span class="ac-tag">${t}</span>`).join('')}</div>
+      <div class="ac-footer">
+        <div class="ac-deploy-time">Deploy: <strong>${a.deployWeeks} weeks</strong></div>
+        <button class="ac-btn" onclick="openModal('${a.id}')">View Details →</button>
+      </div>
+    </div>
+  `).join('');
+}
 
-  updateCount();
+document.querySelectorAll('[data-domain]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('[data-domain]').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activeDomain=btn.dataset.domain;
+    renderAssets();
+  });
+});
+document.querySelectorAll('[data-maturity]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('[data-maturity]').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activeMaturity=btn.dataset.maturity;
+    renderAssets();
+  });
+});
+
+function openModal(id){
+  const a=ASSETS.find(x=>x.id===id);
+  if(!a)return;
+  const color=a.domain==='finance'?'var(--gold)':a.domain==='hr'?'var(--cyan)':'var(--green)';
+  document.getElementById('modalContent').innerHTML=`
+    <div class="modal-header">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span style="font-size:2rem;">${a.icon}</span>
+        <div><h3 style="margin-bottom:4px;color:#0f62fe;">${a.name}</h3><div style="font-size:12px;color:var(--text-2);">${a.process}</div></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-section">
+      <h4>Overview</h4>
+      <p style="font-size:13px;color:var(--text-1);line-height:1.6;">${a.desc}</p>
+    </div>
+    <div class="modal-section">
+      <h4>IBM Client Zero Proof Point</h4>
+      <div style="padding:12px 16px;background:rgba(15,98,254,0.08);border:1px solid rgba(15,98,254,0.25);border-left:3px solid #0f62fe;font-size:13px;color:var(--text-1);line-height:1.6;">${a.detail.ibmProof}</div>
+    </div>
+    <div class="modal-section">
+      <h4>Key Metrics</h4>
+      <div class="modal-metrics">${a.metrics.map(m=>`<div class="mm"><div class="mm-val" style="color:${color}">${m.val}</div><div class="mm-lbl">${m.lbl}</div></div>`).join('')}</div>
+    </div>
+    <div class="modal-section">
+      <h4>Deployment Steps</h4>
+      <div class="step-list">${a.detail.steps.map((s,i)=>`<div class="step-item"><div class="step-num">${i+1}</div><span>${s}</span></div>`).join('')}</div>
+    </div>
+    <div class="modal-section">
+      <h4>System Integrations</h4>
+      <div class="int-list">${a.detail.integrations.map(i=>`<span class="int-badge">${i}</span>`).join('')}</div>
+    </div>
+    <div style="display:flex;gap:1rem;margin-top:1rem;">
+      <a href="/assess.html" class="btn-primary" style="flex:1;display:inline-flex;justify-content:center;align-items:center;padding:10px 24px;background:#0f62fe;color:#fff;font-size:13px;font-weight:600;text-decoration:none;">Assess Readiness →</a>
+      <a href="/roi.html" class="btn-ghost" style="flex:1;justify-content:center;">Model ROI →</a>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(e){
+  if(!e||e.target===document.getElementById('modalOverlay'))
+    document.getElementById('modalOverlay').classList.remove('open');
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+renderAssets();
 </script>
-
 </body>
 </html>
