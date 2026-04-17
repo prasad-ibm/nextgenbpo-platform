@@ -76,6 +76,18 @@ body{overflow-x:hidden;}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:200;display:none;align-items:center;justify-content:center;padding:2rem;}
 .modal-overlay.open{display:flex;}
 .modal{background:var(--bg-1);border:1px solid var(--border-b);border-radius:4px;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:2rem;}
+.modal.preview{max-width:1200px;width:96vw;max-height:94vh;padding:0;overflow:hidden;display:flex;flex-direction:column;}
+.modal.preview .preview-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px;background:var(--bg-2);border-bottom:1px solid var(--border-b);flex-shrink:0;}
+.modal.preview .preview-bar .pb-title{display:flex;align-items:center;gap:10px;min-width:0;}
+.modal.preview .preview-bar .pb-title span.icon{font-size:1.4rem;}
+.modal.preview .preview-bar .pb-title .tname{font-weight:600;color:var(--text-0);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.modal.preview .preview-bar .pb-title .tproc{font-size:11px;color:var(--text-2);}
+.modal.preview .preview-bar .pb-actions{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.modal.preview .preview-bar a.pb-open{font-size:12px;color:#0f62fe;text-decoration:none;font-weight:600;padding:6px 12px;border:1px solid #0f62fe;border-radius:4px;white-space:nowrap;}
+.modal.preview .preview-bar a.pb-open:hover{background:rgba(15,98,254,0.08);}
+.modal.preview iframe.preview-frame{flex:1;width:100%;border:0;background:#fff;}
+.modal.preview .preview-fallback{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:32px;color:var(--text-2);font-size:13px;text-align:center;}
+.modal.preview .preview-fallback .pfb-url{font-family:monospace;font-size:12px;color:#0f62fe;}
 .modal-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;}
 .modal-close{background:var(--bg-2);border:none;color:var(--text-1);font-size:1.2rem;cursor:pointer;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;}
 .modal-section{margin-bottom:1.5rem;}
@@ -218,19 +230,19 @@ if(_c){document.getElementById('nav-client').textContent=_c;document.getElementB
 <script>
 const ASSETS=[
   // FINANCE
-  {id:'fin1',domain:'finance',icon:'📄',name:'Invoice Processing Agent',process:'Accounts Payable · P2P',desc:'End-to-end AI-powered invoice processing with OCR ingestion, automated 3-way matching (PO–receipt–invoice), intelligent exception routing, and touchless payment scheduling. Reduces human touchpoints by 80%+.',metrics:[{val:'25%',lbl:'Cost Reduction'},{val:'32%',lbl:'Faster Cycle'},{val:'<5%',lbl:'Exception Rate'}],tags:['SAP S/4','Oracle Fusion','Coupa'],deployWeeks:'4-6',maturityGap:'1-2',
+  {id:'fin1',domain:'finance',icon:'📄',name:'Invoice Processing Agent',process:'Accounts Payable · P2P',demoUrl:'https://invoice-processing-dashboard.azurewebsites.net',desc:'End-to-end AI-powered invoice processing with OCR ingestion, automated 3-way matching (PO–receipt–invoice), intelligent exception routing, and touchless payment scheduling. Reduces human touchpoints by 80%+.',metrics:[{val:'25%',lbl:'Cost Reduction'},{val:'32%',lbl:'Faster Cycle'},{val:'<5%',lbl:'Exception Rate'}],tags:['SAP S/4','Oracle Fusion','Coupa'],deployWeeks:'4-6',maturityGap:'1-2',
    detail:{ibmProof:'IBM reduced cost-per-invoice by 25% and cycle time by 32% using AI-powered matching across its global AP operations.',steps:['Ingest invoice via email/portal/EDI','OCR extraction and validation','Automated 3-way PO match','AI exception classification and routing','Payment scheduling and supplier notification'],integrations:['SAP S/4HANA','Oracle Fusion','Coupa','Ariba','Basware']}},
-  {id:'fin2',domain:'finance',icon:'📊',name:'FP&A Forecasting Agent',process:'Financial Planning & Analysis',desc:'AI-generated rolling forecasts, driver-based scenario modeling, and natural language variance explanations. Finance teams get instant narrative commentary on plan vs. actual — no manual analysis required.',metrics:[{val:'33%',lbl:'Faster Cycles'},{val:'57%',lbl:'Error Reduction'},{val:'Real-time',lbl:'Insights'}],tags:['Anaplan','SAP BPC','Oracle EPM','Workday Adaptive'],deployWeeks:'6-8',maturityGap:'3',
+  {id:'fin2',domain:'finance',icon:'📊',name:'FP&A Forecasting Agent',process:'Financial Planning & Analysis',demoUrl:'https://fpa-forecasting-dashboard.azurewebsites.net',desc:'AI-generated rolling forecasts, driver-based scenario modeling, and natural language variance explanations. Finance teams get instant narrative commentary on plan vs. actual — no manual analysis required.',metrics:[{val:'33%',lbl:'Faster Cycles'},{val:'57%',lbl:'Error Reduction'},{val:'Real-time',lbl:'Insights'}],tags:['Anaplan','SAP BPC','Oracle EPM','Workday Adaptive'],deployWeeks:'6-8',maturityGap:'3',
    detail:{ibmProof:'IBM\'s Plan-to-Results platform won the Hackettgroup 2024 Digital Award — budget cycles 33% faster, forecast errors reduced 57%.',steps:['Connect to ERP/EPM data sources','Configure driver-based forecast models','Deploy AI variance commentary engine','Enable NL query interface for CFO','Establish rolling forecast cadence'],integrations:['Anaplan','SAP BPC','Oracle PBCS','Workday Adaptive','Microsoft Fabric']}},
-  {id:'fin3',domain:'finance',icon:'💳',name:'Collections & DSO Agent',process:'Order-to-Cash · Accounts Receivable',desc:'AI-powered collections prioritization, automated dunning sequences, predictive payment probability scoring, and dispute detection. Identifies at-risk receivables before they age, reducing DSO and write-offs.',metrics:[{val:'43%',lbl:'Uncollectibles ↓'},{val:'32%',lbl:'DSO Reduction'},{val:'Auto',lbl:'Dunning'}],tags:['Salesforce','SAP','Oracle AR'],deployWeeks:'4-6',maturityGap:'1-2',
+  {id:'fin3',domain:'finance',icon:'💳',name:'Collections & DSO Agent',process:'Order-to-Cash · Accounts Receivable',demoUrl:'https://collections-dso-dashboard.azurewebsites.net',desc:'AI-powered collections prioritization, automated dunning sequences, predictive payment probability scoring, and dispute detection. Identifies at-risk receivables before they age, reducing DSO and write-offs.',metrics:[{val:'43%',lbl:'Uncollectibles ↓'},{val:'32%',lbl:'DSO Reduction'},{val:'Auto',lbl:'Dunning'}],tags:['Salesforce','SAP','Oracle AR'],deployWeeks:'4-6',maturityGap:'1-2',
    detail:{ibmProof:'IBM reduced uncollectible balances by 43% and DSO by 32% through AI-driven O2C automation.',steps:['Ingest AR aging and customer data','Score payment probability per invoice','Auto-generate dunning sequences by segment','Route disputes to specialist agents','Report on cash flow impact in real-time'],integrations:['Salesforce CRM','SAP S/4','Oracle AR','HighRadius','Esker']}},
-  {id:'fin4',domain:'finance',icon:'📋',name:'Close Cycle Accelerator',process:'Record-to-Report · Financial Close',desc:'Automated accrual detection, journal entry processing, account reconciliation matching, and variance narrative generation. Compresses the financial close from 10+ days to under 3 — with human review focused on true exceptions only.',metrics:[{val:'33%',lbl:'Faster Close'},{val:'90%',lbl:'Auto-Matched'},{val:'<3 days',lbl:'Close Target'}],tags:['SAP','Oracle','BlackLine'],deployWeeks:'6-10',maturityGap:'1-2',
+  {id:'fin4',domain:'finance',icon:'📋',name:'Close Cycle Accelerator',process:'Record-to-Report · Financial Close',demoUrl:'https://close-cycle-dashboard.azurewebsites.net',desc:'Automated accrual detection, journal entry processing, account reconciliation matching, and variance narrative generation. Compresses the financial close from 10+ days to under 3 — with human review focused on true exceptions only.',metrics:[{val:'33%',lbl:'Faster Close'},{val:'90%',lbl:'Auto-Matched'},{val:'<3 days',lbl:'Close Target'}],tags:['SAP','Oracle','BlackLine'],deployWeeks:'6-10',maturityGap:'1-2',
    detail:{ibmProof:'IBM shortened close cycles by 33% and eliminated significant manual reconciliation through AI-powered R2R automation.',steps:['Identify sub-ledger close dependencies','Deploy accrual detection AI agent','Automate standard journal entry processing','Configure reconciliation matching engine','Generate auto-variance commentary for CFO pack'],integrations:['SAP S/4HANA','Oracle Cloud Financials','BlackLine','Trintech Cadency','Workiva']}},
-  {id:'fin5',domain:'finance',icon:'🧾',name:'Tax Document Agent',process:'Tax Processing & Compliance',desc:'AI digital workers for tax document classification, data extraction, provision calculation support, and filing preparation. IBM deployed this internally to eliminate ~100,000 hours of manual tax preparation annually.',metrics:[{val:'100K',lbl:'Hours Saved/yr'},{val:'95%',lbl:'Accuracy Rate'},{val:'Auto',lbl:'Classification'}],tags:['Thomson Reuters','Vertex','SAP'],deployWeeks:'6-8',maturityGap:'1-2',
+  {id:'fin5',domain:'finance',icon:'🧾',name:'Tax Document Agent',process:'Tax Processing & Compliance',demoUrl:'https://tax-document-dashboard.azurewebsites.net',desc:'AI digital workers for tax document classification, data extraction, provision calculation support, and filing preparation. IBM deployed this internally to eliminate ~100,000 hours of manual tax preparation annually.',metrics:[{val:'100K',lbl:'Hours Saved/yr'},{val:'95%',lbl:'Accuracy Rate'},{val:'Auto',lbl:'Classification'}],tags:['Thomson Reuters','Vertex','SAP'],deployWeeks:'6-8',maturityGap:'1-2',
    detail:{ibmProof:'IBM used digital workers for tax document parsing and preparation — eliminating approximately 100,000 hours of manual effort annually.',steps:['Ingest tax documents via secure channel','AI classification and data extraction','Cross-reference with ERP transactional data','Calculate provision estimates','Generate audit-ready workpapers'],integrations:['Thomson Reuters ONESOURCE','Vertex','SAP Tax','Oracle Tax','Corptax']}},
-  {id:'fin6',domain:'finance',icon:'💬',name:'Conversational Finance BI',process:'Finance Analytics · CFO Insights',desc:'Natural language query interface for financial data — CFOs and finance leaders ask questions in plain English and receive instant AI-generated insights, charts, and narrative from live ERP data.',metrics:[{val:'Instant',lbl:'Insights'},{val:'NL',lbl:'Query Interface'},{val:'Live',lbl:'ERP Data'}],tags:['Tableau','Power BI','Cognos','SAP Analytics'],deployWeeks:'4-6',maturityGap:'3',
+  {id:'fin6',domain:'finance',icon:'💬',name:'Conversational Finance BI',process:'Finance Analytics · CFO Insights',demoUrl:'https://finance-bi-dashboard.azurewebsites.net',desc:'Natural language query interface for financial data — CFOs and finance leaders ask questions in plain English and receive instant AI-generated insights, charts, and narrative from live ERP data.',metrics:[{val:'Instant',lbl:'Insights'},{val:'NL',lbl:'Query Interface'},{val:'Live',lbl:'ERP Data'}],tags:['Tableau','Power BI','Cognos','SAP Analytics'],deployWeeks:'4-6',maturityGap:'3',
    detail:{ibmProof:'IBM\'s watsonx-powered EPM enables conversational BI — finance leaders get instant answers to business questions from live data.',steps:['Connect data layer to ERP and EPM','Configure semantic layer for finance domain','Deploy NL query processing agent','Enable auto-chart and narrative generation','Train finance team on conversational use'],integrations:['SAP Analytics Cloud','IBM Cognos','Power BI','Tableau','Snowflake']}},
-  {id:'fin7',domain:'finance',icon:'⚖️',name:'Balance Sheet Analysis Agent',process:'Record-to-Report · Balance Sheet Flux',desc:'End-to-end agentic automation of the monthly balance sheet flux process — from data extraction and variance analysis to AI-generated commentary and exception routing. Eliminates 70–80% of monthly manual effort across preparers, local controllers, and account owners.',metrics:[{val:'75%',lbl:'Manual Effort ↓'},{val:'14 mo',lbl:'Payback Period'},{val:'>214%',lbl:'3-Year ROI'}],tags:['SAP S/4','Workiva','BlackLine','OneStream','Trintech'],deployWeeks:'6-8',maturityGap:'1-2',
+  {id:'fin7',domain:'finance',icon:'⚖️',name:'Balance Sheet Analysis Agent',process:'Record-to-Report · Balance Sheet Flux',demoUrl:'https://bs-flux-dashboard.azurewebsites.net',desc:'End-to-end agentic automation of the monthly balance sheet flux process — from data extraction and variance analysis to AI-generated commentary and exception routing. Eliminates 70–80% of monthly manual effort across preparers, local controllers, and account owners.',metrics:[{val:'75%',lbl:'Manual Effort ↓'},{val:'14 mo',lbl:'Payback Period'},{val:'>214%',lbl:'3-Year ROI'}],tags:['SAP S/4','Workiva','BlackLine','OneStream','Trintech'],deployWeeks:'6-8',maturityGap:'1-2',
    detail:{ibmProof:'5–7 day close cycle compressed through agentic automation across IBM Preparer, LC, Account Owner, and Corporate Review roles. Benefits of £695K in Year 1 scaling to £1.18M by Year 3, with break-even at Month 14 and cumulative ROI of +214% by Year 3.',steps:['Connect ERP/GL data sources (SAP S/4, Oracle) for automated extraction — 90% ingestion effort eliminated','Deploy material variance detection agent (configurable threshold, e.g. >$2M) with auto-escalation','Enable statistical anomaly detection (>2σ) to surface hidden risks before manual review','Deploy LLM commentary agent: AI drafts BUD vs Actual and PY vs Actual narratives using historical context','Configure intelligent exception routing — routes only genuine exceptions to account owners','Generate full audit trail with agent execution logs for internal/external audit requests'],integrations:['SAP S/4HANA','Oracle Cloud Financials','BlackLine','Workiva','OneStream','Trintech Cadency','Microsoft Excel / Power BI']}},
 
   // HR
@@ -290,7 +302,10 @@ function renderAssets(){
       <div class="ac-tags">${a.tags.map(t=>`<span class="ac-tag">${t}</span>`).join('')}</div>
       <div class="ac-footer">
         <div class="ac-deploy-time">Deploy: <strong>${a.deployWeeks} weeks</strong></div>
-        <button class="ac-btn" onclick="openModal('${a.id}')">View Details →</button>
+        <div style="display:flex;gap:8px;align-items:center;">
+          ${a.demoUrl?`<a class="ac-btn" style="background:transparent;border:1px solid var(--gold);color:var(--gold);text-decoration:none;padding:6px 12px;border-radius:4px;font-size:12px;font-weight:600;" href="${a.demoUrl}" target="_blank" rel="noopener">Live Demo ↗</a>`:''}
+          <button class="ac-btn" onclick="openModal('${a.id}')">View Details →</button>
+        </div>
       </div>
     </div>
   `).join('');
@@ -316,40 +331,65 @@ document.querySelectorAll('[data-maturity]').forEach(btn=>{
 function openModal(id){
   const a=ASSETS.find(x=>x.id===id);
   if(!a)return;
+  const modalEl=document.getElementById('modalContent');
   const color=a.domain==='finance'?'var(--gold)':a.domain==='hr'?'var(--cyan)':'var(--green)';
-  document.getElementById('modalContent').innerHTML=`
-    <div class="modal-header">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <span style="font-size:2rem;">${a.icon}</span>
-        <div><h3 style="margin-bottom:4px;color:#0f62fe;">${a.name}</h3><div style="font-size:12px;color:var(--text-2);">${a.process}</div></div>
+  if(a.demoUrl){
+    // Live interactive preview of the dashboard
+    modalEl.classList.add('preview');
+    const cleanUrl=a.demoUrl.replace(/^https?:\/\//,'');
+    modalEl.innerHTML=`
+      <div class="preview-bar">
+        <div class="pb-title">
+          <span class="icon">${a.icon}</span>
+          <div style="min-width:0;">
+            <div class="tname">${a.name}</div>
+            <div class="tproc">${a.process}</div>
+          </div>
+        </div>
+        <div class="pb-actions">
+          <a class="pb-open" href="${a.demoUrl}" target="_blank" rel="noopener">Open in new tab ↗</a>
+          <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
       </div>
-      <button class="modal-close" onclick="closeModal()">✕</button>
-    </div>
-    <div class="modal-section">
-      <h4>Overview</h4>
-      <p style="font-size:13px;color:var(--text-1);line-height:1.6;">${a.desc}</p>
-    </div>
-    <div class="modal-section">
-      <h4>IBM Client Zero Proof Point</h4>
-      <div style="padding:12px 16px;background:rgba(15,98,254,0.08);border:1px solid rgba(15,98,254,0.25);border-left:3px solid #0f62fe;font-size:13px;color:var(--text-1);line-height:1.6;">${a.detail.ibmProof}</div>
-    </div>
-    <div class="modal-section">
-      <h4>Key Metrics</h4>
-      <div class="modal-metrics">${a.metrics.map(m=>`<div class="mm"><div class="mm-val" style="color:${color}">${m.val}</div><div class="mm-lbl">${m.lbl}</div></div>`).join('')}</div>
-    </div>
-    <div class="modal-section">
-      <h4>Deployment Steps</h4>
-      <div class="step-list">${a.detail.steps.map((s,i)=>`<div class="step-item"><div class="step-num">${i+1}</div><span>${s}</span></div>`).join('')}</div>
-    </div>
-    <div class="modal-section">
-      <h4>System Integrations</h4>
-      <div class="int-list">${a.detail.integrations.map(i=>`<span class="int-badge">${i}</span>`).join('')}</div>
-    </div>
-    <div style="display:flex;gap:1rem;margin-top:1rem;">
-      <a href="/assess.html" class="btn-primary" style="flex:1;display:inline-flex;justify-content:center;align-items:center;padding:10px 24px;background:#0f62fe;color:#fff;font-size:13px;font-weight:600;text-decoration:none;">Assess Readiness →</a>
-      <a href="/roi.html" class="btn-ghost" style="flex:1;justify-content:center;">Model ROI →</a>
-    </div>
-  `;
+      <iframe class="preview-frame" src="${a.demoUrl}" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-popups allow-forms" onerror="this.outerHTML=\`<div class='preview-fallback'><div>Live preview unavailable.</div><a class='pfb-url' href='${a.demoUrl}' target='_blank' rel='noopener'>${cleanUrl} ↗</a></div>\`"></iframe>
+    `;
+  } else {
+    // Fallback: original detail view for assets without a live demo yet
+    modalEl.classList.remove('preview');
+    modalEl.innerHTML=`
+      <div class="modal-header">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="font-size:2rem;">${a.icon}</span>
+          <div><h3 style="margin-bottom:4px;color:#0f62fe;">${a.name}</h3><div style="font-size:12px;color:var(--text-2);">${a.process}</div></div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-section">
+        <h4>Overview</h4>
+        <p style="font-size:13px;color:var(--text-1);line-height:1.6;">${a.desc}</p>
+      </div>
+      <div class="modal-section">
+        <h4>IBM Client Zero Proof Point</h4>
+        <div style="padding:12px 16px;background:rgba(15,98,254,0.08);border:1px solid rgba(15,98,254,0.25);border-left:3px solid #0f62fe;font-size:13px;color:var(--text-1);line-height:1.6;">${a.detail.ibmProof}</div>
+      </div>
+      <div class="modal-section">
+        <h4>Key Metrics</h4>
+        <div class="modal-metrics">${a.metrics.map(m=>`<div class="mm"><div class="mm-val" style="color:${color}">${m.val}</div><div class="mm-lbl">${m.lbl}</div></div>`).join('')}</div>
+      </div>
+      <div class="modal-section">
+        <h4>Deployment Steps</h4>
+        <div class="step-list">${a.detail.steps.map((s,i)=>`<div class="step-item"><div class="step-num">${i+1}</div><span>${s}</span></div>`).join('')}</div>
+      </div>
+      <div class="modal-section">
+        <h4>System Integrations</h4>
+        <div class="int-list">${a.detail.integrations.map(i=>`<span class="int-badge">${i}</span>`).join('')}</div>
+      </div>
+      <div style="display:flex;gap:1rem;margin-top:1rem;">
+        <a href="/assess.html" class="btn-primary" style="flex:1;display:inline-flex;justify-content:center;align-items:center;padding:10px 24px;background:#0f62fe;color:#fff;font-size:13px;font-weight:600;text-decoration:none;">Assess Readiness →</a>
+        <a href="/roi.html" class="btn-ghost" style="flex:1;justify-content:center;">Model ROI →</a>
+      </div>
+    `;
+  }
   document.getElementById('modalOverlay').classList.add('open');
 }
 function closeModal(e){
