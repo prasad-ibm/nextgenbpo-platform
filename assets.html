@@ -302,10 +302,7 @@ function renderAssets(){
       <div class="ac-tags">${a.tags.map(t=>`<span class="ac-tag">${t}</span>`).join('')}</div>
       <div class="ac-footer">
         <div class="ac-deploy-time">Deploy: <strong>${a.deployWeeks} weeks</strong></div>
-        <div style="display:flex;gap:8px;align-items:center;">
-          ${a.demoUrl?`<a class="ac-btn" style="background:transparent;border:1px solid var(--gold);color:var(--gold);text-decoration:none;padding:6px 12px;border-radius:4px;font-size:12px;font-weight:600;" href="${a.demoUrl}" target="_blank" rel="noopener">Live Demo ↗</a>`:''}
-          <button class="ac-btn" onclick="openModal('${a.id}')">View Details →</button>
-        </div>
+        ${a.demoUrl?`<a class="ac-btn" style="background:transparent;border:1px solid var(--gold);color:var(--gold);text-decoration:none;padding:6px 12px;border-radius:4px;font-size:12px;font-weight:600;" href="${a.demoUrl}" target="_blank" rel="noopener">Live Demo ↗</a>`:''}
       </div>
     </div>
   `).join('');
