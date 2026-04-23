@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Future of SAP is Agentic | NextGen Business Operations</title>
+  <link rel="stylesheet" href="/bpo-theme.css?v=3.4"/>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --sap-blue:#0070C0; --sap-blue-d:#003366; --sap-blue-l:#1e8fd8;
+      --sap-gold:#E89C00; --sap-gold-l:#FFB84D;
+      --bg-0:#ffffff; --bg-1:#f4f4f4; --bg-2:#e0e0e0;
+      --ink-0:#161616; --ink-1:#393939; --ink-2:#525252; --ink-3:#6f6f6f;
+      --border:#e0e0e0; --border-strong:#8d8d8d;
+      --persona-fin:#0070C0; --persona-proc:#198038; --persona-hr:#8A3FFC;
+      --code-bg:#0F1F33; --code-ink:#e0e0e0; --code-comment:#62748b; --code-key:#FFB84D; --code-str:#7dd3fc;
+    }
+    body{font-family:'IBM Plex Sans',sans-serif;background:#ffffff;color:var(--ink-0);margin:0;}
+    .container{max-width:1200px;margin:0 auto;padding:0 1.5rem;}
+
+    /* NAV */
+    .c-nav-dropdown{position:relative;display:flex;align-items:center;height:48px}
+    .c-nav-dropdown>a::after{content:'';display:inline-block;width:0;height:0;border-left:3px solid transparent;border-right:3px solid transparent;border-top:4px solid currentColor;margin-left:5px;opacity:.55}
+    .c-nav-dropdown:hover>a::after{opacity:.85}
+    .c-nav-dropdown-menu{position:absolute!important;top:48px!important;left:0;display:flex!important;flex-direction:column;visibility:hidden!important;opacity:0!important;pointer-events:none!important;background:#ffffff;border:1px solid #e0e0e0;border-top:2px solid #0f62fe;min-width:148px;z-index:1010;box-shadow:0 4px 12px rgba(0,0,0,.1);transition:opacity .12s ease}
+    .c-nav-dropdown:hover .c-nav-dropdown-menu{visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+    .c-nav-dropdown-menu a{display:flex!important;align-items:center!important;height:40px!important;padding:0 1rem!important;border-bottom:1px solid #e0e0e0!important;border-left:2px solid transparent!important;font-size:.8125rem!important;white-space:nowrap!important;color:#525252;text-decoration:none}
+    .c-nav-dropdown-menu a:last-child{border-bottom:none!important}
+    .c-nav-dropdown-menu a:hover{background:#f4f4f4;border-left-color:#0f62fe!important;color:#161616}
+    .c-nav-dropdown-menu a.active{color:#0f62fe;background:#edf5ff;border-left-color:#0f62fe!important}
+
+    /* HERO */
+    .hero{padding:6rem 0 5rem;background:radial-gradient(1200px 400px at 80% 0,rgba(0,112,192,0.12),transparent),linear-gradient(180deg,#f8fbff,#ffffff);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--sap-blue),var(--sap-gold));}
+    .hero .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:rgba(0,112,192,0.1);color:var(--sap-blue);font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;border:1px solid rgba(0,112,192,0.25);margin-bottom:1.25rem;}
+    .hero h1{font-size:clamp(2rem,4vw,3.4rem);font-weight:700;line-height:1.08;margin:0 0 1rem 0;color:var(--sap-blue-d);letter-spacing:-0.02em;}
+    .hero h1 em{font-style:normal;color:var(--sap-blue);background:linear-gradient(180deg,transparent 60%,rgba(232,156,0,0.35) 60%);padding:0 4px;}
+    .hero .sub{font-size:1.15rem;line-height:1.6;color:var(--ink-2);max-width:720px;margin:0 0 1.75rem 0;}
+    .hero .stats{display:flex;gap:2.5rem;flex-wrap:wrap;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border);}
+    .hero .stat .val{font-size:2rem;font-weight:700;color:var(--sap-blue);font-family:'IBM Plex Mono',monospace;line-height:1;}
+    .hero .stat .lbl{font-size:12px;color:var(--ink-3);margin-top:0.5rem;text-transform:uppercase;letter-spacing:0.8px;}
+
+    /* SECTION */
+    section{padding:5rem 0;}
+    section.alt{background:var(--bg-1);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+    .section-head{max-width:720px;margin:0 auto 3rem;text-align:center;}
+    .section-head .eyebrow{display:inline-block;color:var(--sap-blue);font-size:11px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;margin-bottom:0.75rem;}
+    .section-head h2{font-size:clamp(1.6rem,2.6vw,2.4rem);font-weight:700;margin:0 0 0.75rem;color:var(--ink-0);letter-spacing:-0.02em;}
+    .section-head p{font-size:1rem;color:var(--ink-2);line-height:1.65;margin:0;}
+
+    /* SHIFT — before/after */
+    .shift-grid{display:grid;grid-template-columns:1fr 64px 1fr;gap:0;align-items:stretch;}
+    @media(max-width:860px){.shift-grid{grid-template-columns:1fr;gap:1rem;}.shift-arrow{display:none;}}
+    .shift-card{background:#ffffff;border:1px solid var(--border);padding:2rem;}
+    .shift-card.before{border-left:4px solid var(--border-strong);}
+    .shift-card.after{border-left:4px solid var(--sap-gold);background:linear-gradient(135deg,#fffdf7,#ffffff);}
+    .shift-card h3{margin:0 0 1rem;font-size:0.85rem;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-3);font-weight:600;}
+    .shift-card.before h3{color:#6f6f6f;}
+    .shift-card.after h3{color:var(--sap-gold);}
+    .shift-card ul{list-style:none;padding:0;margin:0;}
+    .shift-card li{padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;line-height:1.55;display:flex;gap:12px;align-items:flex-start;color:var(--ink-1);}
+    .shift-card li:last-child{border-bottom:0;}
+    .shift-card li .icn{flex-shrink:0;width:20px;font-weight:700;}
+    .shift-card.before .icn{color:#da1e28;}
+    .shift-card.after .icn{color:#198038;}
+    .shift-arrow{display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:var(--sap-blue);}
+
+    /* PERSONAS */
+    .persona-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;}
+    @media(max-width:860px){.persona-tabs{grid-template-columns:1fr;}}
+    .ptab{background:#fff;border:1px solid var(--border);padding:1.5rem;cursor:pointer;text-align:left;display:flex;gap:1rem;align-items:flex-start;transition:0.2s;position:relative;}
+    .ptab:hover{border-color:var(--sap-blue);}
+    .ptab.active{border-color:var(--sap-blue);background:linear-gradient(180deg,#f0f7fd,#ffffff);box-shadow:0 0 0 3px rgba(0,112,192,0.08);}
+    .ptab.active::after{content:'';position:absolute;bottom:-21px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:12px solid var(--sap-blue);}
+    .ptab-ico{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;color:#fff;font-weight:700;}
+    .ptab[data-p="fin"] .ptab-ico{background:var(--persona-fin);}
+    .ptab[data-p="proc"] .ptab-ico{background:var(--persona-proc);}
+    .ptab[data-p="hr"] .ptab-ico{background:var(--persona-hr);}
+    .ptab .tname{font-size:15px;font-weight:700;color:var(--ink-0);margin-bottom:4px;}
+    .ptab .trole{font-size:12px;color:var(--ink-3);}
+
+    .persona-panel{background:#fff;border:1px solid var(--sap-blue);padding:2rem;display:none;}
+    .persona-panel.active{display:grid;grid-template-columns:1fr 1.3fr;gap:2.5rem;}
+    @media(max-width:960px){.persona-panel.active{grid-template-columns:1fr;}}
+    .pp-left h3{margin:0 0 0.25rem;font-size:1.4rem;color:var(--ink-0);font-weight:700;}
+    .pp-left .ptag{font-size:11px;color:var(--sap-blue);letter-spacing:1.2px;text-transform:uppercase;font-weight:600;margin-bottom:1rem;}
+    .pp-left h4{margin:1.75rem 0 0.75rem;font-size:11px;color:var(--ink-3);letter-spacing:1.4px;text-transform:uppercase;font-weight:600;}
+    .pp-left h4:first-of-type{margin-top:0;}
+    .pp-jobs{list-style:none;padding:0;margin:0;}
+    .pp-jobs li{padding:6px 0;font-size:13.5px;color:var(--ink-1);display:flex;gap:10px;}
+    .pp-jobs li::before{content:'→';color:var(--sap-blue);font-weight:700;flex-shrink:0;}
+    .pp-skills{display:flex;gap:6px;flex-wrap:wrap;}
+    .pp-skill{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 10px;background:rgba(232,156,0,0.12);border:1px solid rgba(232,156,0,0.35);color:#8a5e00;font-weight:600;}
+
+    .pp-right{background:var(--code-bg);color:var(--code-ink);padding:1.5rem;font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.7;overflow:auto;border-radius:2px;position:relative;}
+    .pp-right::before{content:'▸ example interaction';position:absolute;top:0;left:0;right:0;padding:8px 1.5rem;background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.08);font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,0.55);}
+    .pp-right .convo{margin-top:2.25rem;}
+    .pp-right .u{color:#7dd3fc;}
+    .pp-right .u::before{content:'👤 ';}
+    .pp-right .a{color:var(--sap-gold-l);margin-top:0.75rem;display:block;}
+    .pp-right .a::before{content:'🤖 ';}
+    .pp-right .tool{color:#94a3b8;font-style:italic;margin:0.5rem 0;padding-left:1.25rem;}
+    .pp-right .out{background:rgba(255,255,255,0.04);padding:10px 14px;margin:0.75rem 0;border-left:2px solid var(--sap-gold);color:#e2e8f0;white-space:pre-wrap;font-size:12px;}
+
+    /* SKILL ANATOMY */
+    .skill-anatomy{display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:start;}
+    @media(max-width:960px){.skill-anatomy{grid-template-columns:1fr;}}
+    .anatomy-code{background:var(--code-bg);color:var(--code-ink);padding:1.5rem;font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.65;overflow:auto;border-radius:2px;}
+    .anatomy-code .c{color:var(--code-comment);}
+    .anatomy-code .k{color:var(--code-key);font-weight:600;}
+    .anatomy-code .s{color:var(--code-str);}
+    .anatomy-code .h{color:#fff;font-weight:600;}
+    .anatomy-code .m{color:var(--sap-gold-l);}
+    .anatomy-note{padding-left:0;}
+    .anatomy-note ol{list-style:none;padding:0;margin:0;counter-reset:step;}
+    .anatomy-note li{counter-increment:step;padding:1rem 0 1rem 3rem;border-bottom:1px solid var(--border);position:relative;}
+    .anatomy-note li:last-child{border-bottom:0;}
+    .anatomy-note li::before{content:counter(step,decimal-leading-zero);position:absolute;left:0;top:1rem;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--sap-gold);font-weight:600;letter-spacing:1px;}
+    .anatomy-note h4{margin:0 0 0.25rem;font-size:14px;color:var(--ink-0);font-weight:600;}
+    .anatomy-note p{margin:0;font-size:13px;color:var(--ink-2);line-height:1.6;}
+
+    /* MESH DIAGRAM */
+    .mesh{background:var(--code-bg);color:#fff;padding:3rem 2rem;border-radius:4px;text-align:center;position:relative;overflow:hidden;}
+    .mesh::before{content:'';position:absolute;inset:0;background:radial-gradient(800px 200px at 50% 0,rgba(0,112,192,0.25),transparent);pointer-events:none;}
+    .mesh-row{display:flex;justify-content:center;gap:1rem;margin-bottom:2rem;flex-wrap:wrap;position:relative;z-index:1;}
+    .mesh-node{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);padding:0.9rem 1.25rem;border-radius:2px;min-width:160px;backdrop-filter:blur(10px);}
+    .mesh-node .nm{font-size:11px;color:rgba(255,255,255,0.55);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:4px;}
+    .mesh-node .lbl{font-size:14px;font-weight:600;color:#fff;}
+    .mesh-node.persona{border-color:var(--sap-blue);background:rgba(0,112,192,0.15);}
+    .mesh-node.router{border-color:var(--sap-gold);background:rgba(232,156,0,0.15);min-width:280px;}
+    .mesh-node.skill{border-color:rgba(255,255,255,0.25);font-family:'IBM Plex Mono',monospace;}
+    .mesh-node.system{border-color:rgba(125,211,252,0.4);background:rgba(125,211,252,0.08);}
+    .mesh-arrow{text-align:center;color:rgba(255,255,255,0.4);font-size:1.4rem;margin:0.25rem 0;line-height:1;position:relative;z-index:1;}
+    .mesh-lbl{font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.75rem;text-align:left;padding-left:0.5rem;}
+
+    /* SKILL LIBRARY */
+    .skill-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
+    .skill-card{background:#fff;border:1px solid var(--border);border-top:3px solid var(--sap-blue);padding:1.25rem;transition:0.2s;position:relative;}
+    .skill-card:hover{border-color:var(--sap-blue);box-shadow:0 2px 8px rgba(0,0,0,0.06);transform:translateY(-1px);}
+    .skill-card[data-dom="fin"]{border-top-color:var(--persona-fin);}
+    .skill-card[data-dom="proc"]{border-top-color:var(--persona-proc);}
+    .skill-card[data-dom="hr"]{border-top-color:var(--persona-hr);}
+    .skill-card[data-dom="cross"]{border-top-color:var(--sap-gold);}
+    .skill-card .shead{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;gap:0.5rem;}
+    .skill-card .sname{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--ink-0);}
+    .skill-card .sver{font-size:10px;color:var(--ink-3);font-family:'IBM Plex Mono',monospace;}
+    .skill-card .sdesc{font-size:12.5px;color:var(--ink-2);line-height:1.55;margin-bottom:0.75rem;}
+    .skill-card .sstatus{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;}
+    .skill-card .sstatus.live{background:#defbe6;color:#0e6027;}
+    .skill-card .sstatus.soon{background:#fff8e1;color:#8a5e00;}
+    .skill-card .sstatus.planned{background:#f4f4f4;color:#6f6f6f;}
+
+    /* ROADMAP */
+    .roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+    @media(max-width:860px){.roadmap{grid-template-columns:1fr;}}
+    .rm-col{background:#fff;border:1px solid var(--border);padding:1.75rem;position:relative;}
+    .rm-col:nth-child(1){border-left:4px solid var(--sap-blue);}
+    .rm-col:nth-child(2){border-left:4px solid var(--sap-gold);}
+    .rm-col:nth-child(3){border-left:4px solid #198038;}
+    .rm-col h3{margin:0 0 0.25rem;font-size:1.3rem;font-weight:700;}
+    .rm-col .when{font-size:11px;color:var(--ink-3);letter-spacing:1.4px;text-transform:uppercase;margin-bottom:1rem;}
+    .rm-col .count{font-size:2.4rem;font-weight:700;color:var(--sap-blue-d);font-family:'IBM Plex Mono',monospace;line-height:1;margin-bottom:0.25rem;}
+    .rm-col .count-lbl{font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:1.5rem;}
+    .rm-col ul{list-style:none;padding:0;margin:0;}
+    .rm-col li{padding:6px 0;font-size:13px;color:var(--ink-1);display:flex;gap:10px;}
+    .rm-col li::before{content:'▪';color:var(--sap-blue);flex-shrink:0;}
+
+    /* CTA */
+    .cta{background:linear-gradient(135deg,var(--sap-blue-d),var(--sap-blue));color:#fff;padding:4rem 2rem;text-align:center;border-radius:2px;position:relative;overflow:hidden;}
+    .cta::before{content:'';position:absolute;inset:0;background:radial-gradient(800px 300px at 80% 80%,rgba(232,156,0,0.3),transparent);}
+    .cta h2{margin:0 0 0.75rem;font-size:2rem;font-weight:700;letter-spacing:-0.02em;position:relative;}
+    .cta p{margin:0 0 2rem;font-size:1.05rem;opacity:0.9;max-width:580px;margin-left:auto;margin-right:auto;position:relative;}
+    .cta-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;}
+    .cta-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:14px;font-weight:600;text-decoration:none;border:1px solid #fff;transition:0.15s;}
+    .cta-btn.primary{background:#fff;color:var(--sap-blue-d);}
+    .cta-btn.primary:hover{background:var(--sap-gold);color:#fff;border-color:var(--sap-gold);}
+    .cta-btn.ghost{background:transparent;color:#fff;}
+    .cta-btn.ghost:hover{background:rgba(255,255,255,0.1);}
+
+    /* FOOTER */
+    footer{background:#161616;color:#c6c6c6;padding:2rem 0;font-size:12px;}
+    footer a{color:#a6c8ff;text-decoration:none;}
+    footer .container{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="c-nav">
+  <div class="container">
+    <a href="/" class="c-nav-brand">
+      <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" fill="#0f62fe"/>
+        <text x="6" y="22" font-family="IBM Plex Sans" font-size="14" font-weight="700" fill="white">BO</text>
+      </svg>
+      NextGen Business Operations
+    </a>
+    <div class="c-nav-links">
+      <a href="/"><span>Home</span></a>
+      <a href="/client-zero.html"><span>Client Zero</span></a>
+      <a href="/assess.html"><span>Assess</span></a>
+      <a href="/roadmap.html"><span>Roadmap</span></a>
+      <a href="/businesscase.html"><span>Business Case</span></a>
+      <div class="c-nav-dropdown">
+        <a href="/platform.html"><span>Platform</span></a>
+        <div class="c-nav-dropdown-menu">
+          <a href="/assets.html"><span>Playbooks</span></a>
+          <a href="/sap-skills.html" class="active"><span>SAP Skills</span></a>
+          <a href="/tracker.html"><span>Pipeline</span></a>
+          <a href="/roi.html"><span>ROI</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">⬢ SAP × AGENTIC AI</span>
+    <h1>Your SAP consultant team,<br/>reimagined as <em>skill agents</em>.</h1>
+    <p class="sub">The future of SAP isn't a bigger ERP — it's a mesh of persona-aware agents backed by versioned, Markdown-based <strong>skill files</strong> that carry the tacit knowledge of a senior FI, CO, MM, HCM, or BTP consultant. Controllers, procurement heads, and HR leaders invoke them in natural language. Answers come in seconds. The knowledge never retires.</p>
+    <div class="stats">
+      <div class="stat"><div class="val">12</div><div class="lbl">Skills live</div></div>
+      <div class="stat"><div class="val">3</div><div class="lbl">Persona lanes</div></div>
+      <div class="stat"><div class="val">60+</div><div class="lbl">Skills by 12 months</div></div>
+      <div class="stat"><div class="val">~8s</div><div class="lbl">Gap analysis latency</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── THE SHIFT ── -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">▚ The Shift</div>
+      <h2>From $1,200/day consultants to always-on skill agents</h2>
+      <p>Traditional SAP implementations front-load cost on a handful of senior consultants whose knowledge walks out the door at go-live. Skill agents capture that same playbook — the T-codes, decision trees, integration points, and edge cases — in a form every business user can invoke on demand.</p>
+    </div>
+    <div class="shift-grid">
+      <div class="shift-card before">
+        <h3>Traditional SAP consulting</h3>
+        <ul>
+          <li><span class="icn">✕</span><span><strong>4–6 week</strong> fit-to-standard workshops before a single gap card is drafted.</span></li>
+          <li><span class="icn">✕</span><span><strong>$1,200–$2,400/day</strong> senior functional consultant rates.</span></li>
+          <li><span class="icn">✕</span><span>Knowledge lives in <strong>one consultant's head</strong> and leaves at go-live.</span></li>
+          <li><span class="icn">✕</span><span>Fit-gap outputs are Word docs and spreadsheets that <strong>drift from reality</strong> within weeks.</span></li>
+          <li><span class="icn">✕</span><span>Onboarding a new business unit <strong>restarts the clock</strong>.</span></li>
+          <li><span class="icn">✕</span><span>Post go-live, business users <strong>raise tickets</strong> and wait days for answers.</span></li>
+        </ul>
+      </div>
+      <div class="shift-arrow">▶</div>
+      <div class="shift-card after">
+        <h3>Skill-agent model</h3>
+        <ul>
+          <li><span class="icn">✓</span><span>Gap analysis, test scripts, and config guides generated in <strong>seconds</strong>, not sprints.</span></li>
+          <li><span class="icn">✓</span><span>Skill library is a <strong>versioned asset</strong> — one-time IP, infinite reuse.</span></li>
+          <li><span class="icn">✓</span><span>Every senior consultant's playbook distilled into a <strong>YAML-fronted Markdown file</strong>.</span></li>
+          <li><span class="icn">✓</span><span>Agents <strong>cite the T-code</strong>, the IMG path, and the integration impact every time.</span></li>
+          <li><span class="icn">✓</span><span>New business unit? The same skills light up on <strong>day one</strong>.</span></li>
+          <li><span class="icn">✓</span><span>Controllers, buyers, and HRBPs <strong>self-serve</strong> — no ticket queue.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PERSONAS ── -->
+<section class="alt">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">◉ Persona Lanes</div>
+      <h2>Three personas, one skill library</h2>
+      <p>Click a persona to see the job-to-be-done, the skills that fire, and a real example interaction drawn from the live skill files.</p>
+    </div>
+
+    <div class="persona-tabs">
+      <button class="ptab active" data-p="fin" onclick="selectPersona('fin')">
+        <div class="ptab-ico">Fi</div>
+        <div><div class="tname">CFO / Controller</div><div class="trole">Record-to-Report · FP&amp;A · Treasury</div></div>
+      </button>
+      <button class="ptab" data-p="proc" onclick="selectPersona('proc')">
+        <div class="ptab-ico">Pr</div>
+        <div><div class="tname">CPO / Procurement Head</div><div class="trole">Source-to-Pay · Supplier · Contracts</div></div>
+      </button>
+      <button class="ptab" data-p="hr" onclick="selectPersona('hr')">
+        <div class="ptab-ico">Hr</div>
+        <div><div class="tname">CHRO / HR Business Partner</div><div class="trole">Hire-to-Retire · Payroll · Talent</div></div>
+      </button>
+    </div>
+
+    <!-- FINANCE PANEL -->
+    <div class="persona-panel active" data-p="fin">
+      <div class="pp-left">
+        <div class="ptag">Finance persona</div>
+        <h3>CFO / Controller / FP&amp;A Lead</h3>
+        <h4>Jobs to be done</h4>
+        <ul class="pp-jobs">
+          <li>Design the chart of accounts and fiscal calendar for a new subsidiary</li>
+          <li>Run fit-to-standard gap analysis on multi-GAAP reporting</li>
+          <li>Compress the month-end close from 10 days to 3</li>
+          <li>Reconcile AA subledger to GL (ABST2 = 0) before year-end</li>
+          <li>Map condition types to CO-PA value fields for customer profitability</li>
+        </ul>
+        <h4>Skills that fire</h4>
+        <div class="pp-skills">
+          <span class="pp-skill">/fi</span>
+          <span class="pp-skill">/fi-gap</span>
+          <span class="pp-skill">/aa</span>
+          <span class="pp-skill">/aa-config</span>
+          <span class="pp-skill">/co</span>
+          <span class="pp-skill">/co-gap</span>
+        </div>
+      </div>
+      <div class="pp-right">
+        <div class="convo">
+          <span class="u">"I need a gap analysis on multi-GAAP reporting — IFRS leading ledger plus local GAAP for the German sub."</span>
+          <span class="tool">▸ Router matched: <b>/fi-gap</b> (SAP FI functional consultant skill)</span>
+          <span class="a">Fit-to-standard assessment — Finance (FI)</span>
+          <div class="out"><b>1. Requirement</b>  Multi-GAAP reporting: IFRS as leading ledger, local-GAAP parallel for DE entity with distinct useful lives and tax provisions.
+
+<b>2. Standard Coverage</b>  S/4HANA Universal Journal (ACDOCA) supports ledger groups natively: <b>0L</b> (leading, IFRS) + <b>1L</b> (local). Depreciation areas in <b>AO90</b> map to ledger groups. Parallel posting allows local adjustments without custom development.
+
+<b>3. Classification</b>  ✅ <b>Fit</b> — fully met by standard config.
+
+<b>4. Approach</b>  FINSC_LEDGER → define 1L group; AO90 → map DE depreciation area 02 to 1L; OB52 → open periods per ledger; run F.16 revaluation separately per ledger group.
+
+<b>5. Integration Impact</b>  AA (dep areas), CO (ledger-aware allocation), Consolidation (0L only), BW (ledger attribute in extractor).
+
+<b>6. Open Questions</b>  Is leading ledger IFRS or US-GAAP group wide? Which currencies per ledger? Is local book used for tax only or also for statutory reporting?</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROCUREMENT PANEL -->
+    <div class="persona-panel" data-p="proc">
+      <div class="pp-left">
+        <div class="ptag">Procurement persona</div>
+        <h3>CPO / Procurement Head / Category Manager</h3>
+        <h4>Jobs to be done</h4>
+        <ul class="pp-jobs">
+          <li>Migrate P2P interfaces from PI/PO to BTP Integration Suite</li>
+          <li>Model supplier master harmonization across 3 S/4 subsidiaries</li>
+          <li>Design approval workflow for PO release strategies</li>
+          <li>Route sourcing requisitions through Ariba / S/4 Sourcing</li>
+          <li>Reconcile GR/IR clearing account (WRX) at month end</li>
+        </ul>
+        <h4>Skills that fire</h4>
+        <div class="pp-skills">
+          <span class="pp-skill">/mm</span>
+          <span class="pp-skill">/mm-gap</span>
+          <span class="pp-skill">/btp</span>
+          <span class="pp-skill">/btp-gap</span>
+          <span class="pp-skill">/srm</span>
+          <span class="pp-skill">/ariba</span>
+        </div>
+      </div>
+      <div class="pp-right">
+        <div class="convo">
+          <span class="u">"Classify our 240 PI/PO interfaces for BTP migration — I need effort estimates and redesign candidates for the procurement stack."</span>
+          <span class="tool">▸ Router matched: <b>/btp-gap</b> (BTP Integration Suite architect skill)</span>
+          <span class="a">PI/PO → BTP Integration Suite migration plan</span>
+          <div class="out"><b>Inventory classified</b>
+  • <b>Simple</b> (152)  IDoc↔IDoc, RFC↔RFC passthroughs — <i>lift-and-shift, 2–5 days each</i>
+  • <b>Medium</b> (62)   SOAP↔RFC with Java UDF → Groovy rewrite — <i>1–2 weeks each</i>
+  • <b>Complex</b> (18)  ccBPM orchestrations, B2B/EDI — <i>5–10 days each</i>
+  • <b>Redesign</b> (8)  Custom Java adapters for supplier portal — <i>2–3 weeks each</i>
+
+<b>Procurement-specific flags</b>
+  ▸ 14 ORDERS/ORDRSP IDocs → lift-and-shift to CPI IDoc adapter
+  ▸ 3 Ariba cXML flows → use CPI Ariba adapter (direct equivalent)
+  ▸ 1 EDIFACT ORDERS (carrier X12) → Integration Advisor for parsing
+  ▸ 2 GR confirmation IDocs → retain for S/4 (still standard)
+
+<b>Cutover recommendation</b>  4-wave parallel run; Wave 3 (EDI/B2B) coincides with carrier contract renewal window.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HR PANEL -->
+    <div class="persona-panel" data-p="hr">
+      <div class="pp-left">
+        <div class="ptag">HR persona</div>
+        <h3>CHRO / HR Business Partner / Payroll Lead</h3>
+        <h4>Jobs to be done</h4>
+        <ul class="pp-jobs">
+          <li>Replicate org structure from S/4 HCM to SuccessFactors</li>
+          <li>Configure payroll posting (PCP0) to FI cost centres</li>
+          <li>Design garnishment logic for multi-country US/CA/MX</li>
+          <li>Reconcile HR cost centre postings at period-end (KB11N)</li>
+          <li>Migrate legacy HCM interfaces to BTP for Employee Central</li>
+        </ul>
+        <h4>Skills that fire</h4>
+        <div class="pp-skills">
+          <span class="pp-skill">/hcm</span>
+          <span class="pp-skill">/py</span>
+          <span class="pp-skill">/sf</span>
+          <span class="pp-skill">/hr-gap</span>
+          <span class="pp-skill">/btp</span>
+          <span class="pp-skill">/co</span>
+        </div>
+      </div>
+      <div class="pp-right">
+        <div class="convo">
+          <span class="u">"Our payroll team is spending 3 days every cycle reconciling HR postings to cost centres. What's the fix?"</span>
+          <span class="tool">▸ Router matched: <b>/co</b> + <b>/py</b> (CO cost-centre + payroll posting skills)</span>
+          <span class="a">Root cause &amp; remediation</span>
+          <div class="out"><b>Diagnosis</b>  Symbolic accounts in payroll (T52EL) are mapping to a single clearing cost centre; detail lost on transfer. KSB1 shows 40K monthly line items all on CC 9999.
+
+<b>Fix path</b>
+  1. <b>PCP0</b> → enable detailed cost assignment per wage type
+  2. <b>KSR1_KSR2</b> → define substitution rule: employee org unit → cost centre (FMDERIVE)
+  3. <b>KB11N</b> → retroactive repost prior 2 periods to break legacy lump-sum
+  4. Schedule <b>KSU5</b> assessment cycle for residual unassigned (admin overhead)
+
+<b>Expected outcome</b>  Reconciliation drops from 3 days to ~4 hours. Cost centre managers see their own HR lines in S_ALR_87013611 without central intervention.
+
+<b>Integration impact</b>  Minimal. No BAdI, no custom dev. Config-only within CO + PY.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILL ANATOMY ── -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">▦ Skill Anatomy</div>
+      <h2>Every skill is a Markdown file with a YAML header</h2>
+      <p>No framework. No bespoke DSL. Just versioned Markdown — diffable, reviewable, portable — carrying the exact knowledge a senior SAP consultant would bring to the workshop.</p>
+    </div>
+
+    <div class="skill-anatomy">
+      <div class="anatomy-code">
+<span class="c">---</span>
+<span class="k">name</span>: <span class="s">aa</span>
+<span class="k">description</span>: <span class="c">&gt;</span>
+  <span class="s">This skill should be used when the user asks about SAP Asset
+  Accounting configuration, FI-AA workstream setup, chart of
+  depreciation, asset classes, depreciation areas, depreciation keys,
+  asset master, asset acquisition (APC), asset retirement, transfer,
+  periodic depreciation run (AFAB), asset year-end close (AJAB),
+  asset under construction (AuC), or any FI-AA / Fixed Assets topic.</span>
+<span class="k">version</span>: <span class="s">0.1.0</span>
+<span class="c">---</span>
+
+<span class="h"># Asset Accounting (FI-AA) Knowledge Base</span>
+
+<span class="m">## 1. Workstream Scope</span>
+Asset Accounting is the SAP sub-ledger that manages the
+complete lifecycle of fixed assets — acquisition, depreciation,
+retirement, transfer. Every posting creates <b>two</b> documents:
+AA subledger + FI-GL. In S/4HANA New AA, the Universal
+Journal (ACDOCA) replaces traditional reconciliation — all
+depreciation postings are real-time. ABST2 should always be zero.
+
+<span class="m">## 2. Chart of Depreciation (EC08)</span>
+Highest-level organizational object. <b>Go-live lock</b> — cannot be
+changed after migration without forced remigration of assets.
+EC08 → Copy from country template (1US, 1GB, 1DE, …)
+OAOB → Assign Chart of Depreciation to Company Code
+
+<span class="m">## 3. Depreciation Areas (OADB &amp; OAYZ)</span>
+01 = Book (IFRS leading)  ·  02 = Local GAAP  ·  15 = Tax
+20 = Cost Accounting  ·  30 = Group Reporting
+<span class="c">... 12 more sections, every T-code, decision point, and edge case ...</span>
+      </div>
+
+      <div class="anatomy-note">
+        <ol>
+          <li>
+            <h4>YAML frontmatter</h4>
+            <p>Declares the skill <b>name</b>, <b>description</b>, and <b>version</b>. The description is the router's matching surface — it tells the agent when this skill should fire.</p>
+          </li>
+          <li>
+            <h4>Trigger phrases</h4>
+            <p>Slash aliases like <code>/aa-config</code>, <code>/aa-gap</code>, and natural-language triggers ("fixed assets setup", "depreciation configuration") both route to the same file.</p>
+          </li>
+          <li>
+            <h4>Workstream scope</h4>
+            <p>The first section frames <b>what belongs here</b> and what doesn't — upstream (MM, PS), downstream (FI-GL, CO), out-of-scope (REM, equipment catalogs).</p>
+          </li>
+          <li>
+            <h4>Configuration decision tree</h4>
+            <p>Each section walks through a configuration area with the <b>exact IMG path</b>, the T-codes in order, and the critical decisions (e.g. "Chart of Depreciation is a go-live lock").</p>
+          </li>
+          <li>
+            <h4>T-code reference table</h4>
+            <p>A complete T-code map at the bottom gives the agent instant recall — no hallucinated codes, no missed edge cases.</p>
+          </li>
+          <li>
+            <h4>Integration impact</h4>
+            <p>Every skill ends with integration hooks so the router can <b>chain</b> skills — AA calls CO for cost-centre allocation, CO calls FI for GL posting, FI calls BTP for interface routing.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MESH ARCHITECTURE ── -->
+<section class="alt">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">⬡ Mesh Architecture</div>
+      <h2>Persona → Router → Skill → System</h2>
+      <p>Three layers. Every persona question flows top-down. Every answer is cited back to the skill file and the SAP system of record.</p>
+    </div>
+
+    <div class="mesh">
+      <div class="mesh-lbl">layer 1 · personas</div>
+      <div class="mesh-row">
+        <div class="mesh-node persona"><div class="nm">Finance</div><div class="lbl">Controller</div></div>
+        <div class="mesh-node persona"><div class="nm">Procurement</div><div class="lbl">Category Mgr</div></div>
+        <div class="mesh-node persona"><div class="nm">HR</div><div class="lbl">HRBP</div></div>
+      </div>
+      <div class="mesh-arrow">▼</div>
+      <div class="mesh-lbl">layer 2 · skill router</div>
+      <div class="mesh-row">
+        <div class="mesh-node router"><div class="nm">intent match · chain compose · cite</div><div class="lbl">Skill Router</div></div>
+      </div>
+      <div class="mesh-arrow">▼</div>
+      <div class="mesh-lbl">layer 3 · skill library (yaml-fronted markdown)</div>
+      <div class="mesh-row">
+        <div class="mesh-node skill">/fi</div>
+        <div class="mesh-node skill">/fi-aa</div>
+        <div class="mesh-node skill">/co</div>
+        <div class="mesh-node skill">/mm</div>
+        <div class="mesh-node skill">/sd</div>
+        <div class="mesh-node skill">/hcm</div>
+        <div class="mesh-node skill">/btp</div>
+      </div>
+      <div class="mesh-arrow">▼</div>
+      <div class="mesh-lbl">layer 4 · systems of record</div>
+      <div class="mesh-row">
+        <div class="mesh-node system"><div class="nm">ERP</div><div class="lbl">S/4HANA</div></div>
+        <div class="mesh-node system"><div class="nm">Integration</div><div class="lbl">BTP Integration Suite</div></div>
+        <div class="mesh-node system"><div class="nm">HCM</div><div class="lbl">SuccessFactors</div></div>
+        <div class="mesh-node system"><div class="nm">Sourcing</div><div class="lbl">Ariba</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILL LIBRARY ── -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">▤ Skill Library</div>
+      <h2>12 skills live. 60+ on the roadmap.</h2>
+      <p>Each skill is authored once, versioned in git, and composable with every other skill. Live skills are callable today; the rest ship on the quarterly roadmap.</p>
+    </div>
+
+    <div class="skill-grid">
+      <!-- FINANCE -->
+      <div class="skill-card" data-dom="fin">
+        <div class="shead"><span class="sname">/fi</span><span class="sver">v0.1.0</span></div>
+        <div class="sdesc">FI functional consultant — GL, AP, AR, chart of accounts, fiscal year, document types, tax, bank, parallel ledgers, period-end close.</div>
+        <span class="sstatus live">● Live</span>
+      </div>
+      <div class="skill-card" data-dom="fin">
+        <div class="shead"><span class="sname">/fi-gap</span><span class="sver">v0.1.0</span></div>
+        <div class="sdesc">Fit-to-standard gap analysis for any finance requirement — returns structured gap cards with T-codes, classification, and integration impact.</div>
+        <span class="sstatus live">● Live</span>
+      </div>
+      <div class="skill-card" data-dom="fin">
+        <div class="shead"><span class="sname">/aa</span><span class="sver">v0.1.0</span></div>
+        <div class="sdesc">FI-AA (Asset Accounting) — chart of depreciation, asset classes, depreciation keys, AFAB, AJAB, AuC settlement, year-end reconciliation.</div>
+        <span class="sstatus live">● Live</span>
+      </div>
+      <div class="skill-card" data-dom="fin">
+        <div class="shead"><span class="sname">/co</span><span class="sver">v0.1.0</span></div>
+        <div class="sdesc">CO / Management Accounting — cost centres, profit centres, CO-PA, CO-PC, internal orders, assessment + distribution cycles, period-end allocation.</div>
+        <span class="sstatus live">● Live</span>
+      </div>
+      <div class="skill-card" data-dom="fin">
+        <div class="shead"><span class="sname">/co-gap</span><span class="sver">v0.1.0</span></div>
+        <div class="sdesc">Gap analysis for controlling requirements — fits, config gaps, enhancements, and custom-development classification with integration impact.</div>
+        <span class="sstatus live">● Live</span>
+      </div>
+      <div class="skill-card" data-dom="fin">
+        <div class="shead"><span class="sname">/tr</span><span class="sver">—</span></div>
+        <div class="sdesc">Treasury &amp; Cash Management — cash position, liquidity forecast, in-house bank, MT940 bank statement automation.</div>
+        <span class="sstatus soon">◐ Next</span>
+      </div>
+
+      <!-- CROSS -->
+      <div class="skill-card" data-dom="cross">
+        <div class="shead"><span class="sname">/btp</span><span class="sver">v0.1.0</span></div>
+        <div class="sdesc">BTP Integration Suite — iFlow design, adapter migration, Groovy scripts, credential store, API Management, Event Mesh.</div>
+        <span class="sstatus live">● Live</span>
+      </div>
+      <div class="skill-card" data-dom="cross">
+        <div class="shead"><span class="sname">/btp-gap</span><span class="sver">v0.1.0</span></div>
+        <div class="sdesc">PI/PO → BTP migration architect — classifies 200+ interfaces as Simple/Medium/Complex/Redesign with effort estimates and cutover waves.</div>
+        <span class="sstatus live">● Live</span>
+      </div>
+      <div class="skill-card" data-dom="cross">
+        <div class="shead"><span class="sname">/sd</span><span class="sver">—</span></div>
+        <div class="sdesc">SD functional — sales order, delivery, billing (VF01), revenue recognition, VKOA, CO-PA integration, pricing.</div>
+        <span class="sstatus soon">◐ Next</span>
+      </div>
+      <div class="skill-card" data-dom="cross">
+        <div class="shead"><span class="sname">/sap-test</span><span class="sver">—</span></div>
+        <div class="sdesc">Test-script authoring — generates Gherkin/Cucumber scenarios from a gap card for SIT and UAT execution.</div>
+        <span class="sstatus planned">○ Planned</span>
+      </div>
+
+      <!-- PROCUREMENT -->
+      <div class="skill-card" data-dom="proc">
+        <div class="shead"><span class="sname">/mm</span><span class="sver">—</span></div>
+        <div class="sdesc">MM functional — PO, PR, goods movement, OBYC account determination, WRX/GBB clearing, release strategy, invoice verification.</div>
+        <span class="sstatus soon">◐ Next</span>
+      </div>
+      <div class="skill-card" data-dom="proc">
+        <div class="shead"><span class="sname">/mm-gap</span><span class="sver">—</span></div>
+        <div class="sdesc">Fit-to-standard gap analysis for procurement — release strategies, approval workflows, intercompany, vendor consignment.</div>
+        <span class="sstatus soon">◐ Next</span>
+      </div>
+      <div class="skill-card" data-dom="proc">
+        <div class="shead"><span class="sname">/ariba</span><span class="sver">—</span></div>
+        <div class="sdesc">Ariba Buying &amp; Invoicing, Sourcing, Contracts — cXML integration, supplier enablement, catalog management.</div>
+        <span class="sstatus planned">○ Planned</span>
+      </div>
+      <div class="skill-card" data-dom="proc">
+        <div class="shead"><span class="sname">/srm</span><span class="sver">—</span></div>
+        <div class="sdesc">Supplier master harmonization, classification (UNSPSC L4), risk monitoring, onboarding workflows.</div>
+        <span class="sstatus planned">○ Planned</span>
+      </div>
+
+      <!-- HR -->
+      <div class="skill-card" data-dom="hr">
+        <div class="shead"><span class="sname">/hcm</span><span class="sver">—</span></div>
+        <div class="sdesc">SAP HCM (Personnel Administration, Org Management) — PA20/PA30/PA40, infotype design, planned working time, action types.</div>
+        <span class="sstatus soon">◐ Next</span>
+      </div>
+      <div class="skill-card" data-dom="hr">
+        <div class="shead"><span class="sname">/py</span><span class="sver">—</span></div>
+        <div class="sdesc">Payroll (PY) — wage types, symbolic accounts, PCP0 posting to FI, garnishments, country-specific schemas (US, DE, UK, IN).</div>
+        <span class="sstatus soon">◐ Next</span>
+      </div>
+      <div class="skill-card" data-dom="hr">
+        <div class="shead"><span class="sname">/sf</span><span class="sver">—</span></div>
+        <div class="sdesc">SuccessFactors — Employee Central, Performance &amp; Goals, Compensation, replication to S/4, CPI-based integrations.</div>
+        <span class="sstatus planned">○ Planned</span>
+      </div>
+      <div class="skill-card" data-dom="hr">
+        <div class="shead"><span class="sname">/hr-gap</span><span class="sver">—</span></div>
+        <div class="sdesc">Gap analysis for HR/payroll — org models, pay structures, time evaluation, country rollouts, FI posting alignment.</div>
+        <span class="sstatus planned">○ Planned</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ROADMAP ── -->
+<section class="alt">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">▶ Roadmap</div>
+      <h2>From 12 skills to every SAP module in 12 months</h2>
+      <p>The shape of the library: Finance leads because it's where IBM Client Zero proof points are strongest. Procurement catches up in Q2. HR closes out by Q4 — by which point every S/4 LoB has at least one reference skill.</p>
+    </div>
+
+    <div class="roadmap">
+      <div class="rm-col">
+        <div class="when">Today — Q2 2026</div>
+        <h3>Foundation</h3>
+        <div class="count">12</div>
+        <div class="count-lbl">skills live</div>
+        <ul>
+          <li>Finance core (FI, FI-AA, CO + 3 gap skills)</li>
+          <li>BTP Integration Suite + PI/PO migration gap</li>
+          <li>Fit-to-standard gap framework</li>
+          <li>Router v1 (intent-match + skill chaining)</li>
+          <li>Skills CI — versioning, changelog, diff review</li>
+        </ul>
+      </div>
+      <div class="rm-col">
+        <div class="when">Q3 2026</div>
+        <h3>LoB Coverage</h3>
+        <div class="count">34</div>
+        <div class="count-lbl">skills target</div>
+        <ul>
+          <li>MM, SD, WM, PP (core logistics modules)</li>
+          <li>HCM, PY + country-specific US / DE / UK</li>
+          <li>Ariba + SAP Sourcing integration skills</li>
+          <li>Test-script auto-generation (/sap-test)</li>
+          <li>Config-guide auto-generation (/sap-config)</li>
+        </ul>
+      </div>
+      <div class="rm-col">
+        <div class="when">Q4 2026</div>
+        <h3>Full Mesh</h3>
+        <div class="count">60+</div>
+        <div class="count-lbl">skills — every SAP module</div>
+        <ul>
+          <li>SuccessFactors, Concur, Fieldglass, IBP</li>
+          <li>S/4 Cloud Public Edition playbook</li>
+          <li>RISE + GROW migration skill packs</li>
+          <li>Skill marketplace — partner-contributed skills</li>
+          <li>Router v2 — multi-skill reasoning, citation graphs</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section>
+  <div class="container">
+    <div class="cta">
+      <h2>Deploy your first SAP skill agent.</h2>
+      <p>Start with a single persona lane — Finance, Procurement, or HR. Wire up the 12 live skills against your S/4 and BTP tenants, and we'll benchmark time-to-answer against your current ticket queue in 30 days.</p>
+      <div class="cta-row">
+        <a href="/assess.html" class="cta-btn primary">Run Maturity Assessment →</a>
+        <a href="/assets.html" class="cta-btn ghost">Browse AI Asset Library</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div>NextGen Business Operations Intelligence Platform</div>
+    <div><a href="/">Home</a>  ·  <a href="/assets.html">Playbooks</a>  ·  <a href="/roadmap.html">Roadmap</a>  ·  <a href="https://github.com/prasad-ibm" target="_blank" rel="noopener">GitHub</a></div>
+  </div>
+</footer>
+
+<script>
+  function selectPersona(p){
+    document.querySelectorAll('.ptab').forEach(b=>b.classList.toggle('active',b.dataset.p===p));
+    document.querySelectorAll('.persona-panel').forEach(panel=>panel.classList.toggle('active',panel.dataset.p===p));
+  }
+</script>
+
+</body>
+</html>
