@@ -563,6 +563,50 @@
   </div>
 </section>
 
+<!-- ── MESH ARCHITECTURE ── -->
+<section class="alt">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">⬡ Mesh Architecture</div>
+      <h2>Persona → Router → Skill → System</h2>
+      <p>Three layers. Every persona question flows top-down. Every answer is cited back to the skill file and the SAP system of record.</p>
+    </div>
+
+    <div class="mesh">
+      <div class="mesh-lbl">layer 1 · personas</div>
+      <div class="mesh-row">
+        <div class="mesh-node persona"><div class="nm">Finance</div><div class="lbl">Controller</div></div>
+        <div class="mesh-node persona"><div class="nm">Procurement</div><div class="lbl">Category Mgr</div></div>
+        <div class="mesh-node persona"><div class="nm">HR</div><div class="lbl">HRBP</div></div>
+      </div>
+      <div class="mesh-arrow">▼</div>
+      <div class="mesh-lbl">layer 2 · skill router</div>
+      <div class="mesh-row">
+        <div class="mesh-node router"><div class="nm">intent match · chain compose · cite</div><div class="lbl">Skill Router</div></div>
+      </div>
+      <div class="mesh-arrow">▼</div>
+      <div class="mesh-lbl">layer 3 · skill library (yaml-fronted markdown)</div>
+      <div class="mesh-row">
+        <div class="mesh-node skill">/fi</div>
+        <div class="mesh-node skill">/fi-aa</div>
+        <div class="mesh-node skill">/co</div>
+        <div class="mesh-node skill">/mm</div>
+        <div class="mesh-node skill">/sd</div>
+        <div class="mesh-node skill">/hcm</div>
+        <div class="mesh-node skill">/btp</div>
+      </div>
+      <div class="mesh-arrow">▼</div>
+      <div class="mesh-lbl">layer 4 · systems of record</div>
+      <div class="mesh-row">
+        <div class="mesh-node system"><div class="nm">ERP</div><div class="lbl">S/4HANA</div></div>
+        <div class="mesh-node system"><div class="nm">Integration</div><div class="lbl">BTP Integration Suite</div></div>
+        <div class="mesh-node system"><div class="nm">HCM</div><div class="lbl">SuccessFactors</div></div>
+        <div class="mesh-node system"><div class="nm">Sourcing</div><div class="lbl">Ariba</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── SKILL ANATOMY ── -->
 <section>
   <div class="container">
@@ -635,50 +679,6 @@ OAOB → Assign Chart of Depreciation to Company Code
             <p>Every skill ends with integration hooks so the router can <b>chain</b> skills — AA calls CO for cost-centre allocation, CO calls FI for GL posting, FI calls BTP for interface routing.</p>
           </li>
         </ol>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── MESH ARCHITECTURE ── -->
-<section class="alt">
-  <div class="container">
-    <div class="section-head">
-      <div class="eyebrow">⬡ Mesh Architecture</div>
-      <h2>Persona → Router → Skill → System</h2>
-      <p>Three layers. Every persona question flows top-down. Every answer is cited back to the skill file and the SAP system of record.</p>
-    </div>
-
-    <div class="mesh">
-      <div class="mesh-lbl">layer 1 · personas</div>
-      <div class="mesh-row">
-        <div class="mesh-node persona"><div class="nm">Finance</div><div class="lbl">Controller</div></div>
-        <div class="mesh-node persona"><div class="nm">Procurement</div><div class="lbl">Category Mgr</div></div>
-        <div class="mesh-node persona"><div class="nm">HR</div><div class="lbl">HRBP</div></div>
-      </div>
-      <div class="mesh-arrow">▼</div>
-      <div class="mesh-lbl">layer 2 · skill router</div>
-      <div class="mesh-row">
-        <div class="mesh-node router"><div class="nm">intent match · chain compose · cite</div><div class="lbl">Skill Router</div></div>
-      </div>
-      <div class="mesh-arrow">▼</div>
-      <div class="mesh-lbl">layer 3 · skill library (yaml-fronted markdown)</div>
-      <div class="mesh-row">
-        <div class="mesh-node skill">/fi</div>
-        <div class="mesh-node skill">/fi-aa</div>
-        <div class="mesh-node skill">/co</div>
-        <div class="mesh-node skill">/mm</div>
-        <div class="mesh-node skill">/sd</div>
-        <div class="mesh-node skill">/hcm</div>
-        <div class="mesh-node skill">/btp</div>
-      </div>
-      <div class="mesh-arrow">▼</div>
-      <div class="mesh-lbl">layer 4 · systems of record</div>
-      <div class="mesh-row">
-        <div class="mesh-node system"><div class="nm">ERP</div><div class="lbl">S/4HANA</div></div>
-        <div class="mesh-node system"><div class="nm">Integration</div><div class="lbl">BTP Integration Suite</div></div>
-        <div class="mesh-node system"><div class="nm">HCM</div><div class="lbl">SuccessFactors</div></div>
-        <div class="mesh-node system"><div class="nm">Sourcing</div><div class="lbl">Ariba</div></div>
       </div>
     </div>
   </div>
