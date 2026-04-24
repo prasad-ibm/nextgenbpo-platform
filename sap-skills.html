@@ -41,6 +41,16 @@
     .hero .stat .val{font-size:2rem;font-weight:700;color:var(--sap-blue);font-family:'IBM Plex Mono',monospace;line-height:1;}
     .hero .stat .lbl{font-size:12px;color:var(--ink-3);margin-top:0.5rem;text-transform:uppercase;letter-spacing:0.8px;}
 
+    /* HERO PILLARS */
+    .hero-vision-row{display:flex;gap:0;align-items:stretch;margin:2rem 0 2.5rem;flex-wrap:wrap;}
+    .hero-pillar{flex:1;min-width:200px;background:rgba(255,255,255,0.75);border:1px solid rgba(0,112,192,0.2);padding:1.25rem 1.5rem;backdrop-filter:blur(4px);}
+    .hero-pillar-out{background:rgba(0,112,192,0.07);border-color:var(--sap-blue);}
+    .hero-pillar-arrow{display:flex;align-items:center;justify-content:center;padding:0 0.75rem;font-size:1.6rem;color:var(--sap-blue);font-weight:300;flex-shrink:0;}
+    .hp-ico{font-size:1.6rem;margin-bottom:0.5rem;}
+    .hp-title{font-size:14px;font-weight:700;color:var(--ink-0);margin-bottom:0.35rem;}
+    .hp-desc{font-size:12.5px;color:var(--ink-2);line-height:1.55;}
+    @media(max-width:860px){.hero-vision-row{flex-direction:column;}.hero-pillar-arrow{transform:rotate(90deg);padding:0.25rem 0;}}
+
     /* SECTION */
     section{padding:5rem 0;}
     section.alt{background:var(--bg-1);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
@@ -50,21 +60,41 @@
     .section-head p{font-size:1rem;color:var(--ink-2);line-height:1.65;margin:0;}
 
     /* SHIFT — before/after */
-    .shift-grid{display:grid;grid-template-columns:1fr 64px 1fr;gap:0;align-items:stretch;}
-    @media(max-width:860px){.shift-grid{grid-template-columns:1fr;gap:1rem;}.shift-arrow{display:none;}}
-    .shift-card{background:#ffffff;border:1px solid var(--border);padding:2rem;}
-    .shift-card.before{border-left:4px solid var(--border-strong);}
-    .shift-card.after{border-left:4px solid var(--sap-gold);background:linear-gradient(135deg,#fffdf7,#ffffff);}
-    .shift-card h3{margin:0 0 1rem;font-size:0.85rem;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-3);font-weight:600;}
-    .shift-card.before h3{color:#6f6f6f;}
-    .shift-card.after h3{color:var(--sap-gold);}
-    .shift-card ul{list-style:none;padding:0;margin:0;}
-    .shift-card li{padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;line-height:1.55;display:flex;gap:12px;align-items:flex-start;color:var(--ink-1);}
-    .shift-card li:last-child{border-bottom:0;}
-    .shift-card li .icn{flex-shrink:0;width:20px;font-weight:700;}
-    .shift-card.before .icn{color:#da1e28;}
-    .shift-card.after .icn{color:#198038;}
-    .shift-arrow{display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:var(--sap-blue);}
+    .shift-outer{background:#fff;border:1px solid var(--border);padding:2.5rem;position:relative;}
+    .shift-header{text-align:center;margin-bottom:2rem;}
+    .shift-header h2{font-size:clamp(1.3rem,2.2vw,1.9rem);font-weight:700;color:var(--ink-0);margin:0 0 0.4rem;letter-spacing:-0.02em;}
+    .shift-header p{font-size:0.95rem;color:var(--ink-2);margin:0;}
+    .shift-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:2rem;align-items:start;}
+    @media(max-width:860px){.shift-grid{grid-template-columns:1fr;gap:1.5rem;}.shift-mid{display:none;}}
+    .shift-col-head{margin-bottom:1.25rem;padding-bottom:0.75rem;border-bottom:2px solid;}
+    .shift-col-head h3{margin:0 0 0.2rem;font-size:1.05rem;font-weight:700;}
+    .shift-col-head .sub{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;font-style:italic;}
+    .before .shift-col-head{border-color:#7eb3d8;}
+    .before .shift-col-head h3{color:#1f5fa6;}
+    .before .shift-col-head .sub{color:#5a88b5;}
+    .after .shift-col-head{border-color:#9b7dd4;}
+    .after .shift-col-head h3{color:#5a3e9e;}
+    .after .shift-col-head .sub{color:#7b5cb8;}
+    .shift-items{display:flex;flex-direction:column;gap:0.75rem;}
+    .shift-item{display:flex;gap:0.875rem;align-items:flex-start;padding:0.875rem;border-radius:4px;}
+    .before .shift-item{background:#edf4fb;}
+    .after .shift-item{background:#f0ebfb;}
+    .shift-item-ico{width:40px;height:40px;flex-shrink:0;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+    .before .shift-item-ico{background:rgba(30,95,166,0.12);}
+    .after .shift-item-ico{background:rgba(90,62,158,0.12);}
+    .shift-item-txt strong{display:block;font-size:13.5px;color:var(--ink-0);margin-bottom:3px;}
+    .shift-item-txt span{font-size:12.5px;color:var(--ink-2);line-height:1.5;}
+    .shift-col-foot{margin-top:1.25rem;padding-top:0.875rem;border-top:1px solid var(--border);display:flex;gap:1.5rem;flex-wrap:wrap;}
+    .shift-col-foot .foot-item{font-size:11.5px;line-height:1.4;}
+    .shift-col-foot .foot-item .fl{font-weight:700;}
+    .before .shift-col-foot .foot-item .fl{color:#1f5fa6;}
+    .after .shift-col-foot .foot-item .fl{color:#5a3e9e;}
+    .shift-col-foot .foot-item .fv{color:var(--ink-2);}
+    .shift-mid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;padding:0 0.5rem;}
+    .shift-mid .arrow-wrap{display:flex;flex-direction:column;align-items:center;gap:0.5rem;}
+    .shift-mid .arrow-ico{font-size:2rem;color:var(--sap-blue);line-height:1;}
+    .shift-mid .arrow-lbl{font-size:11.5px;text-align:center;color:var(--ink-2);line-height:1.45;max-width:120px;font-weight:500;}
+    .shift-quote{text-align:center;font-style:italic;font-size:0.875rem;color:var(--ink-3);margin-top:1.75rem;padding-top:1.25rem;border-top:1px solid var(--border);max-width:600px;margin-left:auto;margin-right:auto;}
 
     /* PERSONAS */
     .persona-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;}
@@ -218,9 +248,28 @@
 <!-- ── HERO ── -->
 <section class="hero">
   <div class="container">
-    <span class="eyebrow">⬢ SAP × AGENTIC AI</span>
-    <h1>Your SAP consultant team,<br/>reimagined as <em>skill agents</em>.</h1>
-    <p class="sub">The future of SAP isn't a bigger ERP — it's a mesh of persona-aware agents backed by versioned, Markdown-based <strong>skill files</strong> that carry the tacit knowledge of a senior FI, CO, MM, HCM, or BTP consultant. Controllers, procurement heads, and HR leaders invoke them in natural language. Answers come in seconds. The knowledge never retires.</p>
+    <span class="eyebrow">⬢ SAP × AGENTIC AI — FUTURE VISION</span>
+    <h1>SAP as the system of record.<br/><em>Skill agents</em> as the system of action.</h1>
+    <p class="sub">The ERP is not being replaced — it is being elevated. SAP S/4HANA continues to own <strong>governance, accounting accuracy, and regulatory compliance</strong>. The intelligence layer — automation, AI reasoning, and workflow decisioning — runs <em>on top</em> through <strong>BTP and partner ecosystems</strong>. SAP ensures the core stays reliable. Skill agents ensure the knowledge around it never retires.</p>
+    <div class="hero-vision-row">
+      <div class="hero-pillar">
+        <div class="hp-ico">🏛️</div>
+        <div class="hp-title">SAP Core</div>
+        <div class="hp-desc">Governance, accounting accuracy &amp; regulatory compliance. The system of record stays untouched.</div>
+      </div>
+      <div class="hero-pillar-arrow">＋</div>
+      <div class="hero-pillar">
+        <div class="hp-ico">⚡</div>
+        <div class="hp-title">BTP &amp; Ecosystem</div>
+        <div class="hp-desc">Automation, AI reasoning &amp; workflow intelligence run on top via BTP, extensions, and partner skills.</div>
+      </div>
+      <div class="hero-pillar-arrow">→</div>
+      <div class="hero-pillar hero-pillar-out">
+        <div class="hp-ico">🤖</div>
+        <div class="hp-title">Skill-Agent Intelligence</div>
+        <div class="hp-desc">Persona-aware agents surface the right SAP knowledge — T-codes, IMG paths, integration impact — in seconds.</div>
+      </div>
+    </div>
     <div class="stats">
       <div class="stat"><div class="val">12</div><div class="lbl">Skills live</div></div>
       <div class="stat"><div class="val">3</div><div class="lbl">Persona lanes</div></div>
@@ -234,35 +283,126 @@
 <section>
   <div class="container">
     <div class="section-head">
-      <div class="eyebrow">▚ The Shift</div>
-      <h2>From $1,200/day consultants to always-on skill agents</h2>
-      <p>Traditional SAP implementations front-load cost on a handful of senior consultants whose knowledge walks out the door at go-live. Skill agents capture that same playbook — the T-codes, decision trees, integration points, and edge cases — in a form every business user can invoke on demand.</p>
+      <div class="eyebrow">▚ The Implementation Model Shift</div>
+      <h2>From manual workflows and documentation — to skill-agent intelligence</h2>
+      <p>Innovation no longer lives inside the core. SAP provides the governed, compliant system of record. Skill agents deliver the intelligence on top — turning tribal consultant knowledge into a versioned, reusable asset.</p>
     </div>
-    <div class="shift-grid">
-      <div class="shift-card before">
-        <h3>Traditional SAP consulting</h3>
-        <ul>
-          <li><span class="icn">✕</span><span><strong>4–6 week</strong> fit-to-standard workshops before a single gap card is drafted.</span></li>
-          <li><span class="icn">✕</span><span><strong>$1,200–$2,400/day</strong> senior functional consultant rates.</span></li>
-          <li><span class="icn">✕</span><span>Knowledge lives in <strong>one consultant's head</strong> and leaves at go-live.</span></li>
-          <li><span class="icn">✕</span><span>Fit-gap outputs are Word docs and spreadsheets that <strong>drift from reality</strong> within weeks.</span></li>
-          <li><span class="icn">✕</span><span>Onboarding a new business unit <strong>restarts the clock</strong>.</span></li>
-          <li><span class="icn">✕</span><span>Post go-live, business users <strong>raise tickets</strong> and wait days for answers.</span></li>
-        </ul>
-      </div>
-      <div class="shift-arrow">▶</div>
-      <div class="shift-card after">
-        <h3>Skill-agent model</h3>
-        <ul>
-          <li><span class="icn">✓</span><span>Gap analysis, test scripts, and config guides generated in <strong>seconds</strong>, not sprints.</span></li>
-          <li><span class="icn">✓</span><span>Skill library is a <strong>versioned asset</strong> — one-time IP, infinite reuse.</span></li>
-          <li><span class="icn">✓</span><span>Every senior consultant's playbook distilled into a <strong>YAML-fronted Markdown file</strong>.</span></li>
-          <li><span class="icn">✓</span><span>Agents <strong>cite the T-code</strong>, the IMG path, and the integration impact every time.</span></li>
-          <li><span class="icn">✓</span><span>New business unit? The same skills light up on <strong>day one</strong>.</span></li>
-          <li><span class="icn">✓</span><span>Controllers, buyers, and HRBPs <strong>self-serve</strong> — no ticket queue.</span></li>
-        </ul>
-      </div>
-    </div>
+
+    <div class="shift-outer">
+      <div class="shift-grid">
+
+        <!-- LEFT: Conventional -->
+        <div class="before">
+          <div class="shift-col-head">
+            <h3>Conventional SAP Rollout Model</h3>
+            <div class="sub">Workflows through people</div>
+          </div>
+          <div class="shift-items">
+            <div class="shift-item">
+              <div class="shift-item-ico">📋</div>
+              <div class="shift-item-txt">
+                <strong>Extended Workshops</strong>
+                <span>Weeks of discovery and manual gap cards before a single config decision is made.</span>
+              </div>
+            </div>
+            <div class="shift-item">
+              <div class="shift-item-ico">📄</div>
+              <div class="shift-item-txt">
+                <strong>Drifting Documentation</strong>
+                <span>Word docs &amp; spreadsheets drift from reality within weeks of go-live.</span>
+              </div>
+            </div>
+            <div class="shift-item">
+              <div class="shift-item-ico">🧑‍🤝‍🧑</div>
+              <div class="shift-item-txt">
+                <strong>Knowledge Attrition &amp; Silos</strong>
+                <span>Tribal knowledge lives in the SME — and leaves at go-live.</span>
+              </div>
+            </div>
+            <div class="shift-item">
+              <div class="shift-item-ico">📊</div>
+              <div class="shift-item-txt">
+                <strong>New Unit Onboarding</strong>
+                <span>Starts from scratch for every new business unit or rollout wave.</span>
+              </div>
+            </div>
+            <div class="shift-item">
+              <div class="shift-item-ico">🎫</div>
+              <div class="shift-item-txt">
+                <strong>Post-Live Ticket Queue</strong>
+                <span>Business users wait days for support ticket answers from overstretched teams.</span>
+              </div>
+            </div>
+          </div>
+          <div class="shift-col-foot">
+            <div class="foot-item"><span class="fl">Cost driver:</span> <span class="fv">Time-intensive transformation</span></div>
+            <div class="foot-item"><span class="fl">Value:</span> <span class="fv">Task throughput</span></div>
+            <div class="foot-item"><span class="fl">Change:</span> <span class="fv">Resource onboarding</span></div>
+          </div>
+        </div>
+
+        <!-- CENTER ARROW -->
+        <div class="shift-mid">
+          <div class="arrow-wrap">
+            <div class="arrow-ico">▶</div>
+            <div class="arrow-lbl">Operating model shift enabled by Skill-Agent Intelligence</div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Skill-Agent -->
+        <div class="after">
+          <div class="shift-col-head">
+            <h3>Skill-Agent Model</h3>
+            <div class="sub">Workflows through intelligence</div>
+          </div>
+          <div class="shift-items">
+            <div class="shift-item">
+              <div class="shift-item-ico">⚡</div>
+              <div class="shift-item-txt">
+                <strong>Automated Gap Analysis</strong>
+                <span>Gap analysis, test scripts, and config guides generated in days, not sprints.</span>
+              </div>
+            </div>
+            <div class="shift-item">
+              <div class="shift-item-ico">📦</div>
+              <div class="shift-item-txt">
+                <strong>Versioned Skill Asset</strong>
+                <span>The skill library is a versioned IP asset — authored once, reused infinitely.</span>
+              </div>
+            </div>
+            <div class="shift-item">
+              <div class="shift-item-ico">🧠</div>
+              <div class="shift-item-txt">
+                <strong>Domain Expertise Playbook</strong>
+                <span>Senior consultant knowledge distilled into YAML-fronted, auditable skill files.</span>
+              </div>
+            </div>
+            <div class="shift-item">
+              <div class="shift-item-ico">🎯</div>
+              <div class="shift-item-txt">
+                <strong>Skill-Centric Precision</strong>
+                <span>Agents cite the T-code, IMG path, and integration impact on every response.</span>
+              </div>
+            </div>
+            <div class="shift-item">
+              <div class="shift-item-ico">🚀</div>
+              <div class="shift-item-txt">
+                <strong>Rapid Unit Onboarding</strong>
+                <span>New business units self-serve on day one — buyers, controllers, and HRBPs included.</span>
+              </div>
+            </div>
+          </div>
+          <div class="shift-col-foot">
+            <div class="foot-item"><span class="fl">Cost driver:</span> <span class="fv">Knowledge engineering</span></div>
+            <div class="foot-item"><span class="fl">Value:</span> <span class="fv">Implementation speed</span></div>
+            <div class="foot-item"><span class="fl">Change:</span> <span class="fv">Agent skill configuration</span></div>
+          </div>
+        </div>
+
+      </div><!-- /shift-grid -->
+      <div class="shift-quote">"The shift accelerates deployment by transforming tribal knowledge into digital, reusable skill assets."</div>
+    </div><!-- /shift-outer -->
+
   </div>
 </section>
 
