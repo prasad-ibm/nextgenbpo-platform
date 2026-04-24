@@ -212,7 +212,43 @@
     footer{background:#161616;color:#c6c6c6;padding:2rem 0;font-size:12px;}
     footer a{color:#a6c8ff;text-decoration:none;}
     footer .container{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+
+    /* ── WHOLE SURFACE / TREEMAP ── */
+    .surf-kicker{font:600 11px/1 'IBM Plex Sans',sans-serif;letter-spacing:1.6px;text-transform:uppercase;color:var(--sap-blue);margin-bottom:0.75rem;display:block;}
+    .surf-standfirst{font-size:1rem;color:var(--ink-2);line-height:1.65;max-width:760px;margin:0 auto 2.5rem;text-align:center;}
+    .tm-wrap{background:#fff;border:1px solid var(--border);margin-top:0;overflow:hidden;}
+    .tm-controls{display:flex;gap:0;border-bottom:1px solid var(--border);background:var(--bg-1);flex-wrap:wrap;}
+    .tm-btn{background:none;border:none;border-right:1px solid var(--border);padding:12px 20px;font:600 11px/1 'IBM Plex Sans',sans-serif;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;color:var(--ink-2);transition:all .15s;}
+    .tm-btn:hover{background:#fff;color:var(--ink-0);}
+    .tm-btn.active{background:#161616;color:#fff;}
+    .tm-btn .num{font-family:'IBM Plex Mono',monospace;margin-right:6px;opacity:.6;font-size:10px;}
+    .tm-meta{margin-left:auto;padding:12px 20px;font:400 11px/1 'IBM Plex Mono',monospace;color:var(--ink-3);display:flex;align-items:center;}
+    .tm-crumb{padding:10px 20px;background:#161616;color:#fff;font:400 11px/1 'IBM Plex Mono',monospace;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+    .tm-crumb-part{color:#a8a8a8;}
+    .tm-crumb-part.active{color:#78a9ff;font-weight:500;}
+    .tm-crumb-sep{color:#525252;}
+    #surf-treemap{width:100%;height:680px;position:relative;background:#fff;}
+    #surf-treemap svg{display:block;width:100%;height:100%;}
+    .surf-legend{display:flex;gap:20px;flex-wrap:wrap;padding:12px 20px;background:var(--bg-1);border-top:1px solid var(--border);font:600 11px/1 'IBM Plex Sans',sans-serif;letter-spacing:.2px;color:var(--ink-2);}
+    .surf-legend-item{display:inline-flex;align-items:center;gap:7px;}
+    .surf-legend-dot{width:11px;height:11px;display:inline-block;flex-shrink:0;}
+    .surf-note{margin-top:2rem;padding:1rem 1.25rem;background:var(--bg-1);border-left:3px solid var(--sap-gold);font-size:13px;line-height:1.6;color:var(--ink-2);}
+    .surf-note b{color:var(--ink-0);font-weight:600;}
+    .surf-note a{color:var(--sap-blue);text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:12px;}
+    .surf-note a:hover{text-decoration:underline;}
+    .surf-stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);margin-top:2.5rem;}
+    @media(max-width:760px){.surf-stats{grid-template-columns:repeat(2,1fr);}}
+    .surf-stat{padding:1.5rem;border-right:1px solid var(--border);position:relative;}
+    .surf-stat:last-child{border-right:none;}
+    .surf-stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--sap-blue);}
+    .surf-stat-label{font:600 10px/1 'IBM Plex Sans',sans-serif;letter-spacing:.8px;text-transform:uppercase;color:var(--ink-3);margin-bottom:0.75rem;}
+    .surf-stat-value{font:300 2.8rem/1 'IBM Plex Sans',sans-serif;letter-spacing:-.02em;color:var(--ink-0);}
+    .surf-stat-value small{font-size:1.1rem;color:var(--ink-3);}
+    .surf-stat-desc{font-size:12px;color:var(--ink-2);margin-top:0.5rem;line-height:1.45;font-style:italic;}
+    .surf-prose{max-width:760px;margin:2rem auto 0;}
+    .surf-prose p{font-size:15px;line-height:1.7;margin:0 0 1rem;color:var(--ink-1);}
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" defer></script>
 </head>
 <body>
 
@@ -403,6 +439,78 @@
       <div class="shift-quote">"The shift accelerates deployment by transforming tribal knowledge into digital, reusable skill assets."</div>
     </div><!-- /shift-outer -->
 
+  </div>
+</section>
+
+<!-- ── THE WHOLE SURFACE ── -->
+<section class="alt">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">◎ The Whole Surface</div>
+      <h2>The full SAP stack — to scale</h2>
+      <p>Every rectangle is a pocket of API capability. Size is proportional to published OData endpoints. The highlighted cell is what one skill library has covered today — one submodule, FI-AR. Every other rectangle is the opportunity ahead.</p>
+    </div>
+
+    <div class="tm-wrap">
+      <div class="tm-controls">
+        <button class="tm-btn active" data-surf-level="l1"><span class="num">L1</span>Lines of Business</button>
+        <button class="tm-btn" data-surf-level="l2"><span class="num">L2</span>Modules</button>
+        <button class="tm-btn" data-surf-level="l3"><span class="num">L3</span>Submodules</button>
+        <button class="tm-btn" data-surf-level="all"><span class="num">∀</span>Everything</button>
+        <div class="tm-meta" id="surf-tm-meta">Click any cell to drill in</div>
+      </div>
+      <div class="tm-crumb" id="surf-tm-crumb">
+        <span class="tm-crumb-part active">SAP S/4HANA (entire stack)</span>
+      </div>
+      <div id="surf-treemap"></div>
+      <div class="surf-legend">
+        <span class="surf-legend-item"><span class="surf-legend-dot" style="background:#0f62fe"></span>Finance</span>
+        <span class="surf-legend-item"><span class="surf-legend-dot" style="background:#0043ce"></span>Sourcing &amp; Procurement</span>
+        <span class="surf-legend-item"><span class="surf-legend-dot" style="background:#0072c3"></span>Supply Chain</span>
+        <span class="surf-legend-item"><span class="surf-legend-dot" style="background:#007d79"></span>Manufacturing</span>
+        <span class="surf-legend-item"><span class="surf-legend-dot" style="background:#d02670"></span>Sales</span>
+        <span class="surf-legend-item"><span class="surf-legend-dot" style="background:#8a3ffc"></span>HR/HCM</span>
+        <span class="surf-legend-item"><span class="surf-legend-dot" style="background:#6f6f6f"></span>Cross-topic</span>
+        <span class="surf-legend-item" style="margin-left:auto"><span class="surf-legend-dot" style="background:#f1c21b"></span>Covered by skill agents today</span>
+      </div>
+    </div>
+
+    <div class="surf-stats">
+      <div class="surf-stat">
+        <div class="surf-stat-label">Skills in FI-AR today</div>
+        <div class="surf-stat-value">172</div>
+        <div class="surf-stat-desc">Exact — measured against the verified skill atom library.</div>
+      </div>
+      <div class="surf-stat">
+        <div class="surf-stat-label">Est. endpoints in all of FI</div>
+        <div class="surf-stat-value">~1,800</div>
+        <div class="surf-stat-desc">Finance module, all ten submodules. Roughly 10× where we are today.</div>
+      </div>
+      <div class="surf-stat">
+        <div class="surf-stat-label">Est. endpoints in S/4HANA</div>
+        <div class="surf-stat-value">~18,000</div>
+        <div class="surf-stat-desc">Every line of business, every module, every submodule.</div>
+      </div>
+      <div class="surf-stat">
+        <div class="surf-stat-label">Coverage today</div>
+        <div class="surf-stat-value">~1<small>%</small></div>
+        <div class="surf-stat-desc">Of one platform. The architecture extends to Oracle, Workday, Fiserv with the same pattern.</div>
+      </div>
+    </div>
+
+    <div class="surf-prose">
+      <p>The treemap makes the opportunity visible. 172 skill atoms covered one slice — cash application, dunning, disputes, collections, aging, write-off, credit, onboarding, invoice generation, payment exceptions. It works, and the architecture proved out on it.</p>
+      <p>But it's one submodule of one module. <strong>There are nine more submodules in FI alone</strong> — Accounts Payable, General Ledger, Asset Accounting, Banking, Treasury, Travel, Special Purpose Ledger, Legal Consolidation, Fund Management — each of comparable complexity. And eight more Lines of Business behind Finance.</p>
+      <p>Atomising one submodule is the hard part. Every subsequent one uses the same patterns: crawl, atom extraction, verification, skill authoring, policy calibration. <strong>The first submodule takes months. The tenth takes weeks. The hundredth takes days.</strong></p>
+    </div>
+
+    <div class="surf-note">
+      <b>Data sources.</b> Endpoint counts sourced from
+      <a href="https://api.sap.com" target="_blank" rel="noopener">api.sap.com</a>,
+      <a href="https://help.sap.com" target="_blank" rel="noopener">help.sap.com</a>, and
+      <a href="https://community.sap.com" target="_blank" rel="noopener">community.sap.com</a>
+      for SAP S/4HANA Cloud Public Edition. L1 and L2 figures are surface estimates (±15%) from package-level metadata in SAP's public catalogs. L3 counts for FI submodules are derived from T-code and Fiori-app inventories. The FI-AR count (172) is exact, measured against the skill atom library as built. Crawled April 2026.
+    </div>
   </div>
 </section>
 
@@ -874,6 +982,344 @@ OAOB → Assign Chart of Depreciation to Company Code
     document.querySelectorAll('.ptab').forEach(b=>b.classList.toggle('active',b.dataset.p===p));
     document.querySelectorAll('.persona-panel').forEach(panel=>panel.classList.toggle('active',panel.dataset.p===p));
   }
+</script>
+
+<script>
+/* ── WHOLE SURFACE TREEMAP ── */
+(function(){
+  const sapData = {
+    name:"SAP S/4HANA",color:"#161616",
+    children:[
+      {name:"Finance",id:"FIN",color:"#0f62fe",children:[
+        {name:"FI — Financial Accounting",id:"FI",color:"#0f62fe",children:[
+          {name:"FI-GL · General Ledger",count:420,color:"#0f62fe"},
+          {name:"FI-AP · Accounts Payable",count:340,color:"#0f62fe"},
+          {name:"FI-AR · Accounts Receivable",count:380,color:"#f1c21b",covered:172,isCovered:true},
+          {name:"FI-AA · Asset Accounting",count:280,color:"#0f62fe"},
+          {name:"FI-BL · Banking & Loans",count:180,color:"#0f62fe"},
+          {name:"FI-TM · Travel Management",count:90,color:"#0f62fe"},
+          {name:"FI-SL · Special Purpose Ledger",count:60,color:"#0f62fe"},
+          {name:"FI-LC · Legal Consolidation",count:70,color:"#0f62fe"},
+          {name:"FI-FM · Fund Management",count:110,color:"#0f62fe"}
+        ]},
+        {name:"CO — Controlling",id:"CO",color:"#0f62fe",children:[
+          {name:"CO-OM · Overhead Cost",count:220,color:"#4589ff"},
+          {name:"CO-PC · Product Costing",count:260,color:"#4589ff"},
+          {name:"CO-PA · Profitability Analysis",count:140,color:"#4589ff"},
+          {name:"CO-PCA · Profit Center",count:110,color:"#4589ff"}
+        ]},
+        {name:"FSCM — Financial Supply Chain",id:"FSCM",color:"#0f62fe",children:[
+          {name:"FSCM-CR · Credit Management",count:95,color:"#78a9ff"},
+          {name:"FSCM-DM · Dispute",count:70,color:"#78a9ff"},
+          {name:"FSCM-COL · Collections",count:80,color:"#78a9ff"},
+          {name:"FSCM-IHC · In-House Cash",count:60,color:"#78a9ff"}
+        ]},
+        {name:"TRM — Treasury & Risk",id:"TRM",color:"#0f62fe",children:[
+          {name:"TRM-TM · Transaction Mgmt",count:150,color:"#a6c8ff"},
+          {name:"TRM-CFM · Cash Flow",count:90,color:"#a6c8ff"},
+          {name:"TRM-RM · Risk Management",count:70,color:"#a6c8ff"}
+        ]}
+      ]},
+      {name:"Sourcing & Procurement",id:"SRM",color:"#0043ce",children:[
+        {name:"MM — Materials Management",id:"MM",color:"#0043ce",children:[
+          {name:"MM-PUR · Purchasing",count:380,color:"#0043ce"},
+          {name:"MM-IM · Inventory Mgmt",count:260,color:"#0043ce"},
+          {name:"MM-SRV · External Services",count:110,color:"#0043ce"},
+          {name:"MM-IV · Invoice Verification",count:140,color:"#0043ce"}
+        ]},
+        {name:"SRM — Supplier Relationship",id:"SRM-MOD",color:"#0043ce",children:[
+          {name:"SRM-SLM · Supplier Lifecycle",count:120,color:"#002d9c"},
+          {name:"SRM-CON · Contract Mgmt",count:80,color:"#002d9c"},
+          {name:"SRM-SRC · Sourcing",count:90,color:"#002d9c"}
+        ]}
+      ]},
+      {name:"Supply Chain",id:"SCM",color:"#0072c3",children:[
+        {name:"EWM — Extended Warehouse",id:"EWM",color:"#0072c3",children:[
+          {name:"EWM-WOP · Warehouse Ops",count:280,color:"#0072c3"},
+          {name:"EWM-INB · Inbound",count:160,color:"#0072c3"},
+          {name:"EWM-OUT · Outbound",count:170,color:"#0072c3"},
+          {name:"EWM-MON · Monitoring",count:90,color:"#0072c3"}
+        ]},
+        {name:"TM — Transportation Mgmt",id:"TM",color:"#0072c3",children:[
+          {name:"TM-PLN · Planning",count:190,color:"#00539a"},
+          {name:"TM-EXE · Execution",count:140,color:"#00539a"},
+          {name:"TM-CHR · Charge Mgmt",count:100,color:"#00539a"}
+        ]},
+        {name:"IBP — Integrated Business Planning",id:"IBP",color:"#0072c3",children:[
+          {name:"IBP-DEM · Demand",count:130,color:"#004d80"},
+          {name:"IBP-SUP · Supply",count:110,color:"#004d80"},
+          {name:"IBP-RES · Response",count:80,color:"#004d80"}
+        ]}
+      ]},
+      {name:"Manufacturing",id:"MFG",color:"#007d79",children:[
+        {name:"PP — Production Planning",id:"PP",color:"#007d79",children:[
+          {name:"PP-MRP · Material Planning",count:240,color:"#007d79"},
+          {name:"PP-SFC · Shop Floor Control",count:180,color:"#007d79"},
+          {name:"PP-BD · Basic Data (BOM)",count:160,color:"#007d79"},
+          {name:"PP-PI · Process Industry",count:120,color:"#007d79"}
+        ]},
+        {name:"QM — Quality Management",id:"QM",color:"#007d79",children:[
+          {name:"QM-IM · Inspection",count:200,color:"#005d5d"},
+          {name:"QM-QC · Quality Control",count:140,color:"#005d5d"},
+          {name:"QM-CA · Quality Certificates",count:60,color:"#005d5d"}
+        ]},
+        {name:"PM — Plant Maintenance",id:"PM",color:"#007d79",children:[
+          {name:"PM-WOC · Work Order",count:220,color:"#004e4c"},
+          {name:"PM-PRM · Preventive",count:110,color:"#004e4c"}
+        ]}
+      ]},
+      {name:"Sales",id:"SD",color:"#d02670",children:[
+        {name:"SD — Sales & Distribution",id:"SD-MOD",color:"#d02670",children:[
+          {name:"SD-SLS · Sales",count:320,color:"#d02670"},
+          {name:"SD-BIL · Billing",count:230,color:"#d02670"},
+          {name:"SD-SHP · Shipping",count:180,color:"#d02670"},
+          {name:"SD-MD · Master Data",count:150,color:"#d02670"},
+          {name:"SD-CAS · Sales Support",count:90,color:"#d02670"}
+        ]},
+        {name:"CS — Customer Service",id:"CS",color:"#d02670",children:[
+          {name:"CS-IS · Installed Base",count:120,color:"#9f1853"},
+          {name:"CS-SE · Service Contracts",count:90,color:"#9f1853"}
+        ]}
+      ]},
+      {name:"HR/HCM",id:"HR",color:"#8a3ffc",children:[
+        {name:"PA — Personnel Admin",id:"PA",color:"#8a3ffc",children:[
+          {name:"PA-PA · Master Data",count:220,color:"#8a3ffc"},
+          {name:"PA-OS · Org. Structure",count:110,color:"#8a3ffc"}
+        ]},
+        {name:"PY — Payroll",id:"PY",color:"#8a3ffc",children:[
+          {name:"PY-XX · Payroll Core",count:280,color:"#6929c4"},
+          {name:"PY-CO · Country Versions",count:180,color:"#6929c4"}
+        ]},
+        {name:"PT — Time Management",id:"PT",color:"#8a3ffc",children:[
+          {name:"PT-RC · Time Recording",count:160,color:"#491d8b"},
+          {name:"PT-EV · Evaluation",count:100,color:"#491d8b"}
+        ]}
+      ]},
+      {name:"R&D / Engineering",id:"RD",color:"#ee5396",children:[
+        {name:"PLM — Product Lifecycle",id:"PLM",color:"#ee5396",children:[
+          {name:"PLM-RM · Recipe Mgmt",count:110,color:"#ee5396"},
+          {name:"PLM-PPM · Portfolio & Proj.",count:140,color:"#ee5396"}
+        ]},
+        {name:"PS — Project System",id:"PS",color:"#ee5396",children:[
+          {name:"PS-ST · Structure",count:130,color:"#ee5396"},
+          {name:"PS-PLN · Planning",count:120,color:"#ee5396"},
+          {name:"PS-EXE · Execution",count:90,color:"#ee5396"}
+        ]}
+      ]},
+      {name:"Asset Management",id:"AM",color:"#33b1ff",children:[
+        {name:"EAM — Enterprise Asset",id:"EAM",color:"#33b1ff",children:[
+          {name:"EAM-ME · Master Data",count:180,color:"#33b1ff"},
+          {name:"EAM-WC · Work Clearance",count:70,color:"#33b1ff"}
+        ]}
+      ]},
+      {name:"Cross-topic",id:"CROSS",color:"#6f6f6f",children:[
+        {name:"BP — Business Partner",id:"BP",color:"#6f6f6f",children:[
+          {name:"BP-CVI · Customer/Vendor Int.",count:180,color:"#6f6f6f"},
+          {name:"BP-MD · Master Data",count:120,color:"#6f6f6f"}
+        ]},
+        {name:"EHS — Env/Health/Safety",id:"EHS",color:"#6f6f6f",children:[
+          {name:"EHS-CMP · Compliance",count:90,color:"#525252"},
+          {name:"EHS-IH · Industrial Hygiene",count:70,color:"#525252"}
+        ]},
+        {name:"GRC — Governance/Risk/Compliance",id:"GRC",color:"#6f6f6f",children:[
+          {name:"GRC-AC · Access Control",count:110,color:"#393939"},
+          {name:"GRC-PC · Process Control",count:90,color:"#393939"}
+        ]}
+      ]}
+    ]
+  };
+
+  function sumLeaves(node){
+    if(node.count!==undefined) return node.count;
+    if(!node.children) return 0;
+    return node.children.reduce((a,c)=>a+sumLeaves(c),0);
+  }
+  function countLeaves(node){
+    if(!node.children) return 1;
+    return node.children.reduce((a,c)=>a+countLeaves(c),0);
+  }
+
+  let surfLevel='l1';
+
+  function getVizData(level){
+    if(level==='l1'){
+      return {name:'root',children:sapData.children.map(lob=>({
+        name:lob.name,id:lob.id,color:lob.color,value:sumLeaves(lob),children:null
+      }))};
+    }
+    if(level==='l2'){
+      const out={name:'root',children:[]};
+      sapData.children.forEach(lob=>{
+        (lob.children||[]).forEach(mod=>{
+          out.children.push({name:mod.name,id:mod.id,color:mod.color||lob.color,lob:lob.name,value:sumLeaves(mod)});
+        });
+      });
+      return out;
+    }
+    if(level==='l3'){
+      const out={name:'root',children:[]};
+      sapData.children.forEach(lob=>{
+        (lob.children||[]).forEach(mod=>{
+          (mod.children||[]).forEach(sub=>{
+            out.children.push({
+              name:sub.name,
+              color:sub.isCovered?'#f1c21b':(sub.color||mod.color||lob.color),
+              lob:lob.name,mod:mod.name,value:sub.count,
+              isCovered:sub.isCovered,covered:sub.covered
+            });
+          });
+        });
+      });
+      return out;
+    }
+    return sapData;
+  }
+
+  function surfRender(level){
+    surfLevel=level;
+    if(!window.d3){return;}
+    const container=d3.select('#surf-treemap');
+    container.selectAll('*').remove();
+    const bbox=container.node().getBoundingClientRect();
+    const W=bbox.width,H=680;
+    const svg=container.append('svg').attr('viewBox',`0 0 ${W} ${H}`).attr('preserveAspectRatio','xMidYMid meet');
+    const total=sumLeaves(sapData);
+
+    if(level==='all'){
+      const root=d3.hierarchy(sapData).sum(d=>d.count||0).sort((a,b)=>b.value-a.value);
+      d3.treemap().size([W,H]).paddingOuter(2).paddingTop(d=>d.depth===1?28:(d.depth===2?22:0)).paddingInner(1.5).round(true)(root);
+      const nodes=svg.selectAll('g').data(root.descendants()).enter().append('g');
+      nodes.each(function(d){
+        const g=d3.select(this);
+        if(d.depth===0) return;
+        const w=d.x1-d.x0,h=d.y1-d.y0;
+        if(w<2||h<2) return;
+        const color=d.data.color||(d.parent&&d.parent.data.color)||'#6f6f6f';
+        const isCovered=d.data.isCovered;
+        g.append('rect').attr('x',d.x0).attr('y',d.y0).attr('width',w).attr('height',h)
+          .attr('fill',isCovered?'#f1c21b':color).attr('stroke','#fff').attr('stroke-width',d.depth===1?2:1)
+          .attr('opacity',d.depth===1?0.15:(d.depth===2?0.7:1));
+        if(d.depth===1&&h>24){
+          g.append('text').attr('x',d.x0+8).attr('y',d.y0+18)
+            .attr('font-family','IBM Plex Sans').attr('font-size','13').attr('font-weight','500')
+            .attr('fill',color).attr('letter-spacing','.5px').style('text-transform','uppercase').text(d.data.name);
+        } else if(d.depth===2&&w>60&&h>20){
+          g.append('text').attr('x',d.x0+6).attr('y',d.y0+14)
+            .attr('font-family','IBM Plex Sans').attr('font-size','11').attr('font-weight','500')
+            .attr('fill',color).style('opacity',.9).text(d.data.name);
+        } else if(d.depth===3&&w>40&&h>22){
+          const code=d.data.name.split(' · ')[0];
+          g.append('text').attr('x',d.x0+w/2).attr('y',d.y0+h/2-2).attr('text-anchor','middle')
+            .attr('font-family','IBM Plex Sans').attr('font-size',w<80?9:(w<140?10:11))
+            .attr('font-weight','500').attr('fill',isCovered?'#161616':'#fff').text(code);
+          if(w>90&&h>34){
+            g.append('text').attr('x',d.x0+w/2).attr('y',d.y0+h/2+12).attr('text-anchor','middle')
+              .attr('font-family','IBM Plex Mono').attr('font-size','9')
+              .attr('fill',isCovered?'#161616':'#fff').attr('opacity',.75).text(d.value);
+          }
+        }
+        if(isCovered&&w>60&&h>24){
+          g.append('text').attr('x',d.x0+w/2).attr('y',d.y0+h-8).attr('text-anchor','middle')
+            .attr('font-family','IBM Plex Mono').attr('font-size','8').attr('font-weight','600')
+            .attr('fill','#161616').attr('letter-spacing','1').text('SKILL AGENTS · 172 ATOMS');
+        }
+        g.append('title').text(`${d.data.name} · ~${d.value} endpoints`);
+      });
+      document.getElementById('surf-tm-meta').textContent=`Entire stack · est. ${total.toLocaleString()} endpoints across ${countLeaves(sapData)} submodules`;
+      surfUpdateCrumb('all');
+      return;
+    }
+
+    const root=d3.hierarchy(getVizData(level)).sum(d=>d.value||0).sort((a,b)=>b.value-a.value);
+    d3.treemap().size([W,H]).paddingInner(2).round(true)(root);
+    const nodes=svg.selectAll('g').data(root.leaves()).enter().append('g').attr('class','tm-cell');
+    nodes.each(function(d){
+      const g=d3.select(this);
+      const w=d.x1-d.x0,h=d.y1-d.y0;
+      const color=d.data.color||'#6f6f6f';
+      const isCovered=d.data.isCovered;
+      g.append('rect').attr('x',d.x0).attr('y',d.y0).attr('width',w).attr('height',h)
+        .attr('fill',isCovered?'#f1c21b':color)
+        .attr('stroke',isCovered?'#d4a017':'#fff').attr('stroke-width',isCovered?2.5:1.5);
+      if(w<30||h<20) return;
+      const parts=d.data.name.split(' · ');
+      const primary=parts[0],secondary=parts[1]||'';
+      const textColor=isCovered?'#161616':'#fff';
+      const fontSize=w>240?18:(w>160?15:(w>100?13:(w>60?11:10)));
+      if(h>48&&w>90){
+        g.append('text').attr('x',d.x0+12).attr('y',d.y0+22)
+          .attr('font-family','IBM Plex Sans').attr('font-size',fontSize).attr('font-weight','500')
+          .attr('fill',textColor).text(primary);
+        if(secondary&&w>140){
+          g.append('text').attr('x',d.x0+12).attr('y',d.y0+22+fontSize+4)
+            .attr('font-family','IBM Plex Sans').attr('font-style','italic').attr('font-size',fontSize-3)
+            .attr('fill',textColor).attr('opacity',.85).text(secondary);
+        }
+        if((surfLevel==='l2'||surfLevel==='l3')&&d.data.lob&&w>110&&h>78){
+          g.append('text').attr('x',d.x0+12).attr('y',d.y0+h-28)
+            .attr('font-family','IBM Plex Mono').attr('font-size','10')
+            .attr('fill',textColor).attr('opacity',.6).attr('letter-spacing','1')
+            .text(d.data.lob.toUpperCase());
+        }
+        g.append('text').attr('x',d.x0+12).attr('y',d.y0+h-10)
+          .attr('font-family','IBM Plex Mono').attr('font-size',w>160?14:12).attr('font-weight','500')
+          .attr('fill',textColor).text(`${d.value.toLocaleString()} endpoints`);
+        if(isCovered){
+          g.append('text').attr('x',d.x0+w-12).attr('y',d.y0+22).attr('text-anchor','end')
+            .attr('font-family','IBM Plex Mono').attr('font-size','10').attr('font-weight','600')
+            .attr('fill','#161616').attr('letter-spacing','1.5').text('◆ SKILL AGENTS');
+          g.append('text').attr('x',d.x0+w-12).attr('y',d.y0+36).attr('text-anchor','end')
+            .attr('font-family','IBM Plex Sans').attr('font-size','11').attr('font-weight','500')
+            .attr('fill','#161616').text('172 atoms built');
+        }
+      } else if(h>22&&w>50){
+        g.append('text').attr('x',d.x0+6).attr('y',d.y0+14)
+          .attr('font-family','IBM Plex Sans').attr('font-size',10).attr('font-weight','500')
+          .attr('fill',textColor).text(primary);
+        g.append('text').attr('x',d.x0+6).attr('y',d.y0+h-6)
+          .attr('font-family','IBM Plex Mono').attr('font-size',9).attr('fill',textColor).attr('opacity',.8).text(d.value);
+      } else if(w>30){
+        g.append('text').attr('x',d.x0+w/2).attr('y',d.y0+h/2+3).attr('text-anchor','middle')
+          .attr('font-family','IBM Plex Mono').attr('font-size',9).attr('fill',textColor).text(d.value);
+      }
+      g.append('title').text(`${d.data.name} · ${d.value.toLocaleString()} endpoints${d.data.lob?' · '+d.data.lob:''}${isCovered?' · COVERED by skill agents (172 atoms)':''}`);
+    });
+    document.getElementById('surf-tm-meta').innerHTML=`${root.leaves().length} cells · est. ${total.toLocaleString()} total endpoints`;
+    surfUpdateCrumb(level);
+  }
+
+  function surfUpdateCrumb(level){
+    const labels={l1:'Lines of Business',l2:'Modules',l3:'Submodules',all:'Full hierarchy'};
+    document.getElementById('surf-tm-crumb').innerHTML=`
+      <span class="tm-crumb-part">SAP S/4HANA</span>
+      <span class="tm-crumb-sep">/</span>
+      <span class="tm-crumb-part active">${labels[level]}</span>`;
+  }
+
+  document.querySelectorAll('[data-surf-level]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('[data-surf-level]').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      surfRender(btn.dataset.surfLevel);
+    });
+  });
+
+  // Init after d3 is ready
+  function initSurf(){
+    if(window.d3){surfRender('l1');}
+    else{setTimeout(initSurf,100);}
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',initSurf);
+  } else {
+    initSurf();
+  }
+
+  window.addEventListener('resize',()=>{
+    clearTimeout(window._surfRz);
+    window._surfRz=setTimeout(()=>surfRender(surfLevel),150);
+  });
+})();
 </script>
 
 </body>
